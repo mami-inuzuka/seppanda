@@ -1,3 +1,7 @@
+![README_logo](https://user-images.githubusercontent.com/52844263/137658534-55247944-c873-43f0-bce5-e4bfa0a29245.png)
+
+<br>
+
 # せっぱんだとは🐼👛
 
 **せっぱんだ**はパートナー間でのお金の貸し借りを見える化するアプリです。
