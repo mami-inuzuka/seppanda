@@ -1,4 +1,5 @@
-![README_cover](https://user-images.githubusercontent.com/52844263/137685441-1c53dc12-2580-45cb-8966-ad01759332aa.png)
+![README_cover](https://user-images.githubusercontent.com/52844263/137689465-f45b6fbf-7bff-4d81-8480-238d153e92f5.png)
+
 
 
 <br>
