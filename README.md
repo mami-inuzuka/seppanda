@@ -1,4 +1,5 @@
-![README_logo](https://user-images.githubusercontent.com/52844263/137658534-55247944-c873-43f0-bce5-e4bfa0a29245.png)
+![README_cover](https://user-images.githubusercontent.com/52844263/137685441-1c53dc12-2580-45cb-8966-ad01759332aa.png)
+
 
 <br>
 
