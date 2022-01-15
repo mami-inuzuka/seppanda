@@ -4,6 +4,7 @@ import { Box, Center, Table, Tbody } from '@chakra-ui/react'
 import { Payment } from '../../types/payment'
 import { PaymentList } from '../organisms/PaymentList'
 import { CircleAddButton } from '../../atoms/button/CircleAddButton'
+import { Header } from '../organisms/layout/Header'
 
 export const Home: VFC = memo(() => {
   const paymentsData: Array<Payment> = [
@@ -30,7 +31,7 @@ export const Home: VFC = memo(() => {
   ]
   return (
     <>
-      <div>せっぱんだ</div>
+      <Header />
       <div>32,670</div>
       <Box bgColor="gray.100">支払い履歴</Box>
       {paymentsData.map((data) => (
