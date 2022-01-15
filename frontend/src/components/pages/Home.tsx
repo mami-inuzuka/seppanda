@@ -5,6 +5,7 @@ import { Payment } from '../../types/payment'
 import { PaymentList } from '../organisms/PaymentList'
 import { CircleAddButton } from '../../atoms/button/CircleAddButton'
 import { Header } from '../organisms/layout/Header'
+import { CurrentStatusArea } from '../organisms/CurrentStatusArea'
 
 export const Home: VFC = memo(() => {
   const paymentsData: Array<Payment> = [
@@ -32,7 +33,7 @@ export const Home: VFC = memo(() => {
   return (
     <>
       <Header />
-      <div>32,670</div>
+      <CurrentStatusArea />
       <Box bgColor="gray.100">支払い履歴</Box>
       {paymentsData.map((data) => (
         <Table variant="simple">
