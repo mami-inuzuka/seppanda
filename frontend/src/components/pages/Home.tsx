@@ -1,8 +1,9 @@
 import { memo, VFC } from 'react'
 
-import { Box, Table, Tbody } from '@chakra-ui/react'
+import { Box, Center, Table, Tbody } from '@chakra-ui/react'
 import { Payment } from '../../types/payment'
 import { PaymentList } from '../organisms/PaymentList'
+import { CircleAddButton } from '../../atoms/button/CircleAddButton'
 
 export const Home: VFC = memo(() => {
   const paymentsData: Array<Payment> = [
@@ -39,6 +40,11 @@ export const Home: VFC = memo(() => {
           </Tbody>
         </Table>
       ))}
+      <Box position="fixed" bottom="24px" w="100%">
+        <Center w="100%">
+          <CircleAddButton />
+        </Center>
+      </Box>
     </>
   )
 })
