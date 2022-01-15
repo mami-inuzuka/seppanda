@@ -1,6 +1,6 @@
 import { memo, VFC } from 'react'
 
-import { Table, Tbody } from '@chakra-ui/react'
+import { Box, Table, Tbody } from '@chakra-ui/react'
 import { Payment } from '../../types/payment'
 import { PaymentList } from '../organisms/PaymentList'
 
@@ -31,6 +31,7 @@ export const Home: VFC = memo(() => {
     <>
       <div>せっぱんだ</div>
       <div>32,670</div>
+      <Box bgColor="gray.100">支払い履歴</Box>
       {paymentsData.map((data) => (
         <Table variant="simple">
           <Tbody>
