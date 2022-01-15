@@ -25,6 +25,14 @@
     "sourceType": "module"
   },
   "plugins": ["react", "@typescript-eslint", "import"],
+  "overrides": [
+    {
+      "files": ["**/*.tsx"],
+      "rules": {
+        "react/prop-types": "off"
+      }
+    }
+  ],
   "rules": {
     "no-use-before-define": "off",
     "import/prefer-default-export": "off",

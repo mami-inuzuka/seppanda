@@ -4,3 +4,4 @@ public/
 *.config.js
 .*lintrc.js
 /*.*
+src/theme.tsx
