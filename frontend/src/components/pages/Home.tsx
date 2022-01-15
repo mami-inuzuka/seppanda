@@ -1,11 +1,12 @@
 import { memo, VFC } from 'react'
 
-import { Box, Center, Table, Tbody } from '@chakra-ui/react'
+import { Box, Center, Flex, Spacer, Table, Tbody } from '@chakra-ui/react'
 import { Payment } from '../../types/payment'
 import { PaymentList } from '../organisms/PaymentList'
 import { CircleAddButton } from '../../atoms/button/CircleAddButton'
 import { Header } from '../organisms/layout/Header'
 import { CurrentStatusArea } from '../organisms/CurrentStatusArea'
+import { DangerButton } from '../../atoms/button/DangerButton'
 
 export const Home: VFC = memo(() => {
   const paymentsData: Array<Payment> = [
@@ -34,7 +35,11 @@ export const Home: VFC = memo(() => {
     <>
       <Header />
       <CurrentStatusArea />
-      <Box bgColor="gray.100">支払い履歴</Box>
+      <Flex bgColor="gray.50" p={2} align="center">
+        支払い履歴
+        <Spacer />
+        <DangerButton>精算する</DangerButton>
+      </Flex>
       {paymentsData.map((data) => (
         <Table variant="simple">
           <Tbody>
