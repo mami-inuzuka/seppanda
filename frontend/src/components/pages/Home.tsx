@@ -9,23 +9,27 @@ import { CurrentStatusArea } from '../organisms/CurrentStatusArea'
 import { DangerButton } from '../../atoms/button/DangerButton'
 
 export const Home: VFC = memo(() => {
-  const paymentsData: Array<Payment> = [
+  const payments: Array<Payment> = [
     {
+      id: 1,
       amount: 600,
       user: 'hanako',
       created_at: '2022-01-15',
     },
     {
+      id: 2,
       amount: 1000,
       user: 'hanako',
       created_at: '2022-01-15',
     },
     {
+      id: 3,
       amount: 950,
       user: 'taro',
       created_at: '2022-01-15',
     },
     {
+      id: 4,
       amount: 1280,
       user: 'hanako',
       created_at: '2022-01-13',
@@ -40,13 +44,7 @@ export const Home: VFC = memo(() => {
         <Spacer />
         <DangerButton>精算する</DangerButton>
       </Flex>
-      {paymentsData.map((data) => (
-        <Table variant="simple">
-          <Tbody>
-            <PaymentList amount={data.amount} user={data.user} date={data.created_at} />
-          </Tbody>
-        </Table>
-      ))}
+      <PaymentList payments={payments} />
       <Box position="fixed" bottom="24px" w="100%">
         <Center w="100%">
           <CircleAddButton />
