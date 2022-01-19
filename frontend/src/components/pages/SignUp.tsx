@@ -46,21 +46,27 @@ export const SignUp: VFC = memo(() => {
   }
 
   return (
-    <form noValidate autoComplete="off">
-      <Box>
-        <Input value={name} onChange={(event) => setName(event.target.value)} />
-        <Input value={email} onChange={(event) => setEmail(event.target.value)} />
-        <Input value={password} onChange={(event) => setPassword(event.target.value)} />
-
-        <Input value={passwordConfirmation} onChange={(event) => setPasswordConfirmation(event.target.value)} />
-        <Button
-          type="submit"
-          disabled={!!(!name || !email || !password || !passwordConfirmation)}
-          onClick={handleSubmit}
-        >
-          Submit
-        </Button>
-      </Box>
-    </form>
+    <>
+      <h1>サインアップ</h1>
+      <form noValidate autoComplete="off">
+        <Box>
+          <Input value={name} placeholder="名前" onChange={(event) => setName(event.target.value)} />
+          <Input value={email} placeholder="メールアドレス" onChange={(event) => setEmail(event.target.value)} />
+          <Input value={password} placeholder="パスワード" onChange={(event) => setPassword(event.target.value)} />
+          <Input
+            value={passwordConfirmation}
+            placeholder="パスワード確認"
+            onChange={(event) => setPasswordConfirmation(event.target.value)}
+          />
+          <Button
+            type="submit"
+            disabled={!!(!name || !email || !password || !passwordConfirmation)}
+            onClick={handleSubmit}
+          >
+            Submit
+          </Button>
+        </Box>
+      </form>
+    </>
   )
 })
