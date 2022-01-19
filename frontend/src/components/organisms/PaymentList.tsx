@@ -3,7 +3,7 @@ import { memo, VFC } from 'react'
 import { Payment } from '../../types/payment'
 
 type Props = {
-  payments: Payment[]
+  payments: Array<Payment>
 }
 
 export const PaymentList: VFC<Props> = memo((props) => {
