@@ -1,6 +1,6 @@
 import { memo, VFC } from 'react'
 
-import { Box, Center, Flex, Spacer, Table, Tbody } from '@chakra-ui/react'
+import { Box, Center, Flex, Spacer } from '@chakra-ui/react'
 import { Payment } from '../../types/payment'
 import { PaymentList } from '../organisms/PaymentList'
 import { CircleAddButton } from '../../atoms/button/CircleAddButton'
