@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { HeaderLayout } from './components/templates/HeaderLayout'
 /* eslint import/no-cycle: 0 */
 import { SignIn } from './components/pages/SignIn'
+import { SignUp } from './components/pages/SignUp'
 import { theme } from './theme'
 import { User } from './types/user'
 
@@ -29,6 +30,7 @@ export default function App() {
           <HeaderLayout>
             <Routes>
               <Route path="/signin" element={<SignIn />} />
+              <Route path="/signout" element={<SignUp />} />
             </Routes>
           </HeaderLayout>
         </AuthContext.Provider>
