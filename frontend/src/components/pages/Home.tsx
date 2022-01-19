@@ -41,7 +41,6 @@ export const Home: VFC = memo(() => {
   return (
     <>
       <BasicModal isOpen={isOpen} onClose={onClose} size="xl" />
-      <Header />
       <BasicAlert />
       <CurrentStatusArea />
       <Flex bgColor="gray.50" p={2} align="center">
