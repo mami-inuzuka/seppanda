@@ -1,5 +1,5 @@
 import { useState, useContext, VFC, memo } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import Cookies from 'js-cookie'
 
 import { Box, Button, Input } from '@chakra-ui/react'
@@ -11,10 +11,8 @@ import { signIn } from '../../lib/api/auth'
 import { SignInParams } from '../../types/signInParams'
 
 export const SignIn: VFC = memo(() => {
-  const navigate = useNavigate()
-
-  const { setIsSignedIn, setCurrentUser, currentUser } = useContext(AuthContext)
-
+  const history = useHistory()
+  const { setIsSignedIn, setCurrentUser } = useContext(AuthContext)
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
 
@@ -37,7 +35,7 @@ export const SignIn: VFC = memo(() => {
         Cookies.set('_uid', res.headers.uid)
         setIsSignedIn(true)
         setCurrentUser(res.data.data)
-        navigate('/')
+        history.push('/')
         console.log('Signed in successfully!')
       }
     } catch (err) {
