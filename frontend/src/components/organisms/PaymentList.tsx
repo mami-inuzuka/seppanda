@@ -1,20 +1,25 @@
-import { Td, Tr } from '@chakra-ui/react'
+import { Table, Tbody, Td, Tr } from '@chakra-ui/react'
 import { memo, VFC } from 'react'
+import { Payment } from '../../types/payment'
 
 type Props = {
-  amount: number
-  user: string
-  date: string
+  payments: Array<Payment>
 }
 
 export const PaymentList: VFC<Props> = memo((props) => {
-  const { amount, user, date } = props
+  const { payments } = props
 
   return (
-    <Tr>
-      <Td>{date}</Td>
-      <Td>{user}</Td>
-      <Td isNumeric>{amount}</Td>
-    </Tr>
+    <Table variant="simple">
+      <Tbody>
+        {payments.map((payment) => (
+          <Tr key={payment.id}>
+            <Td>{payment.created_at}</Td>
+            <Td>{payment.user}</Td>
+            <Td isNumeric>{payment.amount}</Td>
+          </Tr>
+        ))}
+      </Tbody>
+    </Table>
   )
 })
