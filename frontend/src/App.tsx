@@ -5,6 +5,7 @@ import { ChakraProvider } from '@chakra-ui/react'
 
 /* eslint import/no-cycle: 0 */
 import { SignIn } from './components/pages/SignIn'
+import { SignUp } from './components/pages/SignUp'
 import { HeaderLayout } from './components/templates/HeaderLayout'
 import { theme } from './theme'
 import { User } from './types/user'
@@ -31,6 +32,7 @@ export default function App() {
           <HeaderLayout>
             <Routes>
               <Route path="/signin" element={<SignIn />} />
+              <Route path="/signout" element={<SignUp />} />
             </Routes>
           </HeaderLayout>
         </AuthContext.Provider>
