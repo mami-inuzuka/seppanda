@@ -10,7 +10,7 @@ import { SignUpParams } from '../../types/signUpParams'
 
 export const SignUp: VFC = memo(() => {
   const history = useHistory()
-  const { setIsSignedIn, setCurrentUser } = useContext(AuthContext)
+  const { setIsSignedIn } = useContext(AuthContext)
   const [name, setName] = useState<string>('')
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
@@ -36,7 +36,6 @@ export const SignUp: VFC = memo(() => {
         Cookies.set('_client', res.headers.client)
         Cookies.set('_uid', res.headers.uid)
         setIsSignedIn(true)
-        setCurrentUser(res.data.data)
         history.push('/')
         console.log('Signed in successfully!')
       }
