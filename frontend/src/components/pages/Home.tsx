@@ -3,10 +3,10 @@ import { memo, VFC } from 'react'
 import { Box, Center, Flex, Spacer } from '@chakra-ui/react'
 import { Payment } from '../../types/payment'
 import { PaymentList } from '../organisms/PaymentList'
-import { CircleAddButton } from '../../atoms/button/CircleAddButton'
+import { CircleAddButton } from '../atoms/button/CircleAddButton'
 import { Header } from '../organisms/layout/Header'
 import { CurrentStatusArea } from '../organisms/CurrentStatusArea'
-import { DangerButton } from '../../atoms/button/DangerButton'
+import { DangerButton } from '../atoms/button/DangerButton'
 
 export const Home: VFC = memo(() => {
   const payments: Array<Payment> = [
