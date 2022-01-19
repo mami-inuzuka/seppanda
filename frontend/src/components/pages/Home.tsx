@@ -8,6 +8,7 @@ import { Header } from '../organisms/layout/Header'
 import { CurrentStatusArea } from '../organisms/CurrentStatusArea'
 import { DangerButton } from '../atoms/button/DangerButton'
 import { BasicModal } from '../organisms/BasicModal'
+import { BasicAlert } from '../atoms/alert/BasicAlert'
 
 export const Home: VFC = memo(() => {
   const payments: Array<Payment> = [
@@ -41,6 +42,7 @@ export const Home: VFC = memo(() => {
     <>
       <BasicModal isOpen={isOpen} onClose={onClose} size="xl" />
       <Header />
+      <BasicAlert />
       <CurrentStatusArea />
       <Flex bgColor="gray.50" p={2} align="center">
         支払い履歴
