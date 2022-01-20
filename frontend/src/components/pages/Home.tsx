@@ -1,12 +1,13 @@
 import { memo, VFC } from 'react'
 
-import { Box, Center, Flex, Spacer } from '@chakra-ui/react'
+import { Box, Center, Flex, Spacer, useDisclosure } from '@chakra-ui/react'
 import { Payment } from '../../types/payment'
 import { PaymentList } from '../organisms/PaymentList'
-import { CircleAddButton } from '../../atoms/button/CircleAddButton'
-import { Header } from '../organisms/layout/Header'
+import { CircleAddButton } from '../atoms/button/CircleAddButton'
 import { CurrentStatusArea } from '../organisms/CurrentStatusArea'
-import { DangerButton } from '../../atoms/button/DangerButton'
+import { DangerButton } from '../atoms/button/DangerButton'
+import { BasicModal } from '../organisms/BasicModal'
+import { BasicAlert } from '../atoms/alert/BasicAlert'
 
 export const Home: VFC = memo(() => {
   const payments: Array<Payment> = [
@@ -35,14 +36,18 @@ export const Home: VFC = memo(() => {
       created_at: '2022-01-13',
     },
   ]
+  const { isOpen, onOpen, onClose } = useDisclosure()
   return (
     <>
-      <Header />
+      <BasicModal isOpen={isOpen} onClose={onClose} size="xl" />
+      <BasicAlert />
       <CurrentStatusArea />
       <Flex bgColor="gray.50" p={2} align="center">
         支払い履歴
         <Spacer />
-        <DangerButton>精算する</DangerButton>
+        <Box onClick={onOpen}>
+          <DangerButton>精算する</DangerButton>
+        </Box>
       </Flex>
       <PaymentList payments={payments} />
       <Box position="fixed" bottom="24px" w="100%">
