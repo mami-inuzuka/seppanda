@@ -26,15 +26,15 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint --ext .jsx,.js,.tsx,.ts src/",
-    "fmt": "prettier --write src/**/*",
-    "prepare": "cd .. && husky install frontend/.husky",
-    "lint-staged": "lint-staged"
+    "lint": "run-p lint:*",
+    "lint:eslint": "eslint --ext .jsx,.js,.tsx,.ts src/",
+    "lint:prettier": "prettier --write src/**/*",
+    "prepare": "cd .. && husky install frontend/.husky"
   },
   "lint-staged": {
-    "*.{js,ts,jsx,tsx}": [
-      "npx eslint . --fix",
-      "npx prettier --write ."
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --ext .jsx,.js,.tsx,.ts src/",
+      "prettier --write src/**/*"
     ]
   },
   "browserslist": {
@@ -60,7 +60,8 @@
     "eslint-plugin-react": "^7.28.0",
     "eslint-plugin-react-hooks": "^4.3.0",
     "husky": "^7.0.0",
-    "lint-staged": "^12.1.7",
+    "lint-staged": "^12.2.1",
+    "npm-run-all": "^4.1.5",
     "prettier": "2.5.1"
   }
 }
