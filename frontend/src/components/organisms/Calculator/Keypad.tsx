@@ -1,5 +1,5 @@
 import { FC, ReactNode } from 'react'
-import { Flex, Grid, GridItem, Wrap } from '@chakra-ui/react'
+import { Grid } from '@chakra-ui/react'
 
 type Props = {
   children: ReactNode

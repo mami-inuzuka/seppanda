@@ -1,4 +1,4 @@
-import { Flex, FormControl, FormLabel, Image, Input } from '@chakra-ui/react'
+import { Flex, FormControl, FormLabel, Input } from '@chakra-ui/react'
 import { VFC } from 'react'
 import { PrimaryButton } from '../atoms/button/PrimaryButton'
 import { SecondaryButton } from '../atoms/button/SecondaryButton'
