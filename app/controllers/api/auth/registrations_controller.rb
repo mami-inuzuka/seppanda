@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Api::Auth::RegistrationsController < DeviseTokenAuth::RegistrationsController
   private
 
