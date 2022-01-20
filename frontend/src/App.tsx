@@ -1,4 +1,4 @@
-import { useState, VFC } from 'react'
+import { useMemo, useState, VFC } from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { ChakraProvider } from '@chakra-ui/react'
 
@@ -14,12 +14,18 @@ import { theme } from './theme'
 // 未認証だった場合は「/signin」ページに促す
 const App: VFC = () => {
   const [isSignedIn, setIsSignedIn] = useState<boolean>(false)
+  const value = useMemo(
+    () => ({
+      isSignedIn,
+      setIsSignedIn,
+    }),
+    [isSignedIn]
+  )
 
   return (
     <BrowserRouter>
       <ChakraProvider theme={theme}>
-        {/* eslint react/jsx-no-constructed-context-values: 0 */}
-        <AuthContext.Provider value={{ isSignedIn, setIsSignedIn }}>
+        <AuthContext.Provider value={value}>
           <HeaderLayout>
             <Switch>
               <Route path="/signin" component={SignIn} />
