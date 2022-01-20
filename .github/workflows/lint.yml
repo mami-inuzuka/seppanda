@@ -1,4 +1,4 @@
-name: Rubocop
+name: Lint
 
 on:
   push:
@@ -17,5 +17,20 @@ jobs:
         with:
           bundler-cache: true
 
+      - name: Cache node modules
+        uses: actions/cache@v2.1.4
+        with:
+          path: frontend/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - name: yarn install
+        run: yarn install --check-files
+        working-directory: ./frontend
+
       - name: Rubocop
         run: bundle exec rubocop
+
+      - name: JS Lint
+        run: yarn lint
+        working-directory: ./frontend
