@@ -3,9 +3,14 @@
 class Api::Auth::RegistrationsController < DeviseTokenAuth::RegistrationsController
   def create
     build_resource
-    @resource.create_team(token: SecureRandom.urlsafe_base64)
-    team = @resource.team
-    @resource.team = team
+    paring_token = request.headers[:ParingToken]
+    if paring_token.present?
+      team = Team.find_by(token: paring_token)
+      @resource.team_id = team.id
+    else
+      @paring_token = SecureRandom.urlsafe_base64
+      @resource.create_team!(token: @paring_token)
+    end
 
     unless @resource.present?
       raise DeviseTokenAuth::Errors::NoResourceDefinedError,
@@ -74,6 +79,14 @@ class Api::Auth::RegistrationsController < DeviseTokenAuth::RegistrationsControl
     else
       @resource.email = sign_up_params[:email]
     end
+  end
+
+  def render_create_success
+    render json: {
+      status: 'success',
+      data:   resource_data,
+      paring_token: @paring_token
+    }
   end
 
   def sign_up_params
