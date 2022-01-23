@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class Api::Auth::RegistrationsController < DeviseTokenAuth::RegistrationsController
-
   def create
     build_resource
     @resource.create_team(token: SecureRandom.urlsafe_base64)
