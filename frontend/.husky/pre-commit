@@ -1,5 +1,7 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-cd frontend
-yarn lint-staged
+if [[ "${GIT_PREFIX}" == frontend* ]]; then
+  cd frontend
+  yarn lint-staged
+fi
