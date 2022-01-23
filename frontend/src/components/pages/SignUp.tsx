@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { useContext, useState, VFC, memo } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 import Cookies from 'js-cookie'
@@ -38,7 +40,10 @@ export const SignUp: VFC = memo(() => {
         Cookies.set('_client', res.headers.client)
         Cookies.set('_uid', res.headers.uid)
         setIsSignedIn(true)
-        history.push('/')
+        history.push({
+          pathname: '/paring',
+          state: { token: res.data.paringToken },
+        })
         console.log('Signed in successfully!')
       }
     } catch (err) {
