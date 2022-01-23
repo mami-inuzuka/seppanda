@@ -1,5 +1,5 @@
 import { useContext, useState, VFC, memo } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 import Cookies from 'js-cookie'
 import { Box, Button, Input } from '@chakra-ui/react'
 
@@ -14,6 +14,10 @@ export const SignUp: VFC = memo(() => {
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const [passwordConfirmation, setPasswordConfirmation] = useState<string>('')
+  const { search } = useLocation()
+
+  const query = new URLSearchParams(search)
+  const token = query.get('token')
 
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
@@ -26,10 +30,9 @@ export const SignUp: VFC = memo(() => {
     }
 
     try {
-      const res = await signUp(params)
-      console.log(res)
-
+      const res = await signUp(params, token)
       if (res.status === 200) {
+        console.log(res)
         // アカウント作成と同時にログイン（後程メール認証を挟む）
         Cookies.set('_access_token', res.headers['access-token'])
         Cookies.set('_client', res.headers.client)

@@ -4,7 +4,8 @@ import client from './client'
 import { SignUpParams } from '../../types/signUpParams'
 import { SignInParams } from '../../types/signInParams'
 
-export const signUp = (params: SignUpParams) => client.post('auth', params)
+export const signUp = (params: SignUpParams, token?: string | null) =>
+  client.post('auth', params, { headers: { ParingToken: token || '' } })
 
 export const signIn = (params: SignInParams) => client.post('auth/sign_in', params)
 
