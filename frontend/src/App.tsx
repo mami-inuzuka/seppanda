@@ -10,6 +10,7 @@ import { HeaderLayout } from './components/templates/HeaderLayout'
 import { AuthContext } from './context/AuthContext'
 import { PrivateRoute } from './router/PrivateRoute'
 import { theme } from './theme'
+import { Paring } from './components/pages/Paring'
 
 // ユーザーが認証済みかどうかでルーティングを決定
 // 未認証だった場合は「/signin」ページに促す
@@ -31,6 +32,7 @@ const App: VFC = () => {
             <Switch>
               <Route path="/signin" component={SignIn} />
               <Route path="/signup" component={SignUp} />
+              <Route path="/paring" component={Paring} />
               <PrivateRoute>
                 <Route exact path="/" component={Home} />
               </PrivateRoute>
