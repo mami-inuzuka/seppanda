@@ -4,7 +4,7 @@ class Api::Auth::RegistrationsController < DeviseTokenAuth::RegistrationsControl
 
   def create
     build_resource
-    @resource.create_team
+    @resource.create_team(token: SecureRandom.urlsafe_base64)
     team = @resource.team
     @resource.team = team
 
