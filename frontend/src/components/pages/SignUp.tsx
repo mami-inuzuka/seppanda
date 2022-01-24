@@ -2,12 +2,10 @@ import { useContext, useState, VFC, memo } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 import Cookies from 'js-cookie'
 import { Box, Button, Input } from '@chakra-ui/react'
-import { AxiosResponse } from 'axios'
 
 import { signUp } from '../../lib/api/auth'
 import { SignUpParams } from '../../types/signUpParams'
 import { AuthContext } from '../../context/AuthContext'
-import { SignUpResponse } from '../../types/signUpResponse'
 
 export const SignUp: VFC = memo(() => {
   const history = useHistory()
@@ -32,8 +30,7 @@ export const SignUp: VFC = memo(() => {
     }
 
     try {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      const res: AxiosResponse<SignUpResponse> = await signUp(params, token)
+      const res = await signUp(params, token)
 
       if (res.status === 200) {
         console.log(res)
