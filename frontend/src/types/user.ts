@@ -1,12 +1,13 @@
 export type User = {
-  id: number
-  uid: string
-  provider: string
+  allowPasswordChange: false
+  createdAt: string
   email: string
+  id: number
+  image?: string
   name: string
   nickname?: string
-  image?: string
-  allowPasswordChange: boolean
-  created_at: Date
-  updated_at: Date
+  provider: string
+  teamId: number
+  uid: string
+  updatedAt: string
 }
