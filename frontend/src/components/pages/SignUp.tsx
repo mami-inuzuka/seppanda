@@ -1,14 +1,14 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { useContext, useState, VFC, memo } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 
 import { Box, Button, Input } from '@chakra-ui/react'
+import { AxiosResponse } from 'axios'
 import Cookies from 'js-cookie'
 
 import { AuthContext } from '../../context/AuthContext'
 import { signUp } from '../../lib/api/auth'
 import { SignUpParams } from '../../types/signUpParams'
+import { SignUpResponse } from '../../types/signUpResponse'
 
 export const SignUp: VFC = memo(() => {
   const history = useHistory()
@@ -33,7 +33,9 @@ export const SignUp: VFC = memo(() => {
     }
 
     try {
-      const res = await signUp(params, token)
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      const res: AxiosResponse<SignUpResponse> = await signUp(params, token)
+
       if (res.status === 200) {
         console.log(res)
         // アカウント作成と同時にログイン（後程メール認証を挟む）
