@@ -1,10 +1,12 @@
+import { AxiosPromise } from 'axios'
 import Cookies from 'js-cookie'
 
 import { SignInParams } from '../../types/signInParams'
 import { SignUpParams } from '../../types/signUpParams'
+import { SignUpResponse } from '../../types/signUpResponse'
 import client from './client'
 
-export const signUp = (params: SignUpParams, token?: string | null) =>
+export const signUp = (params: SignUpParams, token?: string | null): AxiosPromise<SignUpResponse> =>
   client.post('auth', params, { headers: { ParingToken: token || '' } })
 
 export const signIn = (params: SignInParams) => client.post('auth/sign_in', params)
