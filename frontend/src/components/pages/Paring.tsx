@@ -1,14 +1,11 @@
-/* eslint-disable react/destructuring-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { VFC } from 'react'
 import { useLocation } from 'react-router-dom'
-import client from '../../lib/api/client'
 
 type LocationState = {
   token: string
 }
 
-export const Paring: VFC = (props) => {
+export const Paring: VFC = () => {
   const location = useLocation<LocationState>()
   return (
     <>
