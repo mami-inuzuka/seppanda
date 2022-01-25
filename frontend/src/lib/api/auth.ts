@@ -3,6 +3,7 @@ import Cookies from 'js-cookie'
 
 import { CurrentUserResponse } from '../../types/currentUserResponse'
 import { SignInParams } from '../../types/signInParams'
+import { SignInResponse } from '../../types/signInResponse'
 import { SignUpParams } from '../../types/signUpParams'
 import { SignUpResponse } from '../../types/signUpResponse'
 import client from './client'
@@ -10,7 +11,7 @@ import client from './client'
 export const signUp = (params: SignUpParams, token?: string | null): AxiosPromise<SignUpResponse> =>
   client.post('auth', params, { headers: { ParingToken: token || '' } })
 
-export const signIn = (params: SignInParams) => client.post('auth/sign_in', params)
+export const signIn = (params: SignInParams): AxiosPromise<SignInResponse> => client.post('auth/sign_in', params)
 
 // 認証済みのユーザーを取得
 export const getCurrentUser = (): AxiosPromise<CurrentUserResponse> | undefined => {
