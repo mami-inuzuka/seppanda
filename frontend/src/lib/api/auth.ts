@@ -1,6 +1,7 @@
 import { AxiosPromise } from 'axios'
 import Cookies from 'js-cookie'
 
+import { CurrentUserResponse } from '../../types/currentUserResponse'
 import { SignInParams } from '../../types/signInParams'
 import { SignUpParams } from '../../types/signUpParams'
 import { SignUpResponse } from '../../types/signUpResponse'
@@ -12,8 +13,8 @@ export const signUp = (params: SignUpParams, token?: string | null): AxiosPromis
 export const signIn = (params: SignInParams) => client.post('auth/sign_in', params)
 
 // 認証済みのユーザーを取得
-export const getCurrentUser = () => {
-  if (!Cookies.get('_access_token') || !Cookies.get('_client') || !Cookies.get('_uid')) return false
+export const getCurrentUser = (): AxiosPromise<CurrentUserResponse> | undefined => {
+  if (!Cookies.get('_access_token') || !Cookies.get('_client') || !Cookies.get('_uid')) return undefined
   return client.get('/auth/sessions', {
     headers: {
       'access-token': Cookies.get('_access_token') || '',
