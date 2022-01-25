@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { useEffect, useState, VFC } from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
@@ -16,13 +14,12 @@ import { SignIn } from './components/pages/SignIn'
 import { SignUp } from './components/pages/SignUp'
 import { HeaderLayout } from './components/templates/HeaderLayout'
 
-// ユーザーが認証済みかどうかでルーティングを決定
 const App: VFC = () => {
   const [isLoaded, setIsLoaded] = useState<boolean>(false)
   const [isSignedIn, setIsSignedIn] = useState<boolean>(false)
   const [currentUser, setCurrentUser] = useState<User | null>(null)
 
-  // 認証済みのユーザーがいるかどうかチェック
+  // サインイン状態をチェック
   const handleGetCurrentUser = async () => {
     try {
       const res = await getCurrentUser()
