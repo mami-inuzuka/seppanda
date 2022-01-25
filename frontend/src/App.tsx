@@ -40,8 +40,10 @@ const App: VFC = () => {
 
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    handleGetCurrentUser()
-  }, [setCurrentUser])
+    ;(async () => {
+      await handleGetCurrentUser()
+    })()
+  }, [])
 
   return (
     <BrowserRouter>
