@@ -1,17 +1,7 @@
+import { User } from './user'
+
 export type SignUpResponse = {
-  data: {
-    allowPasswordChange: false
-    createdAt: string
-    email: string
-    id: number
-    image?: string
-    name: string
-    nickname?: string
-    provider: string
-    teamId: number
-    uid: string
-    updatedAt: string
-  }
+  data: User
   paringToken: string
   status: string
 }
