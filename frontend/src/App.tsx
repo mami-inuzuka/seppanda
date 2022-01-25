@@ -19,16 +19,9 @@ import { User } from './types/user'
 // ユーザーが認証済みかどうかでルーティングを決定
 // 未認証だった場合は「/signin」ページに促す
 const App: VFC = () => {
+  const [isLoaded, setIsLoaded] = useState<boolean>(false)
   const [isSignedIn, setIsSignedIn] = useState<boolean>(false)
-  const value = useMemo(
-    () => ({
-      isSignedIn,
-      setIsSignedIn,
-    }),
-    [isSignedIn]
-  )
-
-  const [currentUser, setCurrentUser] = useState<User | undefined>()
+  const [currentUser, setCurrentUser] = useState<User | null>(null)
 
   // 認証済みのユーザーがいるかどうかチェック
   const handleGetCurrentUser = async () => {
@@ -47,6 +40,7 @@ const App: VFC = () => {
     } catch (err) {
       console.log(err)
     }
+    setIsLoaded(true)
   }
 
   useEffect(() => {
@@ -57,7 +51,8 @@ const App: VFC = () => {
   return (
     <BrowserRouter>
       <ChakraProvider theme={theme}>
-        <AuthContext.Provider value={value}>
+        {/* eslint-disable-next-line react/jsx-no-constructed-context-values */}
+        <AuthContext.Provider value={{ isLoaded, setIsLoaded, isSignedIn, setIsSignedIn, currentUser, setCurrentUser }}>
           <HeaderLayout>
             <Switch>
               <Route path="/signin" component={SignIn} />
