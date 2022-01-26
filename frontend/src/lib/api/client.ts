@@ -1,5 +1,5 @@
-import applyCaseMiddleware from 'axios-case-converter'
 import axios from 'axios'
+import applyCaseMiddleware from 'axios-case-converter'
 
 // applyCaseMiddleware:
 // axiosで受け取ったレスポンスの値をスネークケース→キャメルケースに変換
