@@ -1,8 +1,9 @@
 import Cookies from 'js-cookie'
+
+import { SignInParams } from '../../types/signInParams'
+import { SignUpParams } from '../../types/signUpParams'
 import client from './client'
 
-import { SignUpParams } from '../../types/signUpParams'
-import { SignInParams } from '../../types/signInParams'
 
 export const signUp = (params: SignUpParams) => client.post('auth', params)
 
