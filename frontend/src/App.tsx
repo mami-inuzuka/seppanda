@@ -2,17 +2,17 @@ import { useEffect, useState, VFC } from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
 import { ChakraProvider } from '@chakra-ui/react'
-import { theme } from './theme'
 
-import { getCurrentUser } from './lib/api/auth'
-import { User } from './types/user'
-import { AuthContext } from './context/AuthContext'
-import { PrivateRoute } from './components/router/PrivateRoute'
 import { Home } from './components/pages/Home'
 import { Paring } from './components/pages/Paring'
 import { SignIn } from './components/pages/SignIn'
 import { SignUp } from './components/pages/SignUp'
+import { PrivateRoute } from './components/router/PrivateRoute'
 import { HeaderLayout } from './components/templates/HeaderLayout'
+import { AuthContext } from './context/AuthContext'
+import { getCurrentUser } from './lib/api/auth'
+import { theme } from './theme'
+import { User } from './types/user'
 
 const App: VFC = () => {
   const [isLoaded, setIsLoaded] = useState<boolean>(false)
