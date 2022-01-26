@@ -36,10 +36,9 @@ const App: VFC = () => {
   }
 
   useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    ;(async () => {
-      await handleGetCurrentUser()
-    })()
+    handleGetCurrentUser().catch((err) => {
+      console.log(err)
+    })
   }, [])
 
   return (
