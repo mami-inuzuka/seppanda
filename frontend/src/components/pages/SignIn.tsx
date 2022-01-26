@@ -1,11 +1,12 @@
 import { useState, useContext, VFC, memo } from 'react'
 import { useHistory } from 'react-router-dom'
-import Cookies from 'js-cookie'
-import { Box, Button, Input } from '@chakra-ui/react'
 
+import { Box, Button, Input } from '@chakra-ui/react'
+import Cookies from 'js-cookie'
+
+import { AuthContext } from '../../context/AuthContext'
 import { signIn } from '../../lib/api/auth'
 import { SignInParams } from '../../types/signInParams'
-import { AuthContext } from '../../context/AuthContext'
 
 export const SignIn: VFC = memo(() => {
   const history = useHistory()
