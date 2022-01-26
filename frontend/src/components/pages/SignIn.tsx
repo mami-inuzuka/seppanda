@@ -9,6 +9,8 @@ import { signIn } from '../../lib/api/auth'
 import { SignInParams } from '../../types/signInParams'
 
 export const SignIn: VFC = memo(() => {
+  // 関連issue: [react-router-dom] - Export History type #50526 https://github.com/DefinitelyTyped/DefinitelyTyped/issues/50526
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
   const history = useHistory()
   const { setIsSignedIn, setCurrentUser } = useContext(AuthContext)
   const [email, setEmail] = useState<string>('')
@@ -33,6 +35,7 @@ export const SignIn: VFC = memo(() => {
         Cookies.set('_uid', res.headers.uid)
         setIsSignedIn(true)
         setCurrentUser(res.data.data)
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
         history.push('/')
         console.log('Signed in successfully!')
       }

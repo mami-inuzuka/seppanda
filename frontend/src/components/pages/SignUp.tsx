@@ -9,6 +9,8 @@ import { signUp } from '../../lib/api/auth'
 import { SignUpParams } from '../../types/signUpParams'
 
 export const SignUp: VFC = memo(() => {
+  // 関連issue: [react-router-dom] - Export History type #50526 https://github.com/DefinitelyTyped/DefinitelyTyped/issues/50526
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
   const history = useHistory()
   const { setIsSignedIn } = useContext(AuthContext)
   const [name, setName] = useState<string>('')
@@ -40,6 +42,7 @@ export const SignUp: VFC = memo(() => {
         Cookies.set('_client', res.headers.client)
         Cookies.set('_uid', res.headers.uid)
         setIsSignedIn(true)
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
         history.push({
           pathname: '/paring',
           state: { token: res.data.paringToken },
