@@ -11,7 +11,7 @@ export const Paring: VFC = () => {
     <>
       <h1>ペアリング</h1>
       <p>下記のURLを共有してください</p>
-      <p>{`http://localhost:3000/signup?token=${location.state.token}`}</p>
+      <p>{`${window.location.protocol}//${window.location.host}/signup?token=${location.state.token}`}</p>
     </>
   )
 }
