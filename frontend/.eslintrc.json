@@ -24,7 +24,7 @@
     "ecmaVersion": 12,
     "sourceType": "module"
   },
-  "plugins": ["react", "@typescript-eslint", "import"],
+  "plugins": ["react", "@typescript-eslint", "import", "unused-imports"],
   "overrides": [
     {
       "files": ["**/*.tsx"],
@@ -56,6 +56,20 @@
       }
     ]
   },
+  "import/order": [
+    "error",
+    {
+      "groups": ["builtin", "external", "internal", ["parent", "sibling"], "object", "type", "index"],
+      "newlines-between": "always",
+      "pathGroupsExcludedImportTypes": ["builtin"],
+      "alphabetize": { "order": "asc", "caseInsensitive": true },
+      "pathGroups": [
+        // ここに書いた順序で間に1行空行をあけつつ整頓される
+        { "pattern": "src/libs/**", "group": "internal", "position": "before" },
+        { "pattern": "@/components/**", "group": "internal", "position": "before" }
+      ]
+    }
+  ],
   "settings": {
     "import/resolver": {
       "node": {
