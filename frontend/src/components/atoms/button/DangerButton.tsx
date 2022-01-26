@@ -1,4 +1,5 @@
 import { memo, VFC } from 'react'
+
 import { Button } from '@chakra-ui/react'
 
 type Props = {

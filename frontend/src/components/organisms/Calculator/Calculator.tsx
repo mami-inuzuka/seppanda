@@ -1,5 +1,7 @@
-import { Box, Flex } from '@chakra-ui/react'
 import { VFC } from 'react'
+
+import { Box, Flex } from '@chakra-ui/react'
+
 import { CalculatorButton } from './Button'
 import { Display } from './Display'
 import { Keypad } from './Keypad'

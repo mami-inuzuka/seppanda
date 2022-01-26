@@ -1,5 +1,7 @@
-import { Table, Tbody, Td, Tr } from '@chakra-ui/react'
 import { memo, VFC } from 'react'
+
+import { Table, Tbody, Td, Tr } from '@chakra-ui/react'
+
 import { Payment } from '../../types/payment'
 
 type Props = {

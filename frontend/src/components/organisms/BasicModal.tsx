@@ -1,4 +1,5 @@
 import { VFC } from 'react'
+
 import { Modal, ModalHeader, ModalBody, ModalCloseButton, ModalContent, ModalOverlay } from '@chakra-ui/react'
 
 type Props = {

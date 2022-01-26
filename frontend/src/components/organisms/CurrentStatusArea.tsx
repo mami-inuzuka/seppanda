@@ -1,4 +1,5 @@
 import { memo, VFC } from 'react'
+
 import { Box, Center } from '@chakra-ui/react'
 
 export const CurrentStatusArea: VFC = memo(() => (

@@ -1,5 +1,7 @@
-import { Box, Flex } from '@chakra-ui/react'
 import { VFC } from 'react'
+
+import { Box, Flex } from '@chakra-ui/react'
+
 import { ControlBar } from '../molecules/ControlBar'
 import { Calculator } from '../organisms/Calculator/Calculator'
 
