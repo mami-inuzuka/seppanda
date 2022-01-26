@@ -1,5 +1,6 @@
-import { Image } from '@chakra-ui/react'
 import { VFC } from 'react'
+
+import { Image } from '@chakra-ui/react'
 
 type Props = {
   src: string

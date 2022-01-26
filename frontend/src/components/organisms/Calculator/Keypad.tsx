@@ -1,4 +1,5 @@
 import { FC, ReactNode } from 'react'
+
 import { Grid } from '@chakra-ui/react'
 
 type Props = {

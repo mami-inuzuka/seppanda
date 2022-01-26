@@ -1,5 +1,6 @@
-import { Flex } from '@chakra-ui/react'
 import { FC } from 'react'
+
+import { Flex } from '@chakra-ui/react'
 
 type Props = {
   data: number

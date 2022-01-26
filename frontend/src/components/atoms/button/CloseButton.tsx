@@ -1,4 +1,5 @@
 import { VFC } from 'react'
+
 import { CloseIcon } from '@chakra-ui/icons'
 import { Button } from '@chakra-ui/react'
 
