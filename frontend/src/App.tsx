@@ -4,13 +4,13 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { ChakraProvider } from '@chakra-ui/react'
 
 import { Home } from './components/pages/Home'
+import { Paring } from './components/pages/Paring'
 import { SignIn } from './components/pages/SignIn'
 import { SignUp } from './components/pages/SignUp'
 import { HeaderLayout } from './components/templates/HeaderLayout'
 import { AuthContext } from './context/AuthContext'
 import { PrivateRoute } from './router/PrivateRoute'
 import { theme } from './theme'
-import { Paring } from './components/pages/Paring'
 
 // ユーザーが認証済みかどうかでルーティングを決定
 // 未認証だった場合は「/signin」ページに促す
