@@ -12,6 +12,7 @@ gem 'rails', '~> 6.1.4', '>= 6.1.4.4'
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
+  gem 'rspec-rails', '~> 5.0.0'
 end
 
 group :development do
