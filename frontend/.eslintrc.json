@@ -64,6 +64,7 @@
         "alphabetize": { "order": "asc", "caseInsensitive": true },
         "pathGroups": [
           // ここに書いた順序で間に1行空行をあけつつ整頓される
+          { "pattern": "react", "group": "builtin", "position": "before" },
           { "pattern": "./src/libs/**", "group": "internal", "position": "before" },
           { "pattern": "./src/components/**", "group": "internal", "position": "before" }
         ]
