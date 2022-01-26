@@ -2,7 +2,7 @@ import { createContext } from 'react'
 
 import { User } from '../types/user'
 
-type AuthContextValue = {
+export type AuthContextType = {
   isLoaded: boolean | null
   setIsLoaded: React.Dispatch<React.SetStateAction<boolean>>
   isSignedIn: boolean | null
@@ -11,14 +11,17 @@ type AuthContextValue = {
   setCurrentUser: React.Dispatch<React.SetStateAction<User | null>>
 }
 
-export const AuthContext = createContext<AuthContextValue>({
+export const AuthContext = createContext<AuthContextType>({
   isLoaded: null,
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  setIsLoaded: () => {},
+  setIsLoaded: () => {
+    throw new Error('AuthContext not avaliable')
+  },
   isSignedIn: null,
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  setIsSignedIn: () => {},
+  setIsSignedIn: () => {
+    throw new Error('AuthContext not avaliable')
+  },
   currentUser: null,
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  setCurrentUser: () => {},
+  setCurrentUser: () => {
+    throw new Error('AuthContext not avaliable')
+  },
 })
