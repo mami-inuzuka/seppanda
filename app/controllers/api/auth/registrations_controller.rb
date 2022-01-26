@@ -6,10 +6,10 @@ class Api::Auth::RegistrationsController < DeviseTokenAuth::RegistrationsControl
       paring_token = request.headers[:ParingToken]
       if paring_token.present?
         team = Team.find_by(token: paring_token)
-        @resource.team_id = team.id
+        resource.team_id = team.id
       else
         @paring_token = SecureRandom.urlsafe_base64
-        @resource.create_team!(token: @paring_token)
+        resource.create_team!(token: @paring_token)
       end
     end
   end
