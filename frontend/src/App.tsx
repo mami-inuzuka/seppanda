@@ -23,7 +23,7 @@ const App: VFC = () => {
   const handleGetCurrentUser = async () => {
     try {
       const res = await getCurrentUser()
-      if (res?.data.isLogin === true) {
+      if (res?.data.isLogin) {
         setIsSignedIn(true)
         setCurrentUser(res?.data.data)
       } else {
