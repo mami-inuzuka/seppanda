@@ -44,8 +44,8 @@ export const SignUp: VFC = memo(() => {
         setIsSignedIn(true)
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
         history.push({
-          pathname: '/paring',
-          state: { token: res.data.paringToken },
+          pathname: '/invitation',
+          state: { token: res.data.invitationToken },
         })
         console.log('Signed in successfully!')
       }

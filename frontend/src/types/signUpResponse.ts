@@ -2,6 +2,6 @@ import { User } from './user'
 
 export type SignUpResponse = {
   data: User
-  paringToken: string
+  invitationToken: string
   status: string
 }

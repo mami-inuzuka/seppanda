@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { ChakraProvider } from '@chakra-ui/react'
 
 import { Home } from './components/pages/Home'
-import { Paring } from './components/pages/Paring'
+import { Invitation } from './components/pages/Invitation'
 import { SignIn } from './components/pages/SignIn'
 import { SignUp } from './components/pages/SignUp'
 import { PrivateRoute } from './components/router/PrivateRoute'
@@ -50,7 +50,7 @@ const App: VFC = () => {
             <Switch>
               <Route path="/signin" component={SignIn} />
               <Route path="/signup" component={SignUp} />
-              <Route path="/paring" component={Paring} />
+              <Route path="/invitation" component={Invitation} />
               <PrivateRoute>
                 <Route exact path="/" component={Home} />
               </PrivateRoute>
