@@ -17,11 +17,19 @@ class Api::Auth::RegistrationsController < DeviseTokenAuth::RegistrationsControl
   private
 
   def render_create_success
-    render json: {
-      status: 'success',
-      data:   resource_data,
-      invitation_token: @invitation_token
-    }
+    if Team.enabled?(resource_data["team_id"])
+      render json: {
+        is_team_enabled: true,
+        data:   resource_data,
+        invitation_token: ''
+      }
+    else
+      render json: {
+        is_team_enabled: false,
+        data:   resource_data,
+        invitation_token: @invitation_token
+      }
+    end
   end
 
   def sign_up_params

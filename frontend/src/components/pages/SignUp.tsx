@@ -43,7 +43,7 @@ export const SignUp: VFC = memo(() => {
         Cookies.set('_uid', res.headers.uid)
         setIsSignedIn(true)
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-        if (!res.data.invitationToken) {
+        if (res.data.isTeamEnabled) {
           history.push('/')
         } else {
           history.push({
