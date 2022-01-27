@@ -3,13 +3,13 @@
 class Api::Auth::RegistrationsController < DeviseTokenAuth::RegistrationsController
   def create
     super do |resource|
-      paring_token = request.headers[:ParingToken]
-      if paring_token.present?
-        team = Team.find_by(token: paring_token)
+      invitation_token = request.headers[:InvitationToken]
+      if invitation_token.present?
+        team = Team.find_by(token: invitation_token)
         resource.team_id = team.id
       else
-        @paring_token = SecureRandom.urlsafe_base64
-        resource.create_team!(token: @paring_token)
+        @invitation_token = SecureRandom.urlsafe_base64
+        resource.create_team!(token: @invitation_token)
       end
     end
   end
@@ -20,7 +20,7 @@ class Api::Auth::RegistrationsController < DeviseTokenAuth::RegistrationsControl
     render json: {
       status: 'success',
       data:   resource_data,
-      paring_token: @paring_token
+      invitation_token: @invitation_token
     }
   end
 

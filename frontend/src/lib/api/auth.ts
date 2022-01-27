@@ -9,7 +9,7 @@ import { SignUpResponse } from '../../types/signUpResponse'
 import client from './client'
 
 export const signUp = (params: SignUpParams, token?: string | null): AxiosPromise<SignUpResponse> =>
-  client.post('auth', params, { headers: { ParingToken: token || '' } })
+  client.post('auth', params, { headers: { InvitationToken: token || '' } })
 
 export const signIn = (params: SignInParams): AxiosPromise<SignInResponse> => client.post('auth/sign_in', params)
 
