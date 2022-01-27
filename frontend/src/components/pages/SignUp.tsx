@@ -43,10 +43,15 @@ export const SignUp: VFC = memo(() => {
         Cookies.set('_uid', res.headers.uid)
         setIsSignedIn(true)
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-        history.push({
-          pathname: '/invitation',
-          state: { token: res.data.invitationToken },
-        })
+        if (!res.data.invitationToken) {
+          history.push('/')
+        } else {
+          history.push({
+            pathname: '/invitation',
+            state: { token: res.data.invitationToken },
+          })
+        }
+
         console.log('Signed in successfully!')
       }
     } catch (err) {
