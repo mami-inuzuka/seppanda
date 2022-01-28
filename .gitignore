@@ -30,3 +30,7 @@
 # Ignore master key for decrypting credentials and more.
 /config/master.key
 /config/secrets/*
+
+/node_modules
+/public/*
+yarn.lock
