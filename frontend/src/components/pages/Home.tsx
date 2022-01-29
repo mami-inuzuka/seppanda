@@ -8,7 +8,9 @@ import { CircleAddButton } from '../atoms/button/CircleAddButton'
 import { DangerButton } from '../atoms/button/DangerButton'
 import { BasicModal } from '../organisms/BasicModal'
 import { CurrentStatusArea } from '../organisms/CurrentStatusArea'
+import { NoCloseButtonFullModal } from '../organisms/NoCloseButtonFullModal'
 import { PaymentList } from '../organisms/PaymentList'
+import { PaymentDataEntry } from './PaymentDataEntry'
 
 export const Home: VFC = memo(() => {
   const payments: Array<Payment> = [
@@ -38,9 +40,13 @@ export const Home: VFC = memo(() => {
     },
   ]
   const { isOpen: isOpenSettleModal, onOpen: onOpenSettleModal, onClose: onCloseSettleModal } = useDisclosure()
+  const { isOpen: isOpenEntryModal, onOpen: onOpenEntryModal, onClose: onCloseEntryModal } = useDisclosure()
   return (
     <>
       <BasicModal isOpen={isOpenSettleModal} onClose={onCloseSettleModal} size="xl" />
+      <NoCloseButtonFullModal isOpen={isOpenEntryModal} onClose={onCloseEntryModal}>
+        <PaymentDataEntry onClickClose={onCloseEntryModal} />
+      </NoCloseButtonFullModal>
       <BasicAlert />
       <CurrentStatusArea />
       <Flex bgColor="gray.50" p={2} align="center">
@@ -52,7 +58,7 @@ export const Home: VFC = memo(() => {
       </Flex>
       <PaymentList payments={payments} />
       <Box position="fixed" bottom="24px" w="100%">
-        <Center w="100%">
+        <Center w="100%" onClick={onOpenEntryModal}>
           <CircleAddButton />
         </Center>
       </Box>
