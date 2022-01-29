@@ -9,9 +9,9 @@ import { SignUpResponse } from '../../types/signUpResponse'
 import client from './client'
 
 export const signUp = (params: SignUpParams, token?: string | null): AxiosPromise<SignUpResponse> =>
-  client.post('auth', params, { headers: { InvitationToken: token || '' } })
+  client.post('/auth', params, { headers: { InvitationToken: token || '' } })
 
-export const signIn = (params: SignInParams): AxiosPromise<SignInResponse> => client.post('auth/sign_in', params)
+export const signIn = (params: SignInParams): AxiosPromise<SignInResponse> => client.post('/auth/sign_in', params)
 
 // 認証済みのユーザーを取得
 export const getCurrentUser = (): AxiosPromise<CurrentUserResponse> | undefined => {
