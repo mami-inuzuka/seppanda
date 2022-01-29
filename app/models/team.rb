@@ -7,6 +7,6 @@ class Team < ApplicationRecord
   MAX_TEAM_MENBER_NUMBER = 2
 
   def self.enabled?(id)
-    Team.find(id).users.length == MAX_TEAM_MENBER_NUMBER
+    find(id).users.length == MAX_TEAM_MENBER_NUMBER
   end
 end
