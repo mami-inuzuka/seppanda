@@ -8,7 +8,7 @@ const options = {
 
 const client = applyCaseMiddleware(
   axios.create({
-    baseURL: 'http://localhost:3001/api',
+    baseURL: `${String(process.env.REACT_APP_API_URL)}/api`,
   }),
   options
 )
