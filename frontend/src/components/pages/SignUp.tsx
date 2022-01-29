@@ -1,11 +1,13 @@
 import { useContext, useState, VFC, memo } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 
-import { Box, Button, Input } from '@chakra-ui/react'
+import { Box, Button, Input, useToast } from '@chakra-ui/react'
+import axios from 'axios'
 import Cookies from 'js-cookie'
 
 import { AuthContext } from '../../context/AuthContext'
 import { signUp } from '../../lib/api/auth'
+import { SignUpErrorResponse } from '../../types/SignUpErrorResponse'
 import { SignUpParams } from '../../types/signUpParams'
 
 export const SignUp: VFC = memo(() => {
@@ -21,6 +23,7 @@ export const SignUp: VFC = memo(() => {
 
   const query = new URLSearchParams(search)
   const token = query.get('token')
+  const toast = useToast()
 
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
@@ -51,11 +54,18 @@ export const SignUp: VFC = memo(() => {
             state: { token: res.data.invitationToken },
           })
         }
-
         console.log('Signed in successfully!')
       }
-    } catch (err) {
-      console.log(err)
+    } catch (error) {
+      if (axios.isAxiosError<SignUpErrorResponse>(error)) {
+        toast({
+          title: error.response?.data.errors,
+          position: 'top',
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
+        })
+      }
     }
   }
 

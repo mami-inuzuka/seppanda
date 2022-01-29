@@ -9,4 +9,8 @@ class Team < ApplicationRecord
   def self.enabled?(id)
     find(id).users.length == MAX_TEAM_MENBER_NUMBER
   end
+
+  def self.invitation_token_valid?(token)
+    find_by(invitation_token: token)
+  end
 end

@@ -2,8 +2,9 @@
 
 class Api::Auth::RegistrationsController < DeviseTokenAuth::RegistrationsController
   def create
+    invitation_token = request.headers[:InvitationToken]
+    return render_create_error_token_invalid if invitation_token.present? && !Team.invitation_token_valid?(invitation_token)
     super do |resource|
-      invitation_token = request.headers[:InvitationToken]
       if invitation_token.present?
         team = Team.find_by(invitation_token: invitation_token)
         resource.team_id = team.id
@@ -30,6 +31,15 @@ class Api::Auth::RegistrationsController < DeviseTokenAuth::RegistrationsControl
         invitation_token: @invitation_token
       }
     end
+  end
+
+  def render_create_error_token_invalid
+    response = {
+      status: 'error',
+      data:   resource_data
+    }
+    message = I18n.t('devise_token_auth.registrations.token_invalid')
+    render_error(422, message, response)
   end
 
   def sign_up_params
