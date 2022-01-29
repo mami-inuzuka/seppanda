@@ -9,7 +9,7 @@ type Props = {
 export const Keypad: FC<Props> = (props) => {
   const { children } = props
   return (
-    <Grid templateColumns="repeat(4, 1fr)" bg="gray.50" h="100%">
+    <Grid templateColumns="repeat(3, 1fr)" bg="gray.50" h="100%">
       {children}
     </Grid>
   )
