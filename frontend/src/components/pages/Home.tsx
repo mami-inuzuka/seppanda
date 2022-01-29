@@ -37,16 +37,16 @@ export const Home: VFC = memo(() => {
       created_at: '2022-01-13',
     },
   ]
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const { isOpen: isOpenSettleModal, onOpen: onOpenSettleModal, onClose: onCloseSettleModal } = useDisclosure()
   return (
     <>
-      <BasicModal isOpen={isOpen} onClose={onClose} size="xl" />
+      <BasicModal isOpen={isOpenSettleModal} onClose={onCloseSettleModal} size="xl" />
       <BasicAlert />
       <CurrentStatusArea />
       <Flex bgColor="gray.50" p={2} align="center">
         支払い履歴
         <Spacer />
-        <Box onClick={onOpen}>
+        <Box onClick={onOpenSettleModal}>
           <DangerButton>精算する</DangerButton>
         </Box>
       </Flex>
