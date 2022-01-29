@@ -11,6 +11,11 @@ export const Calculator: VFC = () => {
 
   const handleNumberClick = (num: number) => (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) =>
     setInputNumber(inputNumber + String(num))
+
+  const handleBackSpaceClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    setInputNumber(inputNumber.slice(0, -1))
+  }
+
   const display = Number(inputNumber)
 
   return (
@@ -31,6 +36,7 @@ export const Calculator: VFC = () => {
           <CalculatorButton label="3" value="3" onClick={handleNumberClick(3)} />
 
           <CalculatorButton label="0" value="0" onClick={handleNumberClick(0)} />
+          <CalculatorButton label="←" value="←" onClick={handleBackSpaceClick} />
         </Keypad>
       </Box>
     </Flex>
