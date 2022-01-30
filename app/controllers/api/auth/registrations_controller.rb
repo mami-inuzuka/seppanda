@@ -34,12 +34,13 @@ class Api::Auth::RegistrationsController < DeviseTokenAuth::RegistrationsControl
   end
 
   def render_create_error_token_invalid
-    response = {
+    render json: {
       status: 'error',
-      data:   resource_data
-    }
-    message = I18n.t('devise_token_auth.registrations.token_invalid')
-    render_error(422, message, response)
+      data:   resource_data,
+      errors: {
+        fullMessages: [I18n.t('devise_token_auth.registrations.token_invalid')]
+      }
+    }, status: 422
   end
 
   def sign_up_params

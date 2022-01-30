@@ -2,7 +2,7 @@ import { useContext, useState, VFC, memo } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 
 import { Box, Button, Input, useToast } from '@chakra-ui/react'
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 import Cookies from 'js-cookie'
 
 import { AuthContext } from '../../context/AuthContext'
@@ -57,12 +57,33 @@ export const SignUp: VFC = memo(() => {
         console.log('Signed in successfully!')
       }
     } catch (error) {
-      if (axios.isAxiosError<SignUpErrorResponse>(error)) {
+      if (axios.isAxiosError(error)) {
+        const serverError = error as AxiosError<SignUpErrorResponse>
+        if (serverError.response?.data.errors.fullMessages) {
+          serverError.response?.data.errors.fullMessages.map((message) =>
+            toast({
+              title: message,
+              position: 'top',
+              status: 'error',
+              duration: 5000,
+              isClosable: true,
+            })
+          )
+        } else {
+          toast({
+            title: '登録に失敗しました',
+            position: 'top',
+            status: 'error',
+            duration: 5000,
+            isClosable: true,
+          })
+        }
+      } else {
         toast({
-          title: error.response?.data.errors,
+          title: '登録に失敗しました',
           position: 'top',
           status: 'error',
-          duration: 9000,
+          duration: 5000,
           isClosable: true,
         })
       }
