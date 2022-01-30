@@ -41,9 +41,9 @@ export const SignUp: VFC = memo(() => {
       if (res.status === 200) {
         console.log(res)
         // アカウント作成と同時にログイン（後程メール認証を挟む）
-        Cookies.set('_access_token', res.headers['access-token'])
-        Cookies.set('_client', res.headers.client)
-        Cookies.set('_uid', res.headers.uid)
+        Cookies.set('_access_token', res.headers['access-token'], { secure: true })
+        Cookies.set('_client', res.headers.client, { secure: true })
+        Cookies.set('_uid', res.headers.uid, { secure: true })
         setIsSignedIn(true)
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
         if (res.data.isTeamEnabled) {
