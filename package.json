@@ -1,0 +1,19 @@
+{
+  "name": "seppanda",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/mami-inuzuka/seppanda.git",
+  "author": "mami-inuzuka <inuzuka.mami@gmail.com>",
+  "license": "MIT",
+  "proxy": "http://localhost:3001",
+  "scripts": {
+    "build": "cd frontend && yarn install && yarn build && cd ..",
+    "deploy": "cp -a frontend/build/. public/",
+    "postinstall": "yarn build && yarn deploy && echo 'Client built!'"
+  },
+  "engines": {
+    "yarn": "1.22.17",
+    "npm": "8.3.0",
+    "node": "14.17.5"
+  }
+}
