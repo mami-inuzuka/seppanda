@@ -6,7 +6,8 @@ import Cookies from 'js-cookie'
 
 import { AuthContext } from '../../context/AuthContext'
 import { signIn } from '../../lib/api/auth'
-import { SignInParams } from '../../types/signInParams'
+
+import type { SignInParams } from '../../types/signInParams'
 
 export const SignIn: VFC = memo(() => {
   // 関連issue: [react-router-dom] - Export History type #50526 https://github.com/DefinitelyTyped/DefinitelyTyped/issues/50526

@@ -12,7 +12,8 @@ import { HeaderLayout } from './components/templates/HeaderLayout'
 import { AuthContext } from './context/AuthContext'
 import { getCurrentUser } from './lib/api/auth'
 import { theme } from './theme'
-import { User } from './types/user'
+
+import type { User } from './types/user'
 
 const App: VFC = () => {
   const [isLoaded, setIsLoaded] = useState<boolean>(false)

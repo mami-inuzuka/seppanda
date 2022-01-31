@@ -8,8 +8,9 @@ import Cookies from 'js-cookie'
 import { AuthContext } from '../../context/AuthContext'
 import { signUp } from '../../lib/api/auth'
 import { useToast } from '../../lib/toast'
-import { SignUpErrorResponse } from '../../types/SignUpErrorResponse'
-import { SignUpParams } from '../../types/signUpParams'
+
+import type { SignUpErrorResponse } from '../../types/SignUpErrorResponse'
+import type { SignUpParams } from '../../types/signUpParams'
 
 export const SignUp: VFC = memo(() => {
   // 関連issue: [react-router-dom] - Export History type #50526 https://github.com/DefinitelyTyped/DefinitelyTyped/issues/50526

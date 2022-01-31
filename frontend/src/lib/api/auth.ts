@@ -1,12 +1,13 @@
 import { AxiosPromise } from 'axios'
 import Cookies from 'js-cookie'
 
-import { CurrentUserResponse } from '../../types/currentUserResponse'
-import { SignInParams } from '../../types/signInParams'
-import { SignInResponse } from '../../types/signInResponse'
-import { SignUpParams } from '../../types/signUpParams'
-import { SignUpResponse } from '../../types/signUpResponse'
 import client from './client'
+
+import type { CurrentUserResponse } from '../../types/currentUserResponse'
+import type { SignInParams } from '../../types/signInParams'
+import type { SignInResponse } from '../../types/signInResponse'
+import type { SignUpParams } from '../../types/signUpParams'
+import type { SignUpResponse } from '../../types/signUpResponse'
 
 export const signUp = (params: SignUpParams, token?: string | null): AxiosPromise<SignUpResponse> =>
   client.post('/auth', params, { headers: { InvitationToken: token || '' } })

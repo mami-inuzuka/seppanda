@@ -2,7 +2,6 @@ import { memo, VFC } from 'react'
 
 import { Box, Center, Flex, Spacer, useDisclosure } from '@chakra-ui/react'
 
-import { Payment } from '../../types/payment'
 import { BasicAlert } from '../atoms/alert/BasicAlert'
 import { CircleAddButton } from '../atoms/button/CircleAddButton'
 import { DangerButton } from '../atoms/button/DangerButton'
@@ -11,6 +10,8 @@ import { CurrentStatusArea } from '../organisms/CurrentStatusArea'
 import { NoCloseButtonFullModal } from '../organisms/NoCloseButtonFullModal'
 import { PaymentList } from '../organisms/PaymentList'
 import { PaymentDataEntry } from './PaymentDataEntry'
+
+import type { Payment } from '../../types/payment'
 
 export const Home: VFC = memo(() => {
   const payments: Array<Payment> = [
