@@ -1,12 +1,13 @@
 import { useContext, useState, VFC, memo } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 
-import { Box, Button, Input, useToast } from '@chakra-ui/react'
+import { Box, Button, Input } from '@chakra-ui/react'
 import axios, { AxiosError } from 'axios'
 import Cookies from 'js-cookie'
 
 import { AuthContext } from '../../context/AuthContext'
 import { signUp } from '../../lib/api/auth'
+import { useToast } from '../../lib/toast'
 import { SignUpErrorResponse } from '../../types/SignUpErrorResponse'
 import { SignUpParams } from '../../types/signUpParams'
 
@@ -23,7 +24,7 @@ export const SignUp: VFC = memo(() => {
 
   const query = new URLSearchParams(search)
   const token = query.get('token')
-  const toast = useToast()
+  const { errorToast } = useToast()
 
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
@@ -60,32 +61,12 @@ export const SignUp: VFC = memo(() => {
       if (axios.isAxiosError(error)) {
         const serverError = error as AxiosError<SignUpErrorResponse>
         if (serverError.response?.data.errors.fullMessages) {
-          serverError.response?.data.errors.fullMessages.map((message) =>
-            toast({
-              title: message,
-              position: 'top',
-              status: 'error',
-              duration: 5000,
-              isClosable: true,
-            })
-          )
+          serverError.response?.data.errors.fullMessages.map((message) => errorToast(message))
         } else {
-          toast({
-            title: '登録に失敗しました',
-            position: 'top',
-            status: 'error',
-            duration: 5000,
-            isClosable: true,
-          })
+          errorToast('登録に失敗しました')
         }
       } else {
-        toast({
-          title: '登録に失敗しました',
-          position: 'top',
-          status: 'error',
-          duration: 5000,
-          isClosable: true,
-        })
+        errorToast('登録に失敗しました')
       }
     }
   }
