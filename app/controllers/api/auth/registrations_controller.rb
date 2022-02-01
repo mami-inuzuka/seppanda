@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
 class Api::Auth::RegistrationsController < DeviseTokenAuth::RegistrationsController
+  before_action :check_invitation_token, only: :create
+
   def create
     invitation_token = request.headers[:InvitationToken]
-    return render_create_error_token_invalid if invitation_token.present? && !Team.invitation_token_valid?(invitation_token)
     super do |resource|
       if invitation_token.present?
         team = Team.find_by(invitation_token: invitation_token)
@@ -31,6 +32,12 @@ class Api::Auth::RegistrationsController < DeviseTokenAuth::RegistrationsControl
         invitation_token: @invitation_token
       }
     end
+  end
+
+  def check_invitation_token
+    invitation_token = request.headers[:InvitationToken]
+    return if invitation_token.empty?
+    render_create_error_token_invalid if !Team.invitation_token_valid?(invitation_token)
   end
 
   def render_create_error_token_invalid
