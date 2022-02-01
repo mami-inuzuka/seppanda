@@ -7,7 +7,7 @@ class Api::Auth::RegistrationsController < DeviseTokenAuth::RegistrationsControl
     invitation_token = request.headers[:InvitationToken]
     super do |resource|
       if invitation_token.present?
-        team = Team.find_by(invitation_token: invitation_token)
+        team = Team.find_by!(invitation_token: invitation_token)
         resource.team_id = team.id
       else
         @invitation_token = SecureRandom.urlsafe_base64
