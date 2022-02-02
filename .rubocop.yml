@@ -19,6 +19,10 @@ Style/NumericLiterals:
   Exclude:
     - spec/**/*
 
+RSpec/MultipleExpectations:
+  Exclude:
+    - spec/**/*
+
 AllCops:
   Exclude:
     - "**/templates/**/*"
