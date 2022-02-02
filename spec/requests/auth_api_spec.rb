@@ -7,21 +7,21 @@ RSpec.describe 'AuthApi', type: :request do
     subject(:execute_post) { post api_user_registration_path, params: new_user_params, headers: headers }
 
     context 'without invitation_token' do
-      let(:headers) {
+      let(:headers) do
         {
           'Content-Type': 'application/json',
           Accept: 'application/json',
           InvitationToken: ''
         }
-      }
-      let(:new_user_params) {
+      end
+      let(:new_user_params) do
         {
           name: 'charlie',
           email: 'charlie@example.com',
           password: 'testtest',
           password_confirmation: 'testtest'
         }.to_json
-      }
+      end
 
       it 'creates a new user having a new team with invitation token' do
         expect { execute_post }.to change(User, :count).by(1)
@@ -38,21 +38,21 @@ RSpec.describe 'AuthApi', type: :request do
     context 'with invitation_token' do
       let!(:first_user) { create(:first_user) }
       let!(:invitation_token) { first_user.team.invitation_token }
-      let(:new_user_params) {
+      let(:new_user_params) do
         {
           name: 'bob',
           email: 'bob@example.com',
           password: 'testtest',
           password_confirmation: 'testtest'
         }.to_json
-      }
-      let(:headers) {
+      end
+      let(:headers) do
         {
           'Content-Type': 'application/json',
           Accept: 'application/json',
           InvitationToken: invitation_token
         }
-      }
+      end
 
       it 'creates a new user belongs to a team same with invitee' do
         expect { execute_post }.to change(User, :count).by(1)
