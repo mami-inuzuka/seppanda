@@ -20,6 +20,21 @@ RSpec.describe "AuthApi", type: :request do
         user = User.find_by(email: 'charlie@example.com')
         expect(user.team.invitation_token).not_to be_nil
       end
+
+      it "returns json including invitation token" do
+        headers = {
+          'Content-Type'=>'application/json',
+          'Accept'=> 'application/json',
+          'InvitationToken'=> ''
+        }
+        post api_user_registration_path, params: {
+          name: 'charlie',
+          email: 'charlie@example.com',
+          password: 'testtest',
+          password_confirmation: 'testtest'
+        }.to_json, headers: headers
+        expect(JSON.parse(response.body)['invitation_token']).not_to be_empty
+      end
     end
 
     context "with invitation_token" do
@@ -41,6 +56,23 @@ RSpec.describe "AuthApi", type: :request do
         }.to change(User, :count).by(1)
         second_user = User.find_by(email: 'bob@example.com')
         expect(first_user.team_id).to eq second_user.team_id
+      end
+
+      it "returns json including empty invitation token" do
+        first_user = create(:first_user)
+        invitation_token = first_user.team.invitation_token
+        headers = {
+          'Content-Type'=>'application/json',
+          'Accept'=> 'application/json',
+          'InvitationToken'=> invitation_token
+        }
+        post api_user_registration_path, params: {
+          name: 'bob',
+          email: 'bob@example.com',
+          password: 'testtest',
+          password_confirmation: 'testtest'
+        }.to_json, headers: headers
+        expect(JSON.parse(response.body)['invitation_token']).to be_empty
       end
     end
   end
