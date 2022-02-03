@@ -2,6 +2,6 @@
 
 FactoryBot.define do
   factory :team do
-    invitation_token { 1234567890 }
+    invitation_token { 'm4h09q7GyI2pT6gM14XCvg' }
   end
 end
