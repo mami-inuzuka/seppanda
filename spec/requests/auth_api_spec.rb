@@ -36,7 +36,7 @@ RSpec.describe 'AuthApi', type: :request do
     end
 
     context 'with invitation_token' do
-      let!(:host_user) { create(:host_user) }
+      let!(:host_user) { create(:user, :with_team) }
       let!(:invitation_token) { host_user.team.invitation_token }
       let(:new_user_params) do
         {
