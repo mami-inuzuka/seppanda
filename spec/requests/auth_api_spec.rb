@@ -26,12 +26,12 @@ RSpec.describe 'AuthApi', type: :request do
       example 'teamが新しく作られ、そのteamに所属するユーザーが作成される' do
         expect { execute_post }.to change(User, :count).by(1)
         user = User.find_by(email: 'charlie@example.com')
-        expect(user.team.invitation_token).not_to be_nil
+        expect(user.team.invitation_token).to be_present
       end
 
       example 'レスポンスにinvitation tokenが含まれる' do
         execute_post
-        expect(JSON.parse(response.body)['invitation_token']).not_to be_empty
+        expect(JSON.parse(response.body)['invitation_token']).to be_present
       end
     end
 
