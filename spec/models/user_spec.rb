@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   example '名前、メールアドレス、パスワードがあれば登録できる' do
-    user = build(:user, :with_team)
+    user = build(:user, :with_team, name: 'Alice', email: 'alice@example.com', password: 'testtest')
     expect(user).to be_valid
   end
 
