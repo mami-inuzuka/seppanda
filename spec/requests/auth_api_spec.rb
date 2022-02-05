@@ -54,14 +54,11 @@ RSpec.describe 'AuthApi', type: :request do
         }
       end
 
-      example '招待した人と同じteamに所属するユーザーが作られる' do
-        expect { execute_post }.to change(User, :count).by(1)
-        guest_user = User.find_by(email: 'bob@example.com')
-        expect(host_user.team_id).to eq guest_user.team_id
-      end
-
-      example 'レスポンスにinvitation tokenが含まれない' do
-        execute_post
+      example '新規登録すると新しいteamは作られず招待した人と同じteamに所属し、レスポンスにinvitation_tokenは含まれない' do
+        expect { execute_post }.to change(User, :count).by(1).and change(Team, :count).by(0)
+        guest_user = User.last
+        expect(guest_user.email).to eq 'bob@example.com'
+        expect(guest_user.team_id).to eq host_user.team_id
         expect(JSON.parse(response.body)['invitation_token']).to be_empty
       end
     end
