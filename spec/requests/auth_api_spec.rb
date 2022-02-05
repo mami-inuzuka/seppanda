@@ -39,7 +39,6 @@ RSpec.describe 'AuthApi', type: :request do
 
     context 'サインアップURLにinvitation_tokenが含まれる時' do
       let!(:host_user) { create(:user, :with_team) }
-      let!(:invitation_token) { host_user.team.invitation_token }
       let(:new_user_params) do
         {
           name: 'bob',
@@ -52,7 +51,7 @@ RSpec.describe 'AuthApi', type: :request do
         {
           'Content-Type' => 'application/json',
           'Accept' => 'application/json',
-          'InvitationToken' => invitation_token
+          'InvitationToken' => host_user.team.invitation_token
         }
       end
 
