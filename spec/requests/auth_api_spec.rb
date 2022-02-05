@@ -22,11 +22,7 @@ RSpec.describe 'AuthApi', type: :request do
       end
 
       example '新規登録するとユーザーに紐づくteamが新しく作られ、レスポンスにそのteamのinvitation_tokenが含まれる' do
-        expect {
-          post api_user_registration_path,
-          params: new_user_params,
-          headers: headers
-         }.to change(User, :count).by(1).and change(Team, :count).by(1)
+        expect { post api_user_registration_path, params: new_user_params, headers: headers }.to change(User, :count).by(1).and change(Team, :count).by(1)
         team = Team.last
         user = User.last
         expect(user.email).to eq 'charlie@example.com'
@@ -56,11 +52,7 @@ RSpec.describe 'AuthApi', type: :request do
       end
 
       example '新規登録すると新しいteamは作られず招待した人と同じteamに所属し、レスポンスにinvitation_tokenは含まれない' do
-        expect {
-          post api_user_registration_path,
-          params: new_user_params,
-          headers: headers
-         }.to change(User, :count).by(1).and change(Team, :count).by(0)
+        expect { post api_user_registration_path, params: new_user_params, headers: headers }.to change(User, :count).by(1).and change(Team, :count).by(0)
         guest_user = User.last
         expect(guest_user.email).to eq 'bob@example.com'
         expect(guest_user.team_id).to eq host_user.team_id
