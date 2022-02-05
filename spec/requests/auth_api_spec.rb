@@ -6,7 +6,7 @@ RSpec.describe 'AuthApi', type: :request do
   describe 'POST api_user_registration_path' do
     subject(:execute_post) { post api_user_registration_path, params: new_user_params, headers: headers }
 
-    context 'without invitation_token' do
+    context 'サインアップURLにinvitation_tokenが含まれない時' do
       let(:headers) do
         {
           'Content-Type': 'application/json',
@@ -23,19 +23,19 @@ RSpec.describe 'AuthApi', type: :request do
         }.to_json
       end
 
-      it 'creates a new user having a new team with invitation token' do
+      example 'teamが新しく作られ、そのteamに所属するユーザーが作成される' do
         expect { execute_post }.to change(User, :count).by(1)
         user = User.find_by(email: 'charlie@example.com')
         expect(user.team.invitation_token).not_to be_nil
       end
 
-      it 'returns json including invitation token' do
+      example 'レスポンスにinvitation tokenが含まれる' do
         execute_post
         expect(JSON.parse(response.body)['invitation_token']).not_to be_empty
       end
     end
 
-    context 'with invitation_token' do
+    context 'サインアップURLにinvitation_tokenが含まれる時' do
       let!(:host_user) { create(:user, :with_team) }
       let!(:invitation_token) { host_user.team.invitation_token }
       let(:new_user_params) do
@@ -54,13 +54,13 @@ RSpec.describe 'AuthApi', type: :request do
         }
       end
 
-      it 'creates a new user belongs to a team same with host user' do
+      example '招待した人と同じteamに所属するユーザーが作られる' do
         expect { execute_post }.to change(User, :count).by(1)
         guest_user = User.find_by(email: 'bob@example.com')
         expect(host_user.team_id).to eq guest_user.team_id
       end
 
-      it 'returns json including empty invitation token' do
+      example 'レスポンスにinvitation tokenが含まれない' do
         execute_post
         expect(JSON.parse(response.body)['invitation_token']).to be_empty
       end
