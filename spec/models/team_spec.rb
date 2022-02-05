@@ -8,6 +8,6 @@ RSpec.describe Team, type: :model do
     guest_user = build(:user)
     guest_user.team_id = host_user.team_id
     guest_user.save
-    expect(described_class.enabled?(host_user.team_id)).to be true
+    expect(Team.enabled?(host_user.team_id)).to be true
   end
 end
