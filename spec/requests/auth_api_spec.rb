@@ -9,9 +9,9 @@ RSpec.describe 'AuthApi', type: :request do
     context 'サインアップURLにinvitation_tokenが含まれない時' do
       let(:headers) do
         {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-          InvitationToken: ''
+          'Content-Type' => 'application/json',
+          'Accept' => 'application/json',
+          'InvitationToken' => ''
         }
       end
       let(:new_user_params) do
@@ -48,9 +48,9 @@ RSpec.describe 'AuthApi', type: :request do
       end
       let(:headers) do
         {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-          InvitationToken: invitation_token
+          'Content-Type' => 'application/json',
+          'Accept' => 'application/json',
+          'InvitationToken' => invitation_token
         }
       end
 
