@@ -36,8 +36,8 @@ RSpec.describe 'AuthApi', type: :request do
     end
 
     context 'with invitation_token' do
-      let!(:first_user) { create(:first_user) }
-      let!(:invitation_token) { first_user.team.invitation_token }
+      let!(:host_user) { create(:host_user) }
+      let!(:invitation_token) { host_user.team.invitation_token }
       let(:new_user_params) do
         {
           name: 'bob',
@@ -54,10 +54,10 @@ RSpec.describe 'AuthApi', type: :request do
         }
       end
 
-      it 'creates a new user belongs to a team same with invitee' do
+      it 'creates a new user belongs to a team same with host user' do
         expect { execute_post }.to change(User, :count).by(1)
-        second_user = User.find_by(email: 'bob@example.com')
-        expect(first_user.team_id).to eq second_user.team_id
+        guest_user = User.find_by(email: 'bob@example.com')
+        expect(host_user.team_id).to eq guest_user.team_id
       end
 
       it 'returns json including empty invitation token' do

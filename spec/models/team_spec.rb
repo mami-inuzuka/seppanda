@@ -4,10 +4,10 @@ require 'rails_helper'
 
 RSpec.describe Team, type: :model do
   it 'is available when including 2 users' do
-    first_user = create(:first_user)
-    second_user = build(:second_user)
-    second_user.team_id = first_user.team_id
-    second_user.save
-    expect(described_class.enabled?(first_user.team_id)).to be true
+    host_user = create(:host_user)
+    guest_user = build(:guest_user)
+    guest_user.team_id = host_user.team_id
+    guest_user.save
+    expect(described_class.enabled?(host_user.team_id)).to be true
   end
 end
