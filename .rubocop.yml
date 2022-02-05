@@ -23,6 +23,18 @@ RSpec/MultipleExpectations:
   Exclude:
     - spec/**/*
 
+RSpec/ContextWording:
+  Exclude:
+    - spec/**/*
+
+RSpec/DescribedClass:
+  Exclude:
+    - spec/**/*
+
+RSpec/ExampleLength:
+  Exclude:
+    - spec/**/*
+
 AllCops:
   Exclude:
     - "**/templates/**/*"
