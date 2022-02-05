@@ -10,10 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_02_034155) do
+ActiveRecord::Schema.define(version: 2022_02_05_075046) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "payments", force: :cascade do |t|
+    t.bigint "team_id", null: false
+    t.bigint "user_id", null: false
+    t.integer "amount", null: false
+    t.boolean "settled", default: false, null: false
+    t.date "settled_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["team_id"], name: "index_payments_on_team_id"
+    t.index ["user_id"], name: "index_payments_on_user_id"
+  end
 
   create_table "teams", force: :cascade do |t|
     t.string "invitation_token"
@@ -48,5 +60,7 @@ ActiveRecord::Schema.define(version: 2022_02_02_034155) do
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
 
+  add_foreign_key "payments", "teams"
+  add_foreign_key "payments", "users"
   add_foreign_key "users", "teams"
 end
