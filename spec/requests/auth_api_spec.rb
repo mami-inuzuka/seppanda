@@ -21,15 +21,17 @@ RSpec.describe 'AuthApi', type: :request do
         }.to_json
       end
 
-      example '新規登録するとユーザーに紐づくteamが新しく作られ、レスポンスにそのteamのinvitation_tokenが含まれる' do
-        expect { post api_user_registration_path, params: new_user_params, headers: headers }.to change(User, :count).by(1).and change(Team, :count).by(1)
-        team = Team.last
-        user = User.last
-        expect(user.email).to eq 'charlie@example.com'
-        expect(user.team_id).to eq team.id
-        expect(user.team.invitation_token).to be_present
-        expect(JSON.parse(response.body)['invitation_token']).to be_present
-        expect(JSON.parse(response.body)['invitation_token']).to eq user.team.invitation_token
+      context '正常系' do
+        example 'ユーザーに紐づくteamが新しく作られ、レスポンスにそのteamのinvitation_tokenが含まれる' do
+          expect { post api_user_registration_path, params: new_user_params, headers: headers }.to change(User, :count).by(1).and change(Team, :count).by(1)
+          team = Team.last
+          user = User.last
+          expect(user.email).to eq 'charlie@example.com'
+          expect(user.team_id).to eq team.id
+          expect(user.team.invitation_token).to be_present
+          expect(JSON.parse(response.body)['invitation_token']).to be_present
+          expect(JSON.parse(response.body)['invitation_token']).to eq user.team.invitation_token
+        end
       end
     end
 
@@ -51,12 +53,14 @@ RSpec.describe 'AuthApi', type: :request do
         }
       end
 
-      example '新規登録すると新しいteamは作られず招待した人と同じteamに所属し、レスポンスにinvitation_tokenは含まれない' do
-        expect { post api_user_registration_path, params: new_user_params, headers: headers }.to change(User, :count).by(1).and change(Team, :count).by(0)
-        guest_user = User.last
-        expect(guest_user.email).to eq 'bob@example.com'
-        expect(guest_user.team_id).to eq host_user.team_id
-        expect(JSON.parse(response.body)['invitation_token']).to be_empty
+      context '正常系' do
+        example '新しいteamは作られず招待した人と同じteamに所属し、レスポンスにinvitation_tokenは含まれない' do
+          expect { post api_user_registration_path, params: new_user_params, headers: headers }.to change(User, :count).by(1).and change(Team, :count).by(0)
+          guest_user = User.last
+          expect(guest_user.email).to eq 'bob@example.com'
+          expect(guest_user.team_id).to eq host_user.team_id
+          expect(JSON.parse(response.body)['invitation_token']).to be_empty
+        end
       end
     end
   end
