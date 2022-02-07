@@ -3,5 +3,5 @@ import { User } from './user'
 export type SignUpResponse = {
   data: User
   invitationToken: string
-  isTeamEnabled: boolean
+  isTeamCapacityReached: boolean
 }

@@ -65,4 +65,4 @@ en:
         other: "%{count} errors prohibited this %{resource} from being saved:"
   devise_token_auth:
     registrations:
-      token_invalid: "Your token is invalid"
+      token_invalid_or_team_capacity_reached: "Your token is invalid or the team reached capacity"

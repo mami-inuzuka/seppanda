@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Api::Auth::RegistrationsController < DeviseTokenAuth::RegistrationsController
-  before_action :check_invitation_token, only: :create
+  before_action :check_invitation_token_and_team_capacity, only: :create
 
   private
 
@@ -28,33 +28,34 @@ class Api::Auth::RegistrationsController < DeviseTokenAuth::RegistrationsControl
   end
 
   def render_create_success
-    if Team.enabled?(resource_data["team_id"])
+    if @resource.team.capacity_reached?
       render json: {
-        is_team_enabled: true,
+        is_team_capacity_reached: true,
         data:   resource_data,
         invitation_token: ''
       }
     else
       render json: {
-        is_team_enabled: false,
+        is_team_capacity_reached: false,
         data:   resource_data,
         invitation_token: @invitation_token
       }
     end
   end
 
-  def check_invitation_token
+  def check_invitation_token_and_team_capacity
     invitation_token = request.headers[:InvitationToken]
     return if invitation_token.empty?
-    render_create_error_token_invalid if !Team.invitation_token_valid?(invitation_token)
+    team = Team.find_by(invitation_token: invitation_token)
+    render_create_error_token_invalid_or_team_capacity_reached if !team.invitation_token_valid? || team.capacity_reached?
   end
 
-  def render_create_error_token_invalid
+  def render_create_error_token_invalid_or_team_capacity_reached
     render json: {
       status: 'error',
       data:   resource_data,
       errors: {
-        fullMessages: [I18n.t('devise_token_auth.registrations.token_invalid')]
+        fullMessages: [I18n.t('devise_token_auth.registrations.token_invalid_or_team_capacity_reached')]
       }
     }, status: 422
   end
