@@ -10,4 +10,9 @@ RSpec.describe Team, type: :model do
     guest_user.save
     expect(host_user.team.capacity_reached?).to be true
   end
+
+  example '1つのteamに含まれるユーザーが1人の時は満員ではない' do
+    host_user = create(:user, :with_team)
+    expect(host_user.team.capacity_reached?).to be false
+  end
 end
