@@ -18,7 +18,17 @@ export const useToast = () => {
     })
   }
 
+  const successToast = (title: string, description?: string) => {
+    toast({
+      ...defaultParams,
+      status: 'success',
+      title,
+      description,
+    })
+  }
+
   return {
     errorToast,
+    successToast,
   }
 }
