@@ -65,18 +65,20 @@ RSpec.describe 'AuthApi', type: :request do
 
       context '異常系' do
         example '存在しないinvitation_tokenの場合登録できない' do
-          expect { post api_user_registration_path, params: new_user_params, headers: {
-            'Content-Type' => 'application/json',
-            'Accept' => 'application/json',
-            'InvitationToken' => '123456789'
-          } }.to change(User, :count).by(0).and change(Team, :count).by(0)
+          expect do
+            post api_user_registration_path, params: new_user_params, headers: {
+              'Content-Type' => 'application/json',
+              'Accept' => 'application/json',
+              'InvitationToken' => '123456789'
+            }
+          end.to change(User, :count).by(0).and change(Team, :count).by(0)
           expect(JSON.parse(response.body)['errors']['fullMessages']).to include('Your token is invalid or the team reached capacity')
         end
 
         example 'teamに既に2人のユーザーが所属していたら登録できない' do
-          guest_user_1 = build(:user)
-          guest_user_1.team_id = host_user.team_id
-          guest_user_1.save
+          guest_user = build(:user)
+          guest_user.team_id = host_user.team_id
+          guest_user.save
           expect { post api_user_registration_path, params: new_user_params, headers: headers }.to change(User, :count).by(0).and change(Team, :count).by(0)
           expect(JSON.parse(response.body)['errors']['fullMessages']).to include('Your token is invalid or the team reached capacity')
         end
