@@ -20,6 +20,6 @@ class Api::PaymentsController < ApplicationController
   private
 
   def payment_params
-    params.require(:payment).permit(:amount)
+    params.permit(:amount)
   end
 end

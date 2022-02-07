@@ -23,7 +23,7 @@ RSpec.describe "Api::Payments", type: :request do
       end
 
       example '金額を登録することができる' do
-        params = { payment: { amount: 100 }}
+        params = { amount: 100 }
         expect { post api_payments_path, params: params, headers: auth_headers }.to change(Payment, :count).by(1)
         expect(response).to have_http_status(:ok)
       end
@@ -42,7 +42,7 @@ RSpec.describe "Api::Payments", type: :request do
       end
 
       example '金額を登録することができない' do
-        params = { payment: { amount: 100 }}
+        params = { amount: 100 }
         expect { post api_payments_path, params: params }.not_to change(Payment, :count)
         expect(response.status).to eq(401)
       end
