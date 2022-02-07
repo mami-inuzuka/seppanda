@@ -35,6 +35,10 @@ RSpec/ExampleLength:
   Exclude:
     - spec/**/*
 
+RSpec/NestedGroups:
+  Exclude:
+    - spec/**/*
+
 AllCops:
   Exclude:
     - "**/templates/**/*"
