@@ -10,7 +10,7 @@ class Team < ApplicationRecord
     users.length == MAX_TEAM_MENBER_NUMBER
   end
 
-  def invitation_token_valid?
+  def self.invitation_token_exists?(invitation_token)
     Team.exists?(invitation_token: invitation_token)
   end
 end
