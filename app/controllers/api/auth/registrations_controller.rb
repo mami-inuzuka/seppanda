@@ -28,15 +28,15 @@ class Api::Auth::RegistrationsController < DeviseTokenAuth::RegistrationsControl
   end
 
   def render_create_success
-    if Team.enabled?(resource_data["team_id"])
+    if @resource.team.capacity_reached?
       render json: {
-        is_team_enabled: true,
+        is_team_capacity_reached: true,
         data:   resource_data,
         invitation_token: ''
       }
     else
       render json: {
-        is_team_enabled: false,
+        is_team_capacity_reached: false,
         data:   resource_data,
         invitation_token: @invitation_token
       }
