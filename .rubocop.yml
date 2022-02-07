@@ -15,6 +15,30 @@ Metrics/ClassLength:
   Exclude:
     - spec/**/*
 
+Style/NumericLiterals:
+  Exclude:
+    - spec/**/*
+
+RSpec/MultipleExpectations:
+  Exclude:
+    - spec/**/*
+
+RSpec/ContextWording:
+  Exclude:
+    - spec/**/*
+
+RSpec/DescribedClass:
+  Exclude:
+    - spec/**/*
+
+RSpec/ExampleLength:
+  Exclude:
+    - spec/**/*
+
+RSpec/NestedGroups:
+  Exclude:
+    - spec/**/*
+
 AllCops:
   Exclude:
     - "**/templates/**/*"
