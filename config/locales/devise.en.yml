@@ -66,3 +66,4 @@ en:
   devise_token_auth:
     registrations:
       token_invalid: "Your token is invalid"
+      team_capacity_reached: "The team reached capacity"

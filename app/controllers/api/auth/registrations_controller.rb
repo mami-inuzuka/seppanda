@@ -2,6 +2,7 @@
 
 class Api::Auth::RegistrationsController < DeviseTokenAuth::RegistrationsController
   before_action :check_invitation_token, only: :create
+  before_action :check_team_capacity, only: :create
 
   private
 
@@ -49,12 +50,28 @@ class Api::Auth::RegistrationsController < DeviseTokenAuth::RegistrationsControl
     render_create_error_token_invalid if !Team.invitation_token_valid?(invitation_token)
   end
 
+  def check_team_capacity
+    invitation_token = request.headers[:InvitationToken]
+    return if invitation_token.empty?
+    render_create_error_team_capacity_reached if !Team.invitation_token_valid?(invitation_token).capacity_reached?
+  end
+
   def render_create_error_token_invalid
     render json: {
       status: 'error',
       data:   resource_data,
       errors: {
         fullMessages: [I18n.t('devise_token_auth.registrations.token_invalid')]
+      }
+    }, status: 422
+  end
+
+  def render_create_error_team_capacity_reached
+    render json: {
+      status: 'error',
+      data:   resource_data,
+      errors: {
+        fullMessages: [I18n.t('devise_token_auth.registrations.team_capacity_reached')]
       }
     }, status: 422
   end
