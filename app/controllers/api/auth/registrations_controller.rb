@@ -46,7 +46,8 @@ class Api::Auth::RegistrationsController < DeviseTokenAuth::RegistrationsControl
   def check_invitation_token_and_team_capacity
     invitation_token = request.headers[:InvitationToken]
     return if invitation_token.empty?
-    render_create_error_token_invalid if !Team.invitation_token_valid?(invitation_token) || Team.find_by(invitation_token: invitation_token).capacity_reached?
+    team = Team.find_by(invitation_token: invitation_token)
+    render_create_error_token_invalid if !team.invitation_token_valid? || team.capacity_reached?
   end
 
   def render_create_error_token_invalid
