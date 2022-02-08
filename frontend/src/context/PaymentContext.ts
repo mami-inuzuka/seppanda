@@ -1,6 +1,6 @@
 import { createContext } from 'react'
 
-import { Payment } from '../types/payment'
+import type { Payment } from '../types/payment'
 
 export type PaymentContextType = {
   inputNumber: string
