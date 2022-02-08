@@ -1,4 +1,4 @@
-import { memo, VFC } from 'react'
+import { memo, useEffect, useState, VFC } from 'react'
 
 import { Box, Center, Flex, Spacer, useDisclosure } from '@chakra-ui/react'
 
@@ -10,38 +10,39 @@ import { CurrentStatusArea } from 'components/organisms/CurrentStatusArea'
 import { NoCloseButtonFullModal } from 'components/organisms/NoCloseButtonFullModal'
 import { PaymentList } from 'components/organisms/PaymentList'
 import { PaymentDataEntry } from 'components/pages/PaymentDataEntry'
+import { getPayments } from 'lib/api/getPayments'
+import { useToast } from 'lib/toast'
 
 import type { Payment } from 'types/payment'
 
 export const Home: VFC = memo(() => {
-  const payments: Array<Payment> = [
-    {
-      id: 1,
-      amount: 600,
-      user: 'hanako',
-      created_at: '2022-01-15',
-    },
-    {
-      id: 2,
-      amount: 1000,
-      user: 'hanako',
-      created_at: '2022-01-15',
-    },
-    {
-      id: 3,
-      amount: 950,
-      user: 'taro',
-      created_at: '2022-01-15',
-    },
-    {
-      id: 4,
-      amount: 1280,
-      user: 'hanako',
-      created_at: '2022-01-13',
-    },
-  ]
+  const [paymentsList, setPaymentsList] = useState<Payment[] | undefined>()
+  const [isPaymentsLoaded, setIsPaymentsLoaded] = useState<boolean>(false)
+  const { errorToast } = useToast()
   const { isOpen: isOpenSettleModal, onOpen: onOpenSettleModal, onClose: onCloseSettleModal } = useDisclosure()
   const { isOpen: isOpenEntryModal, onOpen: onOpenEntryModal, onClose: onCloseEntryModal } = useDisclosure()
+
+  const handleGetPayments = async () => {
+    try {
+      const res = await getPayments()
+      if (res?.status === 200) {
+        console.log(res?.data)
+        setPaymentsList(res?.data?.payments)
+      } else {
+        errorToast('取得に失敗しました')
+      }
+    } catch {
+      errorToast('取得に失敗しました')
+    }
+    setIsPaymentsLoaded(true)
+  }
+
+  useEffect(() => {
+    handleGetPayments().catch((err) => {
+      console.log(err)
+    })
+  }, [])
+
   return (
     <>
       <BasicModal isOpen={isOpenSettleModal} onClose={onCloseSettleModal} size="xl" />
@@ -57,7 +58,7 @@ export const Home: VFC = memo(() => {
           <DangerButton>精算する</DangerButton>
         </Box>
       </Flex>
-      <PaymentList payments={payments} />
+      {isPaymentsLoaded && <PaymentList payments={paymentsList} />}
       <Box position="fixed" bottom="24px" w="100%">
         <Center w="100%" onClick={onOpenEntryModal}>
           <CircleAddButton />
