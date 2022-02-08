@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Payment, type: :model do
@@ -17,7 +19,7 @@ RSpec.describe Payment, type: :model do
     payment.team_id = user.team_id
     payment.valid?
     expect(payment).to be_invalid
-    expect(payment.errors[:amount]).to include("is not a number")
+    expect(payment.errors[:amount]).to include('is not a number')
   end
 
   example '金額の入力がないと登録できない' do
@@ -35,7 +37,7 @@ RSpec.describe Payment, type: :model do
     payment.team_id = user.team_id
     payment.valid?
     expect(payment).to be_invalid
-    expect(payment.errors[:amount]).to include("must be an integer")
+    expect(payment.errors[:amount]).to include('must be an integer')
   end
 
   example '0は登録できない' do
@@ -44,7 +46,7 @@ RSpec.describe Payment, type: :model do
     payment.team_id = user.team_id
     payment.valid?
     expect(payment).to be_invalid
-    expect(payment.errors[:amount]).to include("must be greater than 0")
+    expect(payment.errors[:amount]).to include('must be greater than 0')
   end
 
   example '1は登録できる' do
@@ -69,6 +71,6 @@ RSpec.describe Payment, type: :model do
     payment.team_id = user.team_id
     payment.valid?
     expect(payment).to be_invalid
-    expect(payment.errors[:amount]).to include("must be less than or equal to 9999999")
+    expect(payment.errors[:amount]).to include('must be less than or equal to 9999999')
   end
 end
