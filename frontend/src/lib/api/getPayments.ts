@@ -1,10 +1,11 @@
 import { AxiosPromise } from 'axios'
 import Cookies from 'js-cookie'
 
-import { GetPaymentsResponse } from '../../types/getPaymentsResponse'
 import client from './client'
 
-export const getPayments = (): AxiosPromise<GetPaymentsResponse[] | undefined> =>
+import type { Payment } from '../../types/payment'
+
+export const getPayments = (): AxiosPromise<Payment[] | null> =>
   client.get('/payments', {
     headers: {
       'access-token': Cookies.get('_access_token') || '',

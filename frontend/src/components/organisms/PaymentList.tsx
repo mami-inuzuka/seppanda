@@ -3,10 +3,10 @@ import { memo, VFC } from 'react'
 import { Table, Tbody, Td, Tr } from '@chakra-ui/react'
 import moment from 'moment'
 
-import type { GetPaymentsResponse } from 'types/getPaymentsResponse'
+import type { Payment } from 'types/payment'
 
 type Props = {
-  payments: GetPaymentsResponse[] | undefined
+  payments: Payment[] | null
 }
 
 export const PaymentList: VFC<Props> = memo((props) => {
