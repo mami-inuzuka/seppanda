@@ -10,13 +10,11 @@ import { PaymentContext } from 'context/PaymentContext'
 export const Calculator: VFC = () => {
   const { inputNumber, setInputNumber } = useContext(PaymentContext)
 
-  const handleNumberClick = (num: number) => (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const handleNumberClick = (num: number) => (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) =>
     setInputNumber(inputNumber + String(num))
-  }
 
-  const handleBackSpaceClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const handleBackSpaceClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) =>
     setInputNumber(inputNumber.slice(0, -1))
-  }
 
   const display = Number(inputNumber)
 
