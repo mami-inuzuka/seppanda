@@ -13,7 +13,7 @@ class Api::PaymentsController < ApplicationController
     payment.user_id = current_api_user.id
     payment.team_id = current_api_user.team_id
     if payment.save
-      render json: { status: :ok }
+      render json: payment, include: [:user]
     else
       render json: { status: :unprocessable_entity }
     end
