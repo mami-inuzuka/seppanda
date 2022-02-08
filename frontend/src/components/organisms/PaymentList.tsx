@@ -13,7 +13,7 @@ export const PaymentList: VFC<Props> = memo((props) => {
   return (
     <Table variant="simple">
       <Tbody>
-        {payments?.map((payment) => (
+        {payments.map((payment) => (
           <Tr key={payment.id}>
             <Td>{payment.createdAt}</Td>
             <Td>{payment.user.name}</Td>
