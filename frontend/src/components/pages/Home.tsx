@@ -17,9 +17,9 @@ import { useToast } from 'lib/toast'
 import type { Payment } from 'types/payment'
 
 export const Home: VFC = memo(() => {
+  const [inputNumber, setInputNumber] = useState<string>('0')
   const [paymentList, setPaymentList] = useState<Payment[] | null>(null)
   const [isPaymentsLoaded, setIsPaymentsLoaded] = useState<boolean>(false)
-  const [inputNumber, setInputNumber] = useState<string>('0')
   const { errorToast } = useToast()
   const { isOpen: isOpenSettleModal, onOpen: onOpenSettleModal, onClose: onCloseSettleModal } = useDisclosure()
   const { isOpen: isOpenEntryModal, onOpen: onOpenEntryModal, onClose: onCloseEntryModal } = useDisclosure()
