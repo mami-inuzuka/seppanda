@@ -1,6 +1,7 @@
 import { memo, VFC } from 'react'
 
 import { Table, Tbody, Td, Tr } from '@chakra-ui/react'
+import moment from 'moment'
 
 import type { Payment } from 'types/payment'
 
@@ -15,7 +16,7 @@ export const PaymentList: VFC<Props> = memo((props) => {
       <Tbody>
         {payments?.map((payment) => (
           <Tr key={payment.id}>
-            <Td>{payment.createdAt}</Td>
+            <Td>{moment(String(payment.createdAt)).format('YYYY-MM-DD')}</Td>
             <Td>{payment.user}</Td>
             <Td isNumeric>{payment.amount}</Td>
           </Tr>
