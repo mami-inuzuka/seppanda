@@ -2,9 +2,9 @@ import { VFC } from 'react'
 
 import { Flex, FormControl, FormLabel, Input } from '@chakra-ui/react'
 
-import { PrimaryButton } from '../atoms/button/PrimaryButton'
-import { SecondaryButton } from '../atoms/button/SecondaryButton'
-import { UserIcon } from '../atoms/icon/UserIcon'
+import { PrimaryButton } from 'components/atoms/button/PrimaryButton'
+import { SecondaryButton } from 'components/atoms/button/SecondaryButton'
+import { UserIcon } from 'components/atoms/icon/UserIcon'
 
 export const Setting: VFC = () => (
   <>

@@ -1,4 +1,4 @@
-import { User } from './user'
+import type { User } from 'types/user'
 
 export type CurrentUserResponse = {
   data: User

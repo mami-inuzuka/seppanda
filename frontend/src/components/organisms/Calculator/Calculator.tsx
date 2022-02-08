@@ -2,9 +2,9 @@ import { useState, VFC } from 'react'
 
 import { Box, Flex } from '@chakra-ui/react'
 
-import { CalculatorButton } from './Button'
-import { Display } from './Display'
-import { Keypad } from './Keypad'
+import { CalculatorButton } from 'components/organisms/Calculator/Button'
+import { Display } from 'components/organisms/Calculator/Display'
+import { Keypad } from 'components/organisms/Calculator/Keypad'
 
 export const Calculator: VFC = () => {
   const [inputNumber, setInputNumber] = useState('0')
