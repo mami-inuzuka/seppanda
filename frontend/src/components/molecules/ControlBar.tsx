@@ -2,8 +2,8 @@ import { VFC } from 'react'
 
 import { Flex } from '@chakra-ui/react'
 
-import { BarButton } from '../atoms/button/BarButton'
-import { CloseButton } from '../atoms/button/CloseButton'
+import { BarButton } from 'components/atoms/button/BarButton'
+import { CloseButton } from 'components/atoms/button/CloseButton'
 
 type Props = {
   onClickClose: () => void

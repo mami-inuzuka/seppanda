@@ -2,8 +2,8 @@ import { VFC } from 'react'
 
 import { Box, Flex } from '@chakra-ui/react'
 
-import { ControlBar } from '../molecules/ControlBar'
-import { Calculator } from '../organisms/Calculator/Calculator'
+import { ControlBar } from 'components/molecules/ControlBar'
+import { Calculator } from 'components/organisms/Calculator/Calculator'
 
 type Props = {
   onClickClose: () => void
