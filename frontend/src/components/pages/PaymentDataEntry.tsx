@@ -1,4 +1,4 @@
-import { useState, VFC } from 'react'
+import { useContext, VFC } from 'react'
 
 import { Box, Flex } from '@chakra-ui/react'
 
@@ -16,8 +16,9 @@ type Props = {
 
 export const PaymentDataEntry: VFC<Props> = (props) => {
   const { onClickClose } = props
+  const { inputNumber, paymentList, setPaymentList } = useContext(PaymentContext)
   const { errorToast, successToast } = useToast()
-  const [inputNumber, setInputNumber] = useState<string>('0')
+
   const handleSubmitAmount = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
 
@@ -28,6 +29,11 @@ export const PaymentDataEntry: VFC<Props> = (props) => {
     try {
       const res = await postPayment(params)
       if (res.status === 200) {
+        if (paymentList != null) {
+          setPaymentList([res.data, ...paymentList])
+        } else {
+          setPaymentList([res.data])
+        }
         onClickClose()
         successToast('支払い情報を登録しました')
       } else {
@@ -38,14 +44,11 @@ export const PaymentDataEntry: VFC<Props> = (props) => {
     }
   }
   return (
-    // eslint-disable-next-line react/jsx-no-constructed-context-values
-    <PaymentContext.Provider value={{ inputNumber, setInputNumber }}>
-      <Flex flexDirection="column" h="100vh">
-        <Box flex="1">
-          <Calculator />
-        </Box>
-        <ControlBar onClickClose={onClickClose} onClickBarButton={handleSubmitAmount} />
-      </Flex>
-    </PaymentContext.Provider>
+    <Flex flexDirection="column" h="100vh">
+      <Box flex="1">
+        <Calculator />
+      </Box>
+      <ControlBar onClickClose={onClickClose} onClickBarButton={handleSubmitAmount} />
+    </Flex>
   )
 }

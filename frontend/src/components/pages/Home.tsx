@@ -10,14 +10,16 @@ import { CurrentStatusArea } from 'components/organisms/CurrentStatusArea'
 import { NoCloseButtonFullModal } from 'components/organisms/NoCloseButtonFullModal'
 import { PaymentList } from 'components/organisms/PaymentList'
 import { PaymentDataEntry } from 'components/pages/PaymentDataEntry'
+import { PaymentContext } from 'context/PaymentContext'
 import { getPayments } from 'lib/api/getPayments'
 import { useToast } from 'lib/toast'
 
-import type { GetPaymentsResponse } from 'types/getPaymentsResponse'
+import type { Payment } from 'types/payment'
 
 export const Home: VFC = memo(() => {
-  const [paymentsList, setPaymentsList] = useState<GetPaymentsResponse[] | undefined>()
+  const [paymentList, setPaymentList] = useState<Payment[] | null>(null)
   const [isPaymentsLoaded, setIsPaymentsLoaded] = useState<boolean>(false)
+  const [inputNumber, setInputNumber] = useState<string>('0')
   const { errorToast } = useToast()
   const { isOpen: isOpenSettleModal, onOpen: onOpenSettleModal, onClose: onCloseSettleModal } = useDisclosure()
   const { isOpen: isOpenEntryModal, onOpen: onOpenEntryModal, onClose: onCloseEntryModal } = useDisclosure()
@@ -26,7 +28,7 @@ export const Home: VFC = memo(() => {
     try {
       const res = await getPayments()
       if (res?.status === 200) {
-        setPaymentsList(res?.data)
+        setPaymentList(res?.data)
       } else {
         errorToast('取得に失敗しました')
       }
@@ -44,7 +46,8 @@ export const Home: VFC = memo(() => {
   }, [])
 
   return (
-    <>
+    // eslint-disable-next-line react/jsx-no-constructed-context-values
+    <PaymentContext.Provider value={{ inputNumber, setInputNumber, paymentList, setPaymentList }}>
       <BasicModal isOpen={isOpenSettleModal} onClose={onCloseSettleModal} size="xl" />
       <NoCloseButtonFullModal isOpen={isOpenEntryModal} onClose={onCloseEntryModal}>
         <PaymentDataEntry onClickClose={onCloseEntryModal} />
@@ -58,12 +61,12 @@ export const Home: VFC = memo(() => {
           <DangerButton>精算する</DangerButton>
         </Box>
       </Flex>
-      {isPaymentsLoaded && <PaymentList payments={paymentsList} />}
+      {isPaymentsLoaded && <PaymentList payments={paymentList} />}
       <Box position="fixed" bottom="24px" w="100%">
         <Center w="100%" onClick={onOpenEntryModal}>
           <CircleAddButton />
         </Center>
       </Box>
-    </>
+    </PaymentContext.Provider>
   )
 })
