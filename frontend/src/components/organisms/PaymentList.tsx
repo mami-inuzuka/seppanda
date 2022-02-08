@@ -3,10 +3,10 @@ import { memo, VFC } from 'react'
 import { Table, Tbody, Td, Tr } from '@chakra-ui/react'
 import moment from 'moment'
 
-import type { Payment } from 'types/payment'
+import type { GetPaymentsResponse } from 'types/getPaymentsResponse'
 
 type Props = {
-  payments: Payment[] | undefined
+  payments: GetPaymentsResponse[] | undefined
 }
 
 export const PaymentList: VFC<Props> = memo((props) => {
@@ -17,7 +17,7 @@ export const PaymentList: VFC<Props> = memo((props) => {
         {payments?.map((payment) => (
           <Tr key={payment.id}>
             <Td>{moment(String(payment.createdAt)).format('YYYY-MM-DD')}</Td>
-            <Td>{payment.user}</Td>
+            <Td>{payment.user.name}</Td>
             <Td isNumeric>{payment.amount}</Td>
           </Tr>
         ))}

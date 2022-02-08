@@ -1,5 +1,13 @@
-import { Payment } from './payment'
+import type { User } from './user'
 
 export type GetPaymentsResponse = {
-  payments: Payment[] | undefined
+  amount: number
+  createdAt: string
+  id: number
+  settled: boolean
+  settledAt: null
+  teamId: number
+  updatedAt: string
+  user: User
+  userId: number
 }
