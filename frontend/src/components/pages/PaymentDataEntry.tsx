@@ -29,11 +29,8 @@ export const PaymentDataEntry: VFC<Props> = (props) => {
     try {
       const res = await postPayment(params)
       if (res.status === 200) {
-        if (paymentList != null) {
-          setPaymentList([res.data, ...paymentList])
-        } else {
-          setPaymentList([res.data])
-        }
+        const newPaymentList = paymentList != null ? [res.data, ...paymentList] : [res.data]
+        setPaymentList(newPaymentList)
         onClickClose()
         successToast('支払い情報を登録しました')
       } else {
