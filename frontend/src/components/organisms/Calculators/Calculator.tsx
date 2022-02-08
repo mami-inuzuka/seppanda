@@ -2,9 +2,9 @@ import { useContext, VFC } from 'react'
 
 import { Box, Flex } from '@chakra-ui/react'
 
-import { CalculatorButton } from 'components/organisms/Calculator/Button'
-import { Display } from 'components/organisms/Calculator/Display'
-import { Keypad } from 'components/organisms/Calculator/Keypad'
+import { CalculatorButton } from 'components/organisms/Calculators/Button'
+import { Display } from 'components/organisms/Calculators/Display'
+import { Keypad } from 'components/organisms/Calculators/Keypad'
 import { PaymentContext } from 'context/PaymentContext'
 
 export const Calculator: VFC = () => {
