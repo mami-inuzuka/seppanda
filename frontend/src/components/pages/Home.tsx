@@ -13,10 +13,10 @@ import { PaymentDataEntry } from 'components/pages/PaymentDataEntry'
 import { getPayments } from 'lib/api/getPayments'
 import { useToast } from 'lib/toast'
 
-import type { Payment } from 'types/payment'
+import type { GetPaymentsResponse } from 'types/getPaymentsResponse'
 
 export const Home: VFC = memo(() => {
-  const [paymentsList, setPaymentsList] = useState<Payment[] | undefined>()
+  const [paymentsList, setPaymentsList] = useState<GetPaymentsResponse[] | undefined>()
   const [isPaymentsLoaded, setIsPaymentsLoaded] = useState<boolean>(false)
   const { errorToast } = useToast()
   const { isOpen: isOpenSettleModal, onOpen: onOpenSettleModal, onClose: onCloseSettleModal } = useDisclosure()
@@ -26,8 +26,7 @@ export const Home: VFC = memo(() => {
     try {
       const res = await getPayments()
       if (res?.status === 200) {
-        console.log(res?.data)
-        setPaymentsList(res?.data?.payments)
+        setPaymentsList(res?.data)
       } else {
         errorToast('取得に失敗しました')
       }

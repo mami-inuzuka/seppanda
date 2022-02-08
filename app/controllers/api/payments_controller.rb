@@ -3,7 +3,7 @@ class Api::PaymentsController < ApplicationController
 
   def index
     payments = Payment.where(team_id: current_api_user.team_id).order(created_at: :desc)
-    render json: { status: :ok, payments: payments }
+    render json: payments, include: [:user]
   end
 
   def create
