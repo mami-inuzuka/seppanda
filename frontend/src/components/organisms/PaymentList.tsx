@@ -1,6 +1,7 @@
 import { memo, VFC } from 'react'
 
 import { Table, Tbody, Td, Tr } from '@chakra-ui/react'
+import { DateTime } from 'luxon'
 
 import type { Payment } from 'types/payment'
 
@@ -15,7 +16,7 @@ export const PaymentList: VFC<Props> = memo((props) => {
       <Tbody>
         {payments.map((payment) => (
           <Tr key={payment.id}>
-            <Td>{payment.createdAt}</Td>
+            <Td>{DateTime.fromISO(payment.createdAt).toISODate()}</Td>
             <Td>{payment.user.name}</Td>
             <Td isNumeric>{payment.amount}</Td>
           </Tr>
