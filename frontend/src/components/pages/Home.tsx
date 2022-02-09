@@ -9,7 +9,7 @@ import { BasicModal } from 'components/organisms/BasicModal'
 import { CurrentStatusArea } from 'components/organisms/CurrentStatusArea'
 import { NoCloseButtonFullModal } from 'components/organisms/NoCloseButtonFullModal'
 import { PaymentList } from 'components/organisms/PaymentList'
-import { PaymentDataEntry } from 'components/pages/PaymentDataEntry'
+import { NewPaymentEntry } from 'components/pages/NewPaymentEntry'
 import { PaymentContext } from 'context/PaymentContext'
 import { getPayments } from 'lib/api/getPayments'
 import { useToast } from 'lib/toast'
@@ -50,7 +50,7 @@ export const Home: VFC = memo(() => {
     <PaymentContext.Provider value={{ inputNumber, setInputNumber, paymentList, setPaymentList }}>
       <BasicModal isOpen={isOpenSettleModal} onClose={onCloseSettleModal} size="xl" />
       <NoCloseButtonFullModal isOpen={isOpenEntryModal} onClose={onCloseEntryModal}>
-        <PaymentDataEntry onClickClose={onCloseEntryModal} />
+        <NewPaymentEntry onClickClose={onCloseEntryModal} />
       </NoCloseButtonFullModal>
       <BasicAlert />
       <CurrentStatusArea />

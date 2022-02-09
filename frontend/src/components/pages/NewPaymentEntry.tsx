@@ -1,8 +1,8 @@
 import { useContext, VFC } from 'react'
 
-import { Box, Flex } from '@chakra-ui/react'
+import { Box, CloseButton, Flex } from '@chakra-ui/react'
 
-import { ControlBar } from 'components/molecules/ControlBar'
+import { BarButton } from 'components/atoms/button/BarButton'
 import { Calculator } from 'components/organisms/Calculators/Calculator'
 import { PaymentContext } from 'context/PaymentContext'
 import { postPayment } from 'lib/api/postPayment'
@@ -14,7 +14,7 @@ type Props = {
   onClickClose: () => void
 }
 
-export const PaymentDataEntry: VFC<Props> = (props) => {
+export const NewPaymentEntry: VFC<Props> = (props) => {
   const { onClickClose } = props
   const { inputNumber, setInputNumber, paymentList, setPaymentList } = useContext(PaymentContext)
   const { errorToast, successToast } = useToast()
@@ -41,12 +41,18 @@ export const PaymentDataEntry: VFC<Props> = (props) => {
       errorToast('登録に失敗しました')
     }
   }
+
   return (
     <Flex flexDirection="column" h="100vh">
       <Box flex="1">
         <Calculator />
       </Box>
-      <ControlBar onClickClose={onClickClose} onClickBarButton={handleSubmitAmount} disabled={inputNumber === '0'} />
+      <Flex h="64px">
+        <CloseButton onClick={onClickClose} />
+        <BarButton onClickButton={handleSubmitAmount} disabled={inputNumber === '0'}>
+          登録する
+        </BarButton>
+      </Flex>
     </Flex>
   )
 }
