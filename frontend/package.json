@@ -15,6 +15,9 @@
     "@types/node": "^16.11.19",
     "@types/react": "^17.0.38",
     "@types/react-dom": "^17.0.11",
+    "@types/axios": "^0.14.0",
+    "@types/js-cookie": "^3.0.1",
+    "@types/react-router-dom": "^5.3.2",
     "axios": "^0.24.0",
     "axios-case-converter": "^0.9.0",
     "eslint-config-airbnb": "^19.0.4",
@@ -60,9 +63,6 @@
     ]
   },
   "devDependencies": {
-    "@types/axios": "^0.14.0",
-    "@types/js-cookie": "^3.0.1",
-    "@types/react-router-dom": "^5.3.2",
     "@typescript-eslint/eslint-plugin": "^5.9.1",
     "@typescript-eslint/parser": "^5.9.1",
     "eslint": "^8.6.0",
