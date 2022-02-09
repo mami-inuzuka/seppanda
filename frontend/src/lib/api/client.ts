@@ -8,7 +8,8 @@ const options = {
 
 const client = applyCaseMiddleware(
   axios.create({
-    baseURL: `${String(process.env.REACT_APP_API_URL)}/api`,
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+    baseURL: `${process.env.REACT_APP_API_URL}/api`,
   }),
   options
 )
