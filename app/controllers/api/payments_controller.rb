@@ -4,7 +4,7 @@ class Api::PaymentsController < ApplicationController
   before_action :authenticate_api_user!
 
   def index
-    payments = Payment.where(team_id: current_api_user.team_id).order(created_at: :desc)
+    payments = Payment.includes(:user).where(team_id: current_api_user.team_id).order(created_at: :desc)
     render json: payments, include: [:user]
   end
 
