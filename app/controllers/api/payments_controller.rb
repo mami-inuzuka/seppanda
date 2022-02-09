@@ -2,7 +2,7 @@
 
 class Api::PaymentsController < ApplicationController
   before_action :authenticate_api_user!
-  before_action :set_payment, only: %i[destroy]
+  before_action :set_payment, only: %i[destroy, update]
 
   def index
     payments = Payment.includes(:user).where(team_id: current_api_user.team_id).order(created_at: :desc)
@@ -23,6 +23,14 @@ class Api::PaymentsController < ApplicationController
   def destroy
     @payment.destroy!
     render json: { status: :ok }
+  end
+
+  def update
+    if @payment.update!(payment_params)
+      render json: @payment, include: [:user]
+    else
+      render json: { status: :unprocessable_entity }
+    end
   end
 
   private
