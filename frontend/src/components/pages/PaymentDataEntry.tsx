@@ -16,7 +16,7 @@ type Props = {
 
 export const PaymentDataEntry: VFC<Props> = (props) => {
   const { onClickClose } = props
-  const { inputNumber, paymentList, setPaymentList } = useContext(PaymentContext)
+  const { inputNumber, setInputNumber, paymentList, setPaymentList } = useContext(PaymentContext)
   const { errorToast, successToast } = useToast()
 
   const handleSubmitAmount = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -33,6 +33,7 @@ export const PaymentDataEntry: VFC<Props> = (props) => {
         setPaymentList(newPaymentList)
         onClickClose()
         successToast('支払い情報を登録しました')
+        setInputNumber('0')
       } else {
         errorToast('登録に失敗しました')
       }
