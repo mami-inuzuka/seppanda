@@ -39,8 +39,7 @@ export const ShowPaymentEntry: VFC = () => {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
       const res = await updatePayment(params, payment.id)
       if (res.status === 200) {
-        const newPaymentList = paymentList != null ? [res.data, ...paymentList] : [res.data]
-        setPaymentList(newPaymentList)
+        setPaymentList(paymentList)
         onClickClose()
         successToast('支払い情報を更新しました')
         setInputNumber('0')
