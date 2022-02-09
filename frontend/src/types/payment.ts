@@ -1,6 +1,13 @@
+import { User } from './user'
+
 export type Payment = {
-  id: number
   amount: number
-  user: string
-  created_at: string
+  createdAt: string
+  id: number
+  settled: boolean
+  settledAt: null
+  teamId: number
+  updatedAt: string
+  user: User
+  userId: number
 }

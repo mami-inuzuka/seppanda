@@ -1,20 +1,20 @@
-import { useState, VFC } from 'react'
+import { useContext, VFC } from 'react'
 
 import { Box, Flex } from '@chakra-ui/react'
 
-import { CalculatorButton } from 'components/organisms/Calculator/Button'
-import { Display } from 'components/organisms/Calculator/Display'
-import { Keypad } from 'components/organisms/Calculator/Keypad'
+import { CalculatorButton } from 'components/organisms/Calculators/Button'
+import { Display } from 'components/organisms/Calculators/Display'
+import { Keypad } from 'components/organisms/Calculators/Keypad'
+import { PaymentContext } from 'context/PaymentContext'
 
 export const Calculator: VFC = () => {
-  const [inputNumber, setInputNumber] = useState('0')
+  const { inputNumber, setInputNumber } = useContext(PaymentContext)
 
   const handleNumberClick = (num: number) => (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) =>
     setInputNumber(inputNumber + String(num))
 
-  const handleBackSpaceClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const handleBackSpaceClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) =>
     setInputNumber(inputNumber.slice(0, -1))
-  }
 
   const display = Number(inputNumber)
 
