@@ -1,4 +1,5 @@
 import { useContext, VFC } from 'react'
+import { useHistory } from 'react-router-dom'
 
 import { Box, CloseButton, Flex } from '@chakra-ui/react'
 
@@ -10,14 +11,14 @@ import { useToast } from 'lib/toast'
 
 import type { PostPaymentParams } from 'types/postPaymentParams'
 
-type Props = {
-  onClickClose: () => void
-}
-
-export const NewPaymentEntry: VFC<Props> = (props) => {
-  const { onClickClose } = props
+export const NewPaymentEntry: VFC = () => {
   const { inputNumber, setInputNumber, paymentList, setPaymentList } = useContext(PaymentContext)
   const { errorToast, successToast } = useToast()
+  const history = useHistory()
+
+  const onClickClose = () => {
+    history.push('/')
+  }
 
   const handleSubmitAmount = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
@@ -48,7 +49,7 @@ export const NewPaymentEntry: VFC<Props> = (props) => {
         <Calculator />
       </Box>
       <Flex h="64px">
-        <CloseButton onClick={onClickClose} />
+        <CloseButton onClick={() => onClickClose()} />
         <BarButton onClickButton={handleSubmitAmount} disabled={inputNumber === '0'}>
           登録する
         </BarButton>
