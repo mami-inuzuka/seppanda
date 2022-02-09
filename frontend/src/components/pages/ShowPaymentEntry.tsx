@@ -79,11 +79,11 @@ export const ShowPaymentEntry: VFC = () => {
       </Box>
       <Flex h="64px">
         <CloseButton onClick={() => onClickClose()} />
-        <BarButton onClickButton={handleDeletePayment} disabled={false} bg="red.500">
-          削除する
-        </BarButton>
         <BarButton onClickButton={handleUpdateAmount} disabled={inputNumber === '0'} bg="green.500">
           更新する
+        </BarButton>
+        <BarButton onClickButton={handleDeletePayment} disabled={false} bg="red.500">
+          削除する
         </BarButton>
       </Flex>
     </Flex>
