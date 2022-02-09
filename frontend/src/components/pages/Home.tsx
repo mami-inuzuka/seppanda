@@ -10,7 +10,7 @@ import { BasicModal } from 'components/organisms/BasicModal'
 import { CurrentStatusArea } from 'components/organisms/CurrentStatusArea'
 import { PaymentList } from 'components/organisms/PaymentList'
 import { PaymentContext } from 'context/PaymentContext'
-import { getPayments } from 'lib/api/getPayments'
+import { getPayments } from 'lib/api/payment'
 import { useToast } from 'lib/toast'
 
 export const Home: VFC = memo(() => {

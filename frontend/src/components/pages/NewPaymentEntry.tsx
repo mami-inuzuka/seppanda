@@ -6,7 +6,7 @@ import { Box, CloseButton, Flex } from '@chakra-ui/react'
 import { BarButton } from 'components/atoms/button/BarButton'
 import { Calculator } from 'components/organisms/Calculators/Calculator'
 import { PaymentContext } from 'context/PaymentContext'
-import { postPayment } from 'lib/api/postPayment'
+import { postPayment } from 'lib/api/payment'
 import { useToast } from 'lib/toast'
 
 import type { PostPaymentParams } from 'types/postPaymentParams'
