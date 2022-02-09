@@ -74,9 +74,9 @@ const App: VFC = () => {
                 <PrivateRoute>
                   <Route
                     path="/"
-                    render={({ match: { url } }) => (
+                    render={() => (
                       <Switch>
-                        <Route exact path={url} component={Home} />
+                        <Route exact path="/" component={Home} />
                         <Route path="/payments/new" component={NewPaymentEntry} />
                         <Route path="/payments/:id" component={ShowPaymentEntry} />
                       </Switch>
