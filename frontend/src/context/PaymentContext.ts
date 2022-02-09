@@ -7,6 +7,8 @@ export type PaymentContextType = {
   setInputNumber: React.Dispatch<React.SetStateAction<string>>
   paymentList: Payment[] | null
   setPaymentList: React.Dispatch<React.SetStateAction<Payment[] | null>>
+  isPaymentsLoaded: boolean
+  setIsPaymentsLoaded: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export const PaymentContext = createContext<PaymentContextType>({
@@ -16,6 +18,10 @@ export const PaymentContext = createContext<PaymentContextType>({
   },
   paymentList: null,
   setPaymentList: () => {
+    throw new Error('PaymentContext not avaliable')
+  },
+  isPaymentsLoaded: false,
+  setIsPaymentsLoaded: () => {
     throw new Error('PaymentContext not avaliable')
   },
 })
