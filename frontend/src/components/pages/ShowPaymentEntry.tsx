@@ -28,6 +28,23 @@ export const ShowPaymentEntry: VFC = () => {
     history.push('/')
   }
 
+  const handleDeletePayment = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+
+    try {
+      const res = await deletePayment(payment.id)
+      if (res.status === 200) {
+        setPaymentList(paymentList)
+        onClickClose()
+        successToast('支払い情報を削除しました')
+      } else {
+        errorToast('削除に失敗しました')
+      }
+    } catch {
+      errorToast('削除に失敗しました')
+    }
+  }
+
   const handleUpdateAmount = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
 
@@ -62,6 +79,9 @@ export const ShowPaymentEntry: VFC = () => {
       </Box>
       <Flex h="64px">
         <CloseButton onClick={() => onClickClose()} />
+        <BarButton onClickButton={handleDeletePayment} disabled={false} bg="red.500">
+          削除する
+        </BarButton>
         <BarButton onClickButton={handleUpdateAmount} disabled={inputNumber === '0'} bg="green.500">
           更新する
         </BarButton>
