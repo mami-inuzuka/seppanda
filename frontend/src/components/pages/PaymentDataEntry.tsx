@@ -46,7 +46,7 @@ export const PaymentDataEntry: VFC<Props> = (props) => {
       <Box flex="1">
         <Calculator />
       </Box>
-      <ControlBar onClickClose={onClickClose} onClickBarButton={handleSubmitAmount} />
+      <ControlBar onClickClose={onClickClose} onClickBarButton={handleSubmitAmount} disabled={inputNumber === '0'} />
     </Flex>
   )
 }

@@ -8,14 +8,17 @@ import { CloseButton } from 'components/atoms/button/CloseButton'
 type Props = {
   onClickClose: () => void
   onClickBarButton: (e: React.MouseEvent<HTMLButtonElement>) => Promise<void> | (() => void)
+  disabled: boolean
 }
 
 export const ControlBar: VFC<Props> = (props) => {
-  const { onClickClose, onClickBarButton } = props
+  const { onClickClose, onClickBarButton, disabled = false } = props
   return (
     <Flex h="64px">
       <CloseButton onClick={onClickClose} />
-      <BarButton onClickButton={onClickBarButton}>登録する</BarButton>
+      <BarButton onClickButton={onClickBarButton} disabled={disabled}>
+        登録する
+      </BarButton>
     </Flex>
   )
 }
