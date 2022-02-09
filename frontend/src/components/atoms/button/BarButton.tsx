@@ -6,16 +6,17 @@ type Props = {
   children: ReactNode
   onClickButton: (e: React.MouseEvent<HTMLButtonElement>) => Promise<void> | (() => void)
   disabled: boolean
+  bg: string
 }
 
 export const BarButton: FC<Props> = (props) => {
-  const { children, onClickButton, disabled = false } = props
+  const { children, onClickButton, disabled = false, bg } = props
   return (
     <Button
       type="submit"
       onClick={onClickButton}
       disabled={disabled}
-      bg="green.500"
+      bg={bg}
       color="white"
       borderRadius="0"
       flex="1"

@@ -50,7 +50,7 @@ export const NewPaymentEntry: VFC = () => {
       </Box>
       <Flex h="64px">
         <CloseButton onClick={() => onClickClose()} />
-        <BarButton onClickButton={handleSubmitAmount} disabled={inputNumber === '0'}>
+        <BarButton onClickButton={handleSubmitAmount} disabled={inputNumber === '0'} bg="green.500">
           登録する
         </BarButton>
       </Flex>

@@ -6,7 +6,7 @@ import { Box, CloseButton, Flex } from '@chakra-ui/react'
 import { BarButton } from 'components/atoms/button/BarButton'
 import { Calculator } from 'components/organisms/Calculators/Calculator'
 import { PaymentContext } from 'context/PaymentContext'
-import { updatePayment } from 'lib/api/payment'
+import { deletePayment, updatePayment } from 'lib/api/payment'
 import { useToast } from 'lib/toast'
 
 import type { Payment } from 'types/payment'
@@ -36,7 +36,6 @@ export const ShowPaymentEntry: VFC = () => {
     }
 
     try {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
       const res = await updatePayment(params, payment.id)
       if (res.status === 200) {
         setPaymentList(paymentList)
@@ -63,7 +62,7 @@ export const ShowPaymentEntry: VFC = () => {
       </Box>
       <Flex h="64px">
         <CloseButton onClick={() => onClickClose()} />
-        <BarButton onClickButton={handleUpdateAmount} disabled={inputNumber === '0'}>
+        <BarButton onClickButton={handleUpdateAmount} disabled={inputNumber === '0'} bg="green.500">
           更新する
         </BarButton>
       </Flex>
