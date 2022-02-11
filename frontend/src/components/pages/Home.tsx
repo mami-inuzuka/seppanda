@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom'
 
 import { Box, Center, Flex, Spacer, useDisclosure } from '@chakra-ui/react'
 
-import { BasicAlert } from 'components/atoms/alert/BasicAlert'
+import { DebtAlert } from 'components/atoms/alert/debtAlert'
+import { NoRefundAlert } from 'components/atoms/alert/NoRefundAlert'
 import { CircleAddButton } from 'components/atoms/button/CircleAddButton'
 import { DangerButton } from 'components/atoms/button/DangerButton'
 import { BasicModal } from 'components/organisms/BasicModal'
@@ -16,7 +17,7 @@ import { getTeamStatus } from 'lib/api/team'
 import { useToast } from 'lib/toast'
 
 export const Home: VFC = memo(() => {
-  const { paymentList, setPaymentList, isPaymentsLoaded, setIsPaymentsLoaded, setTeamStatus } =
+  const { paymentList, setPaymentList, isPaymentsLoaded, setIsPaymentsLoaded, teamStatus, setTeamStatus } =
     useContext(PaymentContext)
   const { currentUser } = useContext(AuthContext)
   const { errorToast } = useToast()
@@ -63,7 +64,9 @@ export const Home: VFC = memo(() => {
   return (
     <>
       <BasicModal isOpen={isOpenSettleModal} onClose={onCloseSettleModal} size="xl" />
-      <BasicAlert />
+      {teamStatus.refundAmount === 0 && <NoRefundAlert />}
+      {currentUser?.id === teamStatus.smallestPaymentUser?.id && <DebtAlert />}
+
       <CurrentStatusArea />
       <Flex bgColor="gray.50" p={2} align="center">
         支払い履歴
