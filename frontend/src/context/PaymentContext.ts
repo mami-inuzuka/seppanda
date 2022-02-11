@@ -1,6 +1,7 @@
 import { createContext } from 'react'
 
 import type { Payment } from 'types/payment'
+import type { TeamStatus } from 'types/teamStatus'
 
 export type PaymentContextType = {
   inputNumber: string
@@ -9,6 +10,8 @@ export type PaymentContextType = {
   setPaymentList: React.Dispatch<React.SetStateAction<Payment[] | null>>
   isPaymentsLoaded: boolean
   setIsPaymentsLoaded: React.Dispatch<React.SetStateAction<boolean>>
+  teamStatus: TeamStatus
+  setTeamStatus: React.Dispatch<React.SetStateAction<TeamStatus>>
 }
 
 export const PaymentContext = createContext<PaymentContextType>({
@@ -22,6 +25,14 @@ export const PaymentContext = createContext<PaymentContextType>({
   },
   isPaymentsLoaded: false,
   setIsPaymentsLoaded: () => {
+    throw new Error('PaymentContext not avaliable')
+  },
+  teamStatus: {
+    refundAmount: 0,
+    largestPaymentUser: null,
+    smallestPaymentUser: null,
+  },
+  setTeamStatus: () => {
     throw new Error('PaymentContext not avaliable')
   },
 })
