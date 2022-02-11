@@ -1,6 +1,6 @@
 import type { User } from './user'
 
-export type TeamStatusResponse = {
+export type TeamStatus = {
   refundAmount: number
   largestPaymentUser: User
   smallestPaymentUser: User

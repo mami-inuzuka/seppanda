@@ -2,9 +2,9 @@ import { AxiosPromise } from 'axios'
 import Cookies from 'js-cookie'
 
 import client from 'lib/api/client'
-import { TeamStatusResponse } from 'types/teamStatusResponse'
+import { TeamStatus } from 'types/teamStatus'
 
-export const getTeamStatus = (id: number): AxiosPromise<TeamStatusResponse[] | null> =>
+export const getTeamStatus = (id: number): AxiosPromise<TeamStatus[] | null> =>
   client.get(`/teams/${id}`, {
     headers: {
       'access-token': Cookies.get('_access_token') || '',
