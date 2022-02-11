@@ -9,12 +9,16 @@ import { DangerButton } from 'components/atoms/button/DangerButton'
 import { BasicModal } from 'components/organisms/BasicModal'
 import { CurrentStatusArea } from 'components/organisms/CurrentStatusArea'
 import { PaymentList } from 'components/organisms/PaymentList'
+import { AuthContext } from 'context/AuthContext'
 import { PaymentContext } from 'context/PaymentContext'
 import { getPayments } from 'lib/api/payment'
+import { getTeamStatus } from 'lib/api/team'
 import { useToast } from 'lib/toast'
 
 export const Home: VFC = memo(() => {
-  const { paymentList, setPaymentList, isPaymentsLoaded, setIsPaymentsLoaded } = useContext(PaymentContext)
+  const { paymentList, setPaymentList, isPaymentsLoaded, setIsPaymentsLoaded, setTeamStatus } =
+    useContext(PaymentContext)
+  const { currentUser } = useContext(AuthContext)
   const { errorToast } = useToast()
   const { isOpen: isOpenSettleModal, onOpen: onOpenSettleModal, onClose: onCloseSettleModal } = useDisclosure()
 
@@ -32,8 +36,25 @@ export const Home: VFC = memo(() => {
     setIsPaymentsLoaded(true)
   }
 
+  const handleGetTeamStatus = async () => {
+    try {
+      const res = await getTeamStatus(currentUser!.teamId)
+      if (res?.status === 200) {
+        setTeamStatus(res?.data)
+      } else {
+        errorToast('取得に失敗しました')
+      }
+    } catch {
+      errorToast('取得に失敗しました')
+    }
+    setIsPaymentsLoaded(true)
+  }
+
   useEffect(() => {
     handleGetPayments().catch((err) => {
+      console.log(err)
+    })
+    handleGetTeamStatus().catch((err) => {
       console.log(err)
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps

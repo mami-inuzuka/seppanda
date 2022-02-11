@@ -17,6 +17,7 @@ import { getCurrentUser } from 'lib/api/auth'
 import { theme } from 'theme'
 
 import type { Payment } from 'types/payment'
+import type { TeamStatus } from 'types/teamStatus'
 import type { User } from 'types/user'
 
 const App: VFC = () => {
@@ -25,6 +26,11 @@ const App: VFC = () => {
   const [currentUser, setCurrentUser] = useState<User | null>(null)
   const [inputNumber, setInputNumber] = useState<string>('0')
   const [paymentList, setPaymentList] = useState<Payment[] | null>(null)
+  const [teamStatus, setTeamStatus] = useState<TeamStatus>({
+    refundAmount: 0,
+    largestPaymentUser: null,
+    smallestPaymentUser: null,
+  })
   const [isPaymentsLoaded, setIsPaymentsLoaded] = useState<boolean>(false)
 
   // サインイン状態をチェック
@@ -69,6 +75,8 @@ const App: VFC = () => {
                   setPaymentList,
                   isPaymentsLoaded,
                   setIsPaymentsLoaded,
+                  teamStatus,
+                  setTeamStatus,
                 }}
               >
                 <PrivateRoute>
