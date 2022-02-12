@@ -43,6 +43,10 @@ RSpec/MultipleMemoizedHelpers:
   Exclude:
     - spec/**/*
 
+RSpec/LetSetup:
+  Exclude:
+    - spec/models/team_spec.rb
+
 AllCops:
   Exclude:
     - "**/templates/**/*"
