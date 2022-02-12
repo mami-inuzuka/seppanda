@@ -24,19 +24,15 @@ class Team < ApplicationRecord
   end
 
   def user_id_and_total_amount
-    users.map { |user| [user.id, user.payments.sum(:amount)]}.to_h
+    users.map { |user| [user.id, user.payments.sum(:amount)] }.to_h
   end
 
   def largest_payment_user
-    if user_id_and_total_amount.values.max != user_id_and_total_amount.values.min
-      User.find(user_id_and_total_amount.key(user_id_and_total_amount.values.max))
-    end
+    User.find(user_id_and_total_amount.key(user_id_and_total_amount.values.max)) if user_id_and_total_amount.values.max != user_id_and_total_amount.values.min
   end
 
   def smallest_payment_user
-    if user_id_and_total_amount.values.max != user_id_and_total_amount.values.min
-      User.find(user_id_and_total_amount.key(user_id_and_total_amount.values.min))
-    end
+    User.find(user_id_and_total_amount.key(user_id_and_total_amount.values.min)) if user_id_and_total_amount.values.max != user_id_and_total_amount.values.min
   end
 
   def capacity_reached?

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Api::TeamsController < ApplicationController
   before_action :authenticate_api_user!
 

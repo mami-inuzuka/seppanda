@@ -20,17 +20,17 @@ RSpec.describe Team, type: :model do
 
   context '支払い金額' do
     context '片方が多く支払っている場合' do
-      let!(:user_1) { create(:user, :with_team) }
-      let!(:user_2) { create(:user, team_id: user_1.team_id) }
-      let!(:team) { user_1.team }
-      let!(:payment_1) { user_1.payments.create(amount: 800, team_id: team.id) }
-      let!(:payment_2) { user_1.payments.create(amount: 200, team_id: team.id) }
-      let!(:payment_3) { user_2.payments.create(amount: 100, team_id: team.id) }
-      let!(:payment_4) { user_2.payments.create(amount: 300, team_id: team.id) }
+      let!(:user1) { create(:user, :with_team) }
+      let!(:user2) { create(:user, team_id: user1.team_id) }
+      let!(:team) { user1.team }
+      let!(:payment1) { user1.payments.create(amount: 800, team_id: team.id) }
+      let!(:payment2) { user1.payments.create(amount: 200, team_id: team.id) }
+      let!(:payment3) { user2.payments.create(amount: 100, team_id: team.id) }
+      let!(:payment4) { user2.payments.create(amount: 300, team_id: team.id) }
 
       example '各ユーザーの合計金額' do
-        expect(user_1.payments.sum(:amount)).to eq 1000
-        expect(user_2.payments.sum(:amount)).to eq 400
+        expect(user1.payments.sum(:amount)).to eq 1000
+        expect(user2.payments.sum(:amount)).to eq 400
       end
 
       example 'teamの合計金額' do
@@ -46,22 +46,22 @@ RSpec.describe Team, type: :model do
       end
 
       example '一人当たり支払うべき金額より多く支払っているユーザー' do
-        expect(team.largest_payment_user).to eq user_1
+        expect(team.largest_payment_user).to eq user1
       end
 
       example '一人当たり支払うべき金額より支払いが少ないユーザー' do
-        expect(team.smallest_payment_user).to eq user_2
+        expect(team.smallest_payment_user).to eq user2
       end
     end
 
     context '2人の支払い金額が同じ場合' do
-      let!(:user_1) { create(:user, :with_team) }
-      let!(:user_2) { create(:user, team_id: user_1.team_id) }
-      let!(:team) { user_1.team }
-      let!(:payment_1) { user_1.payments.create(amount: 800, team_id: team.id) }
-      let!(:payment_2) { user_1.payments.create(amount: 200, team_id: team.id) }
-      let!(:payment_3) { user_2.payments.create(amount: 500, team_id: team.id) }
-      let!(:payment_4) { user_2.payments.create(amount: 500, team_id: team.id) }
+      let!(:user1) { create(:user, :with_team) }
+      let!(:user2) { create(:user, team_id: user1.team_id) }
+      let!(:team) { user1.team }
+      let!(:payment1) { user1.payments.create(amount: 800, team_id: team.id) }
+      let!(:payment2) { user1.payments.create(amount: 200, team_id: team.id) }
+      let!(:payment3) { user2.payments.create(amount: 500, team_id: team.id) }
+      let!(:payment4) { user2.payments.create(amount: 500, team_id: team.id) }
 
       example '1人あたり支払うべき金額' do
         expect(team.payment_per_person).to eq 1000
@@ -81,13 +81,13 @@ RSpec.describe Team, type: :model do
     end
 
     context '支払い金額が0の場合' do
-      let!(:user_1) { create(:user, :with_team) }
-      let!(:user_2) { create(:user, team_id: user_1.team_id) }
-      let!(:team) { user_1.team }
+      let!(:user1) { create(:user, :with_team) }
+      let!(:user2) { create(:user, team_id: user1.team_id) }
+      let!(:team) { user1.team }
 
       example '各ユーザーの合計金額' do
-        expect(user_1.payments.sum(:amount)).to eq 0
-        expect(user_2.payments.sum(:amount)).to eq 0
+        expect(user1.payments.sum(:amount)).to eq 0
+        expect(user2.payments.sum(:amount)).to eq 0
       end
 
       example 'teamの合計金額' do
