@@ -39,6 +39,10 @@ RSpec/NestedGroups:
   Exclude:
     - spec/**/*
 
+RSpec/MultipleMemoizedHelpers:
+  Exclude:
+    - spec/**/*
+
 AllCops:
   Exclude:
     - "**/templates/**/*"
