@@ -24,7 +24,6 @@ const App: VFC = () => {
   const [isLoaded, setIsLoaded] = useState<boolean>(false)
   const [isSignedIn, setIsSignedIn] = useState<boolean>(false)
   const [currentUser, setCurrentUser] = useState<User | null>(null)
-  const [inputNumber, setInputNumber] = useState<string>('0')
   const [paymentList, setPaymentList] = useState<Payment[] | null>(null)
   const [teamStatus, setTeamStatus] = useState<TeamStatus>({
     refundAmount: 0,
@@ -33,6 +32,9 @@ const App: VFC = () => {
     isTeamCapacityReached: false,
   })
   const [isPaymentsLoaded, setIsPaymentsLoaded] = useState<boolean>(false)
+  const [amount, setAmount] = useState<number>(0)
+  const [detail, setDetail] = useState<string>('')
+  const [paidAt, setPaidAt] = useState<string>('')
 
   // サインイン状態をチェック
   const handleGetCurrentUser = async () => {
@@ -70,8 +72,12 @@ const App: VFC = () => {
               <PaymentContext.Provider
                 // eslint-disable-next-line react/jsx-no-constructed-context-values
                 value={{
-                  inputNumber,
-                  setInputNumber,
+                  amount,
+                  setAmount,
+                  detail,
+                  setDetail,
+                  paidAt,
+                  setPaidAt,
                   paymentList,
                   setPaymentList,
                   isPaymentsLoaded,
