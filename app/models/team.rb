@@ -11,12 +11,12 @@ class Team < ApplicationRecord
     payments.sum(:amount)
   end
 
-  def payment_per_person
+  def split_bill_amount
     total_amount / MAX_TEAM_MENBER_NUMBER
   end
 
   def refund_amount
-    (users.first.payments.sum(:amount) - payment_per_person).abs
+    (users.first.payments.sum(:amount) - split_bill_amount).abs
   end
 
   def user_id_and_total_amount

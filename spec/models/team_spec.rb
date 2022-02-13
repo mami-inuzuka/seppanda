@@ -38,7 +38,7 @@ RSpec.describe Team, type: :model do
       end
 
       example '1人あたり支払うべき金額' do
-        expect(team.payment_per_person).to eq 700
+        expect(team.split_bill_amount).to eq 700
       end
 
       example '返金額' do
@@ -64,7 +64,7 @@ RSpec.describe Team, type: :model do
       let!(:payment4) { user2.payments.create(amount: 500, team_id: team.id) }
 
       example '1人あたり支払うべき金額' do
-        expect(team.payment_per_person).to eq 1000
+        expect(team.split_bill_amount).to eq 1000
       end
 
       example '返金額' do
@@ -95,7 +95,7 @@ RSpec.describe Team, type: :model do
       end
 
       example '1人あたり支払うべき金額' do
-        expect(team.payment_per_person).to eq 0
+        expect(team.split_bill_amount).to eq 0
       end
 
       example '返金額' do
