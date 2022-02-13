@@ -2,6 +2,7 @@ import { useEffect, useState, VFC } from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
 import { ChakraProvider } from '@chakra-ui/react'
+import { DateTime } from 'luxon'
 
 import { Home } from 'components/pages/Home'
 import { Invitation } from 'components/pages/Invitation'
@@ -34,7 +35,7 @@ const App: VFC = () => {
   const [isPaymentsLoaded, setIsPaymentsLoaded] = useState<boolean>(false)
   const [amount, setAmount] = useState<number>(0)
   const [detail, setDetail] = useState<string>('')
-  const [paidAt, setPaidAt] = useState<string>('')
+  const [paidAt, setPaidAt] = useState<string>(DateTime.local().toFormat('yyyy-MM-dd'))
 
   // サインイン状態をチェック
   const handleGetCurrentUser = async () => {
