@@ -7,6 +7,7 @@ import { DateTime } from 'luxon'
 import { Home } from 'components/pages/Home'
 import { Invitation } from 'components/pages/Invitation'
 import { NewPaymentEntry } from 'components/pages/NewPaymentEntry'
+import { Setting } from 'components/pages/Setting'
 import { ShowPaymentEntry } from 'components/pages/ShowPaymentEntry'
 import { SignIn } from 'components/pages/SignIn'
 import { SignUp } from 'components/pages/SignUp'
@@ -95,6 +96,7 @@ const App: VFC = () => {
                         <Route exact path="/" component={Home} />
                         <Route path="/payments/new" component={NewPaymentEntry} />
                         <Route path="/payments/:id" component={ShowPaymentEntry} />
+                        <Route path="/setting" component={Setting} />
                       </Switch>
                     )}
                   />
