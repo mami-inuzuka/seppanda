@@ -22,7 +22,7 @@ RSpec.describe 'Api::Teams', type: :request do
     example 'チームの状況を取得することができる' do
       5.times do |n|
         current_user.payments.create(amount: 100 * (n + 1), team_id: current_user.team_id)
-      end # 1500
+      end
       get api_team_path(current_user.team_id), headers: auth_headers
       expect(response).to have_http_status(:ok)
       expect(response.body).to eq(
@@ -30,7 +30,7 @@ RSpec.describe 'Api::Teams', type: :request do
           refund_amount: team.refund_amount,
           largest_payment_user: team.largest_payment_user,
           smallest_payment_user: team.smallest_payment_user,
-          is_team_capacity_reached: team.capacity_reached?,
+          is_team_capacity_reached: team.capacity_reached?
         }.to_json
       )
     end
