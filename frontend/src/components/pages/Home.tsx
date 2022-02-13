@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom'
 import { Box, Center, Flex, Spacer, useDisclosure } from '@chakra-ui/react'
 
 import { DebtAlert } from 'components/atoms/alert/debtAlert'
-import { NoRefundAlert } from 'components/atoms/alert/NoRefundAlert'
 import { CircleAddButton } from 'components/atoms/button/CircleAddButton'
 import { DangerButton } from 'components/atoms/button/DangerButton'
 import { BasicModal } from 'components/organisms/BasicModal'
