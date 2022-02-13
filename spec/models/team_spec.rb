@@ -11,7 +11,7 @@ RSpec.describe Team, type: :model do
     end
 
     example '1つのteamに含まれるユーザーが2人の時満員となる' do
-      guest_user = create(:user, team_id: host_user.team_id)
+      create(:user, team_id: host_user.team_id)
       expect(host_user.team.capacity_reached?).to be true
     end
   end
