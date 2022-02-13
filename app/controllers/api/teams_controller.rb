@@ -8,7 +8,8 @@ class Api::TeamsController < ApplicationController
     render json: {
       refund_amount: team.refund_amount,
       largest_payment_user: team.largest_payment_user,
-      smallest_payment_user: team.smallest_payment_user
+      smallest_payment_user: team.smallest_payment_user,
+      is_team_capacity_reached: team.capacity_reached?
     }
   end
 end

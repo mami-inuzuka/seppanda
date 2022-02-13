@@ -30,6 +30,7 @@ const App: VFC = () => {
     refundAmount: 0,
     largestPaymentUser: null,
     smallestPaymentUser: null,
+    isTeamCapacityReached: false,
   })
   const [isPaymentsLoaded, setIsPaymentsLoaded] = useState<boolean>(false)
 
