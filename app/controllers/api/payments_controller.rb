@@ -36,7 +36,7 @@ class Api::PaymentsController < ApplicationController
   private
 
   def payment_params
-    params.permit(:amount)
+    params.permit(:amount, :detail, :paid_at)
   end
 
   def set_payment
