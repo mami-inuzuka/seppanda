@@ -3,9 +3,9 @@
 require 'rails_helper'
 
 RSpec.describe 'Api::Teams', type: :request do
-  let!(:current_user) { create(:user, :with_team) }
-  let!(:other_user) { create(:user, team_id: current_user.team_id) }
-  let!(:team) { Team.find(current_user.team_id) }
+  let(:current_user) { create(:user, :with_team) }
+  let(:other_user) { create(:user, team_id: current_user.team_id) }
+  let(:team) { Team.find(current_user.team_id) }
 
   def auth_headers
     post new_api_user_session_path, params: { email: current_user.email, password: current_user.password }
