@@ -11,13 +11,14 @@ export const CurrentStatusArea: VFC = memo(() => {
 
   return (
     <Box p={16}>
-      {currentUser?.id === teamStatus.largestPaymentUser?.id && (
+      {teamStatus.refundAmount === 0 && '現在貸し借りはありません'}
+      {teamStatus.refundAmount !== 0 && currentUser?.id === teamStatus.largestPaymentUser?.id && (
         <Center>{teamStatus.smallestPaymentUser?.name}に返してもらう金額</Center>
       )}
-      {currentUser?.id !== teamStatus.largestPaymentUser?.id && (
+      {teamStatus.refundAmount !== 0 && currentUser?.id !== teamStatus.largestPaymentUser?.id && (
         <Center>{teamStatus.largestPaymentUser?.name}に返す金額</Center>
       )}
-      <Center>{teamStatus.refundAmount}</Center>
+      <Center>{teamStatus.refundAmount !== 0 && teamStatus.refundAmount}</Center>
     </Box>
   )
 })

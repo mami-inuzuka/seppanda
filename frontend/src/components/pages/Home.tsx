@@ -10,6 +10,7 @@ import { DangerButton } from 'components/atoms/button/DangerButton'
 import { BasicModal } from 'components/organisms/BasicModal'
 import { CurrentStatusArea } from 'components/organisms/CurrentStatusArea'
 import { PaymentList } from 'components/organisms/PaymentList'
+import { UnavailableStatusArea } from 'components/organisms/UnavailableStatusArea'
 import { AuthContext } from 'context/AuthContext'
 import { PaymentContext } from 'context/PaymentContext'
 import { getPayments } from 'lib/api/payment'
@@ -64,10 +65,8 @@ export const Home: VFC = memo(() => {
   return (
     <>
       <BasicModal isOpen={isOpenSettleModal} onClose={onCloseSettleModal} size="xl" />
-      {teamStatus.refundAmount === 0 && <NoRefundAlert />}
       {currentUser?.id === teamStatus.smallestPaymentUser?.id && <DebtAlert />}
-
-      <CurrentStatusArea />
+      {teamStatus.isTeamCapacityReached ? <CurrentStatusArea /> : <UnavailableStatusArea />}
       <Flex bgColor="gray.50" p={2} align="center">
         支払い履歴
         <Spacer />
