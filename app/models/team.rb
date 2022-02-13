@@ -19,10 +19,6 @@ class Team < ApplicationRecord
     (users.first.payments.sum(:amount) - split_bill_amount).abs
   end
 
-  def user_id_and_total_amount
-    users.map { |user| [user.id, user.payments.sum(:amount)] }.to_h
-  end
-
   def largest_payment_user
     User.find(user_id_and_total_amount.key(user_id_and_total_amount.values.max)) unless refund_amount == 0
   end
@@ -37,5 +33,11 @@ class Team < ApplicationRecord
 
   def self.invitation_token_exists?(invitation_token)
     Team.exists?(invitation_token: invitation_token)
+  end
+
+  private
+
+  def user_id_and_total_amount
+    users.map { |user| [user.id, user.payments.sum(:amount)] }.to_h
   end
 end
