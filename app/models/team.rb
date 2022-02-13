@@ -16,11 +16,7 @@ class Team < ApplicationRecord
   end
 
   def refund_amount
-    if user_id_and_total_amount.values.max == user_id_and_total_amount.values.min
-      0
-    else
-      largest_payment_user.payments.sum(:amount) - payment_per_person
-    end
+    (users.first.payments.sum(:amount) - payment_per_person).abs
   end
 
   def user_id_and_total_amount
