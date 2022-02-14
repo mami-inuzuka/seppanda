@@ -4,22 +4,14 @@ class Api::Auth::RegistrationsController < DeviseTokenAuth::RegistrationsControl
   before_action :check_invitation_token_and_team_capacity, only: :create
 
   def update
-    if @resource
-      if params[:avatar]
+    super do |resource|
+      if params[:avatar].present?
         blob = ActiveStorage::Blob.create_and_upload!(
           io: StringIO.new(decode(params[:avatar][:data]) + "\n"),
           filename: params[:avatar][:name]
         )
-        @resource.avatar.attach(blob)
+        resource.avatar.attach(blob)
       end
-      if @resource.send(resource_update_method, account_update_params)
-        yield @resource if block_given?
-        render_update_success
-      else
-        render_update_error
-      end
-    else
-      render_update_error_user_not_found
     end
   end
 
