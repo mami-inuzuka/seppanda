@@ -1,4 +1,4 @@
-import { useContext, VFC } from 'react'
+import { useContext, useEffect, VFC } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 
 import { CloseButton, Flex, FormControl, FormLabel, Input } from '@chakra-ui/react'
@@ -75,6 +75,13 @@ export const ShowPaymentEntry: VFC = () => {
       errorToast('更新に失敗しました')
     }
   }
+
+  useEffect(() => {
+    setInputAmount(String(payment.amount))
+    setInputDetail(payment.detail)
+    setInputPaidAt(payment.paidAt)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <Flex flexDirection="column" h="100vh">
