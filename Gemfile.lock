@@ -321,6 +321,7 @@ DEPENDENCIES
   image_processing (~> 1.2)
   jbuilder (~> 2.7)
   listen (~> 3.3)
+  mini_magick
   pg
   puma (~> 5.0)
   rack-cors
