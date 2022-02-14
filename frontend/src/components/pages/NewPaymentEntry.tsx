@@ -35,6 +35,7 @@ export const NewPaymentEntry: VFC = () => {
         const newPaymentList = paymentList != null ? [res.data, ...paymentList] : [res.data]
         setPaymentList(newPaymentList)
         setAmount('')
+        setDetail('')
         onClickClose()
         successToast('支払い情報を登録しました')
       } else {
