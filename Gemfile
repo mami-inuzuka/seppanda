@@ -9,6 +9,7 @@ gem 'bootsnap', '>= 1.4.4', require: false
 gem 'devise'
 gem 'devise_token_auth'
 gem 'google-cloud-storage'
+gem 'image_processing', '~> 1.2'
 gem 'pg'
 gem 'puma', '~> 5.0'
 gem 'rack-cors'
