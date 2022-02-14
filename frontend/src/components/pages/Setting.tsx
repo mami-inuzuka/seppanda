@@ -14,6 +14,7 @@ export const Setting: VFC = () => {
   const { currentUser } = useContext(AuthContext)
   const [inputName, setInputName] = useState<string>('')
   const [inputEmail, setInputEmail] = useState<string>('')
+  const [inputAvatar, setInputAvatar] = useState({ data: '', name: '' })
   const { errorToast, successToast } = useToast()
 
   const handleUpdateUser = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -22,6 +23,7 @@ export const Setting: VFC = () => {
     const params: UpdateUserParams = {
       name: inputName,
       email: inputEmail,
+      avatar: inputAvatar,
     }
 
     try {
@@ -36,6 +38,20 @@ export const Setting: VFC = () => {
     }
   }
 
+  const handleImageSelect = (e: React.FormEvent) => {
+    const reader = new FileReader()
+    const { files } = e.target as HTMLInputElement
+    if (files) {
+      reader.onload = () => {
+        setInputAvatar({
+          data: reader.result as string,
+          name: files[0] ? files[0].name : 'unknownfile',
+        })
+      }
+      reader.readAsDataURL(files[0])
+    }
+  }
+
   useEffect(() => {
     if (currentUser) {
       setInputName(currentUser.name)
@@ -47,6 +63,7 @@ export const Setting: VFC = () => {
     <>
       <Flex>
         <UserIcon src="https://bit.ly/dan-abramov" alt="Dan Abramov" />
+        <Input type="file" name="avatar" accept="image/png, image/jpeg" onChange={handleImageSelect} />
         <SecondaryButton>画像を選択</SecondaryButton>
       </Flex>
       <FormControl>

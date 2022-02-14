@@ -3,6 +3,26 @@
 class Api::Auth::RegistrationsController < DeviseTokenAuth::RegistrationsController
   before_action :check_invitation_token_and_team_capacity, only: :create
 
+  def update
+    if @resource
+      if params[:avatar]
+        blob = ActiveStorage::Blob.create_and_upload!(
+          io: StringIO.new(decode(params[:avatar][:data]) + "\n"),
+          filename: params[:avatar][:name]
+        )
+        @resource.avatar.attach(blob)
+      end
+      if @resource.send(resource_update_method, account_update_params)
+        yield @resource if block_given?
+        render_update_success
+      else
+        render_update_error
+      end
+    else
+      render_update_error_user_not_found
+    end
+  end
+
   private
 
   def build_resource
@@ -61,5 +81,13 @@ class Api::Auth::RegistrationsController < DeviseTokenAuth::RegistrationsControl
 
   def sign_up_params
     params.permit(:email, :password, :password_confirmation, :name, :team_id)
+  end
+
+  def account_update_params
+    params.permit(:email, :name, :avatar)
+  end
+
+  def decode(str)
+    Base64.decode64(str.split(',').last)
   end
 end
