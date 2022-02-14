@@ -4,8 +4,8 @@ import type { Payment } from 'types/payment'
 import type { TeamStatus } from 'types/teamStatus'
 
 export type PaymentContextType = {
-  amount: number
-  setAmount: React.Dispatch<React.SetStateAction<number>>
+  amount: string
+  setAmount: React.Dispatch<React.SetStateAction<string>>
   detail: string
   setDetail: React.Dispatch<React.SetStateAction<string>>
   paidAt: string
@@ -19,7 +19,7 @@ export type PaymentContextType = {
 }
 
 export const PaymentContext = createContext<PaymentContextType>({
-  amount: 0,
+  amount: '',
   setAmount: () => {
     throw new Error('PaymentContext not avaliable')
   },

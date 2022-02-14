@@ -74,10 +74,10 @@ export const ShowPaymentEntry: VFC = () => {
         <FormLabel htmlFor="amount">金額</FormLabel>
         <Input
           value={amount}
-          onChange={(event) => setAmount(Number(event.target.value))}
+          onChange={(event) => setAmount(event.target.value)}
           id="amount"
           name="amount"
-          type="text"
+          type="number"
           size="lg"
           placeholder="金額を入力"
         />
@@ -107,7 +107,7 @@ export const ShowPaymentEntry: VFC = () => {
       </FormControl>
       <Flex h="64px">
         <CloseButton onClick={() => onClickClose()} />
-        <BarButton onClickButton={handleUpdateAmount} disabled={amount === 0} bg="green.500">
+        <BarButton onClickButton={handleUpdateAmount} disabled={amount === '' || amount === '0'} bg="green.500">
           更新する
         </BarButton>
         <BarButton onClickButton={handleDeletePayment} disabled={false} bg="red.500">

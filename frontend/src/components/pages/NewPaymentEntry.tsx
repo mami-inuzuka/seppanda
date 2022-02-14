@@ -34,6 +34,7 @@ export const NewPaymentEntry: VFC = () => {
       if (res.status === 200) {
         const newPaymentList = paymentList != null ? [res.data, ...paymentList] : [res.data]
         setPaymentList(newPaymentList)
+        setAmount('')
         onClickClose()
         successToast('支払い情報を登録しました')
       } else {
@@ -50,10 +51,10 @@ export const NewPaymentEntry: VFC = () => {
         <FormLabel htmlFor="amount">金額</FormLabel>
         <Input
           value={amount}
-          onChange={(event) => setAmount(Number(event.target.value))}
+          onChange={(event) => setAmount(event.target.value)}
           id="amount"
           name="amount"
-          type="text"
+          type="number"
           size="lg"
           placeholder="金額を入力"
         />
@@ -81,7 +82,7 @@ export const NewPaymentEntry: VFC = () => {
           name="paid_at"
         />
       </FormControl>
-      <BarButton onClickButton={handleSubmitAmount} disabled={amount === 0} bg="green.500">
+      <BarButton onClickButton={handleSubmitAmount} disabled={amount === '' || amount === '0'} bg="green.500">
         登録する
       </BarButton>
     </Flex>

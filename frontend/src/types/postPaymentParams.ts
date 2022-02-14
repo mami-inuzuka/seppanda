@@ -1,5 +1,5 @@
 export type PostPaymentParams = {
-  amount: number
+  amount: string
   paidAt: string
   detail: string
 }

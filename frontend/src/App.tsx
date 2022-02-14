@@ -33,7 +33,7 @@ const App: VFC = () => {
     isTeamCapacityReached: false,
   })
   const [isPaymentsLoaded, setIsPaymentsLoaded] = useState<boolean>(false)
-  const [amount, setAmount] = useState<number>(0)
+  const [amount, setAmount] = useState<string>('')
   const [detail, setDetail] = useState<string>('')
   const [paidAt, setPaidAt] = useState<string>(DateTime.local().toFormat('yyyy-MM-dd'))
 
