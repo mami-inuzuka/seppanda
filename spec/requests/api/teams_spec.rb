@@ -21,7 +21,7 @@ RSpec.describe 'Api::Teams', type: :request do
   describe 'GET /api/teams/:id' do
     example 'チームの状況を取得することができる' do
       5.times do |n|
-        current_user.payments.create(amount: 100 * (n + 1), team_id: current_user.team_id)
+        current_user.payments.create(amount: 100 * (n + 1), team_id: current_user.team_id, paid_at: '2022-02-14')
       end
       get api_team_path(current_user.team_id), headers: auth_headers
       expect(response).to have_http_status(:ok)
