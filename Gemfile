@@ -10,10 +10,12 @@ gem 'devise'
 gem 'devise_token_auth'
 gem 'google-cloud-storage'
 gem 'image_processing', '~> 1.2'
+gem 'jbuilder', '~> 2.7'
 gem 'pg'
 gem 'puma', '~> 5.0'
 gem 'rack-cors'
 gem 'rails', '~> 6.1.4', '>= 6.1.4.4'
+
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
