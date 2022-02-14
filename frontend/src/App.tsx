@@ -44,7 +44,7 @@ const App: VFC = () => {
       const res = await getCurrentUser()
       if (res?.data.isLogin) {
         setIsSignedIn(true)
-        setCurrentUser(res?.data.data)
+        setCurrentUser(res?.data.user)
       } else {
         console.log('No current user')
       }

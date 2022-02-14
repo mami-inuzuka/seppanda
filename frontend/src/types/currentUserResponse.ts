@@ -1,6 +1,8 @@
+import type { Avatar } from './avatar'
 import type { User } from 'types/user'
 
 export type CurrentUserResponse = {
-  data: User
+  user: User
   isLogin: boolean
+  avatar: Avatar
 }

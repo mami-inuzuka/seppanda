@@ -1,3 +1,5 @@
+import { Avatar } from './avatar'
+
 export type User = {
   allowPasswordChange: false
   createdAt: string
@@ -10,4 +12,5 @@ export type User = {
   teamId: number
   uid: string
   updatedAt: string
+  avatar: Avatar
 }

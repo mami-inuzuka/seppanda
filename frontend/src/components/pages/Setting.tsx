@@ -56,13 +56,15 @@ export const Setting: VFC = () => {
     if (currentUser) {
       setInputName(currentUser.name)
       setInputEmail(currentUser.email)
+      setInputAvatar({ data: currentUser.avatar?.data, name: currentUser.avatar?.name })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
   return (
     <>
       <Flex>
-        <UserIcon src="https://bit.ly/dan-abramov" alt="Dan Abramov" />
+        <UserIcon src={inputAvatar.data} alt={inputAvatar.name} />
         <Input type="file" name="avatar" accept="image/png, image/jpeg" onChange={handleImageSelect} />
         <SecondaryButton>画像を選択</SecondaryButton>
       </Flex>
