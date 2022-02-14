@@ -12,16 +12,7 @@ type Props = {
 export const BarButton: FC<Props> = (props) => {
   const { children, onClickButton, disabled, bg } = props
   return (
-    <Button
-      type="submit"
-      onClick={onClickButton}
-      disabled={disabled}
-      bg={bg}
-      color="white"
-      borderRadius="0"
-      flex="1"
-      h="100%"
-    >
+    <Button type="submit" onClick={onClickButton} disabled={disabled} bg={bg} color="white" borderRadius="0" h="64px">
       {children}
     </Button>
   )

@@ -2,6 +2,7 @@ import { useEffect, useState, VFC } from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
 import { ChakraProvider } from '@chakra-ui/react'
+import { DateTime } from 'luxon'
 
 import { Home } from 'components/pages/Home'
 import { Invitation } from 'components/pages/Invitation'
@@ -24,7 +25,6 @@ const App: VFC = () => {
   const [isLoaded, setIsLoaded] = useState<boolean>(false)
   const [isSignedIn, setIsSignedIn] = useState<boolean>(false)
   const [currentUser, setCurrentUser] = useState<User | null>(null)
-  const [inputNumber, setInputNumber] = useState<string>('0')
   const [paymentList, setPaymentList] = useState<Payment[] | null>(null)
   const [teamStatus, setTeamStatus] = useState<TeamStatus>({
     refundAmount: 0,
@@ -33,6 +33,9 @@ const App: VFC = () => {
     isTeamCapacityReached: false,
   })
   const [isPaymentsLoaded, setIsPaymentsLoaded] = useState<boolean>(false)
+  const [inputAmount, setInputAmount] = useState<string>('')
+  const [inputDetail, setInputDetail] = useState<string>('')
+  const [inputPaidAt, setInputPaidAt] = useState<string>(DateTime.local().toFormat('yyyy-MM-dd'))
 
   // サインイン状態をチェック
   const handleGetCurrentUser = async () => {
@@ -70,8 +73,12 @@ const App: VFC = () => {
               <PaymentContext.Provider
                 // eslint-disable-next-line react/jsx-no-constructed-context-values
                 value={{
-                  inputNumber,
-                  setInputNumber,
+                  inputAmount,
+                  setInputAmount,
+                  inputDetail,
+                  setInputDetail,
+                  inputPaidAt,
+                  setInputPaidAt,
                   paymentList,
                   setPaymentList,
                   isPaymentsLoaded,

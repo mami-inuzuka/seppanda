@@ -1,10 +1,9 @@
 import { useContext, useEffect, VFC } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 
-import { Box, CloseButton, Flex } from '@chakra-ui/react'
+import { CloseButton, Flex, FormControl, FormLabel, Input } from '@chakra-ui/react'
 
 import { BarButton } from 'components/atoms/button/BarButton'
-import { Calculator } from 'components/organisms/Calculators/Calculator'
 import { PaymentContext } from 'context/PaymentContext'
 import { deletePayment, updatePayment } from 'lib/api/payment'
 import { useToast } from 'lib/toast'
@@ -17,7 +16,16 @@ type stateType = {
 }
 
 export const ShowPaymentEntry: VFC = () => {
-  const { inputNumber, setInputNumber, paymentList, setPaymentList } = useContext(PaymentContext)
+  const {
+    inputAmount,
+    setInputAmount,
+    inputDetail,
+    setInputDetail,
+    inputPaidAt,
+    setInputPaidAt,
+    paymentList,
+    setPaymentList,
+  } = useContext(PaymentContext)
   const { errorToast, successToast } = useToast()
   const history = useHistory()
   const location = useLocation()
@@ -49,7 +57,9 @@ export const ShowPaymentEntry: VFC = () => {
     e.preventDefault()
 
     const params: PostPaymentParams = {
-      amount: Number(inputNumber),
+      amount: inputAmount,
+      detail: inputDetail,
+      paid_at: inputPaidAt,
     }
 
     try {
@@ -58,7 +68,6 @@ export const ShowPaymentEntry: VFC = () => {
         setPaymentList(paymentList)
         onClickClose()
         successToast('支払い情報を更新しました')
-        setInputNumber('0')
       } else {
         errorToast('更新に失敗しました')
       }
@@ -68,18 +77,56 @@ export const ShowPaymentEntry: VFC = () => {
   }
 
   useEffect(() => {
-    setInputNumber(String(payment.amount))
+    setInputAmount(String(payment.amount))
+    setInputDetail(payment.detail)
+    setInputPaidAt(payment.paidAt)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
     <Flex flexDirection="column" h="100vh">
-      <Box flex="1">
-        <Calculator />
-      </Box>
+      <FormControl>
+        <FormLabel htmlFor="amount">金額</FormLabel>
+        <Input
+          value={inputAmount}
+          onChange={(event) => setInputAmount(event.target.value)}
+          id="amount"
+          name="amount"
+          type="number"
+          size="lg"
+          placeholder="金額を入力"
+        />
+      </FormControl>
+      <FormControl>
+        <FormLabel htmlFor="detail">内容</FormLabel>
+        <Input
+          value={inputDetail}
+          onChange={(event) => setInputDetail(event.target.value)}
+          id="detail"
+          name="detail"
+          type="text"
+          size="lg"
+          placeholder="例）スーパー"
+        />
+      </FormControl>
+      <FormControl>
+        <FormLabel htmlFor="date">支払日</FormLabel>
+        <Input
+          value={inputPaidAt}
+          onChange={(event) => setInputPaidAt(event.target.value)}
+          id="date"
+          type="date"
+          size="lg"
+          name="paid_at"
+        />
+      </FormControl>
       <Flex h="64px">
         <CloseButton onClick={() => onClickClose()} />
-        <BarButton onClickButton={handleUpdateAmount} disabled={inputNumber === '0'} bg="green.500">
+        <BarButton
+          onClickButton={handleUpdateAmount}
+          disabled={inputAmount === '' || inputAmount === '0'}
+          bg="green.500"
+        >
           更新する
         </BarButton>
         <BarButton onClickButton={handleDeletePayment} disabled={false} bg="red.500">
