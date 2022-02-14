@@ -80,7 +80,6 @@ export const ShowPaymentEntry: VFC = () => {
           type="text"
           size="lg"
           placeholder="金額を入力"
-          inputmode="numeric"
         />
       </FormControl>
       <FormControl>
