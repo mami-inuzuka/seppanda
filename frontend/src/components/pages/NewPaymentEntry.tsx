@@ -11,8 +11,16 @@ import { useToast } from 'lib/toast'
 import type { PostPaymentParams } from 'types/postPaymentParams'
 
 export const NewPaymentEntry: VFC = () => {
-  const { amount, setAmount, detail, setDetail, paidAt, setPaidAt, paymentList, setPaymentList } =
-    useContext(PaymentContext)
+  const {
+    inputAmount,
+    setInputAmount,
+    inputDetail,
+    setInputDetail,
+    inputPaidAt,
+    setInputPaidAt,
+    paymentList,
+    setPaymentList,
+  } = useContext(PaymentContext)
   const { errorToast, successToast } = useToast()
   const history = useHistory()
 
@@ -24,9 +32,9 @@ export const NewPaymentEntry: VFC = () => {
     e.preventDefault()
 
     const params: PostPaymentParams = {
-      amount,
-      paidAt,
-      detail,
+      amount: inputAmount,
+      detail: inputDetail,
+      paid_at: inputPaidAt,
     }
 
     try {
@@ -34,8 +42,8 @@ export const NewPaymentEntry: VFC = () => {
       if (res.status === 200) {
         const newPaymentList = paymentList != null ? [res.data, ...paymentList] : [res.data]
         setPaymentList(newPaymentList)
-        setAmount('')
-        setDetail('')
+        setInputAmount('')
+        setInputDetail('')
         onClickClose()
         successToast('支払い情報を登録しました')
       } else {
@@ -51,8 +59,8 @@ export const NewPaymentEntry: VFC = () => {
       <FormControl>
         <FormLabel htmlFor="amount">金額</FormLabel>
         <Input
-          value={amount}
-          onChange={(event) => setAmount(event.target.value)}
+          value={inputAmount}
+          onChange={(event) => setInputAmount(event.target.value)}
           id="amount"
           name="amount"
           type="number"
@@ -63,8 +71,8 @@ export const NewPaymentEntry: VFC = () => {
       <FormControl>
         <FormLabel htmlFor="detail">内容</FormLabel>
         <Input
-          value={detail}
-          onChange={(event) => setDetail(event.target.value)}
+          value={inputDetail}
+          onChange={(event) => setInputDetail(event.target.value)}
           id="detail"
           name="detail"
           type="text"
@@ -75,15 +83,15 @@ export const NewPaymentEntry: VFC = () => {
       <FormControl>
         <FormLabel htmlFor="date">支払日</FormLabel>
         <Input
-          value={paidAt}
-          onChange={(event) => setPaidAt(event.target.value)}
+          value={inputPaidAt}
+          onChange={(event) => setInputPaidAt(event.target.value)}
           id="date"
           type="date"
           size="lg"
           name="paid_at"
         />
       </FormControl>
-      <BarButton onClickButton={handleSubmitAmount} disabled={amount === '' || amount === '0'} bg="green.500">
+      <BarButton onClickButton={handleSubmitAmount} disabled={inputAmount === '' || inputAmount === '0'} bg="green.500">
         登録する
       </BarButton>
     </Flex>

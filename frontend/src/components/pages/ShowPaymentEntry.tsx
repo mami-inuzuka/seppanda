@@ -16,8 +16,16 @@ type stateType = {
 }
 
 export const ShowPaymentEntry: VFC = () => {
-  const { amount, setAmount, detail, setDetail, paidAt, setPaidAt, paymentList, setPaymentList } =
-    useContext(PaymentContext)
+  const {
+    inputAmount,
+    setInputAmount,
+    inputDetail,
+    setInputDetail,
+    inputPaidAt,
+    setInputPaidAt,
+    paymentList,
+    setPaymentList,
+  } = useContext(PaymentContext)
   const { errorToast, successToast } = useToast()
   const history = useHistory()
   const location = useLocation()
@@ -49,9 +57,9 @@ export const ShowPaymentEntry: VFC = () => {
     e.preventDefault()
 
     const params: PostPaymentParams = {
-      amount,
-      paidAt,
-      detail,
+      amount: inputAmount,
+      detail: inputDetail,
+      paid_at: inputPaidAt,
     }
 
     try {
@@ -73,8 +81,8 @@ export const ShowPaymentEntry: VFC = () => {
       <FormControl>
         <FormLabel htmlFor="amount">金額</FormLabel>
         <Input
-          value={amount}
-          onChange={(event) => setAmount(event.target.value)}
+          value={inputAmount}
+          onChange={(event) => setInputAmount(event.target.value)}
           id="amount"
           name="amount"
           type="number"
@@ -85,8 +93,8 @@ export const ShowPaymentEntry: VFC = () => {
       <FormControl>
         <FormLabel htmlFor="detail">内容</FormLabel>
         <Input
-          value={detail}
-          onChange={(event) => setDetail(event.target.value)}
+          value={inputDetail}
+          onChange={(event) => setInputDetail(event.target.value)}
           id="detail"
           name="detail"
           type="text"
@@ -97,8 +105,8 @@ export const ShowPaymentEntry: VFC = () => {
       <FormControl>
         <FormLabel htmlFor="date">支払日</FormLabel>
         <Input
-          value={paidAt}
-          onChange={(event) => setPaidAt(event.target.value)}
+          value={inputPaidAt}
+          onChange={(event) => setInputPaidAt(event.target.value)}
           id="date"
           type="date"
           size="lg"
@@ -107,7 +115,11 @@ export const ShowPaymentEntry: VFC = () => {
       </FormControl>
       <Flex h="64px">
         <CloseButton onClick={() => onClickClose()} />
-        <BarButton onClickButton={handleUpdateAmount} disabled={amount === '' || amount === '0'} bg="green.500">
+        <BarButton
+          onClickButton={handleUpdateAmount}
+          disabled={inputAmount === '' || inputAmount === '0'}
+          bg="green.500"
+        >
           更新する
         </BarButton>
         <BarButton onClickButton={handleDeletePayment} disabled={false} bg="red.500">
