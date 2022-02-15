@@ -58,7 +58,12 @@ export const SignIn: VFC = memo(() => {
         </FormControl>
         <FormControl>
           <FormLabel htmlFor="password">パスワード</FormLabel>
-          <Input value={password} placeholder="パスワード" onChange={(event) => setPassword(event.target.value)} />
+          <Input
+            value={password}
+            placeholder="パスワード"
+            onChange={(event) => setPassword(event.target.value)}
+            type="password"
+          />
         </FormControl>
         <PrimaryButton
           disabled={!!(!email || !password)} // 空欄があった場合はボタンを押せないように

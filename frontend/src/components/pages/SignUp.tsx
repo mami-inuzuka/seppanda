@@ -99,6 +99,7 @@ export const SignUp: VFC = memo(() => {
             placeholder="英数字6文字以上"
             id="password"
             onChange={(event) => setPassword(event.target.value)}
+            type="password"
           />
         </FormControl>
         <FormControl>
@@ -108,6 +109,7 @@ export const SignUp: VFC = memo(() => {
             placeholder="英数字6文字以上"
             id="password_confirmation"
             onChange={(event) => setPasswordConfirmation(event.target.value)}
+            type="password"
           />
         </FormControl>
         <PrimaryButton
