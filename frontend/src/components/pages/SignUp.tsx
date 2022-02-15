@@ -1,7 +1,7 @@
 import { useContext, useState, VFC, memo } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 
-import { Box, Button, FormControl, FormLabel, Input } from '@chakra-ui/react'
+import { Box, FormControl, FormLabel, Heading, Input } from '@chakra-ui/react'
 import axios, { AxiosError } from 'axios'
 import Cookies from 'js-cookie'
 
@@ -75,7 +75,9 @@ export const SignUp: VFC = memo(() => {
 
   return (
     <Box p={6}>
-      <h1>サインアップ</h1>
+      <Heading size="lg" textAlign="center" my={10}>
+        新規登録
+      </Heading>
       <form noValidate autoComplete="off">
         <FormControl>
           <FormLabel htmlFor="name">名前</FormLabel>

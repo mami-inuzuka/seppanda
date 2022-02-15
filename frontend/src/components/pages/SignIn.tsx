@@ -1,7 +1,7 @@
 import { useState, useContext, VFC, memo } from 'react'
 import { useHistory } from 'react-router-dom'
 
-import { Box, Button, FormControl, FormLabel, Input } from '@chakra-ui/react'
+import { Box, FormControl, FormLabel, Heading, Input } from '@chakra-ui/react'
 import Cookies from 'js-cookie'
 
 import { PrimaryButton } from 'components/atoms/button/PrimaryButton'
@@ -48,7 +48,9 @@ export const SignIn: VFC = memo(() => {
 
   return (
     <Box p={6}>
-      <h1>サインイン</h1>
+      <Heading size="lg" textAlign="center" my={10}>
+        ログイン
+      </Heading>
       <form noValidate autoComplete="off">
         <FormControl>
           <FormLabel htmlFor="email">メールアドレス</FormLabel>
