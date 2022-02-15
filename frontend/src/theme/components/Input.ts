@@ -6,6 +6,7 @@ export const Input = {
         fontSize: 'lg',
         height: 14,
         paddingX: 4,
+        mb: 4,
       },
     },
   },
