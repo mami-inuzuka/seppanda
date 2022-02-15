@@ -5,8 +5,8 @@ class Api::PaymentsController < ApplicationController
   before_action :set_payment, only: %i[destroy update]
 
   def index
-    payments = Payment.includes(:user).where(team_id: current_api_user.team_id).order(created_at: :desc)
-    render json: payments, include: [:user]
+    @payments = Payment.includes(:user).where(team_id: current_api_user.team_id).order(created_at: :desc)
+    render :index
   end
 
   def create
