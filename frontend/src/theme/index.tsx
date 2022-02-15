@@ -1,7 +1,12 @@
 import { extendTheme } from '@chakra-ui/react'
 
+import { Input } from 'theme/components/Input'
+
 export const theme = extendTheme({
   colors: {
+    brand: {
+      primary: '#6BB349',
+    },
     gray: {
       50: '#F2F2F2',
       100: '#DBDBDB',
@@ -62,5 +67,8 @@ export const theme = extendTheme({
       800: '#154351',
       900: '#0B2128',
     },
+  },
+  components: {
+    Input,
   },
 })
