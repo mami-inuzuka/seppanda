@@ -1,7 +1,7 @@
 import { useContext, useState, VFC, memo } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 
-import { Box, Button, Input } from '@chakra-ui/react'
+import { Box, Button, FormControl, FormLabel, Input } from '@chakra-ui/react'
 import axios, { AxiosError } from 'axios'
 import Cookies from 'js-cookie'
 
@@ -76,13 +76,28 @@ export const SignUp: VFC = memo(() => {
     <Box p={6}>
       <h1>サインアップ</h1>
       <form noValidate autoComplete="off">
-        <Box>
-          <Input value={name} placeholder="名前" onChange={(event) => setName(event.target.value)} />
-          <Input value={email} placeholder="メールアドレス" onChange={(event) => setEmail(event.target.value)} />
-          <Input value={password} placeholder="パスワード" onChange={(event) => setPassword(event.target.value)} />
+        <FormControl>
+          <FormLabel htmlFor="name">名前</FormLabel>
+          <Input value={name} placeholder="例）たろう" id="name" onChange={(event) => setName(event.target.value)} />
+          <FormLabel htmlFor="email">メールアドレス</FormLabel>
+          <Input
+            value={email}
+            placeholder="例）taro@example.com"
+            id="email"
+            onChange={(event) => setEmail(event.target.value)}
+          />
+          <FormLabel htmlFor="password">パスワード</FormLabel>
+          <Input
+            value={password}
+            placeholder="英数字6文字以上"
+            id="password"
+            onChange={(event) => setPassword(event.target.value)}
+          />
+          <FormLabel htmlFor="password_confirmation">パスワード確認</FormLabel>
           <Input
             value={passwordConfirmation}
-            placeholder="パスワード確認"
+            placeholder="英数字6文字以上"
+            id="password_confirmation"
             onChange={(event) => setPasswordConfirmation(event.target.value)}
           />
           <Button
@@ -92,7 +107,7 @@ export const SignUp: VFC = memo(() => {
           >
             Submit
           </Button>
-        </Box>
+        </FormControl>
       </form>
     </Box>
   )
