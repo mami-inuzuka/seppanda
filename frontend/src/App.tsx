@@ -18,7 +18,7 @@ import { PaymentContext } from 'context/PaymentContext'
 import { getCurrentUser } from 'lib/api/auth'
 import { theme } from 'theme/index'
 
-import type { Payment } from 'types/payment'
+import type { PaymentListGroupByPaidAt } from 'types/paymentListGroupByPaidAt'
 import type { TeamStatus } from 'types/teamStatus'
 import type { User } from 'types/user'
 
@@ -26,14 +26,14 @@ const App: VFC = () => {
   const [isLoaded, setIsLoaded] = useState<boolean>(false)
   const [isSignedIn, setIsSignedIn] = useState<boolean>(false)
   const [currentUser, setCurrentUser] = useState<User | null>(null)
-  const [paymentList, setPaymentList] = useState<Payment[] | null>(null)
+  const [paymentList, setPaymentList] = useState<PaymentListGroupByPaidAt[] | null>(null)
   const [teamStatus, setTeamStatus] = useState<TeamStatus>({
     refundAmount: 0,
     largestPaymentUser: null,
     smallestPaymentUser: null,
     isTeamCapacityReached: false,
   })
-  const [isPaymentsLoaded, setIsPaymentsLoaded] = useState<boolean>(false)
+  const [isPaymentListLoaded, setIsPaymentListLoaded] = useState<boolean>(false)
   const [inputAmount, setInputAmount] = useState<string>('')
   const [inputDetail, setInputDetail] = useState<string>('')
   const [inputPaidAt, setInputPaidAt] = useState<string>(DateTime.local().toFormat('yyyy-MM-dd'))
@@ -82,8 +82,8 @@ const App: VFC = () => {
                   setInputPaidAt,
                   paymentList,
                   setPaymentList,
-                  isPaymentsLoaded,
-                  setIsPaymentsLoaded,
+                  isPaymentListLoaded,
+                  setIsPaymentListLoaded,
                   teamStatus,
                   setTeamStatus,
                 }}

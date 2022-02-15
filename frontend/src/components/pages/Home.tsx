@@ -1,12 +1,10 @@
 import { memo, useContext, useEffect, VFC } from 'react'
 import { Link } from 'react-router-dom'
 
-import { Box, Center, Flex, Spacer, Text, useDisclosure } from '@chakra-ui/react'
+import { Box, Center } from '@chakra-ui/react'
 
 import { DebtAlert } from 'components/atoms/alert/debtAlert'
 import { CircleAddButton } from 'components/atoms/button/CircleAddButton'
-import { DangerButton } from 'components/atoms/button/DangerButton'
-import { BasicModal } from 'components/organisms/BasicModal'
 import { CurrentStatusArea } from 'components/organisms/CurrentStatusArea'
 import { PaymentList } from 'components/organisms/PaymentList'
 import { UnavailableStatusArea } from 'components/organisms/UnavailableStatusArea'
@@ -17,11 +15,10 @@ import { getTeamStatus } from 'lib/api/team'
 import { useToast } from 'lib/toast'
 
 export const Home: VFC = memo(() => {
-  const { paymentList, setPaymentList, isPaymentsLoaded, setIsPaymentsLoaded, teamStatus, setTeamStatus } =
+  const { paymentList, setPaymentList, isPaymentListLoaded, setIsPaymentListLoaded, teamStatus, setTeamStatus } =
     useContext(PaymentContext)
   const { currentUser } = useContext(AuthContext)
   const { errorToast } = useToast()
-  const { isOpen: isOpenSettleModal, onOpen: onOpenSettleModal, onClose: onCloseSettleModal } = useDisclosure()
 
   const handleGetPayments = async () => {
     try {
@@ -34,7 +31,7 @@ export const Home: VFC = memo(() => {
     } catch {
       errorToast('取得に失敗しました')
     }
-    setIsPaymentsLoaded(true)
+    setIsPaymentListLoaded(true)
   }
 
   const handleGetTeamStatus = async () => {
@@ -48,7 +45,7 @@ export const Home: VFC = memo(() => {
     } catch {
       errorToast('取得に失敗しました')
     }
-    setIsPaymentsLoaded(true)
+    setIsPaymentListLoaded(true)
   }
 
   useEffect(() => {
@@ -63,19 +60,9 @@ export const Home: VFC = memo(() => {
 
   return (
     <>
-      <BasicModal isOpen={isOpenSettleModal} onClose={onCloseSettleModal} size="xl" />
       {currentUser?.id === teamStatus.smallestPaymentUser?.id && <DebtAlert />}
       {teamStatus.isTeamCapacityReached ? <CurrentStatusArea /> : <UnavailableStatusArea />}
-      <Flex bgColor="gray.50" p={2} pl={4} align="center">
-        <Text fontWeight="bold" fontSize="sm">
-          支払い履歴
-        </Text>
-        <Spacer />
-        <Box onClick={onOpenSettleModal}>
-          <DangerButton>精算する</DangerButton>
-        </Box>
-      </Flex>
-      {isPaymentsLoaded && paymentList != null ? <PaymentList payments={paymentList} /> : ''}
+      {isPaymentListLoaded && paymentList != null ? <PaymentList paymentList={paymentList} /> : ''}
       <Box position="fixed" bottom="24px" w="100%">
         <Center w="100%">
           <Link to="/payments/new">

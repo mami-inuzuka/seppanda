@@ -6,7 +6,8 @@ class Api::PaymentsController < ApplicationController
 
   def index
     payments = Payment.includes(:user).where(team_id: current_api_user.team_id).order(created_at: :desc)
-    render json: payments, include: [:user]
+    @payments_group_by_paid_at = payments.group_by { |payment| payment.paid_at.to_s }.sort.reverse.to_h
+    render :index
   end
 
   def create

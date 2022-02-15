@@ -11,16 +11,8 @@ import { useToast } from 'lib/toast'
 import type { PostPaymentParams } from 'types/postPaymentParams'
 
 export const NewPaymentEntry: VFC = () => {
-  const {
-    inputAmount,
-    setInputAmount,
-    inputDetail,
-    setInputDetail,
-    inputPaidAt,
-    setInputPaidAt,
-    paymentList,
-    setPaymentList,
-  } = useContext(PaymentContext)
+  const { inputAmount, setInputAmount, inputDetail, setInputDetail, inputPaidAt, setInputPaidAt } =
+    useContext(PaymentContext)
   const { errorToast, successToast } = useToast()
   const history = useHistory()
 
@@ -40,8 +32,6 @@ export const NewPaymentEntry: VFC = () => {
     try {
       const res = await postPayment(params)
       if (res.status === 200) {
-        const newPaymentList = paymentList != null ? [res.data, ...paymentList] : [res.data]
-        setPaymentList(newPaymentList)
         setInputAmount('')
         setInputDetail('')
         onClickClose()
