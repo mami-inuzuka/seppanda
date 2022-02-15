@@ -2,6 +2,7 @@
 
 class Api::Auth::RegistrationsController < DeviseTokenAuth::RegistrationsController
   before_action :check_invitation_token_and_team_capacity, only: :create
+  after_action :attach_default_avatar, only: :create
 
   def update
     super do |resource|
@@ -69,6 +70,10 @@ class Api::Auth::RegistrationsController < DeviseTokenAuth::RegistrationsControl
         fullMessages: [I18n.t('devise_token_auth.registrations.token_invalid_or_team_capacity_reached')]
       }
     }, status: 422
+  end
+
+  def attach_default_avatar
+    @resource.avatar.attach(io: File.open('./app/assets/images/default-user-icon.png'), filename: 'default-user-icon.png')
   end
 
   def sign_up_params
