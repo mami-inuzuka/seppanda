@@ -1,10 +1,11 @@
 import { useContext, useState, VFC, memo } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 
-import { Box, Button, Input } from '@chakra-ui/react'
+import { Box, FormControl, FormLabel, Heading, Input } from '@chakra-ui/react'
 import axios, { AxiosError } from 'axios'
 import Cookies from 'js-cookie'
 
+import { PrimaryButton } from 'components/atoms/button/PrimaryButton'
 import { AuthContext } from 'context/AuthContext'
 import { signUp } from 'lib/api/auth'
 import { useToast } from 'lib/toast'
@@ -73,27 +74,51 @@ export const SignUp: VFC = memo(() => {
   }
 
   return (
-    <>
-      <h1>サインアップ</h1>
+    <Box p={6}>
+      <Heading size="lg" textAlign="center" my={10}>
+        新規登録
+      </Heading>
       <form noValidate autoComplete="off">
-        <Box>
-          <Input value={name} placeholder="名前" onChange={(event) => setName(event.target.value)} />
-          <Input value={email} placeholder="メールアドレス" onChange={(event) => setEmail(event.target.value)} />
-          <Input value={password} placeholder="パスワード" onChange={(event) => setPassword(event.target.value)} />
+        <FormControl>
+          <FormLabel htmlFor="name">名前</FormLabel>
+          <Input value={name} placeholder="例）たろう" id="name" onChange={(event) => setName(event.target.value)} />
+        </FormControl>
+        <FormControl>
+          <FormLabel htmlFor="email">メールアドレス</FormLabel>
+          <Input
+            value={email}
+            placeholder="例）taro@example.com"
+            id="email"
+            onChange={(event) => setEmail(event.target.value)}
+          />
+        </FormControl>
+        <FormControl>
+          <FormLabel htmlFor="password">パスワード</FormLabel>
+          <Input
+            value={password}
+            placeholder="英数字6文字以上"
+            id="password"
+            onChange={(event) => setPassword(event.target.value)}
+            type="password"
+          />
+        </FormControl>
+        <FormControl>
+          <FormLabel htmlFor="password_confirmation">パスワード確認</FormLabel>
           <Input
             value={passwordConfirmation}
-            placeholder="パスワード確認"
+            placeholder="英数字6文字以上"
+            id="password_confirmation"
             onChange={(event) => setPasswordConfirmation(event.target.value)}
+            type="password"
           />
-          <Button
-            type="submit"
-            disabled={!!(!name || !email || !password || !passwordConfirmation)}
-            onClick={handleSubmit}
-          >
-            Submit
-          </Button>
-        </Box>
+        </FormControl>
+        <PrimaryButton
+          disabled={!!(!name || !email || !password || !passwordConfirmation)}
+          onClickButton={handleSubmit}
+        >
+          利用規約に同意して登録する
+        </PrimaryButton>
       </form>
-    </>
+    </Box>
   )
 })

@@ -16,7 +16,7 @@ import { HeaderLayout } from 'components/templates/HeaderLayout'
 import { AuthContext } from 'context/AuthContext'
 import { PaymentContext } from 'context/PaymentContext'
 import { getCurrentUser } from 'lib/api/auth'
-import { theme } from 'theme'
+import { theme } from 'theme/index'
 
 import type { Payment } from 'types/payment'
 import type { TeamStatus } from 'types/teamStatus'

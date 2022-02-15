@@ -1,9 +1,10 @@
 import { useState, useContext, VFC, memo } from 'react'
 import { useHistory } from 'react-router-dom'
 
-import { Box, Button, Input } from '@chakra-ui/react'
+import { Box, FormControl, FormLabel, Heading, Input } from '@chakra-ui/react'
 import Cookies from 'js-cookie'
 
+import { PrimaryButton } from 'components/atoms/button/PrimaryButton'
 import { AuthContext } from 'context/AuthContext'
 import { signIn } from 'lib/api/auth'
 
@@ -46,21 +47,31 @@ export const SignIn: VFC = memo(() => {
   }
 
   return (
-    <>
-      <h1>サインイン</h1>
+    <Box p={6}>
+      <Heading size="lg" textAlign="center" my={10}>
+        ログイン
+      </Heading>
       <form noValidate autoComplete="off">
-        <Box>
+        <FormControl>
+          <FormLabel htmlFor="email">メールアドレス</FormLabel>
           <Input value={email} placeholder="メールアドレス" onChange={(event) => setEmail(event.target.value)} />
-          <Input value={password} placeholder="パスワード" onChange={(event) => setPassword(event.target.value)} />
-          <Button
-            type="submit"
-            disabled={!!(!email || !password)} // 空欄があった場合はボタンを押せないように
-            onClick={handleSubmit}
-          >
-            Submit
-          </Button>
-        </Box>
+        </FormControl>
+        <FormControl>
+          <FormLabel htmlFor="password">パスワード</FormLabel>
+          <Input
+            value={password}
+            placeholder="パスワード"
+            onChange={(event) => setPassword(event.target.value)}
+            type="password"
+          />
+        </FormControl>
+        <PrimaryButton
+          disabled={!!(!email || !password)} // 空欄があった場合はボタンを押せないように
+          onClickButton={handleSubmit}
+        >
+          ログイン
+        </PrimaryButton>
       </form>
-    </>
+    </Box>
   )
 })

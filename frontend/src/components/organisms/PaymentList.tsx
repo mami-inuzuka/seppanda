@@ -1,7 +1,7 @@
 import { memo, VFC } from 'react'
 import { useHistory } from 'react-router-dom'
 
-import { Table, Tbody, Td, Tr } from '@chakra-ui/react'
+import { Table, Tbody, Td, Text, Tr } from '@chakra-ui/react'
 import { DateTime } from 'luxon'
 
 import type { Payment } from 'types/payment'
@@ -20,12 +20,16 @@ export const PaymentList: VFC<Props> = memo((props) => {
     })
   return (
     <Table variant="simple">
-      <Tbody>
+      <Tbody fontSize="sm">
         {payments.map((payment) => (
           <Tr key={payment.id} onClick={() => handleRowClick(payment)}>
-            <Td>{DateTime.fromISO(payment.createdAt).toISODate()}</Td>
+            <Td>{DateTime.fromISO(payment.createdAt).toFormat('yyyy.MM.dd')}</Td>
             <Td>{payment.user.name}</Td>
-            <Td isNumeric>{payment.amount}</Td>
+            <Td isNumeric display="flex" _after={{ content: `"円"`, fontSize: 'xs' }}>
+              <Text fontSize="md" fontWeight="bold">
+                {payment.amount.toLocaleString()}
+              </Text>
+            </Td>
           </Tr>
         ))}
       </Tbody>

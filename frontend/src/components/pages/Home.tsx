@@ -1,7 +1,7 @@
 import { memo, useContext, useEffect, VFC } from 'react'
 import { Link } from 'react-router-dom'
 
-import { Box, Center, Flex, Spacer, useDisclosure } from '@chakra-ui/react'
+import { Box, Center, Flex, Spacer, Text, useDisclosure } from '@chakra-ui/react'
 
 import { DebtAlert } from 'components/atoms/alert/debtAlert'
 import { CircleAddButton } from 'components/atoms/button/CircleAddButton'
@@ -66,8 +66,10 @@ export const Home: VFC = memo(() => {
       <BasicModal isOpen={isOpenSettleModal} onClose={onCloseSettleModal} size="xl" />
       {currentUser?.id === teamStatus.smallestPaymentUser?.id && <DebtAlert />}
       {teamStatus.isTeamCapacityReached ? <CurrentStatusArea /> : <UnavailableStatusArea />}
-      <Flex bgColor="gray.50" p={2} align="center">
-        支払い履歴
+      <Flex bgColor="gray.50" p={2} pl={4} align="center">
+        <Text fontWeight="bold" fontSize="sm">
+          支払い履歴
+        </Text>
         <Spacer />
         <Box onClick={onOpenSettleModal}>
           <DangerButton>精算する</DangerButton>
