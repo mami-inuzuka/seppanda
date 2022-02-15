@@ -1,8 +1,10 @@
 import { memo, VFC } from 'react'
 import { useHistory } from 'react-router-dom'
 
-import { Box, Flex, Image, Text } from '@chakra-ui/react'
+import { Box, Flex, Text } from '@chakra-ui/react'
 import { DateTime } from 'luxon'
+
+import { UserIcon } from 'components/atoms/icon/UserIcon'
 
 import type { Payment } from 'types/payment'
 import type { PaymentListGroupByPaidAt } from 'types/paymentListGroupByPaidAt'
@@ -37,16 +39,9 @@ export const PaymentList: VFC<Props> = memo((props) => {
                 borderBottom="1px"
                 borderBottomColor="gray.50"
               >
-                <Image
-                  src={payment.user.avatar?.data}
-                  w="28px"
-                  h="28px"
-                  mr={3}
-                  border="2px"
-                  borderColor={`brand.${payment.user.color}`}
-                  borderRadius="100px"
-                  overflow="hidden"
-                />
+                <Box mr={4}>
+                  <UserIcon user={payment.user} size="28px" />
+                </Box>
                 <Text flex="1" fontSize="sm">
                   {payment.detail}
                 </Text>

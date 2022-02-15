@@ -1,8 +1,9 @@
 import { memo, useContext, VFC } from 'react'
 
-import { Box, Center, Text, useDisclosure } from '@chakra-ui/react'
+import { Box, Center, Flex, Text, useDisclosure } from '@chakra-ui/react'
 
 import { DangerButton } from 'components/atoms/button/DangerButton'
+import { UserIcon } from 'components/atoms/icon/UserIcon'
 import { BasicModal } from 'components/organisms/BasicModal'
 import { AuthContext } from 'context/AuthContext'
 import { PaymentContext } from 'context/PaymentContext'
@@ -18,10 +19,20 @@ export const CurrentStatusArea: VFC = memo(() => {
       <Box p={12}>
         {teamStatus.refundAmount === 0 && '現在貸し借りはありません'}
         {teamStatus.refundAmount !== 0 && currentUser?.id === teamStatus.largestPaymentUser?.id && (
-          <Center>{teamStatus.smallestPaymentUser?.name}に返してもらう金額</Center>
+          <Flex justify="center" align="center">
+            <Box mr={2}>
+              <UserIcon user={teamStatus.smallestPaymentUser} size="32px" />
+            </Box>
+            に返してもらう金額
+          </Flex>
         )}
         {teamStatus.refundAmount !== 0 && currentUser?.id !== teamStatus.largestPaymentUser?.id && (
-          <Center>{teamStatus.largestPaymentUser?.name}に返す金額</Center>
+          <Flex justify="center" align="center">
+            <Box mr={2}>
+              <UserIcon user={teamStatus.largestPaymentUser} size="32px" />
+            </Box>
+            に返す金額
+          </Flex>
         )}
         <Center>
           <Text fontSize="56px" fontWeight="bold" _after={{ content: `"円"`, fontSize: '3xl' }}>
