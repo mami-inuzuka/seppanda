@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom'
 import { Box, Button, FormControl, FormLabel, Input } from '@chakra-ui/react'
 import Cookies from 'js-cookie'
 
+import { PrimaryButton } from 'components/atoms/button/PrimaryButton'
 import { AuthContext } from 'context/AuthContext'
 import { signIn } from 'lib/api/auth'
 
@@ -57,13 +58,12 @@ export const SignIn: VFC = memo(() => {
           <FormLabel htmlFor="password">パスワード</FormLabel>
           <Input value={password} placeholder="パスワード" onChange={(event) => setPassword(event.target.value)} />
         </FormControl>
-        <Button
-          type="submit"
+        <PrimaryButton
           disabled={!!(!email || !password)} // 空欄があった場合はボタンを押せないように
-          onClick={handleSubmit}
+          onClickButton={handleSubmit}
         >
-          Submit
-        </Button>
+          ログイン
+        </PrimaryButton>
       </form>
     </Box>
   )

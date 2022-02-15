@@ -5,6 +5,7 @@ import { Box, Button, FormControl, FormLabel, Input } from '@chakra-ui/react'
 import axios, { AxiosError } from 'axios'
 import Cookies from 'js-cookie'
 
+import { PrimaryButton } from 'components/atoms/button/PrimaryButton'
 import { AuthContext } from 'context/AuthContext'
 import { signUp } from 'lib/api/auth'
 import { useToast } from 'lib/toast'
@@ -107,13 +108,12 @@ export const SignUp: VFC = memo(() => {
             onChange={(event) => setPasswordConfirmation(event.target.value)}
           />
         </FormControl>
-        <Button
-          type="submit"
+        <PrimaryButton
           disabled={!!(!name || !email || !password || !passwordConfirmation)}
-          onClick={handleSubmit}
+          onClickButton={handleSubmit}
         >
-          Submit
-        </Button>
+          利用規約に同意して登録する
+        </PrimaryButton>
       </form>
     </Box>
   )
