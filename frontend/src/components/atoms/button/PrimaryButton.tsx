@@ -4,10 +4,11 @@ import { Button } from '@chakra-ui/react'
 
 type Props = {
   children: ReactNode
+  onClickButton: (e: React.MouseEvent<HTMLButtonElement>) => Promise<void> | (() => void)
 }
 
 export const PrimaryButton: FC<Props> = (props) => {
-  const { children } = props
+  const { children, onClickButton } = props
   return (
     <Button
       bg="green.500"
@@ -18,6 +19,7 @@ export const PrimaryButton: FC<Props> = (props) => {
       w="100%"
       border="1px solid rgba(46, 47, 46, 0.1)"
       boxShadow="0px 1px 0px #D7D7D7"
+      onClick={onClickButton}
     >
       {children}
     </Button>

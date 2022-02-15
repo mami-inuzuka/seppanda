@@ -3,6 +3,18 @@
 class Api::Auth::RegistrationsController < DeviseTokenAuth::RegistrationsController
   before_action :check_invitation_token_and_team_capacity, only: :create
 
+  def update
+    super do |resource|
+      if params[:avatar].present?
+        blob = ActiveStorage::Blob.create_and_upload!(
+          io: StringIO.new(decode(params[:avatar][:data]) + "\n"),
+          filename: params[:avatar][:name]
+        )
+        resource.avatar.attach(blob)
+      end
+    end
+  end
+
   private
 
   def build_resource
@@ -61,5 +73,13 @@ class Api::Auth::RegistrationsController < DeviseTokenAuth::RegistrationsControl
 
   def sign_up_params
     params.permit(:email, :password, :password_confirmation, :name, :team_id)
+  end
+
+  def account_update_params
+    params.permit(:email, :name, :avatar)
+  end
+
+  def decode(str)
+    Base64.decode64(str.split(',').last)
   end
 end

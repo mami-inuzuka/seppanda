@@ -8,11 +8,22 @@ import type { SignInParams } from 'types/signInParams'
 import type { SignInResponse } from 'types/signInResponse'
 import type { SignUpParams } from 'types/signUpParams'
 import type { SignUpResponse } from 'types/signUpResponse'
+import type { UpdateUserParams } from 'types/updateUserParams'
+import type { UpdateUserResponse } from 'types/updateUserResponse'
 
 export const signUp = (params: SignUpParams, token?: string | null): AxiosPromise<SignUpResponse> =>
   client.post('/auth', params, { headers: { InvitationToken: token || '' } })
 
 export const signIn = (params: SignInParams): AxiosPromise<SignInResponse> => client.post('/auth/sign_in', params)
+
+export const updateUser = (params: UpdateUserParams): AxiosPromise<UpdateUserResponse> =>
+  client.patch('/auth', params, {
+    headers: {
+      'access-token': Cookies.get('_access_token') || '',
+      client: Cookies.get('_client') || '',
+      uid: Cookies.get('_uid') || '',
+    },
+  })
 
 // 認証済みのユーザーを取得
 export const getCurrentUser = (): AxiosPromise<CurrentUserResponse> | undefined => {

@@ -1,4 +1,5 @@
 import { memo, VFC } from 'react'
+import { Link } from 'react-router-dom'
 
 import { SettingsIcon } from '@chakra-ui/icons'
 import { Box, Flex } from '@chakra-ui/react'
@@ -8,6 +9,8 @@ export const Header: VFC = memo(() => (
     <Box flex="1" textAlign="center">
       せっぱんだ
     </Box>
-    <SettingsIcon w="24px" h="24px" />
+    <Link to="/setting">
+      <SettingsIcon w="24px" h="24px" />
+    </Link>
   </Flex>
 ))
