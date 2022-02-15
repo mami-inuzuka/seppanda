@@ -4,15 +4,15 @@ import { useHistory } from 'react-router-dom'
 import { Box, Flex, Image, Text } from '@chakra-ui/react'
 import { DateTime } from 'luxon'
 
-import type { GetPaymentsResponse } from 'types/getPaymentsResponse'
 import type { Payment } from 'types/payment'
+import type { PaymentListGroupByPaidAt } from 'types/paymentListGroupByPaidAt'
 
 type Props = {
-  paymentsGroupByPaidAt: GetPaymentsResponse[]
+  paymentList: PaymentListGroupByPaidAt[]
 }
 
 export const PaymentList: VFC<Props> = memo((props) => {
-  const { paymentsGroupByPaidAt } = props
+  const { paymentList } = props
   const history = useHistory()
   const handleRowClick = (payment: Payment) =>
     history.push({
@@ -22,8 +22,8 @@ export const PaymentList: VFC<Props> = memo((props) => {
 
   return (
     <Box>
-      {paymentsGroupByPaidAt.map((paymentsData) =>
-        paymentsData.payments.map((payment, index) => (
+      {paymentList.map((paymentListItem) =>
+        paymentListItem.payments.map((payment, index) => (
           <>
             {index === 0 && (
               <Box bg="gray.50" fontSize="xs" color="gray.400" p={1}>
@@ -52,7 +52,7 @@ export const PaymentList: VFC<Props> = memo((props) => {
               <Text flex="1" fontSize="sm">
                 {payment.detail}
               </Text>
-              <Flex isNumeric display="flex" align="baseline" _after={{ content: `"円"`, fontSize: 'xs' }}>
+              <Flex display="flex" align="baseline" _after={{ content: `"円"`, fontSize: 'xs' }}>
                 <Text fontSize="md" fontWeight="bold" mr="2px">
                   {payment.amount.toLocaleString()}
                 </Text>

@@ -15,7 +15,7 @@ import { getTeamStatus } from 'lib/api/team'
 import { useToast } from 'lib/toast'
 
 export const Home: VFC = memo(() => {
-  const { paymentList, setPaymentList, isPaymentsLoaded, setIsPaymentsLoaded, teamStatus, setTeamStatus } =
+  const { paymentList, setPaymentList, isPaymentListLoaded, setIsPaymentListLoaded, teamStatus, setTeamStatus } =
     useContext(PaymentContext)
   const { currentUser } = useContext(AuthContext)
   const { errorToast } = useToast()
@@ -31,7 +31,7 @@ export const Home: VFC = memo(() => {
     } catch {
       errorToast('取得に失敗しました')
     }
-    setIsPaymentsLoaded(true)
+    setIsPaymentListLoaded(true)
   }
 
   const handleGetTeamStatus = async () => {
@@ -45,7 +45,7 @@ export const Home: VFC = memo(() => {
     } catch {
       errorToast('取得に失敗しました')
     }
-    setIsPaymentsLoaded(true)
+    setIsPaymentListLoaded(true)
   }
 
   useEffect(() => {
@@ -62,7 +62,7 @@ export const Home: VFC = memo(() => {
     <>
       {currentUser?.id === teamStatus.smallestPaymentUser?.id && <DebtAlert />}
       {teamStatus.isTeamCapacityReached ? <CurrentStatusArea /> : <UnavailableStatusArea />}
-      {isPaymentsLoaded && paymentList != null ? <PaymentList paymentsDataGroupByDate={paymentList} /> : ''}
+      {isPaymentListLoaded && paymentList != null ? <PaymentList paymentList={paymentList} /> : ''}
       <Box position="fixed" bottom="24px" w="100%">
         <Center w="100%">
           <Link to="/payments/new">

@@ -4,10 +4,10 @@ import Cookies from 'js-cookie'
 import client from 'lib/api/client'
 import { PostPaymentParams } from 'types/postPaymentParams'
 
-import type { GetPaymentsResponse } from 'types/getPaymentsResponse'
 import type { Payment } from 'types/payment'
+import type { PaymentListGroupByPaidAt } from 'types/paymentListGroupByPaidAt'
 
-export const getPayments = (): AxiosPromise<GetPaymentsResponse[] | null> =>
+export const getPayments = (): AxiosPromise<PaymentListGroupByPaidAt[] | null> =>
   client.get('/payments', {
     headers: {
       'access-token': Cookies.get('_access_token') || '',
