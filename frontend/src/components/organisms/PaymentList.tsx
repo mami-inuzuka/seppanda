@@ -1,7 +1,7 @@
 import { memo, VFC } from 'react'
 import { useHistory } from 'react-router-dom'
 
-import { Image, Table, Tbody, Td, Text, Tr } from '@chakra-ui/react'
+import { Table, Tbody, Td, Text, Tr } from '@chakra-ui/react'
 import { DateTime } from 'luxon'
 
 import type { Payment } from 'types/payment'
