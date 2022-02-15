@@ -5,7 +5,8 @@ class Api::PaymentsController < ApplicationController
   before_action :set_payment, only: %i[destroy update]
 
   def index
-    @payments = Payment.includes(:user).where(team_id: current_api_user.team_id).order(created_at: :desc)
+    payments = Payment.includes(:user).where(team_id: current_api_user.team_id).order(created_at: :desc)
+    @payments_by_date = payments.group_by { |payment| payment.paid_at.to_s }
     render :index
   end
 
