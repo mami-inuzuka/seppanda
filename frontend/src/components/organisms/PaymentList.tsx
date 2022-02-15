@@ -25,23 +25,38 @@ export const PaymentList: VFC<Props> = memo((props) => {
       {paymentsGroupByPaidAt.map((paymentsData) =>
         paymentsData.payments.map((payment, index) => (
           <>
-            <Box>{index === 0 && <p>{DateTime.fromISO(payment.paidAt).toFormat('yyyy.MM.dd')}</p>}</Box>
-            <Flex justify="space-between" key={payment.id} onClick={() => handleRowClick(payment)}>
+            {index === 0 && (
+              <Box bg="gray.50" fontSize="xs" color="gray.400" p={1}>
+                <p>{DateTime.fromISO(payment.paidAt).toFormat('yyyy.MM.dd')}</p>
+              </Box>
+            )}
+            <Flex
+              justify="space-between"
+              align="center"
+              key={payment.id}
+              onClick={() => handleRowClick(payment)}
+              p={4}
+              borderBottom="1px"
+              borderBottomColor="gray.50"
+            >
               <Image
                 src={payment.avatar?.data}
                 w="28px"
                 h="28px"
+                mr={3}
                 border="2px"
                 borderColor="brand.primary"
                 borderRadius="100px"
                 overflow="hidden"
               />
-              <Text flex="1">{payment.detail}</Text>
-              <Box isNumeric display="flex" _after={{ content: `"円"`, fontSize: 'xs' }}>
-                <Text fontSize="md" fontWeight="bold">
+              <Text flex="1" fontSize="sm">
+                {payment.detail}
+              </Text>
+              <Flex isNumeric display="flex" align="baseline" _after={{ content: `"円"`, fontSize: 'xs' }}>
+                <Text fontSize="md" fontWeight="bold" mr="2px">
                   {payment.amount.toLocaleString()}
                 </Text>
-              </Box>
+              </Flex>
             </Flex>
           </>
         ))
