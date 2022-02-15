@@ -1,16 +1,14 @@
-import { Avatar } from './avatar'
+import { Avatar } from 'types/avatar'
 
 export type User = {
+  id: number
+  name: string
+  email: string
+  uid: string
+  teamId: number
   allowPasswordChange: false
   createdAt: string
-  email: string
-  id: number
-  image?: string
-  name: string
-  nickname?: string
-  provider: string
-  teamId: number
-  uid: string
   updatedAt: string
   avatar: Avatar
+  color: string
 }

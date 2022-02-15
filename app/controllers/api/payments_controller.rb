@@ -11,11 +11,11 @@ class Api::PaymentsController < ApplicationController
   end
 
   def create
-    payment = Payment.new(payment_params)
-    payment.user_id = current_api_user.id
-    payment.team_id = current_api_user.team_id
-    if payment.save!
-      render json: payment, include: [:user]
+    @payment = Payment.new(payment_params)
+    @payment.user_id = current_api_user.id
+    @payment.team_id = current_api_user.team_id
+    if @payment.save!
+      render :create
     else
       render json: { status: :unprocessable_entity }
     end
@@ -28,7 +28,7 @@ class Api::PaymentsController < ApplicationController
 
   def update
     if @payment.update!(payment_params)
-      render json: @payment, include: [:user]
+      render :update
     else
       render json: { status: :unprocessable_entity }
     end

@@ -38,12 +38,12 @@ export const PaymentList: VFC<Props> = memo((props) => {
                 borderBottomColor="gray.50"
               >
                 <Image
-                  src={payment.avatar?.data}
+                  src={payment.user.avatar?.data}
                   w="28px"
                   h="28px"
                   mr={3}
                   border="2px"
-                  borderColor="brand.primary"
+                  borderColor={`brand.${payment.user.color}`}
                   borderRadius="100px"
                   overflow="hidden"
                 />
