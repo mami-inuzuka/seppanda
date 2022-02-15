@@ -85,4 +85,29 @@ RSpec.describe 'AuthApi', type: :request do
       end
     end
   end
+
+  describe 'PATCH api_user_registration_path' do
+    let!(:current_user) { create(:user, :with_team) }
+
+    def auth_headers
+      post new_api_user_session_path, params: { email: current_user.email, password: current_user.password }
+      { 'uid' => response.header['uid'], 'client' => response.header['client'], 'access-token' => response.header['access-token'] }
+    end
+
+    let(:new_user_params) do
+      {
+        name: 'charlie',
+        email: 'charlie123@example.com',
+        avatar: {data: "data:image/png;base64," + Base64.strict_encode64(file_fixture("test_user_icon.png").read), name: 'test_user_icon.png'}
+      }
+    end
+
+    example 'ユーザー情報を更新することができる' do
+      expect { patch api_user_registration_path, params: new_user_params, headers: auth_headers }.to change(User, :count).by(0).and change(Team, :count).by(0)
+      expect(JSON.parse(response.body)).to include("data")
+      expect(JSON.parse(response.body)['data']['name']).to eq 'charlie'
+      expect(JSON.parse(response.body)['data']['email']).to eq 'charlie123@example.com'
+      expect(current_user.avatar.attached?).to eq true
+    end
+  end
 end
