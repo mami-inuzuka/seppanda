@@ -39,6 +39,7 @@
     "import/prefer-default-export": "off",
     "react/function-component-definition": "off",
     "@typescript-eslint/no-use-before-define": ["error"],
+    "@typescript-eslint/restrict-template-expressions": "off",
     "react/react-in-jsx-scope": "off",
     "react/jsx-filename-extension": [
       "error",
