@@ -52,16 +52,18 @@ export const SignIn: VFC = memo(() => {
         <FormControl>
           <FormLabel htmlFor="email">メールアドレス</FormLabel>
           <Input value={email} placeholder="メールアドレス" onChange={(event) => setEmail(event.target.value)} />
+        </FormControl>
+        <FormControl>
           <FormLabel htmlFor="password">パスワード</FormLabel>
           <Input value={password} placeholder="パスワード" onChange={(event) => setPassword(event.target.value)} />
-          <Button
-            type="submit"
-            disabled={!!(!email || !password)} // 空欄があった場合はボタンを押せないように
-            onClick={handleSubmit}
-          >
-            Submit
-          </Button>
         </FormControl>
+        <Button
+          type="submit"
+          disabled={!!(!email || !password)} // 空欄があった場合はボタンを押せないように
+          onClick={handleSubmit}
+        >
+          Submit
+        </Button>
       </form>
     </Box>
   )

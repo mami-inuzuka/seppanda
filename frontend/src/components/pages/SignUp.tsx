@@ -79,6 +79,8 @@ export const SignUp: VFC = memo(() => {
         <FormControl>
           <FormLabel htmlFor="name">名前</FormLabel>
           <Input value={name} placeholder="例）たろう" id="name" onChange={(event) => setName(event.target.value)} />
+        </FormControl>
+        <FormControl>
           <FormLabel htmlFor="email">メールアドレス</FormLabel>
           <Input
             value={email}
@@ -86,6 +88,8 @@ export const SignUp: VFC = memo(() => {
             id="email"
             onChange={(event) => setEmail(event.target.value)}
           />
+        </FormControl>
+        <FormControl>
           <FormLabel htmlFor="password">パスワード</FormLabel>
           <Input
             value={password}
@@ -93,6 +97,8 @@ export const SignUp: VFC = memo(() => {
             id="password"
             onChange={(event) => setPassword(event.target.value)}
           />
+        </FormControl>
+        <FormControl>
           <FormLabel htmlFor="password_confirmation">パスワード確認</FormLabel>
           <Input
             value={passwordConfirmation}
@@ -100,14 +106,14 @@ export const SignUp: VFC = memo(() => {
             id="password_confirmation"
             onChange={(event) => setPasswordConfirmation(event.target.value)}
           />
-          <Button
-            type="submit"
-            disabled={!!(!name || !email || !password || !passwordConfirmation)}
-            onClick={handleSubmit}
-          >
-            Submit
-          </Button>
         </FormControl>
+        <Button
+          type="submit"
+          disabled={!!(!name || !email || !password || !passwordConfirmation)}
+          onClick={handleSubmit}
+        >
+          Submit
+        </Button>
       </form>
     </Box>
   )
