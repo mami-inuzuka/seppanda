@@ -18,6 +18,7 @@ import { PaymentContext } from 'context/PaymentContext'
 import { getCurrentUser } from 'lib/api/auth'
 import { theme } from 'theme/index'
 
+import type { GetPaymentsResponse } from 'types/getPaymentsResponse'
 import type { Payment } from 'types/payment'
 import type { TeamStatus } from 'types/teamStatus'
 import type { User } from 'types/user'
@@ -26,7 +27,7 @@ const App: VFC = () => {
   const [isLoaded, setIsLoaded] = useState<boolean>(false)
   const [isSignedIn, setIsSignedIn] = useState<boolean>(false)
   const [currentUser, setCurrentUser] = useState<User | null>(null)
-  const [paymentList, setPaymentList] = useState<Payment[] | null>(null)
+  const [paymentList, setPaymentList] = useState<GetPaymentsResponse[] | null>(null)
   const [teamStatus, setTeamStatus] = useState<TeamStatus>({
     refundAmount: 0,
     largestPaymentUser: null,

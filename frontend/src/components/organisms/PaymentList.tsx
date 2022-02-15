@@ -1,38 +1,51 @@
 import { memo, VFC } from 'react'
 import { useHistory } from 'react-router-dom'
 
-import { Table, Tbody, Td, Text, Tr } from '@chakra-ui/react'
+import { Box, Flex, Image, Text } from '@chakra-ui/react'
 import { DateTime } from 'luxon'
 
+import type { GetPaymentsResponse } from 'types/getPaymentsResponse'
 import type { Payment } from 'types/payment'
 
 type Props = {
-  payments: Payment[]
+  paymentsGroupByPaidAt: GetPaymentsResponse[]
 }
 
 export const PaymentList: VFC<Props> = memo((props) => {
-  const { payments } = props
+  const { paymentsGroupByPaidAt } = props
   const history = useHistory()
   const handleRowClick = (payment: Payment) =>
     history.push({
       pathname: `/payments/${payment.id}`,
       state: { payment },
     })
+
   return (
-    <Table variant="simple">
-      <Tbody fontSize="sm">
-        {payments.map((payment) => (
-          <Tr key={payment.id} onClick={() => handleRowClick(payment)}>
-            <Td>{DateTime.fromISO(payment.paidAt).toFormat('yyyy.MM.dd')}</Td>
-            <Td>{payment.user.name}</Td>
-            <Td isNumeric display="flex" _after={{ content: `"円"`, fontSize: 'xs' }}>
-              <Text fontSize="md" fontWeight="bold">
-                {payment.amount.toLocaleString()}
-              </Text>
-            </Td>
-          </Tr>
-        ))}
-      </Tbody>
-    </Table>
+    <Box>
+      {paymentsGroupByPaidAt.map((paymentsData) =>
+        paymentsData.payments.map((payment, index) => (
+          <>
+            <Box>{index === 0 && <p>{DateTime.fromISO(payment.paidAt).toFormat('yyyy.MM.dd')}</p>}</Box>
+            <Flex justify="space-between" key={payment.id} onClick={() => handleRowClick(payment)}>
+              <Image
+                src={payment.avatar?.data}
+                w="28px"
+                h="28px"
+                border="2px"
+                borderColor="brand.primary"
+                borderRadius="100px"
+                overflow="hidden"
+              />
+              <Text flex="1">{payment.detail}</Text>
+              <Box isNumeric display="flex" _after={{ content: `"円"`, fontSize: 'xs' }}>
+                <Text fontSize="md" fontWeight="bold">
+                  {payment.amount.toLocaleString()}
+                </Text>
+              </Box>
+            </Flex>
+          </>
+        ))
+      )}
+    </Box>
   )
 })

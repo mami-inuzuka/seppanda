@@ -1,5 +1,7 @@
 import { createContext } from 'react'
 
+import { GetPaymentsResponse } from 'types/getPaymentsResponse'
+
 import type { Payment } from 'types/payment'
 import type { TeamStatus } from 'types/teamStatus'
 
@@ -10,8 +12,8 @@ export type PaymentContextType = {
   setInputDetail: React.Dispatch<React.SetStateAction<string>>
   inputPaidAt: string
   setInputPaidAt: React.Dispatch<React.SetStateAction<string>>
-  paymentList: Payment[] | null
-  setPaymentList: React.Dispatch<React.SetStateAction<Payment[] | null>>
+  paymentList: GetPaymentsResponse[] | null
+  setPaymentList: React.Dispatch<React.SetStateAction<GetPaymentsResponse[] | null>>
   isPaymentsLoaded: boolean
   setIsPaymentsLoaded: React.Dispatch<React.SetStateAction<boolean>>
   teamStatus: TeamStatus

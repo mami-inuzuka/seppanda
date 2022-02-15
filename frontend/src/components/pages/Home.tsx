@@ -75,7 +75,7 @@ export const Home: VFC = memo(() => {
           <DangerButton>精算する</DangerButton>
         </Box>
       </Flex>
-      {isPaymentsLoaded && paymentList != null ? <PaymentList payments={paymentList} /> : ''}
+      {isPaymentsLoaded && paymentList != null ? <PaymentList paymentsDataGroupByDate={paymentList} /> : ''}
       <Box position="fixed" bottom="24px" w="100%">
         <Center w="100%">
           <Link to="/payments/new">
