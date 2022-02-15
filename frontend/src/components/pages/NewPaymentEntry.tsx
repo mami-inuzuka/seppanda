@@ -55,7 +55,7 @@ export const NewPaymentEntry: VFC = () => {
   }
 
   return (
-    <Flex flexDirection="column" h="100vh">
+    <Flex flexDirection="column" p={6}>
       <FormControl>
         <FormLabel htmlFor="amount">金額</FormLabel>
         <Input

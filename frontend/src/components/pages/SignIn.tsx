@@ -46,7 +46,7 @@ export const SignIn: VFC = memo(() => {
   }
 
   return (
-    <>
+    <Box p={6}>
       <h1>サインイン</h1>
       <form noValidate autoComplete="off">
         <Box>
@@ -61,6 +61,6 @@ export const SignIn: VFC = memo(() => {
           </Button>
         </Box>
       </form>
-    </>
+    </Box>
   )
 })

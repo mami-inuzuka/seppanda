@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState, VFC } from 'react'
 
-import { Flex, FormControl, FormLabel, Input } from '@chakra-ui/react'
+import { Box, Flex, FormControl, FormLabel, Input } from '@chakra-ui/react'
 
 import { PrimaryButton } from 'components/atoms/button/PrimaryButton'
 import { SecondaryButton } from 'components/atoms/button/SecondaryButton'
@@ -62,7 +62,7 @@ export const Setting: VFC = () => {
   }, [])
 
   return (
-    <>
+    <Box p={6}>
       <Flex>
         <UserIcon src={inputAvatar.data} alt={inputAvatar.name} />
         <Input type="file" name="avatar" accept="image/png, image/jpeg" onChange={handleImageSelect} />
@@ -80,8 +80,7 @@ export const Setting: VFC = () => {
           size="lg"
         />
       </FormControl>
-
       <PrimaryButton onClickButton={handleUpdateUser}>保存する</PrimaryButton>
-    </>
+    </Box>
   )
 }
