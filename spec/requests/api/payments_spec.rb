@@ -27,7 +27,7 @@ RSpec.describe 'Api::Payments', type: :request do
       example '登録した支払いの一覧を取得することができる' do
         get api_payments_path, headers: auth_headers
         expect(response).to have_http_status(:ok)
-        expect(JSON.parse(response.body).length).to eq 5
+        expect(JSON.parse(response.body)[0]['payments'].length).to eq 5
       end
     end
 
