@@ -1,5 +1,5 @@
-json.array! @payments_by_date do |date, payments|
-  json.set! "date", date
+json.array! @payments_group_by_paid_at do |date, payments|
+  json.date date
   json.payments do
     json.array!(payments) do |payment|
       json.extract! payment, :id, :amount, :detail, :paid_at, :settled, :settled_at

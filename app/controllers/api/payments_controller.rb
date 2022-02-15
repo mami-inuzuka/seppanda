@@ -6,7 +6,7 @@ class Api::PaymentsController < ApplicationController
 
   def index
     payments = Payment.includes(:user).where(team_id: current_api_user.team_id).order(created_at: :desc)
-    @payments_by_date = payments.group_by { |payment| payment.paid_at.to_s }
+    @payments_group_by_paid_at = payments.group_by { |payment| payment.paid_at.to_s }.sort.reverse.to_h
     render :index
   end
 
