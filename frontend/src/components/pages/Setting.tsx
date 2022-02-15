@@ -79,8 +79,10 @@ export const Setting: VFC = () => {
           type="email"
           size="lg"
         />
+        <PrimaryButton onClickButton={handleUpdateUser} disabled={false}>
+          保存する
+        </PrimaryButton>
       </FormControl>
-      <PrimaryButton onClickButton={handleUpdateUser}>保存する</PrimaryButton>
     </Box>
   )
 }
