@@ -3,7 +3,6 @@ import { useContext, useEffect, useState, VFC } from 'react'
 import { Box, Flex, FormControl, FormLabel, Image, Input } from '@chakra-ui/react'
 
 import { PrimaryButton } from 'components/atoms/button/PrimaryButton'
-import { SecondaryButton } from 'components/atoms/button/SecondaryButton'
 import { HeaderWithTitleLayout } from 'components/templates/HeaderWithTitleLayout'
 import { AuthContext } from 'context/AuthContext'
 import { updateUser } from 'lib/api/auth'
@@ -64,34 +63,59 @@ export const Setting: VFC = () => {
   return (
     <HeaderWithTitleLayout title="アカウント設定">
       <Box p={6}>
-        <Flex>
-          <Image
-            src={inputAvatar.data}
-            alt={inputAvatar.name}
-            boxSize="64px"
-            borderRadius="full"
-            border="2px"
-            borderColor={`brand.${currentUser?.color}`}
-            mr={4}
-          />
-          <Input type="file" name="avatar" accept="image/png, image/jpeg" onChange={handleImageSelect} />
-          <SecondaryButton>画像を選択</SecondaryButton>
-        </Flex>
-        <FormControl>
-          <FormLabel htmlFor="name">名前</FormLabel>
-          <Input value={inputName} onChange={(event) => setInputName(event.target.value)} id="name" size="lg" />
-          <FormLabel htmlFor="email">メールアドレス</FormLabel>
-          <Input
-            value={inputEmail}
-            onChange={(event) => setInputEmail(event.target.value)}
-            id="email"
-            type="email"
-            size="lg"
-          />
+        <form>
+          <FormControl>
+            <Flex align="center" mb={4}>
+              <Image
+                src={inputAvatar.data}
+                alt={inputAvatar.name}
+                boxSize="64px"
+                borderRadius="full"
+                border="2px"
+                borderColor={`brand.${currentUser?.color}`}
+                mr={4}
+              />
+              <FormLabel
+                bg="gray.50"
+                color="gray.900"
+                borderRadius="base"
+                h="32px"
+                border="1px solid rgba(46, 47, 46, 0.1)"
+                boxShadow="0px 1px 0px #D7D7D7"
+                pl={3}
+                pr={3}
+              >
+                <Input
+                  type="file"
+                  name="avatar"
+                  accept="image/png, image/jpeg"
+                  onChange={handleImageSelect}
+                  display="none"
+                />
+                <Flex h="100%" align="center" justify="center">
+                  画像を選択
+                </Flex>
+              </FormLabel>
+            </Flex>
+          </FormControl>
+          <FormControl>
+            <FormLabel htmlFor="name">名前</FormLabel>
+            <Input value={inputName} onChange={(event) => setInputName(event.target.value)} id="name" size="lg" />
+          </FormControl>
+          <FormControl>
+            <FormLabel htmlFor="email">メールアドレス</FormLabel>
+            <Input
+              value={inputEmail}
+              onChange={(event) => setInputEmail(event.target.value)}
+              id="email"
+              type="email"
+              size="lg"
+            />
+          </FormControl>
           <PrimaryButton onClickButton={handleUpdateUser} disabled={false}>
             保存する
           </PrimaryButton>
-        </FormControl>
+        </form>
       </Box>
     </HeaderWithTitleLayout>
   )
