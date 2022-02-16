@@ -31,6 +31,7 @@ const App: VFC = () => {
     largestPaymentUser: null,
     smallestPaymentUser: null,
     isTeamCapacityReached: false,
+    invitationToken: '',
   })
   const [isPaymentListLoaded, setIsPaymentListLoaded] = useState<boolean>(false)
   const [inputAmount, setInputAmount] = useState<string>('')

@@ -5,4 +5,5 @@ export type TeamStatus = {
   largestPaymentUser: User | null
   smallestPaymentUser: User | null
   isTeamCapacityReached: boolean
+  invitationToken: string
 }
