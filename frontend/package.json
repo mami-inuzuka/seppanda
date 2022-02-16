@@ -41,14 +41,14 @@
     "eject": "react-scripts eject",
     "lint": "run-p lint:*",
     "lint:eslint": "eslint --ext .jsx,.js,.tsx,.ts src/",
-    "lint:prettier": "prettier --write src/**/*",
+    "lint:prettier": "prettier --write 'src/**/*.{jsx,js,tsx,ts}'",
     "eslint:fix": "eslint --fix --ext .jsx,.js,.tsx,.ts src/",
     "prepare": "cd .. && husky install frontend/.husky"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
       "eslint --ext .jsx,.js,.tsx,.ts src/",
-      "prettier --write src/**/*"
+      "prettier --write 'src/**/*.{jsx,js,tsx,ts}'"
     ]
   },
   "browserslist": {

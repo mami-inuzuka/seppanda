@@ -4,6 +4,7 @@ import { Box, Flex, FormControl, FormLabel, Image, Input } from '@chakra-ui/reac
 
 import { PrimaryButton } from 'components/atoms/button/PrimaryButton'
 import { SecondaryButton } from 'components/atoms/button/SecondaryButton'
+import { HeaderWithTitleLayout } from 'components/templates/HeaderWithTitleLayout'
 import { AuthContext } from 'context/AuthContext'
 import { updateUser } from 'lib/api/auth'
 import { useToast } from 'lib/toast'
@@ -61,35 +62,37 @@ export const Setting: VFC = () => {
   }, [])
 
   return (
-    <Box p={6}>
-      <Flex>
-        <Image
-          src={inputAvatar.data}
-          alt={inputAvatar.name}
-          boxSize="64px"
-          borderRadius="full"
-          border="2px"
-          borderColor={`brand.${currentUser?.color}`}
-          mr={4}
-        />
-        <Input type="file" name="avatar" accept="image/png, image/jpeg" onChange={handleImageSelect} />
-        <SecondaryButton>画像を選択</SecondaryButton>
-      </Flex>
-      <FormControl>
-        <FormLabel htmlFor="name">名前</FormLabel>
-        <Input value={inputName} onChange={(event) => setInputName(event.target.value)} id="name" size="lg" />
-        <FormLabel htmlFor="email">メールアドレス</FormLabel>
-        <Input
-          value={inputEmail}
-          onChange={(event) => setInputEmail(event.target.value)}
-          id="email"
-          type="email"
-          size="lg"
-        />
-        <PrimaryButton onClickButton={handleUpdateUser} disabled={false}>
-          保存する
-        </PrimaryButton>
-      </FormControl>
-    </Box>
+    <HeaderWithTitleLayout title="アカウント設定">
+      <Box p={6}>
+        <Flex>
+          <Image
+            src={inputAvatar.data}
+            alt={inputAvatar.name}
+            boxSize="64px"
+            borderRadius="full"
+            border="2px"
+            borderColor={`brand.${currentUser?.color}`}
+            mr={4}
+          />
+          <Input type="file" name="avatar" accept="image/png, image/jpeg" onChange={handleImageSelect} />
+          <SecondaryButton>画像を選択</SecondaryButton>
+        </Flex>
+        <FormControl>
+          <FormLabel htmlFor="name">名前</FormLabel>
+          <Input value={inputName} onChange={(event) => setInputName(event.target.value)} id="name" size="lg" />
+          <FormLabel htmlFor="email">メールアドレス</FormLabel>
+          <Input
+            value={inputEmail}
+            onChange={(event) => setInputEmail(event.target.value)}
+            id="email"
+            type="email"
+            size="lg"
+          />
+          <PrimaryButton onClickButton={handleUpdateUser} disabled={false}>
+            保存する
+          </PrimaryButton>
+        </FormControl>
+      </Box>
+    </HeaderWithTitleLayout>
   )
 }

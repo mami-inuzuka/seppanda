@@ -8,6 +8,7 @@ import { CircleAddButton } from 'components/atoms/button/CircleAddButton'
 import { CurrentStatusArea } from 'components/organisms/CurrentStatusArea'
 import { PaymentList } from 'components/organisms/PaymentList'
 import { UnavailableStatusArea } from 'components/organisms/UnavailableStatusArea'
+import { HeaderLayout } from 'components/templates/HeaderLayout'
 import { AuthContext } from 'context/AuthContext'
 import { PaymentContext } from 'context/PaymentContext'
 import { getPayments } from 'lib/api/payment'
@@ -59,7 +60,7 @@ export const Home: VFC = memo(() => {
   }, [])
 
   return (
-    <>
+    <HeaderLayout>
       {currentUser?.id === teamStatus.smallestPaymentUser?.id && <DebtAlert />}
       {teamStatus.isTeamCapacityReached ? <CurrentStatusArea /> : <UnavailableStatusArea />}
       {isPaymentListLoaded && paymentList != null ? <PaymentList paymentList={paymentList} /> : ''}
@@ -70,6 +71,6 @@ export const Home: VFC = memo(() => {
           </Link>
         </Center>
       </Box>
-    </>
+    </HeaderLayout>
   )
 })
