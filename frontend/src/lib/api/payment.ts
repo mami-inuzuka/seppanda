@@ -7,7 +7,7 @@ import { PostPaymentParams } from 'types/postPaymentParams'
 import type { Payment } from 'types/payment'
 import type { PaymentListGroupByPaidAt } from 'types/paymentListGroupByPaidAt'
 
-export const getPayments = (): AxiosPromise<PaymentListGroupByPaidAt[] | null> =>
+export const getPayments = (): AxiosPromise<PaymentListGroupByPaidAt[]> =>
   client.get('/payments', {
     headers: {
       'access-token': Cookies.get('_access_token') || '',

@@ -7,7 +7,7 @@ import { Box, Flex, Img } from '@chakra-ui/react'
 import logo from 'assets/images/logo-horizon.svg'
 
 export const Header: VFC = memo(() => (
-  <Flex as="header" align="center" h="64px" borderBottom="1px" borderColor="gray.100" p={4}>
+  <Flex as="header" align="center" h="56px" borderBottom="1px" borderColor="gray.100" p={4}>
     <Box flex="1" textAlign="center">
       <Img src={logo} />
     </Box>

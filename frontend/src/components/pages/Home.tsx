@@ -7,6 +7,7 @@ import { DebtAlert } from 'components/atoms/alert/debtAlert'
 import { CircleAddButton } from 'components/atoms/button/CircleAddButton'
 import { CurrentStatusArea } from 'components/organisms/CurrentStatusArea'
 import { InvitationAlert } from 'components/organisms/InvitationAlert'
+import { NoPaymentList } from 'components/organisms/NoPaymentList'
 import { PaymentList } from 'components/organisms/PaymentList'
 import { UnavailableStatusArea } from 'components/organisms/UnavailableStatusArea'
 import { HeaderLayout } from 'components/templates/HeaderLayout'
@@ -47,7 +48,6 @@ export const Home: VFC = memo(() => {
     } catch {
       errorToast('取得に失敗しました')
     }
-    setIsPaymentListLoaded(true)
   }
 
   useEffect(() => {
@@ -65,7 +65,7 @@ export const Home: VFC = memo(() => {
       {!teamStatus.isTeamCapacityReached && <InvitationAlert invitationToken={teamStatus.invitationToken} />}
       {currentUser?.id === teamStatus.smallestPaymentUser?.id && <DebtAlert />}
       {teamStatus.isTeamCapacityReached ? <CurrentStatusArea /> : <UnavailableStatusArea />}
-      {isPaymentListLoaded && paymentList != null ? <PaymentList paymentList={paymentList} /> : ''}
+      {isPaymentListLoaded && paymentList.length ? <PaymentList paymentList={paymentList} /> : <NoPaymentList />}
       <Box position="fixed" bottom="24px" w="100%">
         <Center w="100%">
           <Link to="/payments/new">
