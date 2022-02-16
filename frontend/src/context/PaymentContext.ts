@@ -44,6 +44,7 @@ export const PaymentContext = createContext<PaymentContextType>({
     largestPaymentUser: null,
     smallestPaymentUser: null,
     isTeamCapacityReached: false,
+    invitationToken: '',
   },
   setTeamStatus: () => {
     throw new Error('PaymentContext not avaliable')

@@ -6,6 +6,7 @@ import { Box, Center } from '@chakra-ui/react'
 import { DebtAlert } from 'components/atoms/alert/debtAlert'
 import { CircleAddButton } from 'components/atoms/button/CircleAddButton'
 import { CurrentStatusArea } from 'components/organisms/CurrentStatusArea'
+import { InvitationAlert } from 'components/organisms/InvitationAlert'
 import { PaymentList } from 'components/organisms/PaymentList'
 import { UnavailableStatusArea } from 'components/organisms/UnavailableStatusArea'
 import { HeaderLayout } from 'components/templates/HeaderLayout'
@@ -61,6 +62,7 @@ export const Home: VFC = memo(() => {
 
   return (
     <HeaderLayout>
+      {!teamStatus.isTeamCapacityReached && <InvitationAlert invitationToken={teamStatus.invitationToken} />}
       {currentUser?.id === teamStatus.smallestPaymentUser?.id && <DebtAlert />}
       {teamStatus.isTeamCapacityReached ? <CurrentStatusArea /> : <UnavailableStatusArea />}
       {isPaymentListLoaded && paymentList != null ? <PaymentList paymentList={paymentList} /> : ''}

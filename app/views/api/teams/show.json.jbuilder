@@ -10,3 +10,4 @@ if  @team.smallest_payment_user.present?
   end
 end
 json.is_team_capacity_reached @team.capacity_reached?
+json.invitation_token @team.invitation_token
