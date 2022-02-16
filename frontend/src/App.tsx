@@ -12,7 +12,6 @@ import { ShowPaymentEntry } from 'components/pages/ShowPaymentEntry'
 import { SignIn } from 'components/pages/SignIn'
 import { SignUp } from 'components/pages/SignUp'
 import { PrivateRoute } from 'components/router/PrivateRoute'
-import { HeaderLayout } from 'components/templates/HeaderLayout'
 import { AuthContext } from 'context/AuthContext'
 import { PaymentContext } from 'context/PaymentContext'
 import { getCurrentUser } from 'lib/api/auth'
@@ -65,45 +64,42 @@ const App: VFC = () => {
       <ChakraProvider theme={theme}>
         {/* eslint-disable-next-line react/jsx-no-constructed-context-values */}
         <AuthContext.Provider value={{ isLoaded, setIsLoaded, isSignedIn, setIsSignedIn, currentUser, setCurrentUser }}>
-          <HeaderLayout>
-            <Switch>
-              <Route path="/signin" component={SignIn} />
-              <Route path="/signup" component={SignUp} />
-              <Route path="/invitation" component={Invitation} />
-
-              <PaymentContext.Provider
-                // eslint-disable-next-line react/jsx-no-constructed-context-values
-                value={{
-                  inputAmount,
-                  setInputAmount,
-                  inputDetail,
-                  setInputDetail,
-                  inputPaidAt,
-                  setInputPaidAt,
-                  paymentList,
-                  setPaymentList,
-                  isPaymentListLoaded,
-                  setIsPaymentListLoaded,
-                  teamStatus,
-                  setTeamStatus,
-                }}
-              >
-                <PrivateRoute>
-                  <Route
-                    path="/"
-                    render={() => (
-                      <Switch>
-                        <Route exact path="/" component={Home} />
-                        <Route path="/payments/new" component={NewPaymentEntry} />
-                        <Route path="/payments/:id" component={ShowPaymentEntry} />
-                        <Route path="/setting" component={Setting} />
-                      </Switch>
-                    )}
-                  />
-                </PrivateRoute>
-              </PaymentContext.Provider>
-            </Switch>
-          </HeaderLayout>
+          <Switch>
+            <Route path="/signin" component={SignIn} />
+            <Route path="/signup" component={SignUp} />
+            <Route path="/invitation" component={Invitation} />
+            <PaymentContext.Provider
+              // eslint-disable-next-line react/jsx-no-constructed-context-values
+              value={{
+                inputAmount,
+                setInputAmount,
+                inputDetail,
+                setInputDetail,
+                inputPaidAt,
+                setInputPaidAt,
+                paymentList,
+                setPaymentList,
+                isPaymentListLoaded,
+                setIsPaymentListLoaded,
+                teamStatus,
+                setTeamStatus,
+              }}
+            >
+              <PrivateRoute>
+                <Route
+                  path="/"
+                  render={() => (
+                    <Switch>
+                      <Route exact path="/" component={Home} />
+                      <Route path="/payments/new" component={NewPaymentEntry} />
+                      <Route path="/payments/:id" component={ShowPaymentEntry} />
+                      <Route path="/setting" component={Setting} />
+                    </Switch>
+                  )}
+                />
+              </PrivateRoute>
+            </PaymentContext.Provider>
+          </Switch>
         </AuthContext.Provider>
       </ChakraProvider>
     </BrowserRouter>
