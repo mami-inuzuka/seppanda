@@ -25,7 +25,7 @@ const App: VFC = () => {
   const [isLoaded, setIsLoaded] = useState<boolean>(false)
   const [isSignedIn, setIsSignedIn] = useState<boolean>(false)
   const [currentUser, setCurrentUser] = useState<User | null>(null)
-  const [paymentList, setPaymentList] = useState<PaymentListGroupByPaidAt[] | null>(null)
+  const [paymentList, setPaymentList] = useState<PaymentListGroupByPaidAt[]>([])
   const [teamStatus, setTeamStatus] = useState<TeamStatus>({
     refundAmount: 0,
     largestPaymentUser: null,
