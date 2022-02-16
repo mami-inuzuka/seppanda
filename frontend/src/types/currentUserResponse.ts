@@ -1,4 +1,4 @@
-import type { Avatar } from './avatar'
+import type { Avatar } from 'types/avatar'
 import type { User } from 'types/user'
 
 export type CurrentUserResponse = {

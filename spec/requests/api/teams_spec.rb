@@ -24,15 +24,12 @@ RSpec.describe 'Api::Teams', type: :request do
         current_user.payments.create(amount: 100 * (n + 1), team_id: current_user.team_id, paid_at: '2022-02-14')
       end
       get api_team_path(current_user.team_id), headers: auth_headers
+      json = JSON.parse(response.body)
       expect(response).to have_http_status(:ok)
-      expect(response.body).to eq(
-        {
-          refund_amount: team.refund_amount,
-          largest_payment_user: team.largest_payment_user,
-          smallest_payment_user: team.smallest_payment_user,
-          is_team_capacity_reached: team.capacity_reached?
-        }.to_json
-      )
+      expect(json['is_team_capacity_reached']).to eq(team.capacity_reached?)
+      expect(json['refund_amount']).to eq(team.refund_amount)
+      expect(json['largest_payment_user']['id']).to eq(team.largest_payment_user.id)
+      expect(json['smallest_payment_user']['id']).to eq(team.smallest_payment_user.id)
     end
   end
 end

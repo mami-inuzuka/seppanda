@@ -1,4 +1,3 @@
-import type { Avatar } from 'types/avatar'
 import type { User } from 'types/user'
 
 export type Payment = {
@@ -9,5 +8,4 @@ export type Payment = {
   settled: boolean
   settledAt: null
   user: User
-  avatar: Avatar
 }
