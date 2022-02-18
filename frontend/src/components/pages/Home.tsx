@@ -8,8 +8,8 @@ import bgOrange from 'assets/images/bg_orange.png'
 import { CircleAddButton } from 'components/atoms/button/CircleAddButton'
 import { CurrentStatusCard } from 'components/organisms/CurrentStatusCard'
 import { InvitationAlert } from 'components/organisms/InvitationAlert'
-import { NoPaymentList } from 'components/organisms/NoPaymentList'
-import { PaymentList } from 'components/organisms/PaymentList'
+import { Loading } from 'components/organisms/Loading'
+import { PaymentListArea } from 'components/organisms/PaymentListArea'
 import { HomeHeaderLayout } from 'components/templates/HomeHeaderLayout'
 import { AuthContext } from 'context/AuthContext'
 import { PaymentContext } from 'context/PaymentContext'
@@ -19,7 +19,6 @@ import { useToast } from 'lib/toast'
 
 export const Home: VFC = memo(() => {
   const {
-    paymentList,
     setPaymentList,
     isPaymentListLoaded,
     setIsPaymentListLoaded,
@@ -82,7 +81,15 @@ export const Home: VFC = memo(() => {
       >
         <HomeHeaderLayout>
           <CurrentStatusCard />
-          {isPaymentListLoaded && paymentList.length ? <PaymentList paymentList={paymentList} /> : <NoPaymentList />}
+          <Box borderTopColor="gray.200" borderTopWidth="1px" flex="1">
+            {isPaymentListLoaded ? (
+              <PaymentListArea />
+            ) : (
+              <Box pt={12} textAlign="center">
+                <Loading />
+              </Box>
+            )}
+          </Box>
           <Box position="fixed" bottom="24px" w="100%">
             <Center w="100%">
               <Link to="/payments/new">
