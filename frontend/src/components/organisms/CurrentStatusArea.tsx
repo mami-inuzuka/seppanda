@@ -6,10 +6,12 @@ import cardLabel from 'assets/images/card-label.svg'
 import { SecondaryButton } from 'components/atoms/button/SecondaryButton'
 import { CardText } from 'components/molcules/CardText'
 import { BasicModal } from 'components/organisms/BasicModal'
+import { AuthContext } from 'context/AuthContext'
 import { PaymentContext } from 'context/PaymentContext'
 
 export const CurrentStatusArea: VFC = memo(() => {
   const { teamStatus } = useContext(PaymentContext)
+  const { currentUser } = useContext(AuthContext)
   const { isOpen: isOpenSettleModal, onOpen: onOpenSettleModal, onClose: onCloseSettleModal } = useDisclosure()
 
   return (
@@ -52,8 +54,14 @@ export const CurrentStatusArea: VFC = memo(() => {
         >
           <CardText />
           <Center mb={4}>
-            <Text fontSize="5xl" lineHeight="1" fontWeight="bold" _after={{ content: `"円"`, fontSize: '3xl' }}>
-              {teamStatus.refundAmount !== 0 && teamStatus.refundAmount.toLocaleString()}
+            <Text
+              fontSize="5xl"
+              lineHeight="1"
+              fontWeight="bold"
+              color={currentUser?.isDebt ? 'red.500' : 'green.500'}
+              _after={{ content: `"円"`, fontSize: '3xl' }}
+            >
+              {teamStatus.refundAmount === 0 ? '-' : teamStatus.refundAmount.toLocaleString()}
             </Text>
           </Center>
           <Box textAlign="center">
