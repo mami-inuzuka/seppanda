@@ -5,6 +5,7 @@ import { AspectRatio, Box, Center, Text, useDisclosure } from '@chakra-ui/react'
 import cardLabel from 'assets/images/card-label.svg'
 import { SecondaryButton } from 'components/atoms/button/SecondaryButton'
 import { CardText } from 'components/molcules/CardText'
+import { RefundAmount } from 'components/molcules/RefundAmount'
 import { BasicModal } from 'components/organisms/BasicModal'
 import { AuthContext } from 'context/AuthContext'
 import { PaymentContext } from 'context/PaymentContext'
@@ -55,17 +56,7 @@ export const CurrentStatusArea: VFC = memo(() => {
             }}
           >
             <CardText />
-            <Center mb={4}>
-              <Text
-                fontSize="5xl"
-                lineHeight="1"
-                fontWeight="bold"
-                color={currentUser?.isDebt ? 'red.500' : 'green.500'}
-                _after={{ content: `"円"`, fontSize: '3xl' }}
-              >
-                {teamStatus.refundAmount === 0 ? '-' : teamStatus.refundAmount.toLocaleString()}
-              </Text>
-            </Center>
+            <RefundAmount />
             {teamStatus.refundAmount !== 0 && (
               <Box textAlign="center">
                 <SecondaryButton size="sm" isFullWidth={false} onClick={onOpenSettleModal}>
