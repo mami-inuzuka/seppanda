@@ -1,5 +1,6 @@
 import { extendTheme } from '@chakra-ui/react'
 
+import { Button } from 'theme/components/Button'
 import { FormLabel } from 'theme/components/FormLabel'
 import { Input } from 'theme/components/Input'
 
@@ -80,5 +81,6 @@ export const theme = extendTheme({
   components: {
     Input,
     FormLabel,
+    Button,
   },
 })
