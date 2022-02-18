@@ -3,7 +3,7 @@ import { memo, useContext, VFC } from 'react'
 import { Box, Center, Flex, Text, useDisclosure } from '@chakra-ui/react'
 
 import cardLabel from 'assets/images/card-label.svg'
-import { DangerButton } from 'components/atoms/button/DangerButton'
+import { SecondaryButton } from 'components/atoms/button/SecondaryButton'
 import { BasicModal } from 'components/organisms/BasicModal'
 import { AuthContext } from 'context/AuthContext'
 import { PaymentContext } from 'context/PaymentContext'
@@ -75,9 +75,11 @@ export const CurrentStatusArea: VFC = memo(() => {
               {teamStatus.refundAmount !== 0 && teamStatus.refundAmount.toLocaleString()}
             </Text>
           </Center>
-          <Center onClick={onOpenSettleModal}>
-            <DangerButton>精算する</DangerButton>
-          </Center>
+          <Box textAlign="center">
+            <SecondaryButton size="sm" isFullWidth={false} onClick={onOpenSettleModal}>
+              精算する
+            </SecondaryButton>
+          </Box>
         </Box>
       </Box>
     </>
