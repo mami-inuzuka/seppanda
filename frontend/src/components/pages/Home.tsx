@@ -3,14 +3,14 @@ import { Link } from 'react-router-dom'
 
 import { Box, Center } from '@chakra-ui/react'
 
-import { DebtAlert } from 'components/atoms/alert/debtAlert'
+import bgBlue from 'assets/images/bg_blue.png'
 import { CircleAddButton } from 'components/atoms/button/CircleAddButton'
 import { CurrentStatusArea } from 'components/organisms/CurrentStatusArea'
 import { InvitationAlert } from 'components/organisms/InvitationAlert'
 import { NoPaymentList } from 'components/organisms/NoPaymentList'
 import { PaymentList } from 'components/organisms/PaymentList'
 import { UnavailableStatusArea } from 'components/organisms/UnavailableStatusArea'
-import { HeaderLayout } from 'components/templates/HeaderLayout'
+import { HomeHeaderLayout } from 'components/templates/HomeHeaderLayout'
 import { AuthContext } from 'context/AuthContext'
 import { PaymentContext } from 'context/PaymentContext'
 import { getPayments } from 'lib/api/payment'
@@ -61,18 +61,21 @@ export const Home: VFC = memo(() => {
   }, [])
 
   return (
-    <HeaderLayout>
+    <>
       {!teamStatus.isTeamCapacityReached && <InvitationAlert invitationToken={teamStatus.invitationToken} />}
-      {currentUser?.id === teamStatus.smallestPaymentUser?.id && <DebtAlert />}
-      {teamStatus.isTeamCapacityReached ? <CurrentStatusArea /> : <UnavailableStatusArea />}
-      {isPaymentListLoaded && paymentList.length ? <PaymentList paymentList={paymentList} /> : <NoPaymentList />}
-      <Box position="fixed" bottom="24px" w="100%">
-        <Center w="100%">
-          <Link to="/payments/new">
-            <CircleAddButton />
-          </Link>
-        </Center>
+      <Box backgroundImage={`url(${bgBlue})`} backgroundSize="contain" backgroundRepeat="no-repeat">
+        <HomeHeaderLayout>
+          {teamStatus.isTeamCapacityReached ? <CurrentStatusArea /> : <UnavailableStatusArea />}
+          {isPaymentListLoaded && paymentList.length ? <PaymentList paymentList={paymentList} /> : <NoPaymentList />}
+          <Box position="fixed" bottom="24px" w="100%">
+            <Center w="100%">
+              <Link to="/payments/new">
+                <CircleAddButton />
+              </Link>
+            </Center>
+          </Box>
+        </HomeHeaderLayout>
       </Box>
-    </HeaderLayout>
+    </>
   )
 })
