@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { Box, Center } from '@chakra-ui/react'
 
 import bgBlue from 'assets/images/bg_blue.png'
+import bgOrange from 'assets/images/bg_orange.png'
 import { CircleAddButton } from 'components/atoms/button/CircleAddButton'
 import { CurrentStatusArea } from 'components/organisms/CurrentStatusArea'
 import { InvitationAlert } from 'components/organisms/InvitationAlert'
@@ -63,7 +64,11 @@ export const Home: VFC = memo(() => {
   return (
     <>
       {!teamStatus.isTeamCapacityReached && <InvitationAlert invitationToken={teamStatus.invitationToken} />}
-      <Box backgroundImage={`url(${bgBlue})`} backgroundSize="contain" backgroundRepeat="no-repeat">
+      <Box
+        backgroundImage={currentUser?.color === 'blue' ? `url(${bgBlue})` : `url(${bgOrange})`}
+        backgroundSize="contain"
+        backgroundRepeat="no-repeat"
+      >
         <HomeHeaderLayout>
           {teamStatus.isTeamCapacityReached ? <CurrentStatusArea /> : <UnavailableStatusArea />}
           {isPaymentListLoaded && paymentList.length ? <PaymentList paymentList={paymentList} /> : <NoPaymentList />}
