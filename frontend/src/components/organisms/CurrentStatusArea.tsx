@@ -52,7 +52,7 @@ export const CurrentStatusArea: VFC = memo(() => {
           }}
         >
           {teamStatus.refundAmount === 0 && '現在貸し借りはありません'}
-          {teamStatus.refundAmount !== 0 && currentUser?.id === teamStatus.largestPaymentUser?.id && (
+          {teamStatus.refundAmount !== 0 && !currentUser?.isDebt && (
             <Flex fontSize="sm" fontWeight="bold" justify="center" align="center" mb={2}>
               あいてに
               <Text bg="rgba(107, 178, 73, 0.1)" color="green.500" py={0.5} px={1.5} mx={1}>
@@ -61,7 +61,7 @@ export const CurrentStatusArea: VFC = memo(() => {
               金額
             </Flex>
           )}
-          {teamStatus.refundAmount !== 0 && currentUser?.id !== teamStatus.largestPaymentUser?.id && (
+          {teamStatus.refundAmount !== 0 && currentUser?.isDebt && (
             <Flex fontSize="sm" fontWeight="bold" justify="center" align="center" mb={2}>
               あいてに
               <Text bg="rgba(208, 57, 57, 0.1)" color="red.500" py={0.5} px={1.5} mx={1}>
