@@ -4,6 +4,13 @@ import { FormLabel } from 'theme/components/FormLabel'
 import { Input } from 'theme/components/Input'
 
 export const theme = extendTheme({
+  styles: {
+    global: {
+      body: {
+        color: 'black',
+      },
+    },
+  },
   colors: {
     brand: {
       primary: '#6BB349',
