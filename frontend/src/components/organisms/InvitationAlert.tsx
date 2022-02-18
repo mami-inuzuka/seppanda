@@ -18,13 +18,13 @@ export const InvitationAlert: FC<Props> = (props) => {
     successToast('コピーしました')
   }
   return (
-    <Box bg="brand.blue" p={4} color="white">
+    <Box bg="gray.100" p={4}>
       <Text fontSize="xs" fontWeight="bold" align="center" mb={3}>
         お相手の登録がまだのようです
         <br />
         下記のURLを共有して登録をしてもらおう
       </Text>
-      <Flex bg="cyan.500" p={3}>
+      <Flex bg="gray.200" p={3}>
         <Text fontSize="xs">{invitationUrl}</Text>
         <CopyToClipboard text={invitationUrl}>
           <Box onClick={handleFeedback}>
