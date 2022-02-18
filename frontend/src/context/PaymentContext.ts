@@ -16,6 +16,8 @@ export type PaymentContextType = {
   setIsPaymentListLoaded: React.Dispatch<React.SetStateAction<boolean>>
   teamStatus: TeamStatus
   setTeamStatus: React.Dispatch<React.SetStateAction<TeamStatus>>
+  isTeamStatusLoaded: boolean
+  setIsTeamStatusLoaded: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export const PaymentContext = createContext<PaymentContextType>({
@@ -47,6 +49,10 @@ export const PaymentContext = createContext<PaymentContextType>({
     invitationToken: '',
   },
   setTeamStatus: () => {
+    throw new Error('PaymentContext not avaliable')
+  },
+  isTeamStatusLoaded: false,
+  setIsTeamStatusLoaded: () => {
     throw new Error('PaymentContext not avaliable')
   },
 })

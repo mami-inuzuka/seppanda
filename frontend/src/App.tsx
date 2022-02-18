@@ -34,6 +34,7 @@ const App: VFC = () => {
     invitationToken: '',
   })
   const [isPaymentListLoaded, setIsPaymentListLoaded] = useState<boolean>(false)
+  const [isTeamStatusLoaded, setIsTeamStatusLoaded] = useState<boolean>(false)
   const [inputAmount, setInputAmount] = useState<string>('')
   const [inputDetail, setInputDetail] = useState<string>('')
   const [inputPaidAt, setInputPaidAt] = useState<string>(DateTime.local().toFormat('yyyy-MM-dd'))
@@ -84,6 +85,8 @@ const App: VFC = () => {
                 setIsPaymentListLoaded,
                 teamStatus,
                 setTeamStatus,
+                isTeamStatusLoaded,
+                setIsTeamStatusLoaded,
               }}
             >
               <PrivateRoute>
