@@ -71,11 +71,14 @@ export const Home: VFC = memo(() => {
 
   return (
     <>
-      {!teamStatus.isTeamCapacityReached && <InvitationAlert invitationToken={teamStatus.invitationToken} />}
+      {isTeamStatusLoaded && !teamStatus.isTeamCapacityReached && (
+        <InvitationAlert invitationToken={teamStatus.invitationToken} />
+      )}
       <Box
         backgroundImage={currentUser?.color === 'blue' ? `url(${bgBlue})` : `url(${bgOrange})`}
         backgroundSize="contain"
         backgroundRepeat="no-repeat"
+        minH="100vh"
       >
         <HomeHeaderLayout>
           <CurrentStatusCard />
