@@ -1,9 +1,11 @@
 import { memo, useContext, VFC } from 'react'
 
-import { Box, Center, Flex, Text, useDisclosure } from '@chakra-ui/react'
+import { AspectRatio, Box, Center, Text, useDisclosure } from '@chakra-ui/react'
 
-import { DangerButton } from 'components/atoms/button/DangerButton'
-import { UserIcon } from 'components/atoms/icon/UserIcon'
+import cardLabel from 'assets/images/card-label.svg'
+import { SecondaryButton } from 'components/atoms/button/SecondaryButton'
+import { CardText } from 'components/molcules/CardText'
+import { RefundAmount } from 'components/molcules/RefundAmount'
 import { BasicModal } from 'components/organisms/BasicModal'
 import { AuthContext } from 'context/AuthContext'
 import { PaymentContext } from 'context/PaymentContext'
@@ -16,32 +18,54 @@ export const CurrentStatusArea: VFC = memo(() => {
   return (
     <>
       <BasicModal isOpen={isOpenSettleModal} onClose={onCloseSettleModal} size="xl" />
-      <Box p={12}>
-        {teamStatus.refundAmount === 0 && '現在貸し借りはありません'}
-        {teamStatus.refundAmount !== 0 && currentUser?.id === teamStatus.largestPaymentUser?.id && (
-          <Flex justify="center" align="center">
-            <Box mr={2}>
-              <UserIcon user={teamStatus.smallestPaymentUser} size="32px" />
-            </Box>
-            に返してもらう金額
-          </Flex>
-        )}
-        {teamStatus.refundAmount !== 0 && currentUser?.id !== teamStatus.largestPaymentUser?.id && (
-          <Flex justify="center" align="center">
-            <Box mr={2}>
-              <UserIcon user={teamStatus.largestPaymentUser} size="32px" />
-            </Box>
-            に返す金額
-          </Flex>
-        )}
-        <Center>
-          <Text fontSize="56px" fontWeight="bold" _after={{ content: `"円"`, fontSize: '3xl' }}>
-            {teamStatus.refundAmount !== 0 && teamStatus.refundAmount.toLocaleString()}
-          </Text>
-        </Center>
-        <Center onClick={onOpenSettleModal}>
-          <DangerButton>精算する</DangerButton>
-        </Center>
+      <Box px={8} mb={8}>
+        <AspectRatio ratio={311 / 166}>
+          <Box
+            py={6}
+            borderRadius="lg"
+            flexDirection="column"
+            bg="white"
+            boxShadow="0px 4px 20px rgba(0, 0, 0, 0.08)"
+            position="relative"
+            _before={{
+              content: `""`,
+              width: '13px',
+              position: 'absolute',
+              left: '2',
+              top: '0',
+              bottom: '0',
+              margin: 'auto',
+              height: '100%',
+              backgroundImage: `url(${cardLabel})`,
+              backgroundRepeat: 'no-repeat',
+              backgroundPosition: 'center',
+            }}
+            _after={{
+              content: `""`,
+              width: '13px',
+              position: 'absolute',
+              right: '2',
+              top: '0',
+              bottom: '0',
+              margin: 'auto',
+              height: '100%',
+              backgroundImage: `url(${cardLabel})`,
+              backgroundRepeat: 'no-repeat',
+              backgroundPosition: 'center',
+              transform: 'rotate(180deg)',
+            }}
+          >
+            <CardText />
+            <RefundAmount />
+            {teamStatus.refundAmount !== 0 && (
+              <Box textAlign="center">
+                <SecondaryButton size="sm" isFullWidth={false} onClick={onOpenSettleModal}>
+                  精算する
+                </SecondaryButton>
+              </Box>
+            )}
+          </Box>
+        </AspectRatio>
       </Box>
     </>
   )
