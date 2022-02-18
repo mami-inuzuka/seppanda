@@ -26,7 +26,7 @@ export const PaymentList: VFC<Props> = memo((props) => {
     <>
       {paymentList.map((paymentListItem) => (
         <Box key={paymentListItem.date}>
-          <Box bg="gray.50" fontSize="xs" color="gray.400" p={1}>
+          <Box bg="gray.100" fontSize="xs" color="gray.500" p={1}>
             {DateTime.fromISO(paymentListItem.date).toFormat('yyyy.MM.dd')}
           </Box>
           {paymentListItem.payments.map((payment) => (
@@ -37,7 +37,7 @@ export const PaymentList: VFC<Props> = memo((props) => {
                 onClick={() => handleRowClick(payment)}
                 p={4}
                 borderBottom="1px"
-                borderBottomColor="gray.50"
+                borderBottomColor="gray.100"
               >
                 <Box mr={4}>
                   <UserIcon user={payment.user} size="28px" />
