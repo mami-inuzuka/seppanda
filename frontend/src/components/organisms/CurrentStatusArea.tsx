@@ -1,18 +1,16 @@
 import { memo, useContext, VFC } from 'react'
 
-import { AspectRatio, Box, Center, Text, useDisclosure } from '@chakra-ui/react'
+import { AspectRatio, Box, useDisclosure } from '@chakra-ui/react'
 
 import cardLabel from 'assets/images/card-label.svg'
 import { SecondaryButton } from 'components/atoms/button/SecondaryButton'
 import { CardText } from 'components/molcules/CardText'
 import { RefundAmount } from 'components/molcules/RefundAmount'
 import { BasicModal } from 'components/organisms/BasicModal'
-import { AuthContext } from 'context/AuthContext'
 import { PaymentContext } from 'context/PaymentContext'
 
 export const CurrentStatusArea: VFC = memo(() => {
   const { teamStatus } = useContext(PaymentContext)
-  const { currentUser } = useContext(AuthContext)
   const { isOpen: isOpenSettleModal, onOpen: onOpenSettleModal, onClose: onCloseSettleModal } = useDisclosure()
 
   return (

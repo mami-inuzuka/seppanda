@@ -1,9 +1,10 @@
 import { useContext, useEffect, VFC } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 
-import { CloseButton, Flex, FormControl, FormLabel, Input } from '@chakra-ui/react'
+import { Flex, FormControl, FormLabel, Grid, Input } from '@chakra-ui/react'
 
-import { BarButton } from 'components/atoms/button/BarButton'
+import { DangerButton } from 'components/atoms/button/DangerButton'
+import { PrimaryButton } from 'components/atoms/button/PrimaryButton'
 import { HeaderWithTitleLayout } from 'components/templates/HeaderWithTitleLayout'
 import { PaymentContext } from 'context/PaymentContext'
 import { deletePayment, updatePayment } from 'lib/api/payment'
@@ -86,55 +87,54 @@ export const ShowPaymentEntry: VFC = () => {
 
   return (
     <HeaderWithTitleLayout title="支払い情報の編集">
-      <Flex flexDirection="column" h="100vh">
-        <FormControl>
-          <FormLabel htmlFor="amount">金額</FormLabel>
-          <Input
-            value={inputAmount}
-            onChange={(event) => setInputAmount(event.target.value)}
-            id="amount"
-            name="amount"
-            type="number"
-            size="lg"
-            placeholder="金額を入力"
-          />
-        </FormControl>
-        <FormControl>
-          <FormLabel htmlFor="detail">内容</FormLabel>
-          <Input
-            value={inputDetail}
-            onChange={(event) => setInputDetail(event.target.value)}
-            id="detail"
-            name="detail"
-            type="text"
-            size="lg"
-            placeholder="例）スーパー"
-          />
-        </FormControl>
-        <FormControl>
-          <FormLabel htmlFor="date">支払日</FormLabel>
-          <Input
-            value={inputPaidAt}
-            onChange={(event) => setInputPaidAt(event.target.value)}
-            id="date"
-            type="date"
-            size="lg"
-            name="paid_at"
-          />
-        </FormControl>
-        <Flex h="64px">
-          <CloseButton onClick={() => onClickClose()} />
-          <BarButton
-            onClickButton={handleUpdateAmount}
-            disabled={inputAmount === '' || inputAmount === '0'}
-            bg="green.500"
-          >
-            更新する
-          </BarButton>
-          <BarButton onClickButton={handleDeletePayment} disabled={false} bg="red.500">
-            削除する
-          </BarButton>
-        </Flex>
+      <Flex flexDirection="column" p={6}>
+        <form>
+          <Grid gap={6}>
+            <FormControl>
+              <FormLabel htmlFor="amount">金額</FormLabel>
+              <Input
+                value={inputAmount}
+                onChange={(event) => setInputAmount(event.target.value)}
+                id="amount"
+                name="amount"
+                type="number"
+                size="lg"
+                placeholder="金額を入力"
+              />
+            </FormControl>
+            <FormControl>
+              <FormLabel htmlFor="detail">内容</FormLabel>
+              <Input
+                value={inputDetail}
+                onChange={(event) => setInputDetail(event.target.value)}
+                id="detail"
+                name="detail"
+                type="text"
+                size="lg"
+                placeholder="例）スーパー"
+              />
+            </FormControl>
+            <FormControl>
+              <FormLabel htmlFor="date">支払日</FormLabel>
+              <Input
+                value={inputPaidAt}
+                onChange={(event) => setInputPaidAt(event.target.value)}
+                id="date"
+                type="date"
+                size="lg"
+                name="paid_at"
+              />
+            </FormControl>
+            <Grid gap={4}>
+              <PrimaryButton onClickButton={handleUpdateAmount} disabled={inputAmount === '' || inputAmount === '0'}>
+                更新する
+              </PrimaryButton>
+              <DangerButton size="xl" isFullWidth onClick={handleDeletePayment}>
+                削除する
+              </DangerButton>
+            </Grid>
+          </Grid>
+        </form>
       </Flex>
     </HeaderWithTitleLayout>
   )
