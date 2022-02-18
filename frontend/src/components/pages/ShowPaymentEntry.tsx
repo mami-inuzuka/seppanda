@@ -1,9 +1,8 @@
 import { useContext, useEffect, VFC } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 
-import { CloseButton, Flex, FormControl, FormLabel, Grid, Input } from '@chakra-ui/react'
+import { Flex, FormControl, FormLabel, Grid, Input } from '@chakra-ui/react'
 
-import { BarButton } from 'components/atoms/button/BarButton'
 import { DangerButton } from 'components/atoms/button/DangerButton'
 import { PrimaryButton } from 'components/atoms/button/PrimaryButton'
 import { HeaderWithTitleLayout } from 'components/templates/HeaderWithTitleLayout'
