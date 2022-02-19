@@ -6,11 +6,10 @@ import { Box, Center } from '@chakra-ui/react'
 import bgBlue from 'assets/images/bg_blue.png'
 import bgOrange from 'assets/images/bg_orange.png'
 import { CircleAddButton } from 'components/atoms/button/CircleAddButton'
-import { CurrentStatusArea } from 'components/organisms/CurrentStatusArea'
+import { CurrentStatusCard } from 'components/organisms/CurrentStatusCard'
 import { InvitationAlert } from 'components/organisms/InvitationAlert'
-import { NoPaymentList } from 'components/organisms/NoPaymentList'
-import { PaymentList } from 'components/organisms/PaymentList'
-import { UnavailableStatusArea } from 'components/organisms/UnavailableStatusArea'
+import { Loading } from 'components/organisms/Loading'
+import { PaymentListArea } from 'components/organisms/PaymentListArea'
 import { HomeHeaderLayout } from 'components/templates/HomeHeaderLayout'
 import { AuthContext } from 'context/AuthContext'
 import { PaymentContext } from 'context/PaymentContext'
@@ -19,8 +18,15 @@ import { getTeamStatus } from 'lib/api/team'
 import { useToast } from 'lib/toast'
 
 export const Home: VFC = memo(() => {
-  const { paymentList, setPaymentList, isPaymentListLoaded, setIsPaymentListLoaded, teamStatus, setTeamStatus } =
-    useContext(PaymentContext)
+  const {
+    setPaymentList,
+    isPaymentListLoaded,
+    setIsPaymentListLoaded,
+    teamStatus,
+    setTeamStatus,
+    isTeamStatusLoaded,
+    setIsTeamStatusLoaded,
+  } = useContext(PaymentContext)
   const { currentUser } = useContext(AuthContext)
   const { errorToast } = useToast()
 
@@ -49,6 +55,7 @@ export const Home: VFC = memo(() => {
     } catch {
       errorToast('取得に失敗しました')
     }
+    setIsTeamStatusLoaded(true)
   }
 
   useEffect(() => {
@@ -63,15 +70,26 @@ export const Home: VFC = memo(() => {
 
   return (
     <>
-      {!teamStatus.isTeamCapacityReached && <InvitationAlert invitationToken={teamStatus.invitationToken} />}
+      {isTeamStatusLoaded && !teamStatus.isTeamCapacityReached && (
+        <InvitationAlert invitationToken={teamStatus.invitationToken} />
+      )}
       <Box
         backgroundImage={currentUser?.color === 'blue' ? `url(${bgBlue})` : `url(${bgOrange})`}
         backgroundSize="contain"
         backgroundRepeat="no-repeat"
+        minH="100vh"
       >
         <HomeHeaderLayout>
-          {teamStatus.isTeamCapacityReached ? <CurrentStatusArea /> : <UnavailableStatusArea />}
-          {isPaymentListLoaded && paymentList.length ? <PaymentList paymentList={paymentList} /> : <NoPaymentList />}
+          <CurrentStatusCard />
+          <Box borderTopColor="gray.200" borderTopWidth="1px" flex="1">
+            {isPaymentListLoaded ? (
+              <PaymentListArea />
+            ) : (
+              <Box pt={12} textAlign="center">
+                <Loading />
+              </Box>
+            )}
+          </Box>
           <Box position="fixed" bottom="24px" w="100%">
             <Center w="100%">
               <Link to="/payments/new">
