@@ -7,16 +7,17 @@ class Team < ApplicationRecord
   # 現在は1teamにつき2人まで登録できるようにする
   MAX_TEAM_MENBER_NUMBER = 2
 
-  def total_amount
-    payments.sum(:amount)
+  def unsettled_total_amount
+    payments.unsettled.sum(:amount)
   end
 
+  # チーム全体の未清算支払額の合計を人数で割ったものが一人当たり払うべき額
   def split_bill_amount
-    total_amount / MAX_TEAM_MENBER_NUMBER
+    unsettled_total_amount / MAX_TEAM_MENBER_NUMBER
   end
 
   def refund_amount
-    (users.first.payments.sum(:amount) - split_bill_amount).abs
+    (first_user_unsettled_total_amount - split_bill_amount).abs
   end
 
   def largest_payment_user
@@ -38,6 +39,10 @@ class Team < ApplicationRecord
   private
 
   def user_id_and_total_amount
-    users.map { |user| [user.id, user.payments.sum(:amount)] }.to_h
+    users.map { |user| [user.id, user.payments.unsettled.sum(:amount)] }.to_h
+  end
+
+  def first_user_unsettled_total_amount
+    users.first.payments.unsettled.sum(:amount)
   end
 end

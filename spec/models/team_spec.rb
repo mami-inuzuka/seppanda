@@ -34,8 +34,8 @@ RSpec.describe Team, type: :model do
         expect(user2.payments.sum(:amount)).to eq 400
       end
 
-      example 'teamの合計金額' do
-        expect(team.total_amount).to eq 1400
+      example 'teamの未清算の支払い合計' do
+        expect(team.unsettled_total_amount).to eq 1400
       end
 
       example '1人あたり支払うべき金額' do
@@ -94,8 +94,8 @@ RSpec.describe Team, type: :model do
         expect(user2.payments.sum(:amount)).to eq 0
       end
 
-      example 'teamの合計金額' do
-        expect(team.total_amount).to eq 0
+      example 'teamの未清算の支払い合計' do
+        expect(team.unsettled_total_amount).to eq 0
       end
 
       example '1人あたり支払うべき金額' do
