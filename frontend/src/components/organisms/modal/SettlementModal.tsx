@@ -26,6 +26,7 @@ export const SettelementModal: VFC<Props> = (props) => {
       const res = await settleTeamPayments(currentUser!.teamId)
       if (res?.status === 200) {
         successToast('清算が完了しました')
+        onClose()
       } else {
         errorToast('処理に失敗しました')
       }
