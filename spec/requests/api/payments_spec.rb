@@ -14,8 +14,8 @@ RSpec.describe 'Api::Payments', type: :request do
 
   def login
     post api_user_session_path,
-        params: { email: current_user.email, password: current_user.password }.to_json,
-        headers: { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
+         params: { email: current_user.email, password: current_user.password }.to_json,
+         headers: { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
   end
 
   before do
@@ -50,7 +50,9 @@ RSpec.describe 'Api::Payments', type: :request do
       end
 
       example 'detailが記入されていても登録することができる' do
-        expect { post api_payments_path, params: { amount: 100, detail: 'スーパー', paid_at: '2022-02-14' }, headers: auth_headers }.to change(Payment, :count).by(1)
+        expect do
+          post api_payments_path, params: { amount: 100, detail: 'スーパー', paid_at: '2022-02-14' }, headers: auth_headers
+        end.to change(Payment, :count).by(1)
         expect(response).to have_http_status(:ok)
       end
     end
