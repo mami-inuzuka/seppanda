@@ -43,18 +43,21 @@ RSpec.describe 'Api::Payments', type: :request do
   end
 
   describe 'POST /api/payments' do
-    let(:params) { { amount: 100, paid_at: '2022-02-14' } }
-
     context 'ログイン中の時' do
-      example '金額を登録することができる' do
-        expect { post api_payments_path, params: params, headers: auth_headers }.to change(Payment, :count).by(1)
+      example 'detailは空でも登録することができる' do
+        expect { post api_payments_path, params: { amount: 100, paid_at: '2022-02-14' }, headers: auth_headers }.to change(Payment, :count).by(1)
+        expect(response).to have_http_status(:ok)
+      end
+
+      example 'detailが記入されていても登録することができる' do
+        expect { post api_payments_path, params: { amount: 100, detail: 'スーパー', paid_at: '2022-02-14' }, headers: auth_headers }.to change(Payment, :count).by(1)
         expect(response).to have_http_status(:ok)
       end
     end
 
     context 'ログアウト中の時' do
       example '金額を登録することができない' do
-        expect { post api_payments_path, params: params }.not_to change(Payment, :count)
+        expect { post api_payments_path, params: { amount: 100, detail: 'スーパー', paid_at: '2022-02-14' } }.not_to change(Payment, :count)
         expect(response.status).to eq(401)
       end
     end
