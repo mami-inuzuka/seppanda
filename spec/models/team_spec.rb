@@ -23,23 +23,23 @@ RSpec.describe Team, type: :model do
       let(:team) { user1.team }
 
       before do
-        user1.payments.create(amount: 800, team_id: team.id, paid_at: '2022-02-14')
-        user1.payments.create(amount: 200, team_id: team.id, paid_at: '2022-02-14')
-        user2.payments.create(amount: 100, team_id: team.id, paid_at: '2022-02-14')
-        user2.payments.create(amount: 300, team_id: team.id, paid_at: '2022-02-14')
+        user1.payments.create(amount: 200, detail: '外食', team_id: team.id, paid_at: '2022-02-14', settled: true, settled_at: '2022-02-24')
+        user1.payments.create(amount: 800, detail: 'スーパー', team_id: team.id, paid_at: '2022-02-25')
+        user2.payments.create(amount: 300, detail: 'カフェ', team_id: team.id, paid_at: '2022-02-14', settled: true, settled_at: '2022-02-24')
+        user2.payments.create(amount: 200, detail: '日用品', team_id: team.id, paid_at: '2022-02-25')
       end
 
       example '各ユーザーの合計金額' do
         expect(user1.payments.sum(:amount)).to eq 1000
-        expect(user2.payments.sum(:amount)).to eq 400
+        expect(user2.payments.sum(:amount)).to eq 500
       end
 
       example 'teamの未清算の支払い合計' do
-        expect(team.unsettled_total_amount).to eq 1400
+        expect(team.unsettled_total_amount).to eq 1000
       end
 
       example '1人あたり支払うべき金額' do
-        expect(team.split_bill_amount).to eq 700
+        expect(team.split_bill_amount).to eq 500
       end
 
       example '返金額' do
@@ -55,16 +55,18 @@ RSpec.describe Team, type: :model do
       end
     end
 
-    context '2人の支払い金額が同じ場合' do
+    context '2人の未精算支払額が同じ場合' do
       let(:user1) { create(:user, :with_team) }
       let(:user2) { create(:user, team_id: user1.team_id) }
       let(:team) { user1.team }
 
       before do
-        user1.payments.create(amount: 800, team_id: team.id, paid_at: '2022-02-14')
-        user1.payments.create(amount: 200, team_id: team.id, paid_at: '2022-02-14')
-        user2.payments.create(amount: 500, team_id: team.id, paid_at: '2022-02-14')
-        user2.payments.create(amount: 500, team_id: team.id, paid_at: '2022-02-14')
+        user1.payments.create(amount: 200, detail: '外食', team_id: team.id, paid_at: '2022-02-14', settled: true, settled_at: '2022-02-24')
+        user1.payments.create(amount: 800, detail: 'スーパー', team_id: team.id, paid_at: '2022-02-25')
+        user1.payments.create(amount: 200, detail: 'カフェ', team_id: team.id, paid_at: '2022-02-25')
+        user2.payments.create(amount: 300, detail: 'カフェ', team_id: team.id, paid_at: '2022-02-14', settled: true, settled_at: '2022-02-24')
+        user2.payments.create(amount: 500, detail: '日用品', team_id: team.id, paid_at: '2022-02-25')
+        user2.payments.create(amount: 500, detail: 'おやつ', team_id: team.id, paid_at: '2022-02-25')
       end
 
       example '1人あたり支払うべき金額' do

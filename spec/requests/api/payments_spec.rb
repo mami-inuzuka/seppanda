@@ -19,18 +19,18 @@ RSpec.describe 'Api::Payments', type: :request do
   end
 
   before do
-    current_user.payments.create(amount: 800, detail: 'スーパー', team_id: team.id, paid_at: '2022-02-14')
-    current_user.payments.create(amount: 200, detail: '外食', team_id: team.id, paid_at: '2022-02-14')
-    other_user.payments.create(amount: 500, detail: '日用品', team_id: team.id, paid_at: '2022-02-14')
-    other_user.payments.create(amount: 500, detail: 'カフェ', team_id: team.id, paid_at: '2022-02-14')
+    current_user.payments.create(amount: 200, detail: '外食', team_id: team.id, paid_at: '2022-02-14', settled: true, settled_at: '2022-02-24')
+    other_user.payments.create(amount: 500, detail: 'カフェ', team_id: team.id, paid_at: '2022-02-14', settled: true, settled_at: '2022-02-24')
+    current_user.payments.create(amount: 800, detail: 'スーパー', team_id: team.id, paid_at: '2022-02-25')
+    other_user.payments.create(amount: 500, detail: '日用品', team_id: team.id, paid_at: '2022-02-25')
   end
 
   describe 'GET /api/payments' do
     context 'ログイン中の時' do
-      example '登録した支払いの一覧を取得することができる' do
+      example '未清算の支払い一覧を取得することができる' do
         get api_payments_path, headers: auth_headers
         expect(response).to have_http_status(:ok)
-        expect(JSON.parse(response.body)[0]['payments'].length).to eq 4
+        expect(JSON.parse(response.body)[0]['payments'].length).to eq 2
       end
     end
 
@@ -82,7 +82,18 @@ RSpec.describe 'Api::Payments', type: :request do
         expect { patch api_payment_path(payment.id), params: new_params, headers: auth_headers }.to change(Payment, :count).by(0)
         expect(payment.reload.amount).to eq 500
         expect(payment.reload.paid_at.to_s).to eq '2022-02-15'
+        expect(payment.reload.detail).to eq '日用品'
         expect(response).to have_http_status(:ok)
+      end
+    end
+  end
+
+  # 精算機能
+  describe 'PATCH /api/teams/:team_id/payments' do
+    example '精算を実行するとPaymentのsettledカラムが全てtrueになる' do
+      expect { patch api_team_payments_path(team), params: '', headers: auth_headers }.not_to change(Payment, :count)
+      team.payments.each do |payment|
+        expect(payment.settled).to eq true
       end
     end
   end
