@@ -58,7 +58,7 @@ export const SettelementModal: VFC<Props> = (props) => {
               color={currentUser?.isDebt ? 'red.500' : 'green.500'}
               _after={{ content: `"円"`, fontSize: '3xl' }}
             >
-              {teamStatus.refundAmount}
+              {teamStatus.refundAmount.toLocaleString()}
             </Text>
           </Box>
           <Grid gap={4}>
