@@ -18,7 +18,7 @@ type Props = {
 export const SettelementModal: VFC<Props> = (props) => {
   const { isOpen, onClose, size } = props
   const { currentUser } = useContext(AuthContext)
-  const { teamStatus } = useContext(PaymentContext)
+  const { teamStatus, setPaymentList } = useContext(PaymentContext)
   const { errorToast, successToast } = useToast()
 
   const handleSettleTeamPayments = async () => {
@@ -26,6 +26,7 @@ export const SettelementModal: VFC<Props> = (props) => {
       const res = await settleTeamPayments(currentUser!.teamId)
       if (res?.status === 200) {
         successToast('清算が完了しました')
+        setPaymentList([])
         onClose()
       } else {
         errorToast('処理に失敗しました')
