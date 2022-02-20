@@ -4,6 +4,8 @@ require 'rails_helper'
 
 RSpec.describe 'Api::Payments', type: :request do
   let(:current_user) { create(:user, :with_team) }
+  let(:other_user) { create(:user, team_id: current_user.team_id) }
+  let(:team) { current_user.team }
 
   def auth_headers
     post new_api_user_session_path, params: { email: current_user.email, password: current_user.password }
@@ -12,22 +14,23 @@ RSpec.describe 'Api::Payments', type: :request do
 
   def login
     post api_user_session_path,
-         params: { email: current_user.email, password: current_user.password }.to_json,
-         headers: { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
+        params: { email: current_user.email, password: current_user.password }.to_json,
+        headers: { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
+  end
+
+  before do
+    current_user.payments.create(amount: 800, detail: 'スーパー', team_id: team.id, paid_at: '2022-02-14')
+    current_user.payments.create(amount: 200, detail: '外食', team_id: team.id, paid_at: '2022-02-14')
+    other_user.payments.create(amount: 500, detail: '日用品', team_id: team.id, paid_at: '2022-02-14')
+    other_user.payments.create(amount: 500, detail: 'カフェ', team_id: team.id, paid_at: '2022-02-14')
   end
 
   describe 'GET /api/payments' do
-    before do
-      5.times do |n|
-        current_user.payments.create(amount: 100 * (n + 1), team_id: current_user.team_id, paid_at: '2022-02-14')
-      end
-    end
-
     context 'ログイン中の時' do
       example '登録した支払いの一覧を取得することができる' do
         get api_payments_path, headers: auth_headers
         expect(response).to have_http_status(:ok)
-        expect(JSON.parse(response.body)[0]['payments'].length).to eq 5
+        expect(JSON.parse(response.body)[0]['payments'].length).to eq 4
       end
     end
 
@@ -58,11 +61,8 @@ RSpec.describe 'Api::Payments', type: :request do
   end
 
   describe 'DELETE /api/payments/:id' do
-    let(:params) { { amount: 100, paid_at: '2022-02-14' } }
-
     context 'ログイン中の時' do
       example '対象の金額を1つ削除することができる' do
-        expect { post api_payments_path, params: params, headers: auth_headers }.to change(Payment, :count).by(1)
         payment = Payment.last
         expect { delete api_payment_path(payment.id), headers: auth_headers }.to change(Payment, :count).by(-1)
         expect(response).to have_http_status(:ok)
@@ -71,8 +71,8 @@ RSpec.describe 'Api::Payments', type: :request do
   end
 
   describe 'PATCH /api/payments/:id' do
-    let(:params) { { amount: 100, paid_at: '2022-02-14' } }
-    let(:new_params) { { amount: 500, paid_at: '2022-02-15' } }
+    let(:params) { { amount: 100, detail: 'スーパー', paid_at: '2022-02-14' } }
+    let(:new_params) { { amount: 500, detail: '日用品', paid_at: '2022-02-15' } }
 
     context 'ログイン中の時' do
       example '対象の金額を1つ更新することができる' do
