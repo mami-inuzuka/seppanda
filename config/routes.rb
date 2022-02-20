@@ -9,7 +9,9 @@ Rails.application.routes.draw do
     end
 
     resources :payments
-    resources :teams, only: %i[show]
+    resources :teams, only: %i[show] do
+      patch :payments, to: 'teams/payments#update'
+    end
   end
 
   get '*path', to: "application#fallback_index_html", constraints: ->(request) do

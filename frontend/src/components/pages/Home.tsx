@@ -19,6 +19,7 @@ import { useToast } from 'lib/toast'
 
 export const Home: VFC = memo(() => {
   const {
+    paymentList,
     setPaymentList,
     isPaymentListLoaded,
     setIsPaymentListLoaded,
@@ -62,11 +63,15 @@ export const Home: VFC = memo(() => {
     handleGetPayments().catch((err) => {
       console.log(err)
     })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  useEffect(() => {
     handleGetTeamStatus().catch((err) => {
       console.log(err)
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [paymentList])
 
   return (
     <>

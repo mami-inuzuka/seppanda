@@ -5,7 +5,7 @@ import { Box, Text, useDisclosure } from '@chakra-ui/react'
 import { SecondaryButton } from 'components/atoms/button/SecondaryButton'
 import { CardText } from 'components/molcules/CardText'
 import { RefundAmount } from 'components/molcules/RefundAmount'
-import { BasicModal } from 'components/organisms/BasicModal'
+import { SettelementModal } from 'components/organisms/modal/SettlementModal'
 import { PaymentContext } from 'context/PaymentContext'
 
 export const CurrentStatusContents: VFC = memo(() => {
@@ -13,7 +13,7 @@ export const CurrentStatusContents: VFC = memo(() => {
   const { isOpen: isOpenSettleModal, onOpen: onOpenSettleModal, onClose: onCloseSettleModal } = useDisclosure()
   return (
     <>
-      <BasicModal isOpen={isOpenSettleModal} onClose={onCloseSettleModal} size="xl" />
+      <SettelementModal isOpen={isOpenSettleModal} onClose={onCloseSettleModal} size="xl" />
       <Box>
         {teamStatus.isTeamCapacityReached ? (
           <>
