@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   namespace :api, defaults: { format: :json } do
     namespace :auth do
+      resources :registrations, only: %i[create]
       resources :sessions, only: %i[index]
     end
 
