@@ -1,7 +1,7 @@
 import { useState, useContext, VFC, memo } from 'react'
 import { useHistory } from 'react-router-dom'
 
-import { Box, FormControl, FormLabel, Heading, Input } from '@chakra-ui/react'
+import { Box, FormControl, FormLabel, Grid, Heading, Input } from '@chakra-ui/react'
 import Cookies from 'js-cookie'
 
 import { PrimaryButton } from 'components/atoms/button/PrimaryButton'
@@ -54,25 +54,27 @@ export const SignIn: VFC = memo(() => {
           ログイン
         </Heading>
         <form noValidate autoComplete="off">
-          <FormControl>
-            <FormLabel htmlFor="email">メールアドレス</FormLabel>
-            <Input value={email} placeholder="メールアドレス" onChange={(event) => setEmail(event.target.value)} />
-          </FormControl>
-          <FormControl>
-            <FormLabel htmlFor="password">パスワード</FormLabel>
-            <Input
-              value={password}
-              placeholder="パスワード"
-              onChange={(event) => setPassword(event.target.value)}
-              type="password"
-            />
-          </FormControl>
-          <PrimaryButton
-            disabled={!!(!email || !password)} // 空欄があった場合はボタンを押せないように
-            onClickButton={handleSubmit}
-          >
-            ログイン
-          </PrimaryButton>
+          <Grid gap={6}>
+            <FormControl>
+              <FormLabel htmlFor="email">メールアドレス</FormLabel>
+              <Input value={email} placeholder="メールアドレス" onChange={(event) => setEmail(event.target.value)} />
+            </FormControl>
+            <FormControl>
+              <FormLabel htmlFor="password">パスワード</FormLabel>
+              <Input
+                value={password}
+                placeholder="パスワード"
+                onChange={(event) => setPassword(event.target.value)}
+                type="password"
+              />
+            </FormControl>
+            <PrimaryButton
+              disabled={!!(!email || !password)} // 空欄があった場合はボタンを押せないように
+              onClickButton={handleSubmit}
+            >
+              ログイン
+            </PrimaryButton>
+          </Grid>
         </form>
       </Box>
     </HeaderOnlyLogoLayout>
