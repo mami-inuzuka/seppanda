@@ -1,10 +1,5 @@
 Rails.application.routes.draw do
   namespace :api, defaults: { format: :json } do
-    mount_devise_token_auth_for 'User', at: 'auth', controllers: {
-      registrations: 'overrides/registrations',
-      confirmations: 'overrides/confirmations'
-    }
-
     namespace :auth do
       resources :sessions, only: %i[index]
     end
