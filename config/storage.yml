@@ -18,7 +18,7 @@ local:
 google:
   service: GCS
   project: seppanda
-  credentials: <%= Rails.root.join("config/secrets/seppanda.json") %>
+  credentials: <%= ENV["GOOGLE_CREDENTIALS"] %>
   bucket: seppanda
 # Use rails credentials:edit to set the Azure Storage secret (as azure_storage:storage_access_key)
 # microsoft:
