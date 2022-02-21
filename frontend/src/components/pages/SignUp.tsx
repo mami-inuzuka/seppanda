@@ -37,6 +37,7 @@ export const SignUp: VFC = memo(() => {
       email,
       password,
       passwordConfirmation,
+      confirmSuccessUrl: `${process.env.REACT_APP_API_URL}/invitation`,
     }
 
     try {
@@ -53,10 +54,7 @@ export const SignUp: VFC = memo(() => {
         if (res.data.isTeamCapacityReached) {
           history.push('/')
         } else {
-          history.push({
-            pathname: '/invitation',
-            state: { token: res.data.invitationToken },
-          })
+          history.push('/confirmation')
         }
         console.log('Signed in successfully!')
       }

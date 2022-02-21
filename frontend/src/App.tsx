@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { ChakraProvider } from '@chakra-ui/react'
 import { DateTime } from 'luxon'
 
+import { EmailConfirmation } from 'components/pages/EmailConfirmation'
 import { Home } from 'components/pages/Home'
 import { Invitation } from 'components/pages/Invitation'
 import { NewPaymentEntry } from 'components/pages/NewPaymentEntry'
@@ -70,6 +71,7 @@ const App: VFC = () => {
             <Route path="/signin" component={SignIn} />
             <Route path="/signup" component={SignUp} />
             <Route path="/invitation" component={Invitation} />
+            <Route path="/confirmation" component={EmailConfirmation} />
             <PaymentContext.Provider
               // eslint-disable-next-line react/jsx-no-constructed-context-values
               value={{
