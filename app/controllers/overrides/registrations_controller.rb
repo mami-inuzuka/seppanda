@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Api::Auth::RegistrationsController < DeviseTokenAuth::RegistrationsController
+class Overrides::RegistrationsController < DeviseTokenAuth::RegistrationsController
   before_action :check_invitation_token_and_team_capacity, only: :create
   after_action :attach_default_avatar, only: :create
 

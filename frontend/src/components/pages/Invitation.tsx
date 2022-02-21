@@ -5,12 +5,11 @@ import { Box, Heading } from '@chakra-ui/react'
 
 import { HeaderOnlyLogoLayout } from 'components/templates/HeaderOnlyLogoLayout'
 
-type LocationState = {
-  token: string
-}
-
 export const Invitation: VFC = () => {
-  const location = useLocation<LocationState>()
+  const { search } = useLocation()
+
+  const query = new URLSearchParams(search)
+  const invitationToken = query.get('invitation_token')
   return (
     <HeaderOnlyLogoLayout>
       <Box p={6}>
@@ -25,7 +24,7 @@ export const Invitation: VFC = () => {
           </p>
         </Box>
         <Box bg="gray.50" p={4}>
-          <p>{`${window.location.protocol}//${window.location.host}/signup?token=${location.state.token}`}</p>
+          <p>{`${window.location.protocol}//${window.location.host}/signup?token=${invitationToken}`}</p>
         </Box>
       </Box>
     </HeaderOnlyLogoLayout>
