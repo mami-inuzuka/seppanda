@@ -17,7 +17,8 @@ RSpec.describe 'AuthApi', type: :request do
           name: 'charlie',
           email: 'charlie@example.com',
           password: 'testtest',
-          password_confirmation: 'testtest'
+          password_confirmation: 'testtest',
+          confirm_success_url: 'invitation'
         }.to_json
       end
 
@@ -42,7 +43,8 @@ RSpec.describe 'AuthApi', type: :request do
           name: 'bob',
           email: 'bob@example.com',
           password: 'testtest',
-          password_confirmation: 'testtest'
+          password_confirmation: 'testtest',
+          confirm_success_url: 'invitation'
         }.to_json
       end
       let(:headers) do
@@ -83,6 +85,27 @@ RSpec.describe 'AuthApi', type: :request do
           expect(JSON.parse(response.body)['errors']['fullMessages']).to include('Your token is invalid or the team reached capacity')
         end
       end
+    end
+  end
+
+  # サインイン
+  describe 'POST api_user_session_path' do
+    let(:confirmed_user) { create(:user, :with_team) }
+    let(:unconfirmed_user) { create(:user, :with_team, confirmed_at: nil) }
+
+    example 'メール認証が完了しているとサインインできる' do
+      post api_user_session_path, params: { email: confirmed_user.email, password: confirmed_user.password }
+      expect(response.header).to include('uid')
+      expect(response.header).to include('client')
+      expect(response.header).to include('access-token')
+    end
+
+    example 'メール認証が完了していないとサインインできない' do
+      post api_user_session_path, params: { email: unconfirmed_user.email, password: unconfirmed_user.password }
+      expect(response.header).not_to include('uid')
+      expect(response.header).not_to include('client')
+      expect(response.header).not_to include('access-token')
+      expect(response.body).to include('errors')
     end
   end
 
