@@ -37,7 +37,7 @@ export const SignUp: VFC = memo(() => {
       email,
       password,
       passwordConfirmation,
-      confirmSuccessUrl: `${process.env.REACT_APP_API_URL}/invitation`,
+      confirmSuccessUrl: `${process.env.REACT_APP_URL}/invitation`,
     }
 
     try {
