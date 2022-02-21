@@ -9,6 +9,7 @@ gem 'bootsnap', '>= 1.4.4', require: false
 gem 'devise'
 gem 'devise_token_auth'
 gem 'dotenv-rails'
+gem 'firebase-auth-rails'
 gem 'google-cloud-storage'
 gem 'image_processing', '~> 1.2'
 gem 'jbuilder', '~> 2.7'

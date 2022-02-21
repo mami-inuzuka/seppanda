@@ -116,6 +116,15 @@ GEM
     faraday-patron (1.0.0)
     faraday-rack (1.0.0)
     ffi (1.15.5)
+    firebase-auth-rails (0.1.2)
+      firebase_id_token (~> 2.3, >= 2.3.0)
+      jwt (~> 2.1, >= 2.1.0)
+      rails
+    firebase_id_token (2.4.0)
+      httparty (~> 0.16, >= 0.16.2)
+      jwt (~> 2.1, >= 2.1.0)
+      redis (~> 4.0, >= 4.0.1)
+      redis-namespace (~> 1.6, >= 1.6.0)
     globalid (1.0.0)
       activesupport (>= 5.0)
     google-apis-core (0.4.2)
@@ -155,6 +164,9 @@ GEM
     haml (5.2.2)
       temple (>= 0.8.0)
       tilt
+    httparty (0.20.0)
+      mime-types (~> 3.0)
+      multi_xml (>= 0.5.2)
     httpclient (2.8.3)
     i18n (1.8.11)
       concurrent-ruby (~> 1.0)
@@ -187,11 +199,15 @@ GEM
     marcel (1.0.2)
     memoist (0.16.2)
     method_source (1.0.0)
+    mime-types (3.4.1)
+      mime-types-data (~> 3.2015)
+    mime-types-data (3.2022.0105)
     mini_magick (4.11.0)
     mini_mime (1.1.2)
     minitest (5.15.0)
     msgpack (1.4.2)
     multi_json (1.15.0)
+    multi_xml (0.6.0)
     multipart-post (2.1.1)
     mustermann (1.1.1)
       ruby2_keywords (~> 0.0.1)
@@ -248,6 +264,9 @@ GEM
     rb-fsevent (0.11.0)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
+    redis (4.6.0)
+    redis-namespace (1.8.1)
+      redis (>= 3.0.4)
     regexp_parser (2.2.0)
     representable (3.1.1)
       declarative (< 0.1.0)
@@ -359,6 +378,7 @@ DEPENDENCIES
   devise_token_auth
   dotenv-rails
   factory_bot_rails
+  firebase-auth-rails
   google-cloud-storage
   image_processing (~> 1.2)
   jbuilder (~> 2.7)
