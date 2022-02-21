@@ -54,7 +54,10 @@ export const SignUp: VFC = memo(() => {
         if (res.data.isTeamCapacityReached) {
           history.push('/')
         } else {
-          history.push('/confirmation')
+          history.push({
+            pathname: '/confirmation',
+            state: { email },
+          })
         }
         console.log('Signed in successfully!')
       }
