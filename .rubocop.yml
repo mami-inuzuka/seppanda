@@ -60,4 +60,4 @@ AllCops:
     - storage/**/*
     - tmp/**/*
     - bin/**/*
-    - app/controllers/api/auth/registrations_controller.rb # devise token authの上書きなので対象外にする
+    - app/controllers/overrides/**/* # devise token authの上書きなので対象外にする
