@@ -2,6 +2,7 @@ import { useEffect, useState, VFC } from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
 import { ChakraProvider } from '@chakra-ui/react'
+import { getAuth } from 'firebase/auth'
 import { DateTime } from 'luxon'
 
 import { EmailConfirmation } from 'components/pages/EmailConfirmation'
@@ -15,17 +16,17 @@ import { SignUp } from 'components/pages/SignUp'
 import { PrivateRoute } from 'components/router/PrivateRoute'
 import { AuthContext } from 'context/AuthContext'
 import { PaymentContext } from 'context/PaymentContext'
-import { getCurrentUser } from 'lib/api/auth'
+import 'firebase/compat/auth'
 import { theme } from 'theme/index'
 
+import type { FirebaseUser } from 'types/firebaseUser'
 import type { PaymentListGroupByPaidAt } from 'types/paymentListGroupByPaidAt'
 import type { TeamStatus } from 'types/teamStatus'
-import type { User } from 'types/user'
 
 const App: VFC = () => {
   const [isLoaded, setIsLoaded] = useState<boolean>(false)
   const [isSignedIn, setIsSignedIn] = useState<boolean>(false)
-  const [currentUser, setCurrentUser] = useState<User | null>(null)
+  const [currentUser, setCurrentUser] = useState<FirebaseUser | null>(null)
   const [paymentList, setPaymentList] = useState<PaymentListGroupByPaidAt[]>([])
   const [teamStatus, setTeamStatus] = useState<TeamStatus>({
     refundAmount: 0,
@@ -39,27 +40,17 @@ const App: VFC = () => {
   const [inputAmount, setInputAmount] = useState<string>('')
   const [inputDetail, setInputDetail] = useState<string>('')
   const [inputPaidAt, setInputPaidAt] = useState<string>(DateTime.local().toFormat('yyyy-MM-dd'))
-
-  // サインイン状態をチェック
-  const handleGetCurrentUser = async () => {
-    try {
-      const res = await getCurrentUser()
-      if (res?.data.isLogin) {
-        setIsSignedIn(true)
-        setCurrentUser(res?.data.user)
-      } else {
-        console.log('No current user')
-      }
-    } catch (err) {
-      console.log(err)
-    }
-    setIsLoaded(true)
-  }
+  const auth = getAuth()
 
   useEffect(() => {
-    handleGetCurrentUser().catch((err) => {
-      console.log(err)
+    const unsubscribed = auth.onAuthStateChanged((user) => {
+      setCurrentUser(user)
+      setIsLoaded(true)
     })
+    return () => {
+      unsubscribed()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
