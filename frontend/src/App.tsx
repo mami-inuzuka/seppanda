@@ -12,7 +12,6 @@ import { NewPaymentEntry } from 'components/pages/NewPaymentEntry'
 import { Setting } from 'components/pages/Setting'
 import { ShowPaymentEntry } from 'components/pages/ShowPaymentEntry'
 import { SignIn } from 'components/pages/SignIn'
-import { SignUp } from 'components/pages/SignUp'
 import { PrivateRoute } from 'components/router/PrivateRoute'
 import { AuthContext } from 'context/AuthContext'
 import { PaymentContext } from 'context/PaymentContext'
@@ -94,7 +93,6 @@ const App: VFC = () => {
         >
           <Switch>
             <Route path="/signin" component={SignIn} />
-            <Route path="/signup" component={SignUp} />
             <Route path="/invitation" component={Invitation} />
             <Route path="/confirmation" component={EmailConfirmation} />
             <PaymentContext.Provider
