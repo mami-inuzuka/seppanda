@@ -1,5 +1,7 @@
 import { createContext } from 'react'
 
+import firebase from 'firebase/compat/app'
+
 import type { User } from 'types/user'
 
 export type AuthContextType = {
@@ -9,6 +11,7 @@ export type AuthContextType = {
   setIsSignedIn: React.Dispatch<React.SetStateAction<boolean>>
   currentUser: User | null
   setCurrentUser: React.Dispatch<React.SetStateAction<User | null>>
+  currentFirebaseUser: firebase.User | null
 }
 
 export const AuthContext = createContext<AuthContextType>({
@@ -24,4 +27,5 @@ export const AuthContext = createContext<AuthContextType>({
   setCurrentUser: () => {
     throw new Error('AuthContext not avaliable')
   },
+  currentFirebaseUser: null,
 })
