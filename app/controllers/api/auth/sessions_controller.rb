@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
 class Api::Auth::SessionsController < ApplicationController
+  skip_before_action :authenticate_user
+
   def index
-    @current_api_user = current_api_user
+    @user = User.find_by(uid: params[:uid])
     render :index
   end
 end
