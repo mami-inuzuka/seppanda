@@ -22,11 +22,13 @@ import { theme } from 'theme/index'
 import type { FirebaseUser } from 'types/firebaseUser'
 import type { PaymentListGroupByPaidAt } from 'types/paymentListGroupByPaidAt'
 import type { TeamStatus } from 'types/teamStatus'
+import type { User } from 'types/user'
 
 const App: VFC = () => {
   const [isLoaded, setIsLoaded] = useState<boolean>(false)
   const [isSignedIn, setIsSignedIn] = useState<boolean>(false)
-  const [currentUser, setCurrentUser] = useState<FirebaseUser | null>(null)
+  const [currentUser, setCurrentUser] = useState<User | null>(null)
+  const [currentFirebaseUser, setCurrentFirebaseUser] = useState<FirebaseUser | null>(null)
   const [paymentList, setPaymentList] = useState<PaymentListGroupByPaidAt[]>([])
   const [teamStatus, setTeamStatus] = useState<TeamStatus>({
     refundAmount: 0,
@@ -44,8 +46,7 @@ const App: VFC = () => {
 
   useEffect(() => {
     const unsubscribed = auth.onAuthStateChanged((user) => {
-      setCurrentUser(user)
-      setIsLoaded(true)
+      setCurrentFirebaseUser(user)
     })
     return () => {
       unsubscribed()
@@ -53,11 +54,28 @@ const App: VFC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  useEffect(() => {
+    handleGetCurrentUser().catch((err) => {
+      console.log(err)
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentFirebaseUser])
+
   return (
     <BrowserRouter>
       <ChakraProvider theme={theme}>
-        {/* eslint-disable-next-line react/jsx-no-constructed-context-values */}
-        <AuthContext.Provider value={{ isLoaded, setIsLoaded, isSignedIn, setIsSignedIn, currentUser, setCurrentUser }}>
+        <AuthContext.Provider
+          // eslint-disable-next-line react/jsx-no-constructed-context-values
+          value={{
+            isLoaded,
+            setIsLoaded,
+            isSignedIn,
+            setIsSignedIn,
+            currentUser,
+            setCurrentUser,
+            currentFirebaseUser,
+          }}
+        >
           <Switch>
             <Route path="/signin" component={SignIn} />
             <Route path="/signup" component={SignUp} />
