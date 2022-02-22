@@ -1,78 +1,51 @@
-import { useContext, useState, VFC, memo } from 'react'
+import { useState, VFC, memo, useContext } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 
 import { Box, FormControl, FormLabel, Grid, Heading, Input } from '@chakra-ui/react'
-import axios, { AxiosError } from 'axios'
-import Cookies from 'js-cookie'
 
 import { PrimaryButton } from 'components/atoms/button/PrimaryButton'
 import { HeaderOnlyLogoLayout } from 'components/templates/HeaderOnlyLogoLayout'
 import { AuthContext } from 'context/AuthContext'
 import { signUp } from 'lib/api/auth'
-import { useToast } from 'lib/toast'
-
-import type { SignUpErrorResponse } from 'types/SignUpErrorResponse'
-import type { SignUpParams } from 'types/signUpParams'
+import { auth } from 'lib/firebase'
 
 export const SignUp: VFC = memo(() => {
-  // 関連issue: [react-router-dom] - Export History type #50526 https://github.com/DefinitelyTyped/DefinitelyTyped/issues/50526
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
-  const history = useHistory()
-  const { setIsSignedIn } = useContext(AuthContext)
   const [name, setName] = useState<string>('')
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const [passwordConfirmation, setPasswordConfirmation] = useState<string>('')
+  const { setIsSignedIn, setCurrentUser, currentUser } = useContext(AuthContext)
+  const history = useHistory()
   const { search } = useLocation()
-
   const query = new URLSearchParams(search)
-  const token = query.get('token')
-  const { errorToast } = useToast()
+  const invitationToken = query.get('token')
+
+  const handleCreateUser = async () => {
+    const token = await auth.currentUser?.getIdToken(true)
+    const data = { token }
+    const res = await signUp(data, invitationToken)
+    if (res.status === 200) {
+      // eslint-disable-next-line no-debugger
+      debugger
+      setCurrentUser(res.data?.user)
+      console.log(`currentUser:${currentUser}`)
+      setIsSignedIn(true)
+    }
+  }
 
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
-
-    const params: SignUpParams = {
-      name,
-      email,
-      password,
-      passwordConfirmation,
-      confirmSuccessUrl: `${process.env.REACT_APP_URL}/invitation`,
-    }
-
-    try {
-      const res = await signUp(params, token)
-
-      if (res.status === 200) {
-        console.log(res)
-        // アカウント作成と同時にログイン（後程メール認証を挟む）
-        Cookies.set('_access_token', res.headers['access-token'], { secure: true })
-        Cookies.set('_client', res.headers.client, { secure: true })
-        Cookies.set('_uid', res.headers.uid, { secure: true })
-        setIsSignedIn(true)
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-        if (res.data.isTeamCapacityReached) {
-          history.push('/')
-        } else {
-          history.push({
-            pathname: '/confirmation',
-            state: { email },
-          })
-        }
-        console.log('Signed in successfully!')
-      }
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        const serverError = error as AxiosError<SignUpErrorResponse>
-        if (serverError.response?.data.errors.fullMessages) {
-          serverError.response?.data.errors.fullMessages.map((message) => errorToast(message))
-        } else {
-          errorToast('登録に失敗しました')
-        }
-      } else {
-        errorToast('登録に失敗しました')
-      }
-    }
+    // eslint-disable-next-line no-debugger
+    debugger
+    await auth
+      .createUserWithEmailAndPassword(email, password)
+      .then(handleCreateUser)
+      .then(() => {
+        history.push({
+          pathname: '/invitation',
+          state: { email },
+        })
+      })
   }
 
   return (

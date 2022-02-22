@@ -2,49 +2,44 @@ import { useState, useContext, VFC, memo } from 'react'
 import { useHistory } from 'react-router-dom'
 
 import { Box, FormControl, FormLabel, Grid, Heading, Input } from '@chakra-ui/react'
-import Cookies from 'js-cookie'
 
 import { PrimaryButton } from 'components/atoms/button/PrimaryButton'
 import { HeaderOnlyLogoLayout } from 'components/templates/HeaderOnlyLogoLayout'
 import { AuthContext } from 'context/AuthContext'
-import { signIn } from 'lib/api/auth'
-
-import type { SignInParams } from 'types/signInParams'
+import { getCurrentUser } from 'lib/api/auth'
+import { auth } from 'lib/firebase'
 
 export const SignIn: VFC = memo(() => {
   // 関連issue: [react-router-dom] - Export History type #50526 https://github.com/DefinitelyTyped/DefinitelyTyped/issues/50526
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
   const history = useHistory()
-  const { setIsSignedIn, setCurrentUser } = useContext(AuthContext)
+  const { setCurrentUser, setIsLoaded } = useContext(AuthContext)
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
+
+  const handleGetCurrentUser = async () => {
+    console.log('SIgnIn:handleGetCurrentUser')
+    try {
+      const idToken = await auth.currentUser?.getIdToken(true)
+      const uid = auth.currentUser?.uid
+      if (uid) {
+        const res = await getCurrentUser({ uid }, idToken)
+        if (res?.status === 200) {
+          setCurrentUser(res.data.user)
+          setIsLoaded(true)
+        }
+      }
+    } catch (e) {
+      console.log(e)
+    }
+  }
 
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     // デフォルトの動作をキャンセル
     e.preventDefault()
-
-    const params: SignInParams = {
-      email,
-      password,
-    }
-
-    try {
-      const res = await signIn(params)
-      console.log(res)
-      if (res.status === 200) {
-        // ログインに成功した場合はCookieに各値を格納
-        Cookies.set('_access_token', res.headers['access-token'])
-        Cookies.set('_client', res.headers.client)
-        Cookies.set('_uid', res.headers.uid)
-        setIsSignedIn(true)
-        setCurrentUser(res.data.data)
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
-        history.push('/')
-        console.log('Signed in successfully!')
-      }
-    } catch (err) {
-      console.log(err)
-    }
+    // eslint-disable-next-line no-debugger
+    debugger
+    await auth.signInWithEmailAndPassword(email, password).then(handleGetCurrentUser)
   }
 
   return (

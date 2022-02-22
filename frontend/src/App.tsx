@@ -2,7 +2,7 @@ import { useEffect, useState, VFC } from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
 import { ChakraProvider } from '@chakra-ui/react'
-import { getAuth } from 'firebase/auth'
+import firebase from 'firebase/compat/app'
 import { DateTime } from 'luxon'
 
 import { EmailConfirmation } from 'components/pages/EmailConfirmation'
@@ -16,10 +16,11 @@ import { SignUp } from 'components/pages/SignUp'
 import { PrivateRoute } from 'components/router/PrivateRoute'
 import { AuthContext } from 'context/AuthContext'
 import { PaymentContext } from 'context/PaymentContext'
-import 'firebase/compat/auth'
+import { getCurrentUser } from 'lib/api/auth'
+import { auth } from 'lib/firebase'
 import { theme } from 'theme/index'
+import { GetCurrentUserParams } from 'types/getCurrentUserParams'
 
-import type { FirebaseUser } from 'types/firebaseUser'
 import type { PaymentListGroupByPaidAt } from 'types/paymentListGroupByPaidAt'
 import type { TeamStatus } from 'types/teamStatus'
 import type { User } from 'types/user'
@@ -28,7 +29,7 @@ const App: VFC = () => {
   const [isLoaded, setIsLoaded] = useState<boolean>(false)
   const [isSignedIn, setIsSignedIn] = useState<boolean>(false)
   const [currentUser, setCurrentUser] = useState<User | null>(null)
-  const [currentFirebaseUser, setCurrentFirebaseUser] = useState<FirebaseUser | null>(null)
+  const [currentFirebaseUser, setCurrentFirebaseUser] = useState<firebase.User | null>(null)
   const [paymentList, setPaymentList] = useState<PaymentListGroupByPaidAt[]>([])
   const [teamStatus, setTeamStatus] = useState<TeamStatus>({
     refundAmount: 0,
@@ -42,7 +43,22 @@ const App: VFC = () => {
   const [inputAmount, setInputAmount] = useState<string>('')
   const [inputDetail, setInputDetail] = useState<string>('')
   const [inputPaidAt, setInputPaidAt] = useState<string>(DateTime.local().toFormat('yyyy-MM-dd'))
-  const auth = getAuth()
+
+  const handleGetCurrentUser = async () => {
+    const token = await auth.currentUser?.getIdToken(true)
+    const params: GetCurrentUserParams = {
+      uid: auth.currentUser?.uid,
+    }
+    try {
+      const res = await getCurrentUser(params, token)
+      if (res?.status === 200) {
+        setCurrentUser(res.data.user)
+        setIsLoaded(true)
+      }
+    } catch (e) {
+      console.log(e)
+    }
+  }
 
   useEffect(() => {
     const unsubscribed = auth.onAuthStateChanged((user) => {

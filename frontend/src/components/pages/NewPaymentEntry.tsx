@@ -7,6 +7,7 @@ import { PrimaryButton } from 'components/atoms/button/PrimaryButton'
 import { HeaderWithTitleLayout } from 'components/templates/HeaderWithTitleLayout'
 import { PaymentContext } from 'context/PaymentContext'
 import { postPayment } from 'lib/api/payment'
+import { auth } from 'lib/firebase'
 import { useToast } from 'lib/toast'
 
 import type { PostPaymentParams } from 'types/postPaymentParams'
@@ -23,7 +24,7 @@ export const NewPaymentEntry: VFC = () => {
 
   const handleSubmitAmount = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
-
+    const idToken = await auth.currentUser?.getIdToken(true)
     const params: PostPaymentParams = {
       amount: inputAmount,
       detail: inputDetail,
@@ -31,7 +32,7 @@ export const NewPaymentEntry: VFC = () => {
     }
 
     try {
-      const res = await postPayment(params)
+      const res = await postPayment(params, idToken)
       if (res.status === 200) {
         setInputAmount('')
         setInputDetail('')

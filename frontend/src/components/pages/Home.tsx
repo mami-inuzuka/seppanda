@@ -15,6 +15,7 @@ import { AuthContext } from 'context/AuthContext'
 import { PaymentContext } from 'context/PaymentContext'
 import { getPayments } from 'lib/api/payment'
 import { getTeamStatus } from 'lib/api/team'
+import { auth } from 'lib/firebase'
 import { useToast } from 'lib/toast'
 
 export const Home: VFC = memo(() => {
@@ -32,31 +33,37 @@ export const Home: VFC = memo(() => {
   const { errorToast } = useToast()
 
   const handleGetPayments = async () => {
-    try {
-      const res = await getPayments()
-      if (res?.status === 200) {
-        setPaymentList(res?.data)
-      } else {
+    const idToken = await auth.currentUser?.getIdToken(true)
+    if (currentUser) {
+      try {
+        const res = await getPayments(idToken)
+        if (res?.status === 200) {
+          setPaymentList(res?.data)
+        } else {
+          errorToast('取得に失敗しました')
+        }
+      } catch {
         errorToast('取得に失敗しました')
       }
-    } catch {
-      errorToast('取得に失敗しました')
+      setIsPaymentListLoaded(true)
     }
-    setIsPaymentListLoaded(true)
   }
 
   const handleGetTeamStatus = async () => {
-    try {
-      const res = await getTeamStatus(currentUser!.teamId)
-      if (res?.status === 200) {
-        setTeamStatus(res?.data)
-      } else {
+    const idToken = await auth.currentUser?.getIdToken(true)
+    if (currentUser) {
+      try {
+        const res = await getTeamStatus(currentUser.teamId, idToken)
+        if (res?.status === 200) {
+          setTeamStatus(res?.data)
+        } else {
+          errorToast('取得に失敗しました')
+        }
+      } catch {
         errorToast('取得に失敗しました')
       }
-    } catch {
-      errorToast('取得に失敗しました')
+      setIsTeamStatusLoaded(true)
     }
-    setIsTeamStatusLoaded(true)
   }
 
   useEffect(() => {
@@ -79,7 +86,7 @@ export const Home: VFC = memo(() => {
         <InvitationAlert invitationToken={teamStatus.invitationToken} />
       )}
       <Box
-        backgroundImage={currentUser?.color === 'blue' ? `url(${bgBlue})` : `url(${bgOrange})`}
+        backgroundImage={currentUser?.color === 'blue' ? bgBlue : bgOrange}
         backgroundSize="contain"
         backgroundRepeat="no-repeat"
         minH="100vh"

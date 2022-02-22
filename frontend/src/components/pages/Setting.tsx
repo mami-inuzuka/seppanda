@@ -6,6 +6,7 @@ import { PrimaryButton } from 'components/atoms/button/PrimaryButton'
 import { HeaderWithTitleLayout } from 'components/templates/HeaderWithTitleLayout'
 import { AuthContext } from 'context/AuthContext'
 import { updateUser } from 'lib/api/auth'
+import { auth } from 'lib/firebase'
 import { useToast } from 'lib/toast'
 import { UpdateUserParams } from 'types/updateUserParams'
 
@@ -18,7 +19,7 @@ export const Setting: VFC = () => {
 
   const handleUpdateUser = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
-
+    const idToken = await auth.currentUser?.getIdToken(true)
     const params: UpdateUserParams = {
       name: inputName,
       email: inputEmail,
@@ -26,7 +27,7 @@ export const Setting: VFC = () => {
     }
 
     try {
-      const res = await updateUser(params)
+      const res = await updateUser(params, idToken)
       if (res.status === 200) {
         successToast('ユーザー情報を更新しました')
       } else {

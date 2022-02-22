@@ -1,9 +1,10 @@
 import { AxiosPromise } from 'axios'
-import Cookies from 'js-cookie'
 
 import client from 'lib/api/client'
+import { GetCurrentUserParams } from 'types/getCurrentUserParams'
 
 import type { CurrentUserResponse } from 'types/currentUserResponse'
+import type { FirebaseIdToken } from 'types/firebaseIdToken'
 import type { SignInParams } from 'types/signInParams'
 import type { SignInResponse } from 'types/signInResponse'
 import type { SignUpParams } from 'types/signUpParams'
@@ -11,28 +12,22 @@ import type { SignUpResponse } from 'types/signUpResponse'
 import type { UpdateUserParams } from 'types/updateUserParams'
 import type { UpdateUserResponse } from 'types/updateUserResponse'
 
-export const signUp = (params: SignUpParams, token?: string | null): AxiosPromise<SignUpResponse> =>
-  client.post('/auth', params, { headers: { InvitationToken: token || '' } })
+export const signUp = (params: SignUpParams, invitationToken?: string | null): AxiosPromise<SignUpResponse> =>
+  client.post('/auth/registrations', params, {
+    headers: {
+      Authorization: params.token || '',
+      InvitationToken: invitationToken || '',
+    },
+  })
 
 export const signIn = (params: SignInParams): AxiosPromise<SignInResponse> => client.post('/auth/sign_in', params)
 
-export const updateUser = (params: UpdateUserParams): AxiosPromise<UpdateUserResponse> =>
-  client.patch('/auth', params, {
-    headers: {
-      'access-token': Cookies.get('_access_token') || '',
-      client: Cookies.get('_client') || '',
-      uid: Cookies.get('_uid') || '',
-    },
-  })
+export const updateUser = (params: UpdateUserParams, idToken: FirebaseIdToken): AxiosPromise<UpdateUserResponse> =>
+  client.patch('/auth', params, { headers: { Authorization: idToken || '' } })
 
-// 認証済みのユーザーを取得
-export const getCurrentUser = (): AxiosPromise<CurrentUserResponse> | undefined => {
-  if (!Cookies.get('_access_token') || !Cookies.get('_client') || !Cookies.get('_uid')) return undefined
-  return client.get('/auth/sessions', {
-    headers: {
-      'access-token': Cookies.get('_access_token') || '',
-      client: Cookies.get('_client') || '',
-      uid: Cookies.get('_uid') || '',
-    },
-  })
-}
+// idTokenをもとにusersテーブル内の該当ユーザーを取得する
+export const getCurrentUser = (
+  params: GetCurrentUserParams,
+  idToken: FirebaseIdToken
+): AxiosPromise<CurrentUserResponse> | undefined =>
+  client.get(`/auth/sessions?uid=${params.uid}`, { headers: { Authorization: idToken || '' } })
