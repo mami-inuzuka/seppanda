@@ -33,10 +33,14 @@ export const SignIn: VFC = memo(() => {
     signInWithPopup(auth, provider)
       .then(handleCreateUser)
       .then((res) => {
-        history.push({
-          pathname: '/invitation',
-          state: { token: res.invitationToken },
-        })
+        if (res.isTeamCapacityReached) {
+          history.push('/')
+        } else {
+          history.push({
+            pathname: '/invitation',
+            state: { token: res.invitationToken },
+          })
+        }
       })
       .catch((error) => {
         console.log(error)
