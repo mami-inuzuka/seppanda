@@ -8,13 +8,15 @@ import { Box, Flex, Heading, Text } from '@chakra-ui/react'
 import { HeaderOnlyLogoLayout } from 'components/templates/HeaderOnlyLogoLayout'
 import { useToast } from 'lib/toast'
 
-export const Invitation: VFC = () => {
-  const { search } = useLocation()
-  const { successToast } = useToast()
+type LocationState = {
+  token: string
+}
 
-  const query = new URLSearchParams(search)
-  const invitationToken = query.get('invitation_token')
-  const invitationUrl = `${window.location.protocol}//${window.location.host}/signup?token=${invitationToken}`
+export const Invitation: VFC = () => {
+  const { successToast } = useToast()
+  const location = useLocation<LocationState>()
+
+  const invitationUrl = `${window.location.protocol}//${window.location.host}/signup?token=${location.state.token}`
   const handleFeedback = () => {
     successToast('コピーしました')
   }

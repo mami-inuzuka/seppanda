@@ -24,6 +24,7 @@ export const SignIn: VFC = memo(() => {
       setCurrentUser(res.data?.user)
       setIsSignedIn(true)
     }
+    return res.data
   }
 
   const auth = getAuth()
@@ -31,10 +32,10 @@ export const SignIn: VFC = memo(() => {
     const provider = new GoogleAuthProvider()
     signInWithPopup(auth, provider)
       .then(handleCreateUser)
-      .then(() => {
+      .then((res) => {
         history.push({
           pathname: '/invitation',
-          state: '',
+          state: { token: res.invitationToken },
         })
       })
       .catch((error) => {
