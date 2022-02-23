@@ -34,19 +34,17 @@ export const Home: VFC = memo(() => {
 
   const handleGetPayments = async () => {
     const idToken = await auth.currentUser?.getIdToken(true)
-    if (currentUser) {
-      try {
-        const res = await getPayments(idToken)
-        if (res?.status === 200) {
-          setPaymentList(res?.data)
-        } else {
-          errorToast('取得に失敗しました')
-        }
-      } catch {
+    try {
+      const res = await getPayments(idToken)
+      if (res?.status === 200) {
+        setPaymentList(res?.data)
+      } else {
         errorToast('取得に失敗しました')
       }
-      setIsPaymentListLoaded(true)
+    } catch {
+      errorToast('取得に失敗しました')
     }
+    setIsPaymentListLoaded(true)
   }
 
   const handleGetTeamStatus = async () => {

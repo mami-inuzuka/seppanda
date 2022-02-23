@@ -26,7 +26,6 @@ import type { User } from 'types/user'
 
 const App: VFC = () => {
   const [isLoaded, setIsLoaded] = useState<boolean>(false)
-  const [isSignedIn, setIsSignedIn] = useState<boolean>(false)
   const [currentUser, setCurrentUser] = useState<User | null>(null)
   const [currentFirebaseUser, setCurrentFirebaseUser] = useState<firebase.User | null>(null)
   const [paymentList, setPaymentList] = useState<PaymentListGroupByPaidAt[]>([])
@@ -52,10 +51,11 @@ const App: VFC = () => {
       const res = await getCurrentUser(params, token)
       if (res?.status === 200) {
         setCurrentUser(res.data.user)
-        setIsLoaded(true)
       }
     } catch (e) {
       console.log(e)
+    } finally {
+      setIsLoaded(true)
     }
   }
 
@@ -84,8 +84,6 @@ const App: VFC = () => {
           value={{
             isLoaded,
             setIsLoaded,
-            isSignedIn,
-            setIsSignedIn,
             currentUser,
             setCurrentUser,
             currentFirebaseUser,

@@ -10,7 +10,7 @@ import { AuthContext } from 'context/AuthContext'
 import { signUp } from 'lib/api/auth'
 
 export const SignIn: VFC = memo(() => {
-  const { setIsSignedIn, setCurrentUser } = useContext(AuthContext)
+  const { setCurrentUser } = useContext(AuthContext)
   const history = useHistory()
   const { search } = useLocation()
   const query = new URLSearchParams(search)
@@ -22,7 +22,6 @@ export const SignIn: VFC = memo(() => {
     const res = await signUp(data, invitationToken)
     if (res.status === 200) {
       setCurrentUser(res.data?.user)
-      setIsSignedIn(true)
     }
     return res.data
   }
