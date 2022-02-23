@@ -7,6 +7,7 @@ import { SecondaryButton } from 'components/atoms/button/SecondaryButton'
 import { AuthContext } from 'context/AuthContext'
 import { PaymentContext } from 'context/PaymentContext'
 import { settleTeamPayments } from 'lib/api/payment'
+import { auth } from 'lib/firebase'
 import { useToast } from 'lib/toast'
 
 type Props = {
@@ -21,18 +22,22 @@ export const SettelementModal: VFC<Props> = (props) => {
   const { teamStatus, setPaymentList } = useContext(PaymentContext)
   const { errorToast, successToast } = useToast()
 
-  const handleSettleTeamPayments = async () => {
-    try {
-      const res = await settleTeamPayments(currentUser!.teamId)
-      if (res?.status === 200) {
-        successToast('清算が完了しました')
-        setPaymentList([])
-        onClose()
-      } else {
+  const handleSettleTeamPayments = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    const idToken = await auth.currentUser?.getIdToken(true)
+    if (currentUser) {
+      try {
+        const res = await settleTeamPayments(currentUser.teamId, idToken)
+        if (res?.status === 200) {
+          successToast('清算が完了しました')
+          setPaymentList([])
+          onClose()
+        } else {
+          errorToast('処理に失敗しました')
+        }
+      } catch {
         errorToast('処理に失敗しました')
       }
-    } catch {
-      errorToast('処理に失敗しました')
     }
   }
 

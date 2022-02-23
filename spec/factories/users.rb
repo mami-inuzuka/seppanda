@@ -2,11 +2,9 @@
 
 FactoryBot.define do
   factory :user do
-    name { 'Alice' }
+    sequence(:uid) { |n| "uid#{n}" }
+    color { 'orange' }
     sequence(:email) { |n| "tester#{n}@example.com" }
-    password { 'testtest' }
-    confirmed_at { Time.zone.today }
-
     trait :with_team do
       association :team
     end

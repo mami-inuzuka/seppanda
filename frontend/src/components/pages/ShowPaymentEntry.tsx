@@ -8,6 +8,7 @@ import { PrimaryButton } from 'components/atoms/button/PrimaryButton'
 import { HeaderWithTitleLayout } from 'components/templates/HeaderWithTitleLayout'
 import { PaymentContext } from 'context/PaymentContext'
 import { deletePayment, updatePayment } from 'lib/api/payment'
+import { auth } from 'lib/firebase'
 import { useToast } from 'lib/toast'
 
 import type { Payment } from 'types/payment'
@@ -33,16 +34,15 @@ export const ShowPaymentEntry: VFC = () => {
   const location = useLocation()
   const state = location.state as stateType
   const { payment } = state
-
   const onClickClose = () => {
     history.push('/')
   }
 
   const handleDeletePayment = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
-
+    const idToken = await auth.currentUser?.getIdToken(true)
     try {
-      const res = await deletePayment(payment.id)
+      const res = await deletePayment(payment.id, idToken)
       if (res.status === 200) {
         setPaymentList(paymentList)
         onClickClose()
@@ -63,9 +63,9 @@ export const ShowPaymentEntry: VFC = () => {
       detail: inputDetail,
       paid_at: inputPaidAt,
     }
-
+    const idToken = await auth.currentUser?.getIdToken(true)
     try {
-      const res = await updatePayment(params, payment.id)
+      const res = await updatePayment(params, payment.id, idToken)
       if (res.status === 200) {
         setPaymentList(paymentList)
         onClickClose()

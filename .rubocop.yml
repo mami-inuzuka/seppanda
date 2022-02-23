@@ -47,6 +47,10 @@ RSpec/LetSetup:
   Exclude:
     - spec/models/team_spec.rb
 
+RSpec/AnyInstance:
+  Exclude:
+    - spec/support/firebase_stub.rb
+
 AllCops:
   Exclude:
     - "**/templates/**/*"

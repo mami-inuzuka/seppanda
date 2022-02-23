@@ -2,10 +2,8 @@
 
 class ApplicationController < ActionController::API
   include ActionController::MimeResponds
-  include ActionController::Helpers
-  include DeviseTokenAuth::Concerns::SetUserByToken
-
-  skip_before_action :verify_authenticity_token, raise: false
+  include Firebase::Auth::Authenticable
+  before_action :authenticate_user
 
   def fallback_index_html
     respond_to do |format|

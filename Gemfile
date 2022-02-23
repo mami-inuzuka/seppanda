@@ -9,6 +9,7 @@ gem 'bootsnap', '>= 1.4.4', require: false
 gem 'devise'
 gem 'devise_token_auth'
 gem 'dotenv-rails'
+gem 'firebase-auth-rails'
 gem 'google-cloud-storage'
 gem 'image_processing', '~> 1.2'
 gem 'jbuilder', '~> 2.7'
@@ -17,6 +18,7 @@ gem 'pg'
 gem 'puma', '~> 5.0'
 gem 'rack-cors'
 gem 'rails', '~> 6.1.4', '>= 6.1.4.4'
+gem 'redis'
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]

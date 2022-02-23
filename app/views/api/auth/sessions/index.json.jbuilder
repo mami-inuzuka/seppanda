@@ -1,6 +1,6 @@
-if @current_api_user
+if @user
   json.user do
-    json.partial! 'api/auth/sessions/user', user: @current_api_user
+    json.partial! 'api/auth/sessions/user', user: @user
   end
   json.is_login true
 else

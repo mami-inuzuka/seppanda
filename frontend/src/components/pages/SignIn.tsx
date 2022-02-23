@@ -1,81 +1,61 @@
-import { useState, useContext, VFC, memo } from 'react'
-import { useHistory } from 'react-router-dom'
+import { VFC, memo, useContext } from 'react'
+import { useHistory, useLocation } from 'react-router-dom'
 
-import { Box, FormControl, FormLabel, Grid, Heading, Input } from '@chakra-ui/react'
-import Cookies from 'js-cookie'
+import { Box, Button, Heading, Image } from '@chakra-ui/react'
+import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
 
-import { PrimaryButton } from 'components/atoms/button/PrimaryButton'
+import googleIcon from 'assets/images/google_icon.svg'
 import { HeaderOnlyLogoLayout } from 'components/templates/HeaderOnlyLogoLayout'
 import { AuthContext } from 'context/AuthContext'
-import { signIn } from 'lib/api/auth'
-
-import type { SignInParams } from 'types/signInParams'
+import { signUp } from 'lib/api/auth'
 
 export const SignIn: VFC = memo(() => {
-  // 関連issue: [react-router-dom] - Export History type #50526 https://github.com/DefinitelyTyped/DefinitelyTyped/issues/50526
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
+  const { setCurrentUser } = useContext(AuthContext)
   const history = useHistory()
-  const { setIsSignedIn, setCurrentUser } = useContext(AuthContext)
-  const [email, setEmail] = useState<string>('')
-  const [password, setPassword] = useState<string>('')
+  const { search } = useLocation()
+  const query = new URLSearchParams(search)
+  const invitationToken = query.get('token')
 
-  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    // デフォルトの動作をキャンセル
-    e.preventDefault()
-
-    const params: SignInParams = {
-      email,
-      password,
+  const handleCreateUser = async () => {
+    const token = await auth.currentUser?.getIdToken(true)
+    const data = { token }
+    const res = await signUp(data, invitationToken)
+    if (res.status === 200) {
+      setCurrentUser(res.data?.user)
     }
+    return res.data
+  }
 
-    try {
-      const res = await signIn(params)
-      console.log(res)
-      if (res.status === 200) {
-        // ログインに成功した場合はCookieに各値を格納
-        Cookies.set('_access_token', res.headers['access-token'])
-        Cookies.set('_client', res.headers.client)
-        Cookies.set('_uid', res.headers.uid)
-        setIsSignedIn(true)
-        setCurrentUser(res.data.data)
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
-        history.push('/')
-        console.log('Signed in successfully!')
-      }
-    } catch (err) {
-      console.log(err)
-    }
+  const auth = getAuth()
+  const signInWithGoogle = () => {
+    const provider = new GoogleAuthProvider()
+    signInWithPopup(auth, provider)
+      .then(handleCreateUser)
+      .then((res) => {
+        if (res.isTeamCapacityReached) {
+          history.push('/')
+        } else {
+          history.push({
+            pathname: '/invitation',
+            state: { token: res.invitationToken },
+          })
+        }
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }
 
   return (
     <HeaderOnlyLogoLayout>
       <Box p={6}>
         <Heading size="lg" textAlign="center" my={10}>
-          ログイン
+          はじめる
         </Heading>
-        <form noValidate autoComplete="off">
-          <Grid gap={6}>
-            <FormControl>
-              <FormLabel htmlFor="email">メールアドレス</FormLabel>
-              <Input value={email} placeholder="メールアドレス" onChange={(event) => setEmail(event.target.value)} />
-            </FormControl>
-            <FormControl>
-              <FormLabel htmlFor="password">パスワード</FormLabel>
-              <Input
-                value={password}
-                placeholder="パスワード"
-                onChange={(event) => setPassword(event.target.value)}
-                type="password"
-              />
-            </FormControl>
-            <PrimaryButton
-              disabled={!!(!email || !password)} // 空欄があった場合はボタンを押せないように
-              onClickButton={handleSubmit}
-            >
-              ログイン
-            </PrimaryButton>
-          </Grid>
-        </form>
+        <Button onClick={signInWithGoogle} bg="gray.100" size="xl" isFullWidth>
+          <Image src={googleIcon} mr={2} />
+          Googleアカウントではじめる
+        </Button>
       </Box>
     </HeaderOnlyLogoLayout>
   )
