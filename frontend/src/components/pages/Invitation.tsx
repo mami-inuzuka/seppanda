@@ -9,14 +9,14 @@ import { HeaderOnlyLogoLayout } from 'components/templates/HeaderOnlyLogoLayout'
 import { useToast } from 'lib/toast'
 
 type LocationState = {
-  token: string
+  invitationToken: string
 }
 
 export const Invitation: VFC = () => {
   const { successToast } = useToast()
   const location = useLocation<LocationState>()
 
-  const invitationUrl = `${window.location.protocol}//${window.location.host}/signup?token=${location.state.token}`
+  const invitationUrl = `${window.location.protocol}//${window.location.host}/welcome?invitation_token=${location.state.invitationToken}`
   const handleFeedback = () => {
     successToast('コピーしました')
   }

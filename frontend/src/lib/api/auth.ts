@@ -1,22 +1,22 @@
 import { AxiosPromise } from 'axios'
 
 import client from 'lib/api/client'
-import { GetCurrentUserParams } from 'types/getCurrentUserParams'
 
+import type { CreateUserParams } from 'types/createUserParams'
 import type { CurrentUserResponse } from 'types/currentUserResponse'
 import type { FirebaseIdToken } from 'types/firebaseIdToken'
+import type { GetCurrentUserParams } from 'types/getCurrentUserParams'
 import type { SignInParams } from 'types/signInParams'
 import type { SignInResponse } from 'types/signInResponse'
-import type { SignUpParams } from 'types/signUpParams'
 import type { SignUpResponse } from 'types/signUpResponse'
 import type { UpdateUserParams } from 'types/updateUserParams'
 import type { UpdateUserResponse } from 'types/updateUserResponse'
 
-export const signUp = (params: SignUpParams, invitationToken?: string | null): AxiosPromise<SignUpResponse> =>
+export const createUser = (params: CreateUserParams, idToken: FirebaseIdToken): AxiosPromise<SignUpResponse> =>
   client.post('/auth/registrations', params, {
     headers: {
-      Authorization: params.token || '',
-      InvitationToken: invitationToken || '',
+      Authorization: idToken || '',
+      InvitationToken: params.invitationToken || '',
     },
   })
 

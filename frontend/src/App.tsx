@@ -7,9 +7,10 @@ import { EmailConfirmation } from 'components/pages/EmailConfirmation'
 import { Home } from 'components/pages/Home'
 import { Invitation } from 'components/pages/Invitation'
 import { NewPaymentEntry } from 'components/pages/NewPaymentEntry'
+import { Onboarding } from 'components/pages/Onboarding'
 import { Setting } from 'components/pages/Setting'
 import { ShowPaymentEntry } from 'components/pages/ShowPaymentEntry'
-import { SignIn } from 'components/pages/SignIn'
+import { Welcome } from 'components/pages/Welcome'
 import { PrivateRoute } from 'components/router/PrivateRoute'
 import { AuthProvider } from 'provider/AuthProvider'
 import { PaymentProvider } from 'provider/PaymentProvider'
@@ -19,7 +20,8 @@ const App: VFC = () => (
   <BrowserRouter>
     <ChakraProvider theme={theme}>
       <Switch>
-        <Route path="/signin" component={SignIn} />
+        <Route path="/welcome" component={Welcome} />
+        <Route path="/onboarding" component={Onboarding} />
         <Route path="/invitation" component={Invitation} />
         <Route path="/confirmation" component={EmailConfirmation} />
         <AuthProvider>
