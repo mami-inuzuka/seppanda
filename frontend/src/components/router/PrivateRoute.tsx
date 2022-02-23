@@ -4,9 +4,9 @@ import { Redirect } from 'react-router-dom'
 import { AuthContext } from 'context/AuthContext'
 
 export const PrivateRoute = ({ children }: { children: React.ReactElement }) => {
-  const { isLoaded, isSignedIn } = useContext(AuthContext)
+  const { isLoaded, currentUser, currentFirebaseUser } = useContext(AuthContext)
   if (isLoaded) {
-    if (isSignedIn) return children
+    if (currentUser && currentFirebaseUser) return children
     return <Redirect to="/signin" />
   }
   return null
