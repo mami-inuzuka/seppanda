@@ -50,7 +50,6 @@ export const AuthProvider = ({ children }: { children: React.ReactElement }) => 
     return () => {
       unsubscribed()
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return <AuthContext.Provider value={value}>{isLoaded && children}</AuthContext.Provider>
