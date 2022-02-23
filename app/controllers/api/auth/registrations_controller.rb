@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Api::Auth::RegistrationsController < ApplicationController
+class Api::Auth::RegistrationsController < Api::ApplicationController
   skip_before_action :authenticate_user
   before_action :check_invitation_token_and_team_capacity, only: :create
   after_action :attach_default_avatar, only: :create

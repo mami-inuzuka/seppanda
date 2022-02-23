@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Api::Teams::PaymentsController < ApplicationController
+class Api::Teams::PaymentsController < Api::ApplicationController
   before_action :authenticate_api_user!
 
   def update

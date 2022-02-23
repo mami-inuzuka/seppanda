@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Api::Auth::SessionsController < ApplicationController
+class Api::Auth::SessionsController < Api::ApplicationController
   skip_before_action :authenticate_user
 
   def index
