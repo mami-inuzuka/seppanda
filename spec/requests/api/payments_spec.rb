@@ -8,7 +8,6 @@ RSpec.describe 'Api::Payments', type: :request do
   let(:team) { current_user.team }
   let(:headers) { { Authorization: 'Bearer token' } }
 
-
   before do
     current_user.payments.create(amount: 200, detail: '外食', team_id: team.id, paid_at: '2022-02-14', settled: true, settled_at: '2022-02-24')
     other_user.payments.create(amount: 500, detail: 'カフェ', team_id: team.id, paid_at: '2022-02-14', settled: true, settled_at: '2022-02-24')
@@ -96,7 +95,7 @@ RSpec.describe 'Api::Payments', type: :request do
 
     example '支払い情報を更新することができない' do
       payment = current_user.payments.create(amount: 200, detail: '外食', team_id: team.id, paid_at: '2022-02-14', settled: true, settled_at: '2022-02-24')
-      expect { patch api_payment_path(payment.id), params: {amount: 100, detail: 'スーパー', paid_at: '2022-02-15'} }.to change(Payment, :count).by(0)
+      expect { patch api_payment_path(payment.id), params: { amount: 100, detail: 'スーパー', paid_at: '2022-02-15' } }.to change(Payment, :count).by(0)
       expect(response.status).to eq(401)
     end
 

@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'AuthApi', type: :request do
   describe 'POST /api/auth/registrations' do
-    let(:params) { {token: 'token'}.to_json }
+    let(:params) { { token: 'token' }.to_json }
     let!(:host_user) { create(:user, :with_team) }
     let(:team) { Team.find(host_user.team_id) }
 
@@ -60,7 +60,7 @@ RSpec.describe 'AuthApi', type: :request do
       end
 
       example 'teamに既に2人のユーザーが所属していたら登録できない' do
-        guest_user = create(:user, team_id: host_user.team_id)
+        create(:user, team_id: host_user.team_id)
         expect { post api_auth_registrations_path, params: params, headers: headers }.to change(User, :count).by(0).and change(Team, :count).by(0)
         expect(JSON.parse(response.body)['errors']['fullMessages']).to include('Your token is invalid or the team reached capacity')
       end
