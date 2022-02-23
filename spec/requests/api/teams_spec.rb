@@ -6,30 +6,37 @@ RSpec.describe 'Api::Teams', type: :request do
   let(:current_user) { create(:user, :with_team) }
   let(:other_user) { create(:user, team_id: current_user.team_id) }
   let(:team) { Team.find(current_user.team_id) }
+  let(:headers) { { Authorization: 'Bearer token' } }
 
-  def auth_headers
-    post new_api_user_session_path, params: { email: current_user.email, password: current_user.password }
-    { 'uid' => response.header['uid'], 'client' => response.header['client'], 'access-token' => response.header['access-token'] }
+  before do
+    current_user.payments.create(amount: 200, detail: '外食', team_id: team.id, paid_at: '2022-02-14', settled: true, settled_at: '2022-02-24')
+    other_user.payments.create(amount: 500, detail: 'カフェ', team_id: team.id, paid_at: '2022-02-14', settled: true, settled_at: '2022-02-24')
+    current_user.payments.create(amount: 800, detail: 'スーパー', team_id: team.id, paid_at: '2022-02-25')
+    other_user.payments.create(amount: 500, detail: '日用品', team_id: team.id, paid_at: '2022-02-25')
   end
 
-  def login
-    post api_user_session_path,
-         params: { email: current_user.email, password: current_user.password }.to_json,
-         headers: { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
-  end
+  context 'ログイン中の時' do
+    before do
+      stub_firebase(current_user)
+    end
 
-  describe 'GET /api/teams/:id' do
-    example 'チームの状況を取得することができる' do
-      5.times do |n|
-        current_user.payments.create(amount: 100 * (n + 1), team_id: current_user.team_id, paid_at: '2022-02-14')
+    describe 'GET /api/teams/:id' do
+      example 'チームの状況を取得することができる' do
+        get api_team_path(current_user.team_id), headers: headers
+        json = JSON.parse(response.body)
+        expect(response).to have_http_status(:ok)
+        expect(json['is_team_capacity_reached']).to eq(team.capacity_reached?)
+        expect(json['refund_amount']).to eq(team.refund_amount)
+        expect(json['largest_payment_user']['id']).to eq(team.largest_payment_user.id)
+        expect(json['smallest_payment_user']['id']).to eq(team.smallest_payment_user.id)
       end
-      get api_team_path(current_user.team_id), headers: auth_headers
-      json = JSON.parse(response.body)
-      expect(response).to have_http_status(:ok)
-      expect(json['is_team_capacity_reached']).to eq(team.capacity_reached?)
-      expect(json['refund_amount']).to eq(team.refund_amount)
-      expect(json['largest_payment_user']['id']).to eq(team.largest_payment_user.id)
-      expect(json['smallest_payment_user']['id']).to eq(team.smallest_payment_user.id)
+    end
+  end
+
+  context 'ログアウト中の時' do
+    example 'チームの状況を取得することができない' do
+      get api_team_path(current_user.team_id)
+      expect(response.status).to eq(401)
     end
   end
 end
