@@ -14,12 +14,10 @@ export type AuthContextType = {
 
 export const AuthContext = createContext<AuthContextType>({
   isLoaded: null,
-  setIsLoaded: () => {
-    throw new Error('AuthContext not avaliable')
-  },
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  setIsLoaded: () => {},
   currentUser: null,
-  setCurrentUser: () => {
-    throw new Error('AuthContext not avaliable')
-  },
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  setCurrentUser: () => {},
   currentFirebaseUser: null,
 })
