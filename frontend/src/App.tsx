@@ -9,7 +9,7 @@ import { Invitation } from 'components/pages/Invitation'
 import { NewPaymentEntry } from 'components/pages/NewPaymentEntry'
 import { Setting } from 'components/pages/Setting'
 import { ShowPaymentEntry } from 'components/pages/ShowPaymentEntry'
-import { SignIn } from 'components/pages/SignIn'
+import { Welcome } from 'components/pages/Welcome'
 import { PrivateRoute } from 'components/router/PrivateRoute'
 import { AuthProvider } from 'provider/AuthProvider'
 import { PaymentProvider } from 'provider/PaymentProvider'
@@ -19,7 +19,7 @@ const App: VFC = () => (
   <BrowserRouter>
     <ChakraProvider theme={theme}>
       <Switch>
-        <Route path="/signin" component={SignIn} />
+        <Route path="/signin" component={Welcome} />
         <Route path="/invitation" component={Invitation} />
         <Route path="/confirmation" component={EmailConfirmation} />
         <AuthProvider>

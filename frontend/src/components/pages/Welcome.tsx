@@ -9,7 +9,7 @@ import { HeaderOnlyLogoLayout } from 'components/templates/HeaderOnlyLogoLayout'
 import { AuthContext } from 'context/AuthContext'
 import { signUp } from 'lib/api/auth'
 
-export const SignIn: VFC = memo(() => {
+export const Welcome: VFC = memo(() => {
   const { setCurrentUser } = useContext(AuthContext)
   const history = useHistory()
   const { search } = useLocation()
