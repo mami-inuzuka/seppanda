@@ -2,8 +2,6 @@
 
 class ApplicationController < ActionController::API
   include ActionController::MimeResponds
-  include Firebase::Auth::Authenticable
-  before_action :authenticate_user
 
   def fallback_index_html
     respond_to do |format|
