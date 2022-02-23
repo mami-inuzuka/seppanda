@@ -1,11 +1,11 @@
 import { VFC, memo, useContext } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 
-import { Box, Button, Heading, Image } from '@chakra-ui/react'
+import { Box, Button, Flex, Image, Text } from '@chakra-ui/react'
 import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
 
 import googleIcon from 'assets/images/google_icon.svg'
-import { HeaderOnlyLogoLayout } from 'components/templates/HeaderOnlyLogoLayout'
+import LogoWithCopy from 'assets/images/logo-with-copy.svg'
 import { AuthContext } from 'context/AuthContext'
 import { signUp } from 'lib/api/auth'
 
@@ -47,16 +47,17 @@ export const Welcome: VFC = memo(() => {
   }
 
   return (
-    <HeaderOnlyLogoLayout>
-      <Box p={6}>
-        <Heading size="lg" textAlign="center" my={10}>
-          はじめる
-        </Heading>
-        <Button onClick={signInWithGoogle} bg="gray.100" size="xl" isFullWidth>
+    <Flex h="100vh" justify="center" align="center" p={6}>
+      <Box>
+        <Image src={LogoWithCopy} margin="0 auto" mb="14" />
+        <Button onClick={signInWithGoogle} bg="gray.100" size="xl" mb={6} isFullWidth>
           <Image src={googleIcon} mr={2} />
-          Googleアカウントではじめる
+          Googleでログインする
         </Button>
+        <Text fontSize="xs" align="center" color="gray.400">
+          上記のボタンをクリックすることで、利用規約およびプライバシーポリシーに同意するものとします。
+        </Text>
       </Box>
-    </HeaderOnlyLogoLayout>
+    </Flex>
   )
 })
