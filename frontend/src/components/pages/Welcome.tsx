@@ -6,6 +6,7 @@ import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
 
 import googleIcon from 'assets/images/google_icon.svg'
 import LogoWithCopy from 'assets/images/logo-with-copy.svg'
+import { getCurrentUser } from 'lib/api/auth'
 
 export const Welcome: VFC = memo(() => {
   const history = useHistory()
@@ -13,15 +14,28 @@ export const Welcome: VFC = memo(() => {
   const query = new URLSearchParams(search)
   const invitationToken = query.get('invitation_token')
 
+  const handleGetCurrentUser = async () => {
+    const token = await auth.currentUser?.getIdToken(true)
+    const res = await getCurrentUser(token)
+    return res
+  }
+
   const auth = getAuth()
   const signInWithGoogle = () => {
     const provider = new GoogleAuthProvider()
     signInWithPopup(auth, provider)
-      .then(() => {
-        history.push({
-          pathname: '/onboarding',
-          state: { invitationToken },
-        })
+      .then(handleGetCurrentUser)
+      .then((res) => {
+        if (res?.status === 200) {
+          if (res?.data.isExisted) {
+            history.push('/')
+          } else {
+            history.push({
+              pathname: '/onboarding',
+              state: { invitationToken },
+            })
+          }
+        }
       })
       .catch((error) => {
         console.log(error)

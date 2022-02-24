@@ -5,7 +5,6 @@ import client from 'lib/api/client'
 import type { CreateUserParams } from 'types/createUserParams'
 import type { CurrentUserResponse } from 'types/currentUserResponse'
 import type { FirebaseIdToken } from 'types/firebaseIdToken'
-import type { GetCurrentUserParams } from 'types/getCurrentUserParams'
 import type { SignInParams } from 'types/signInParams'
 import type { SignInResponse } from 'types/signInResponse'
 import type { SignUpResponse } from 'types/signUpResponse'
@@ -26,8 +25,5 @@ export const updateUser = (params: UpdateUserParams, idToken: FirebaseIdToken): 
   client.patch('/auth', params, { headers: { Authorization: idToken || '' } })
 
 // idTokenをもとにusersテーブル内の該当ユーザーを取得する
-export const getCurrentUser = (
-  params: GetCurrentUserParams,
-  idToken: FirebaseIdToken
-): AxiosPromise<CurrentUserResponse> | undefined =>
-  client.get(`/auth/sessions?uid=${params.uid}`, { headers: { Authorization: idToken || '' } })
+export const getCurrentUser = (idToken: FirebaseIdToken): AxiosPromise<CurrentUserResponse> | undefined =>
+  client.get(`/auth/sessions`, { headers: { Authorization: idToken || '' } })
