@@ -1,7 +1,5 @@
 import { useContext, useEffect, useState } from 'react'
 
-import { DateTime } from 'luxon'
-
 import { AuthContext } from 'context/AuthContext'
 import { PaymentContext } from 'context/PaymentContext'
 import { getPayments } from 'lib/api/payment'
@@ -24,18 +22,9 @@ export const PaymentProvider = ({ children }: { children: React.ReactElement }) 
   })
   const [isPaymentListLoaded, setIsPaymentListLoaded] = useState<boolean>(false)
   const [isTeamStatusLoaded, setIsTeamStatusLoaded] = useState<boolean>(false)
-  const [inputAmount, setInputAmount] = useState<string>('')
-  const [inputDetail, setInputDetail] = useState<string>('')
-  const [inputPaidAt, setInputPaidAt] = useState<string>(DateTime.local().toFormat('yyyy-MM-dd'))
   const { errorToast } = useToast()
   // eslint-disable-next-line react/jsx-no-constructed-context-values
   const value = {
-    inputAmount,
-    setInputAmount,
-    inputDetail,
-    setInputDetail,
-    inputPaidAt,
-    setInputPaidAt,
     paymentList,
     setPaymentList,
     isPaymentListLoaded,

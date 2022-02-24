@@ -1,11 +1,11 @@
-import { useContext, VFC } from 'react'
+import { useState, VFC } from 'react'
 import { useHistory } from 'react-router-dom'
 
 import { Flex, FormControl, FormLabel, Grid, Input } from '@chakra-ui/react'
+import { DateTime } from 'luxon'
 
 import { PrimaryButton } from 'components/atoms/button/PrimaryButton'
 import { HeaderWithTitleLayout } from 'components/templates/HeaderWithTitleLayout'
-import { PaymentContext } from 'context/PaymentContext'
 import { postPayment } from 'lib/api/payment'
 import { auth } from 'lib/firebase'
 import { useToast } from 'lib/toast'
@@ -13,8 +13,9 @@ import { useToast } from 'lib/toast'
 import type { PostPaymentParams } from 'types/postPaymentParams'
 
 export const NewPaymentEntry: VFC = () => {
-  const { inputAmount, setInputAmount, inputDetail, setInputDetail, inputPaidAt, setInputPaidAt } =
-    useContext(PaymentContext)
+  const [inputAmount, setInputAmount] = useState<string>('')
+  const [inputPaidAt, setInputPaidAt] = useState<string>(DateTime.local().toFormat('yyyy-MM-dd'))
+  const [inputDetail, setInputDetail] = useState<string>('')
   const { errorToast, successToast } = useToast()
   const history = useHistory()
 
