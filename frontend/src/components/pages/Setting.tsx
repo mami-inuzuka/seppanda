@@ -1,8 +1,10 @@
 import { useContext, useEffect, useState, VFC } from 'react'
+import { useHistory } from 'react-router-dom'
 
-import { Box, Flex, FormControl, FormLabel, Grid, Image, Input } from '@chakra-ui/react'
+import { Box, Divider, Flex, FormControl, FormLabel, Grid, Image, Input } from '@chakra-ui/react'
 
 import { PrimaryButton } from 'components/atoms/button/PrimaryButton'
+import { SecondaryButton } from 'components/atoms/button/SecondaryButton'
 import { HeaderWithTitleLayout } from 'components/templates/HeaderWithTitleLayout'
 import { AuthContext } from 'context/AuthContext'
 import { updateUser } from 'lib/api/auth'
@@ -15,6 +17,13 @@ export const Setting: VFC = () => {
   const [inputName, setInputName] = useState<string>('')
   const [inputAvatar, setInputAvatar] = useState({ data: '', name: '' })
   const { errorToast, successToast } = useToast()
+  const history = useHistory()
+
+  const handleSignOut = async () => {
+    await auth.signOut()
+    history.push('/welcome')
+    successToast('ログアウトしました')
+  }
 
   const handleUpdateUser = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
@@ -106,6 +115,12 @@ export const Setting: VFC = () => {
             </PrimaryButton>
           </Grid>
         </form>
+        <Divider my={10} />
+        <Box textAlign="center">
+          <SecondaryButton size="sm" onClick={handleSignOut} isFullWidth={false}>
+            ログアウト
+          </SecondaryButton>
+        </Box>
       </Box>
     </HeaderWithTitleLayout>
   )
