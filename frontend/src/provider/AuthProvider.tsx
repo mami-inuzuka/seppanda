@@ -6,7 +6,6 @@ import { AuthContext } from 'context/AuthContext'
 import { getCurrentUser } from 'lib/api/auth'
 import { auth } from 'lib/firebase'
 
-import type { GetCurrentUserParams } from 'types/getCurrentUserParams'
 import type { User } from 'types/user'
 
 export const AuthProvider = ({ children }: { children: React.ReactElement }) => {
@@ -25,11 +24,9 @@ export const AuthProvider = ({ children }: { children: React.ReactElement }) => 
 
   const handleGetCurrentUser = async () => {
     const token = await auth.currentUser?.getIdToken(true)
-    const params: GetCurrentUserParams = {
-      uid: auth.currentUser?.uid,
-    }
+
     try {
-      const res = await getCurrentUser(params, token)
+      const res = await getCurrentUser(token)
       if (res?.status === 200) {
         setCurrentUser(res.data.user)
       }

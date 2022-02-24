@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Api::Auth::RegistrationsController < Api::ApplicationController
+class Api::Auth::RegistrationsController < Api::Auth::FirebaseAuthRailsController
   skip_before_action :authenticate_user
   before_action :check_invitation_token_and_team_capacity, only: :create
   after_action :attach_default_avatar, only: :create
@@ -30,18 +30,6 @@ class Api::Auth::RegistrationsController < Api::ApplicationController
   end
 
   private
-
-  def token_from_request_headers
-    request.headers['Authorization']&.split&.last
-  end
-
-  def token
-    params[:token] || token_from_request_headers
-  end
-
-  def payload
-    @payload ||= FirebaseIdToken::Signature.verify(token)
-  end
 
   def attach_default_avatar
     @user.avatar.attach(io: File.open('./app/assets/images/default-user-icon.png'), filename: 'default-user-icon.png')

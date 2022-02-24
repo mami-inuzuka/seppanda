@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-class Api::Auth::SessionsController < Api::ApplicationController
+class Api::Auth::SessionsController < Api::Auth::FirebaseAuthRailsController
   skip_before_action :authenticate_user
 
   def index
-    @user = User.find_by(uid: params[:uid])
+    @user = User.find_by(uid: payload['sub'])
     render :index
   end
 end
