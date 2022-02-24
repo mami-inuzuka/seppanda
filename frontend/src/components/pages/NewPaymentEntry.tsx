@@ -16,6 +16,7 @@ export const NewPaymentEntry: VFC = () => {
   const [inputAmount, setInputAmount] = useState<string>('')
   const [inputPaidAt, setInputPaidAt] = useState<string>(DateTime.local().toFormat('yyyy-MM-dd'))
   const [inputDetail, setInputDetail] = useState<string>('')
+  const [processing, setProcessing] = useState<boolean>(false)
   const { errorToast, successToast } = useToast()
   const history = useHistory()
 
@@ -25,13 +26,13 @@ export const NewPaymentEntry: VFC = () => {
 
   const handleSubmitAmount = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
+    setProcessing(true)
     const idToken = await auth.currentUser?.getIdToken(true)
     const params: PostPaymentParams = {
       amount: inputAmount,
       detail: inputDetail,
       paid_at: inputPaidAt,
     }
-
     try {
       const res = await postPayment(params, idToken)
       if (res.status === 200) {
@@ -44,6 +45,8 @@ export const NewPaymentEntry: VFC = () => {
       }
     } catch {
       errorToast('登録に失敗しました')
+    } finally {
+      setProcessing(false)
     }
   }
 
@@ -87,7 +90,11 @@ export const NewPaymentEntry: VFC = () => {
                 name="paid_at"
               />
             </FormControl>
-            <PrimaryButton onClickButton={handleSubmitAmount} disabled={inputAmount === '' || inputAmount === '0'}>
+            <PrimaryButton
+              isLoading={processing}
+              onClickButton={handleSubmitAmount}
+              disabled={inputAmount === '' || inputAmount === '0' || processing}
+            >
               登録する
             </PrimaryButton>
           </Grid>

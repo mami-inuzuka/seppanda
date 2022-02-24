@@ -16,6 +16,7 @@ export const Setting: VFC = () => {
   const { currentUser } = useContext(AuthContext)
   const [inputName, setInputName] = useState<string>('')
   const [inputAvatar, setInputAvatar] = useState({ data: '', name: '' })
+  const [processing, setProcessing] = useState<boolean>(false)
   const { errorToast, successToast } = useToast()
   const history = useHistory()
 
@@ -27,6 +28,7 @@ export const Setting: VFC = () => {
 
   const handleUpdateUser = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
+    setProcessing(true)
     const idToken = await auth.currentUser?.getIdToken(true)
     const params: UpdateUserParams = {
       name: inputName,
@@ -41,6 +43,8 @@ export const Setting: VFC = () => {
       }
     } catch {
       errorToast('ユーザー情報の更新に失敗しました')
+    } finally {
+      setProcessing(false)
     }
   }
 
@@ -110,7 +114,7 @@ export const Setting: VFC = () => {
               <FormLabel htmlFor="name">なまえ</FormLabel>
               <Input value={inputName} onChange={(event) => setInputName(event.target.value)} id="name" size="lg" />
             </FormControl>
-            <PrimaryButton onClickButton={handleUpdateUser} disabled={false}>
+            <PrimaryButton isLoading={processing} onClickButton={handleUpdateUser} disabled={processing}>
               保存する
             </PrimaryButton>
           </Grid>

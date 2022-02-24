@@ -23,6 +23,8 @@ export const ShowPaymentEntry: VFC = () => {
   const [inputAmount, setInputAmount] = useState<string>('')
   const [inputDetail, setInputDetail] = useState<string>('')
   const [inputPaidAt, setInputPaidAt] = useState<string>('')
+  const [processingUpdate, setProcessingUpdate] = useState<boolean>(false)
+  const [processingDelete, setProcessingDelete] = useState<boolean>(false)
   const { errorToast, successToast } = useToast()
   const history = useHistory()
   const location = useLocation()
@@ -34,6 +36,7 @@ export const ShowPaymentEntry: VFC = () => {
 
   const handleDeletePayment = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
+    setProcessingDelete(true)
     const idToken = await auth.currentUser?.getIdToken(true)
     try {
       const res = await deletePayment(payment.id, idToken)
@@ -46,12 +49,14 @@ export const ShowPaymentEntry: VFC = () => {
       }
     } catch {
       errorToast('削除に失敗しました')
+    } finally {
+      setProcessingDelete(false)
     }
   }
 
   const handleUpdateAmount = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
-
+    setProcessingUpdate(true)
     const params: PostPaymentParams = {
       amount: inputAmount,
       detail: inputDetail,
@@ -71,6 +76,8 @@ export const ShowPaymentEntry: VFC = () => {
       }
     } catch {
       errorToast('更新に失敗しました')
+    } finally {
+      setProcessingUpdate(false)
     }
   }
 
@@ -122,10 +129,20 @@ export const ShowPaymentEntry: VFC = () => {
               />
             </FormControl>
             <Grid gap={4}>
-              <PrimaryButton onClickButton={handleUpdateAmount} disabled={inputAmount === '' || inputAmount === '0'}>
+              <PrimaryButton
+                isLoading={processingUpdate}
+                onClickButton={handleUpdateAmount}
+                disabled={inputAmount === '' || inputAmount === '0' || processingUpdate}
+              >
                 更新する
               </PrimaryButton>
-              <DangerButton size="xl" isFullWidth onClick={handleDeletePayment}>
+              <DangerButton
+                size="xl"
+                isFullWidth
+                onClick={handleDeletePayment}
+                disabled={processingDelete}
+                isLoading={processingDelete}
+              >
                 削除する
               </DangerButton>
             </Grid>
