@@ -1,4 +1,4 @@
-import { useContext, useEffect, VFC } from 'react'
+import { useContext, useEffect, useState, VFC } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 
 import { Flex, FormControl, FormLabel, Grid, Input } from '@chakra-ui/react'
@@ -19,16 +19,10 @@ type stateType = {
 }
 
 export const ShowPaymentEntry: VFC = () => {
-  const {
-    inputAmount,
-    setInputAmount,
-    inputDetail,
-    setInputDetail,
-    inputPaidAt,
-    setInputPaidAt,
-    paymentList,
-    setPaymentList,
-  } = useContext(PaymentContext)
+  const { paymentList, setPaymentList } = useContext(PaymentContext)
+  const [inputAmount, setInputAmount] = useState<string>('')
+  const [inputDetail, setInputDetail] = useState<string>('')
+  const [inputPaidAt, setInputPaidAt] = useState<string>('')
   const { errorToast, successToast } = useToast()
   const history = useHistory()
   const location = useLocation()
@@ -68,6 +62,8 @@ export const ShowPaymentEntry: VFC = () => {
       const res = await updatePayment(params, payment.id, idToken)
       if (res.status === 200) {
         setPaymentList(paymentList)
+        setInputAmount('')
+        setInputDetail('')
         onClickClose()
         successToast('支払い情報を更新しました')
       } else {
