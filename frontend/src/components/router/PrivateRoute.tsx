@@ -7,7 +7,7 @@ export const PrivateRoute = ({ children }: { children: React.ReactElement }) => 
   const { isLoaded, currentUser, currentFirebaseUser } = useContext(AuthContext)
   if (isLoaded) {
     if (currentUser && currentFirebaseUser) return children
-    return <Redirect to="/signin" />
+    return <Redirect to="/welcome" />
   }
   return null
 }

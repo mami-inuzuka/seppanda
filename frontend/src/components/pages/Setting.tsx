@@ -1,8 +1,10 @@
 import { useContext, useEffect, useState, VFC } from 'react'
+import { useHistory } from 'react-router-dom'
 
-import { Box, Flex, FormControl, FormLabel, Grid, Image, Input } from '@chakra-ui/react'
+import { Box, Divider, Flex, FormControl, FormLabel, Grid, Image, Input } from '@chakra-ui/react'
 
 import { PrimaryButton } from 'components/atoms/button/PrimaryButton'
+import { SecondaryButton } from 'components/atoms/button/SecondaryButton'
 import { HeaderWithTitleLayout } from 'components/templates/HeaderWithTitleLayout'
 import { AuthContext } from 'context/AuthContext'
 import { updateUser } from 'lib/api/auth'
@@ -13,19 +15,23 @@ import { UpdateUserParams } from 'types/updateUserParams'
 export const Setting: VFC = () => {
   const { currentUser } = useContext(AuthContext)
   const [inputName, setInputName] = useState<string>('')
-  const [inputEmail, setInputEmail] = useState<string>('')
   const [inputAvatar, setInputAvatar] = useState({ data: '', name: '' })
   const { errorToast, successToast } = useToast()
+  const history = useHistory()
+
+  const handleSignOut = async () => {
+    await auth.signOut()
+    history.push('/welcome')
+    successToast('ログアウトしました')
+  }
 
   const handleUpdateUser = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
     const idToken = await auth.currentUser?.getIdToken(true)
     const params: UpdateUserParams = {
       name: inputName,
-      email: inputEmail,
       avatar: inputAvatar,
     }
-
     try {
       const res = await updateUser(params, idToken)
       if (res.status === 200) {
@@ -55,7 +61,6 @@ export const Setting: VFC = () => {
   useEffect(() => {
     if (currentUser) {
       setInputName(currentUser.name)
-      setInputEmail(currentUser.email)
       setInputAvatar({ data: currentUser.avatar?.data, name: currentUser.avatar?.name })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -67,15 +72,15 @@ export const Setting: VFC = () => {
         <form>
           <Grid gap={6}>
             <FormControl>
-              <Flex align="center">
+              <Flex align="center" direction="column">
                 <Image
                   src={inputAvatar.data}
                   alt={inputAvatar.name}
-                  boxSize="64px"
+                  boxSize="124px"
                   borderRadius="full"
-                  border="2px"
+                  border="4px"
                   borderColor={`brand.${currentUser?.color}`}
-                  mr={4}
+                  mb={4}
                 />
                 <FormLabel
                   bg="gray.50"
@@ -86,6 +91,7 @@ export const Setting: VFC = () => {
                   boxShadow="0px 1px 0px #D7D7D7"
                   pl={3}
                   pr={3}
+                  m={0}
                 >
                   <Input
                     type="file"
@@ -101,24 +107,20 @@ export const Setting: VFC = () => {
               </Flex>
             </FormControl>
             <FormControl>
-              <FormLabel htmlFor="name">名前</FormLabel>
+              <FormLabel htmlFor="name">なまえ</FormLabel>
               <Input value={inputName} onChange={(event) => setInputName(event.target.value)} id="name" size="lg" />
-            </FormControl>
-            <FormControl>
-              <FormLabel htmlFor="email">メールアドレス</FormLabel>
-              <Input
-                value={inputEmail}
-                onChange={(event) => setInputEmail(event.target.value)}
-                id="email"
-                type="email"
-                size="lg"
-              />
             </FormControl>
             <PrimaryButton onClickButton={handleUpdateUser} disabled={false}>
               保存する
             </PrimaryButton>
           </Grid>
         </form>
+        <Divider my={10} />
+        <Box textAlign="center">
+          <SecondaryButton size="sm" onClick={handleSignOut} isFullWidth={false}>
+            ログアウト
+          </SecondaryButton>
+        </Box>
       </Box>
     </HeaderWithTitleLayout>
   )
