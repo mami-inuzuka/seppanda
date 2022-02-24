@@ -61,5 +61,8 @@ jobs:
       - name: Setup test DB
         run: bundle exec rails db:setup
 
+      - name: Request Firebase Certificates
+        run: bundle exec rails firebase:certificates:force_request
+
       - name: Run tests
         run: bundle exec rspec
