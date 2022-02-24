@@ -1,4 +1,4 @@
-import { useContext, VFC } from 'react'
+import { useContext, useState, VFC } from 'react'
 
 import { Modal, ModalHeader, ModalBody, ModalContent, ModalOverlay, Text, Grid, Box } from '@chakra-ui/react'
 
@@ -20,10 +20,12 @@ export const SettelementModal: VFC<Props> = (props) => {
   const { isOpen, onClose, size } = props
   const { currentUser } = useContext(AuthContext)
   const { teamStatus, setPaymentList } = useContext(PaymentContext)
+  const [processing, setProcessing] = useState<boolean>(false)
   const { errorToast, successToast } = useToast()
 
   const handleSettleTeamPayments = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
+    setProcessing(true)
     const idToken = await auth.currentUser?.getIdToken(true)
     if (currentUser) {
       try {
@@ -37,6 +39,8 @@ export const SettelementModal: VFC<Props> = (props) => {
         }
       } catch {
         errorToast('処理に失敗しました')
+      } finally {
+        setProcessing(false)
       }
     }
   }
@@ -67,7 +71,7 @@ export const SettelementModal: VFC<Props> = (props) => {
             </Text>
           </Box>
           <Grid gap={4}>
-            <PrimaryButton onClickButton={handleSettleTeamPayments} disabled={false}>
+            <PrimaryButton isLoading={processing} onClickButton={handleSettleTeamPayments} disabled={processing}>
               {currentUser?.isDebt ? '返した' : '返してもらった'}ので清算する
             </PrimaryButton>
             <SecondaryButton onClick={onClose} size="xl" isFullWidth>

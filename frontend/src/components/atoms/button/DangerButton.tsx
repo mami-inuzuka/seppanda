@@ -6,11 +6,13 @@ type Props = {
   children: React.ReactNode
   isFullWidth: boolean
   size: string
+  disabled: boolean
+  isLoading: boolean
   onClick: (e: React.MouseEvent<HTMLButtonElement>) => Promise<void> | (() => void)
 }
 
 export const DangerButton: VFC<Props> = memo((props) => {
-  const { children, size, isFullWidth, onClick } = props
+  const { children, size, isFullWidth, disabled, isLoading, onClick } = props
   return (
     <Button
       bgColor="gray.50"
@@ -21,6 +23,8 @@ export const DangerButton: VFC<Props> = memo((props) => {
       onClick={onClick}
       size={size}
       isFullWidth={isFullWidth}
+      disabled={disabled}
+      isLoading={isLoading}
     >
       {children}
     </Button>
