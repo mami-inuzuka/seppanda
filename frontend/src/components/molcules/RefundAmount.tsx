@@ -11,7 +11,7 @@ export const RefundAmount: VFC = () => {
   return (
     <Center mb={4}>
       <Text
-        fontSize="5xl"
+        fontSize="2.6rem"
         lineHeight="1"
         fontWeight="bold"
         color={currentUser?.isDebt ? 'red.500' : 'green.500'}
