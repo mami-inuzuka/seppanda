@@ -34,12 +34,14 @@ export const Invitation: VFC = () => {
           </p>
         </Box>
 
-        <Flex bg="gray.100" p={4} align="center">
-          <Text>{invitationUrl}</Text>
+        <Flex bg="gray.100" py={5} px={6} align="center">
+          <Text flex="1" wordBreak="break-all">
+            {invitationUrl}
+          </Text>
           <CopyToClipboard text={invitationUrl}>
-            <Box onClick={handleFeedback}>
-              <CopyIcon />
-            </Box>
+            <Flex w={10} align="center" justify="flex-end" onClick={handleFeedback}>
+              <CopyIcon w={6} h={6} />
+            </Flex>
           </CopyToClipboard>
         </Flex>
       </Box>
