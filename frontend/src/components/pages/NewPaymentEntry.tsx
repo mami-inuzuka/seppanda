@@ -20,6 +20,7 @@ export const NewPaymentEntry: VFC = () => {
   const { errorToast, successToast } = useToast()
   const history = useHistory()
   const inputAmoutError = inputAmount === '' || inputAmount === '0'
+  const inputDetailError = inputDetail.length > 29
   const inputPaidAtError = inputPaidAt === ''
 
   const onClickClose = () => {
@@ -70,7 +71,7 @@ export const NewPaymentEntry: VFC = () => {
               />
               {inputAmoutError && <FormErrorMessage>金額を入力してください</FormErrorMessage>}
             </FormControl>
-            <FormControl>
+            <FormControl isInvalid={inputDetailError}>
               <FormLabel htmlFor="detail">内容</FormLabel>
               <Input
                 value={inputDetail}
@@ -81,6 +82,7 @@ export const NewPaymentEntry: VFC = () => {
                 size="lg"
                 placeholder="例）スーパー"
               />
+              {inputDetailError && <FormErrorMessage>内容は28文字以下で入力してください</FormErrorMessage>}
             </FormControl>
             <FormControl isInvalid={inputPaidAtError}>
               <FormLabel htmlFor="date">支払日</FormLabel>
@@ -97,7 +99,7 @@ export const NewPaymentEntry: VFC = () => {
             <PrimaryButton
               isLoading={processing}
               onClickButton={handleSubmitAmount}
-              disabled={inputAmoutError || inputPaidAtError || processing}
+              disabled={inputAmoutError || inputPaidAtError || inputDetailError || processing}
             >
               登録する
             </PrimaryButton>

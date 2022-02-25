@@ -28,13 +28,14 @@ export const ShowPaymentEntry: VFC = () => {
   const { errorToast, successToast } = useToast()
   const history = useHistory()
   const location = useLocation()
-  const inputAmoutError = inputAmount === '' || inputAmount === '0'
-  const inputPaidAtError = inputPaidAt === ''
   const state = location.state as stateType
   const { payment } = state
   const onClickClose = () => {
     history.push('/')
   }
+  const inputAmoutError = inputAmount === '' || inputAmount === '0'
+  const inputPaidAtError = inputPaidAt === ''
+  const inputDetailError = inputDetail.length > 29
 
   const handleDeletePayment = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
@@ -108,7 +109,7 @@ export const ShowPaymentEntry: VFC = () => {
               />
               {inputAmoutError ? <FormErrorMessage>金額を入力してください</FormErrorMessage> : ''}
             </FormControl>
-            <FormControl>
+            <FormControl isInvalid={inputDetailError}>
               <FormLabel htmlFor="detail">内容</FormLabel>
               <Input
                 value={inputDetail}
@@ -119,6 +120,7 @@ export const ShowPaymentEntry: VFC = () => {
                 size="lg"
                 placeholder="例）スーパー"
               />
+              {inputDetailError && <FormErrorMessage>内容は28文字以下で入力してください</FormErrorMessage>}
             </FormControl>
             <FormControl isInvalid={inputPaidAtError}>
               <FormLabel htmlFor="date">支払日</FormLabel>
@@ -136,7 +138,7 @@ export const ShowPaymentEntry: VFC = () => {
               <PrimaryButton
                 isLoading={processingUpdate}
                 onClickButton={handleUpdateAmount}
-                disabled={inputAmoutError || inputPaidAtError || processingUpdate}
+                disabled={inputAmoutError || inputPaidAtError || inputDetailError || processingUpdate}
               >
                 更新する
               </PrimaryButton>
