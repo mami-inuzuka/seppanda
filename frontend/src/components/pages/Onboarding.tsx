@@ -1,7 +1,19 @@
 import { useContext, useState, VFC } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 
-import { Box, Flex, FormControl, FormHelperText, FormLabel, Grid, Heading, Image, Input, Text } from '@chakra-ui/react'
+import {
+  Box,
+  Flex,
+  FormControl,
+  FormErrorMessage,
+  FormHelperText,
+  FormLabel,
+  Grid,
+  Heading,
+  Image,
+  Input,
+  Text,
+} from '@chakra-ui/react'
 
 import DefaultUserIcon from 'assets/images/default-user-icon.png'
 import { PrimaryButton } from 'components/atoms/button/PrimaryButton'
@@ -25,6 +37,7 @@ export const Onboarding: VFC = () => {
   const location = useLocation<LocationState>()
   const { setCurrentUser } = useContext(AuthContext)
   const history = useHistory()
+  const inputNameError = inputName === ''
 
   const handleImageSelect = (e: React.FormEvent) => {
     const reader = new FileReader()
@@ -117,12 +130,20 @@ export const Onboarding: VFC = () => {
                 </FormLabel>
               </Flex>
             </FormControl>
-            <FormControl>
+            <FormControl isInvalid={inputNameError}>
               <FormLabel htmlFor="name">なまえ</FormLabel>
               <Input value={inputName} onChange={(event) => setInputName(event.target.value)} id="name" size="lg" />
-              <FormHelperText>なまえは後から変えられます</FormHelperText>
+              {inputNameError ? (
+                <FormErrorMessage>なまえを入力してください</FormErrorMessage>
+              ) : (
+                <FormHelperText>なまえは後から変えられます</FormHelperText>
+              )}
             </FormControl>
-            <PrimaryButton isLoading={processing} onClickButton={handleCreateUser} disabled={processing}>
+            <PrimaryButton
+              isLoading={processing}
+              onClickButton={handleCreateUser}
+              disabled={inputNameError || processing}
+            >
               上記の内容で登録する
             </PrimaryButton>
           </Grid>

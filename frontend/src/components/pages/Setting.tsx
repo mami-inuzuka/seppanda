@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState, VFC } from 'react'
 import { useHistory } from 'react-router-dom'
 
-import { Box, Divider, Flex, FormControl, FormLabel, Grid, Image, Input } from '@chakra-ui/react'
+import { Box, Divider, Flex, FormControl, FormErrorMessage, FormLabel, Grid, Image, Input } from '@chakra-ui/react'
 
 import { PrimaryButton } from 'components/atoms/button/PrimaryButton'
 import { SecondaryButton } from 'components/atoms/button/SecondaryButton'
@@ -19,6 +19,7 @@ export const Setting: VFC = () => {
   const [processing, setProcessing] = useState<boolean>(false)
   const { errorToast, successToast } = useToast()
   const history = useHistory()
+  const inputNameError = inputName === ''
 
   const handleSignOut = async () => {
     await auth.signOut()
@@ -110,11 +111,16 @@ export const Setting: VFC = () => {
                 </FormLabel>
               </Flex>
             </FormControl>
-            <FormControl>
+            <FormControl isInvalid={inputNameError}>
               <FormLabel htmlFor="name">なまえ</FormLabel>
               <Input value={inputName} onChange={(event) => setInputName(event.target.value)} id="name" size="lg" />
+              {inputNameError && <FormErrorMessage>なまえを入力してください</FormErrorMessage>}
             </FormControl>
-            <PrimaryButton isLoading={processing} onClickButton={handleUpdateUser} disabled={processing}>
+            <PrimaryButton
+              isLoading={processing}
+              onClickButton={handleUpdateUser}
+              disabled={inputNameError || processing}
+            >
               保存する
             </PrimaryButton>
           </Grid>

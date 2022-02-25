@@ -1,7 +1,7 @@
 import { useState, VFC } from 'react'
 import { useHistory } from 'react-router-dom'
 
-import { Flex, FormControl, FormLabel, Grid, Input } from '@chakra-ui/react'
+import { Flex, FormControl, FormErrorMessage, FormLabel, Grid, Input } from '@chakra-ui/react'
 import { DateTime } from 'luxon'
 
 import { PrimaryButton } from 'components/atoms/button/PrimaryButton'
@@ -19,6 +19,8 @@ export const NewPaymentEntry: VFC = () => {
   const [processing, setProcessing] = useState<boolean>(false)
   const { errorToast, successToast } = useToast()
   const history = useHistory()
+  const inputAmoutError = inputAmount === '' || inputAmount === '0'
+  const inputPaidAtError = inputPaidAt === ''
 
   const onClickClose = () => {
     history.push('/')
@@ -55,7 +57,7 @@ export const NewPaymentEntry: VFC = () => {
       <Flex flexDirection="column" p={6}>
         <form>
           <Grid gap={6}>
-            <FormControl>
+            <FormControl isInvalid={inputAmoutError}>
               <FormLabel htmlFor="amount">金額</FormLabel>
               <Input
                 value={inputAmount}
@@ -66,6 +68,7 @@ export const NewPaymentEntry: VFC = () => {
                 size="lg"
                 placeholder="金額を入力"
               />
+              {inputAmoutError && <FormErrorMessage>金額を入力してください</FormErrorMessage>}
             </FormControl>
             <FormControl>
               <FormLabel htmlFor="detail">内容</FormLabel>
@@ -79,7 +82,7 @@ export const NewPaymentEntry: VFC = () => {
                 placeholder="例）スーパー"
               />
             </FormControl>
-            <FormControl>
+            <FormControl isInvalid={inputPaidAtError}>
               <FormLabel htmlFor="date">支払日</FormLabel>
               <Input
                 value={inputPaidAt}
@@ -89,11 +92,12 @@ export const NewPaymentEntry: VFC = () => {
                 size="lg"
                 name="paid_at"
               />
+              {inputPaidAtError && <FormErrorMessage>支払日を入力してください</FormErrorMessage>}
             </FormControl>
             <PrimaryButton
               isLoading={processing}
               onClickButton={handleSubmitAmount}
-              disabled={inputAmount === '' || inputAmount === '0' || processing}
+              disabled={inputAmoutError || inputPaidAtError || processing}
             >
               登録する
             </PrimaryButton>

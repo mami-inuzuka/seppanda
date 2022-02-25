@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState, VFC } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 
-import { Flex, FormControl, FormLabel, Grid, Input } from '@chakra-ui/react'
+import { Flex, FormControl, FormErrorMessage, FormLabel, Grid, Input } from '@chakra-ui/react'
 
 import { DangerButton } from 'components/atoms/button/DangerButton'
 import { PrimaryButton } from 'components/atoms/button/PrimaryButton'
@@ -28,6 +28,8 @@ export const ShowPaymentEntry: VFC = () => {
   const { errorToast, successToast } = useToast()
   const history = useHistory()
   const location = useLocation()
+  const inputAmoutError = inputAmount === '' || inputAmount === '0'
+  const inputPaidAtError = inputPaidAt === ''
   const state = location.state as stateType
   const { payment } = state
   const onClickClose = () => {
@@ -93,7 +95,7 @@ export const ShowPaymentEntry: VFC = () => {
       <Flex flexDirection="column" p={6}>
         <form>
           <Grid gap={6}>
-            <FormControl>
+            <FormControl isInvalid={inputAmoutError}>
               <FormLabel htmlFor="amount">金額</FormLabel>
               <Input
                 value={inputAmount}
@@ -104,6 +106,7 @@ export const ShowPaymentEntry: VFC = () => {
                 size="lg"
                 placeholder="金額を入力"
               />
+              {inputAmoutError ? <FormErrorMessage>金額を入力してください</FormErrorMessage> : ''}
             </FormControl>
             <FormControl>
               <FormLabel htmlFor="detail">内容</FormLabel>
@@ -117,7 +120,7 @@ export const ShowPaymentEntry: VFC = () => {
                 placeholder="例）スーパー"
               />
             </FormControl>
-            <FormControl>
+            <FormControl isInvalid={inputPaidAtError}>
               <FormLabel htmlFor="date">支払日</FormLabel>
               <Input
                 value={inputPaidAt}
@@ -127,12 +130,13 @@ export const ShowPaymentEntry: VFC = () => {
                 size="lg"
                 name="paid_at"
               />
+              {inputPaidAtError ? <FormErrorMessage>金額を入力してください</FormErrorMessage> : ''}
             </FormControl>
             <Grid gap={4}>
               <PrimaryButton
                 isLoading={processingUpdate}
                 onClickButton={handleUpdateAmount}
-                disabled={inputAmount === '' || inputAmount === '0' || processingUpdate}
+                disabled={inputAmoutError || inputPaidAtError || processingUpdate}
               >
                 更新する
               </PrimaryButton>
