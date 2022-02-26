@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Api::Auth::RegistrationsController < Api::Auth::FirebaseAuthRailsController
+class Api::UsersController < Api::FirebaseAuthRailsController
   skip_before_action :authenticate_user, only: :create
   before_action :check_invitation_token_and_team_capacity, only: :create
   after_action :attach_default_avatar, only: :create

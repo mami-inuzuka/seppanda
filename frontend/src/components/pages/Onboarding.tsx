@@ -19,7 +19,7 @@ import DefaultUserIcon from 'assets/images/default-user-icon.png'
 import { PrimaryButton } from 'components/atoms/button/PrimaryButton'
 import { HeaderOnlyLogoLayout } from 'components/templates/HeaderOnlyLogoLayout'
 import { AuthContext } from 'context/AuthContext'
-import { createUser } from 'lib/api/auth'
+import { createUser } from 'lib/api/user'
 import { auth } from 'lib/firebase'
 import { useToast } from 'lib/toast'
 
