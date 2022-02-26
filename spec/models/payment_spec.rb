@@ -73,4 +73,29 @@ RSpec.describe Payment, type: :model do
     expect(payment).to be_invalid
     expect(payment.errors[:amount]).to include('must be less than or equal to 9999999')
   end
+
+  example 'detailは0文字でも登録できる' do
+    payment = Payment.new(amount: 100, detail: '')
+    payment.user_id = user.id
+    payment.team_id = user.team_id
+    payment.valid?
+    expect(payment).to be_valid
+  end
+
+  example 'detailが28文字だと登録できる' do
+    payment = Payment.new(amount: 100, detail: 'ああああああああああああああああああああああああああああ')
+    payment.user_id = user.id
+    payment.team_id = user.team_id
+    payment.valid?
+    expect(payment).to be_valid
+  end
+
+  example 'detailが29文字だと登録できない' do
+    payment = Payment.new(amount: 100, detail: 'あああああああああああああああああああああああああああああ')
+    payment.user_id = user.id
+    payment.team_id = user.team_id
+    payment.valid?
+    expect(payment).to be_invalid
+    expect(payment.errors[:detail]).to include('is too long (maximum is 28 characters)')
+  end
 end
