@@ -20,7 +20,7 @@ type stateType = {
 }
 
 export const ShowPaymentEntry: VFC = () => {
-  const { paymentList, setPaymentList } = useContext(PaymentContext)
+  const { updatePaymentList, setUpdatePaymentList } = useContext(PaymentContext)
   const { errorToast, successToast } = useToast()
   const [processingDelete, setProcessingDelete] = useState<boolean>(false)
   const history = useHistory()
@@ -48,7 +48,7 @@ export const ShowPaymentEntry: VFC = () => {
     try {
       const res = await deletePayment(payment.id, idToken)
       if (res.status === 200) {
-        setPaymentList(paymentList)
+        setUpdatePaymentList(!updatePaymentList)
         history.push('/')
         successToast('支払い情報を削除しました')
       } else {
@@ -66,7 +66,7 @@ export const ShowPaymentEntry: VFC = () => {
     try {
       const res = await updatePayment(params, payment.id, idToken)
       if (res.status === 200) {
-        setPaymentList(paymentList)
+        setUpdatePaymentList(!updatePaymentList)
         history.push('/')
         successToast('支払い情報を更新しました')
       } else {
