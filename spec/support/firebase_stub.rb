@@ -9,7 +9,8 @@ module FirebaseStub
     user_info = {
       'name' => 'Alice',
       'email' => 'alice@example.com',
-      'sub' => '12345'
+      'sub' => '12345',
+      "firebase"=> {"sign_in_provider"=>"google.com"}
     }
     allow_any_instance_of(Api::UsersController).to receive(:payload).and_return(user_info)
   end
