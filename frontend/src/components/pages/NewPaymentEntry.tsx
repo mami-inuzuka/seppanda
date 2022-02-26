@@ -1,4 +1,4 @@
-import { VFC } from 'react'
+import { useContext, VFC } from 'react'
 import { useForm } from 'react-hook-form'
 import { useHistory } from 'react-router-dom'
 
@@ -7,6 +7,7 @@ import { DateTime } from 'luxon'
 
 import { PrimaryButton } from 'components/atoms/button/PrimaryButton'
 import { HeaderWithTitleLayout } from 'components/templates/HeaderWithTitleLayout'
+import { PaymentContext } from 'context/PaymentContext'
 import { postPayment } from 'lib/api/payment'
 import { auth } from 'lib/firebase'
 import { useToast } from 'lib/toast'
@@ -14,6 +15,7 @@ import { useToast } from 'lib/toast'
 import type { PostPaymentParams } from 'types/postPaymentParams'
 
 export const NewPaymentEntry: VFC = () => {
+  const { updatePaymentList, setUpdatePaymentList } = useContext(PaymentContext)
   const { errorToast, successToast } = useToast()
   const history = useHistory()
   const {
@@ -33,6 +35,7 @@ export const NewPaymentEntry: VFC = () => {
     try {
       const res = await postPayment(params, idToken)
       if (res.status === 200) {
+        setUpdatePaymentList(!updatePaymentList)
         history.push('/')
         successToast('支払い情報を登録しました')
       } else {

@@ -13,6 +13,7 @@ import type { TeamStatus } from 'types/teamStatus'
 export const PaymentProvider = ({ children }: { children: React.ReactElement }) => {
   const { currentUser } = useContext(AuthContext)
   const [paymentList, setPaymentList] = useState<PaymentListGroupByPaidAt[]>([])
+  const [updatePaymentList, setUpdatePaymentList] = useState<boolean>(false)
   const [teamStatus, setTeamStatus] = useState<TeamStatus>({
     refundAmount: 0,
     largestPaymentUser: null,
@@ -33,6 +34,8 @@ export const PaymentProvider = ({ children }: { children: React.ReactElement }) 
     setTeamStatus,
     isTeamStatusLoaded,
     setIsTeamStatusLoaded,
+    updatePaymentList,
+    setUpdatePaymentList,
   }
 
   const handleGetPayments = async () => {
@@ -72,7 +75,7 @@ export const PaymentProvider = ({ children }: { children: React.ReactElement }) 
       console.log(err)
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [updatePaymentList])
 
   useEffect(() => {
     handleGetTeamStatus().catch((err) => {
