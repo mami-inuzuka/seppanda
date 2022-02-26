@@ -29,6 +29,23 @@ class Api::UsersController < Api::Auth::FirebaseAuthRailsController
     end
   end
 
+  def update
+    @user = User.find_by(uid: payload['sub'])
+    @user.name = params[:name]
+    if params[:avatar][:data].present?
+      blob = ActiveStorage::Blob.create_and_upload!(
+        io: StringIO.new(decode(params[:avatar][:data]) + "\n"),
+        filename: params[:avatar][:name]
+      )
+      @user.avatar.attach(blob)
+    end
+    if @user.update(update_params)
+      render :update
+    else
+      render json: { status: :unprocessable_entity }
+    end
+  end
+
   private
 
   def attach_default_avatar
@@ -51,5 +68,15 @@ class Api::UsersController < Api::Auth::FirebaseAuthRailsController
         fullMessages: [I18n.t('devise_token_auth.registrations.token_invalid_or_team_capacity_reached')]
       }
     }, status: :unprocessable_entity
+  end
+
+  def decode(str)
+    Base64.decode64(str.split(',').last)
+  end
+
+  def update_params
+    params.permit(
+      :name
+    )
   end
 end
