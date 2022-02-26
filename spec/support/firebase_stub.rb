@@ -11,6 +11,6 @@ module FirebaseStub
       'email' => 'alice@example.com',
       'sub' => '12345'
     }
-    allow_any_instance_of(Api::Auth::RegistrationsController).to receive(:payload).and_return(user_info)
+    allow_any_instance_of(Api::UsersController).to receive(:payload).and_return(user_info)
   end
 end
