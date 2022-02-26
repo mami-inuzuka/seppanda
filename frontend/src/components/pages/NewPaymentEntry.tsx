@@ -1,7 +1,8 @@
-import { useState, VFC } from 'react'
+import { VFC } from 'react'
+import { useForm } from 'react-hook-form'
 import { useHistory } from 'react-router-dom'
 
-import { Flex, FormControl, FormLabel, Grid, Input } from '@chakra-ui/react'
+import { Flex, FormControl, FormErrorMessage, FormLabel, Grid, Input } from '@chakra-ui/react'
 import { DateTime } from 'luxon'
 
 import { PrimaryButton } from 'components/atoms/button/PrimaryButton'
@@ -13,40 +14,32 @@ import { useToast } from 'lib/toast'
 import type { PostPaymentParams } from 'types/postPaymentParams'
 
 export const NewPaymentEntry: VFC = () => {
-  const [inputAmount, setInputAmount] = useState<string>('')
-  const [inputPaidAt, setInputPaidAt] = useState<string>(DateTime.local().toFormat('yyyy-MM-dd'))
-  const [inputDetail, setInputDetail] = useState<string>('')
-  const [processing, setProcessing] = useState<boolean>(false)
   const { errorToast, successToast } = useToast()
   const history = useHistory()
+  const {
+    register,
+    handleSubmit,
+    formState,
+    formState: { errors },
+  } = useForm<PostPaymentParams>({
+    mode: 'all',
+    defaultValues: {
+      paidAt: DateTime.local().toFormat('yyyy-MM-dd'),
+    },
+  })
 
-  const onClickClose = () => {
-    history.push('/')
-  }
-
-  const handleSubmitAmount = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault()
-    setProcessing(true)
+  const handleSubmitAmount = async (params: PostPaymentParams) => {
     const idToken = await auth.currentUser?.getIdToken(true)
-    const params: PostPaymentParams = {
-      amount: inputAmount,
-      detail: inputDetail,
-      paid_at: inputPaidAt,
-    }
     try {
       const res = await postPayment(params, idToken)
       if (res.status === 200) {
-        setInputAmount('')
-        setInputDetail('')
-        onClickClose()
+        history.push('/')
         successToast('支払い情報を登録しました')
       } else {
         errorToast('登録に失敗しました')
       }
     } catch {
       errorToast('登録に失敗しました')
-    } finally {
-      setProcessing(false)
     }
   }
 
@@ -55,45 +48,60 @@ export const NewPaymentEntry: VFC = () => {
       <Flex flexDirection="column" p={6}>
         <form>
           <Grid gap={6}>
-            <FormControl>
+            <FormControl isInvalid={!!errors?.amount} errortext={errors?.amount?.message}>
               <FormLabel htmlFor="amount">金額</FormLabel>
               <Input
-                value={inputAmount}
-                onChange={(event) => setInputAmount(event.target.value)}
                 id="amount"
-                name="amount"
                 type="number"
                 size="lg"
                 placeholder="金額を入力"
+                // eslint-disable-next-line react/jsx-props-no-spreading
+                {...register('amount', {
+                  required: '金額を入力してください',
+                  min: {
+                    value: 1,
+                    message: '0円以上で入力してください',
+                  },
+                  max: {
+                    value: 999999,
+                    message: '999,999円以下で入力してください',
+                  },
+                })}
               />
+              <FormErrorMessage>{errors.amount && errors.amount?.message}</FormErrorMessage>
             </FormControl>
-            <FormControl>
+            <FormControl isInvalid={!!errors?.detail} errortext={errors?.detail?.message}>
               <FormLabel htmlFor="detail">内容</FormLabel>
               <Input
-                value={inputDetail}
-                onChange={(event) => setInputDetail(event.target.value)}
                 id="detail"
-                name="detail"
                 type="text"
                 size="lg"
-                placeholder="例）スーパー"
+                placeholder="例）スーパー" // eslint-disable-next-line react/jsx-props-no-spreading
+                {...register('detail', {
+                  maxLength: {
+                    value: 28,
+                    message: '28文字以下で入力してください',
+                  },
+                })}
               />
+              <FormErrorMessage>{errors.detail && errors.detail?.message}</FormErrorMessage>
             </FormControl>
-            <FormControl>
-              <FormLabel htmlFor="date">支払日</FormLabel>
+            <FormControl isInvalid={!!errors?.paidAt} errortext={errors?.paidAt?.message}>
+              <FormLabel htmlFor="paid_at">支払日</FormLabel>
               <Input
-                value={inputPaidAt}
-                onChange={(event) => setInputPaidAt(event.target.value)}
-                id="date"
+                id="paid_at"
                 type="date"
-                size="lg"
-                name="paid_at"
+                size="lg" // eslint-disable-next-line react/jsx-props-no-spreading
+                {...register('paidAt', {
+                  required: '支払日を入力してください',
+                })}
               />
+              <FormErrorMessage>{errors.paidAt && errors.paidAt?.message}</FormErrorMessage>
             </FormControl>
             <PrimaryButton
-              isLoading={processing}
-              onClickButton={handleSubmitAmount}
-              disabled={inputAmount === '' || inputAmount === '0' || processing}
+              onClickButton={handleSubmit(handleSubmitAmount)}
+              disabled={!formState.isValid || formState.isSubmitting}
+              isLoading={formState.isSubmitting}
             >
               登録する
             </PrimaryButton>

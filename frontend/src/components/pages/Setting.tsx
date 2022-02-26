@@ -1,7 +1,8 @@
-import { useContext, useEffect, useState, VFC } from 'react'
+import { useContext, useState, VFC } from 'react'
+import { useForm } from 'react-hook-form'
 import { useHistory } from 'react-router-dom'
 
-import { Box, Divider, Flex, FormControl, FormLabel, Grid, Image, Input } from '@chakra-ui/react'
+import { Box, Divider, Flex, FormControl, FormErrorMessage, FormLabel, Grid, Image, Input } from '@chakra-ui/react'
 
 import { PrimaryButton } from 'components/atoms/button/PrimaryButton'
 import { SecondaryButton } from 'components/atoms/button/SecondaryButton'
@@ -10,42 +11,44 @@ import { AuthContext } from 'context/AuthContext'
 import { updateUser } from 'lib/api/user'
 import { auth } from 'lib/firebase'
 import { useToast } from 'lib/toast'
-
-import type { UpdateUserParams } from 'types/updateUserParams'
+import { UpdateUserParams } from 'types/updateUserParams'
 
 export const Setting: VFC = () => {
-  const { currentUser } = useContext(AuthContext)
-  const [inputName, setInputName] = useState<string>('')
+  const { currentUser, setCurrentUser } = useContext(AuthContext)
   const [inputAvatar, setInputAvatar] = useState({ data: '', name: '' })
-  const [processing, setProcessing] = useState<boolean>(false)
   const { errorToast, successToast } = useToast()
   const history = useHistory()
 
-  const handleSignOut = async () => {
-    await auth.signOut()
-    history.push('/welcome')
-    successToast('ログアウトしました')
-  }
+  const {
+    register,
+    handleSubmit,
+    formState,
+    formState: { errors },
+  } = useForm<UpdateUserParams>({
+    mode: 'all',
+    defaultValues: {
+      name: currentUser?.name,
+      avatar: { data: currentUser?.avatar?.data, name: currentUser?.avatar?.name },
+    },
+  })
 
-  const handleUpdateUser = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault()
-    setProcessing(true)
+  const handleUpdateUser = async (params: UpdateUserParams) => {
     const idToken = await auth.currentUser?.getIdToken(true)
-    const params: UpdateUserParams = {
-      name: inputName,
+    const data = {
       avatar: inputAvatar,
+      name: params.name,
     }
     try {
-      const res = await updateUser(params, idToken)
+      const res = await updateUser(data, idToken)
       if (res.status === 200) {
+        setCurrentUser(res.data.user)
+        history.push('/')
         successToast('ユーザー情報を更新しました')
       } else {
         errorToast('ユーザー情報の更新に失敗しました')
       }
     } catch {
       errorToast('ユーザー情報の更新に失敗しました')
-    } finally {
-      setProcessing(false)
     }
   }
 
@@ -53,23 +56,21 @@ export const Setting: VFC = () => {
     const reader = new FileReader()
     const { files } = e.target as HTMLInputElement
     if (files) {
+      reader.readAsDataURL(files[0])
       reader.onload = () => {
         setInputAvatar({
           data: reader.result as string,
           name: files[0] ? files[0].name : 'unknownfile',
         })
       }
-      reader.readAsDataURL(files[0])
     }
   }
 
-  useEffect(() => {
-    if (currentUser) {
-      setInputName(currentUser.name)
-      setInputAvatar({ data: currentUser.avatar?.data, name: currentUser.avatar?.name })
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  const handleSignOut = async () => {
+    await auth.signOut()
+    history.push('/welcome')
+    successToast('ログアウトしました')
+  }
 
   return (
     <HeaderWithTitleLayout title="アカウント設定">
@@ -100,10 +101,11 @@ export const Setting: VFC = () => {
                 >
                   <Input
                     type="file"
-                    name="avatar"
                     accept="image/png, image/jpeg"
-                    onChange={handleImageSelect}
-                    display="none"
+                    display="none" // eslint-disable-next-line react/jsx-props-no-spreading
+                    {...register('avatar', {
+                      onChange: (e) => handleImageSelect(e as React.FormEvent),
+                    })}
                   />
                   <Flex h="100%" align="center" justify="center">
                     画像を選択
@@ -111,11 +113,26 @@ export const Setting: VFC = () => {
                 </FormLabel>
               </Flex>
             </FormControl>
-            <FormControl>
+            <FormControl isInvalid={!!errors?.name} errortext={errors?.name?.message}>
               <FormLabel htmlFor="name">なまえ</FormLabel>
-              <Input value={inputName} onChange={(event) => setInputName(event.target.value)} id="name" size="lg" />
+              <Input
+                id="name"
+                size="lg" // eslint-disable-next-line react/jsx-props-no-spreading
+                {...register('name', {
+                  required: 'なまえを入力してください',
+                  maxLength: {
+                    value: 15,
+                    message: '15文字以下で入力してください',
+                  },
+                })}
+              />
+              <FormErrorMessage>{errors.name && errors.name?.message}</FormErrorMessage>
             </FormControl>
-            <PrimaryButton isLoading={processing} onClickButton={handleUpdateUser} disabled={processing}>
+            <PrimaryButton
+              isLoading={formState.isSubmitting}
+              onClickButton={handleSubmit(handleUpdateUser)}
+              disabled={!formState.isValid || formState.isSubmitting}
+            >
               保存する
             </PrimaryButton>
           </Grid>

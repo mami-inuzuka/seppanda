@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'AuthApi', type: :request do
   describe 'POST /api/auth/registrations' do
-    let(:params) { { token: 'token' }.to_json }
+    let(:params) { { token: 'token', name: 'Alice', avatar: { data: '', name: '' } }.to_json }
     let!(:host_user) { create(:user, :with_team) }
     let(:team) { Team.find(host_user.team_id) }
 

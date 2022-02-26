@@ -16,5 +16,6 @@ export const createUser = (params: CreateUserParams, idToken: FirebaseIdToken): 
     },
   })
 
+// TODO: 操作対象のリソースはidTokenから割り出せるため:idの指定は不要だがルーティングに合わせて:idをセットするかどうか決める。1はdummy
 export const updateUser = (params: UpdateUserParams, idToken: FirebaseIdToken): AxiosPromise<UpdateUserResponse> =>
-  client.patch('/users', params, { headers: { Authorization: idToken || '' } })
+  client.patch('/users/1', params, { headers: { Authorization: idToken || '' } })
