@@ -12,7 +12,7 @@ import type { UpdateUserParams } from 'types/updateUserParams'
 import type { UpdateUserResponse } from 'types/updateUserResponse'
 
 export const createUser = (params: CreateUserParams, idToken: FirebaseIdToken): AxiosPromise<SignUpResponse> =>
-  client.post('/auth/registrations', params, {
+  client.post('/users', params, {
     headers: {
       Authorization: idToken || '',
       InvitationToken: params.invitationToken || '',
