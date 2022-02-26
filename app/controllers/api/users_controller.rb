@@ -3,7 +3,6 @@
 class Api::UsersController < Api::FirebaseAuthRailsController
   skip_before_action :authenticate_user, only: :create
   before_action :check_invitation_token_and_team_capacity, only: :create
-  after_action :attach_default_avatar, only: :create
 
   def create
     FirebaseIdToken::Certificates.request
@@ -21,13 +20,14 @@ class Api::UsersController < Api::FirebaseAuthRailsController
         user.build_team(invitation_token: @invitation_token)
         user.color = 'blue'
       end
-      # TODO 画像データを新規登録時に送信していたらデフォルト画像ではなく送信したファイルをattachする
-      if params[]
+      if params[:avatar][:data].present?
         blob = ActiveStorage::Blob.create_and_upload!(
           io: StringIO.new(decode(params[:avatar][:data]) + "\n"),
           filename: params[:avatar][:name]
         )
         user.avatar.attach(blob)
+      else
+        user.avatar.attach(io: File.open('./app/assets/images/default-user-icon.png'), filename: 'default-user-icon.png')
       end
     end
     if @user.save
@@ -55,10 +55,6 @@ class Api::UsersController < Api::FirebaseAuthRailsController
   end
 
   private
-
-  def attach_default_avatar
-    @user.avatar.attach(io: File.open('./app/assets/images/default-user-icon.png'), filename: 'default-user-icon.png')
-  end
 
   def check_invitation_token_and_team_capacity
     invitation_token = request.headers[:InvitationToken]
