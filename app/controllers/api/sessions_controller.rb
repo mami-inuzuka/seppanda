@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Api::Auth::SessionsController < Api::Auth::FirebaseAuthRailsController
+class Api::SessionsController < Api::Auth::FirebaseAuthRailsController
   skip_before_action :authenticate_user
 
   def index
