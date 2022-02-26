@@ -39,6 +39,7 @@ export const PaymentProvider = ({ children }: { children: React.ReactElement }) 
   }
 
   const handleGetPayments = async () => {
+    setIsPaymentListLoaded(false)
     const idToken = await auth.currentUser?.getIdToken(true)
     try {
       const res = await getPayments(idToken)
@@ -75,7 +76,7 @@ export const PaymentProvider = ({ children }: { children: React.ReactElement }) 
       console.log(err)
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [updatePaymentList])
+  }, [updatePaymentList, currentUser])
 
   useEffect(() => {
     handleGetTeamStatus().catch((err) => {

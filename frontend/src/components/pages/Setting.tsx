@@ -1,4 +1,4 @@
-import { useContext, useState, VFC } from 'react'
+import { useContext, useEffect, useState, VFC } from 'react'
 import { useForm } from 'react-hook-form'
 import { useHistory } from 'react-router-dom'
 
@@ -28,7 +28,6 @@ export const Setting: VFC = () => {
     mode: 'all',
     defaultValues: {
       name: currentUser?.name,
-      avatar: { data: currentUser?.avatar?.data, name: currentUser?.avatar?.name },
     },
   })
 
@@ -71,6 +70,13 @@ export const Setting: VFC = () => {
     history.push('/welcome')
     successToast('ログアウトしました')
   }
+
+  useEffect(() => {
+    if (currentUser) {
+      setInputAvatar({ data: currentUser.avatar.data, name: currentUser.avatar.name })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <HeaderWithTitleLayout title="アカウント設定">
