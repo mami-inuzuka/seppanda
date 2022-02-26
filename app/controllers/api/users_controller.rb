@@ -34,7 +34,7 @@ class Api::UsersController < Api::Auth::FirebaseAuthRailsController
     @user.name = params[:name]
     if params[:avatar][:data].present?
       blob = ActiveStorage::Blob.create_and_upload!(
-        io: StringIO.new(decode(params[:avatar][:data]) + "\n"),
+        io: StringIO.new("#{decode(params[:avatar][:data])}\n"),
         filename: params[:avatar][:name]
       )
       @user.avatar.attach(blob)
