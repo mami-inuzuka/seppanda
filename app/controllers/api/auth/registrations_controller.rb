@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Api::Auth::RegistrationsController < Api::Auth::FirebaseAuthRailsController
-  skip_before_action :authenticate_user
+  skip_before_action :authenticate_user, only: :create
   before_action :check_invitation_token_and_team_capacity, only: :create
   after_action :attach_default_avatar, only: :create
 
@@ -21,9 +21,34 @@ class Api::Auth::RegistrationsController < Api::Auth::FirebaseAuthRailsControlle
         user.build_team(invitation_token: @invitation_token)
         user.color = 'blue'
       end
+      # TODO 画像データを新規登録時に送信していたらデフォルト画像ではなく送信したファイルをattachする
+      if params[]
+        blob = ActiveStorage::Blob.create_and_upload!(
+          io: StringIO.new(decode(params[:avatar][:data]) + "\n"),
+          filename: params[:avatar][:name]
+        )
+        user.avatar.attach(blob)
+      end
     end
     if @user.save
       render :create
+    else
+      render json: { status: :unprocessable_entity }
+    end
+  end
+
+  def update
+    @user = User.find_by(uid: payload['sub'])
+    @user.name = params[:name]
+    if params[:avatar][:data].present?
+      blob = ActiveStorage::Blob.create_and_upload!(
+        io: StringIO.new(decode(params[:avatar][:data]) + "\n"),
+        filename: params[:avatar][:name]
+      )
+    end
+    @user.avatar.attach(blob)
+    if @user.save
+      render json: { status: :ok }
     else
       render json: { status: :unprocessable_entity }
     end
@@ -51,5 +76,9 @@ class Api::Auth::RegistrationsController < Api::Auth::FirebaseAuthRailsControlle
         fullMessages: [I18n.t('devise_token_auth.registrations.token_invalid_or_team_capacity_reached')]
       }
     }, status: :unprocessable_entity
+  end
+
+  def decode(str)
+    Base64.decode64(str.split(',').last)
   end
 end

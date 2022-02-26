@@ -21,8 +21,12 @@ export const createUser = (params: CreateUserParams, idToken: FirebaseIdToken): 
 
 export const signIn = (params: SignInParams): AxiosPromise<SignInResponse> => client.post('/auth/sign_in', params)
 
-export const updateUser = (params: UpdateUserParams, idToken: FirebaseIdToken): AxiosPromise<UpdateUserResponse> =>
-  client.patch('/auth', params, { headers: { Authorization: idToken || '' } })
+export const updateUser = (
+  params: UpdateUserParams,
+  userId: number | undefined,
+  idToken: FirebaseIdToken
+): AxiosPromise<UpdateUserResponse> =>
+  client.patch(`/auth/registrations/${userId}`, params, { headers: { Authorization: idToken || '' } })
 
 // idTokenをもとにusersテーブル内の該当ユーザーを取得する
 export const getCurrentUser = (idToken: FirebaseIdToken): AxiosPromise<CurrentUserResponse> | undefined =>
