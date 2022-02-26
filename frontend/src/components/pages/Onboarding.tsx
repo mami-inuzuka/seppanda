@@ -1,4 +1,5 @@
 import { useContext, useState, VFC } from 'react'
+import { useForm } from 'react-hook-form'
 import { useHistory, useLocation } from 'react-router-dom'
 
 import {
@@ -30,40 +31,44 @@ type LocationState = {
 }
 
 export const Onboarding: VFC = () => {
-  const [inputName, setInputName] = useState<string>('')
   const [inputAvatar, setInputAvatar] = useState({ data: '', name: '' })
-  const [processing, setProcessing] = useState<boolean>(false)
   const { errorToast, successToast } = useToast()
   const location = useLocation<LocationState>()
   const { setCurrentUser } = useContext(AuthContext)
   const history = useHistory()
-  const inputNameError = inputName === ''
+
+  const {
+    register,
+    handleSubmit,
+    formState,
+    formState: { errors },
+  } = useForm<CreateUserParams>({
+    mode: 'all',
+  })
 
   const handleImageSelect = (e: React.FormEvent) => {
     const reader = new FileReader()
     const { files } = e.target as HTMLInputElement
     if (files) {
+      reader.readAsDataURL(files[0])
       reader.onload = () => {
         setInputAvatar({
           data: reader.result as string,
           name: files[0] ? files[0].name : 'unknownfile',
         })
       }
-      reader.readAsDataURL(files[0])
     }
   }
 
-  const handleCreateUser = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault()
-    const params: CreateUserParams = {
-      name: inputName,
+  const handleCreateUser = async (params: CreateUserParams) => {
+    const data = {
+      name: params.name,
       avatar: inputAvatar,
       invitationToken: location.state.invitationToken,
     }
-    setProcessing(true)
     const token = await auth.currentUser?.getIdToken(true)
     try {
-      const res = await createUser(params, token)
+      const res = await createUser(data, token)
       if (res.status === 200) {
         setCurrentUser(res.data?.user)
         if (location.state.invitationToken) {
@@ -79,8 +84,6 @@ export const Onboarding: VFC = () => {
       }
     } catch {
       errorToast('登録に失敗しました')
-    } finally {
-      setProcessing(false)
     }
   }
 
@@ -119,10 +122,12 @@ export const Onboarding: VFC = () => {
                 >
                   <Input
                     type="file"
-                    name="avatar"
                     accept="image/png, image/jpeg"
-                    onChange={handleImageSelect}
                     display="none"
+                    // eslint-disable-next-line react/jsx-props-no-spreading
+                    {...register('avatar', {
+                      onChange: (e) => handleImageSelect(e as React.FormEvent),
+                    })}
                   />
                   <Flex h="100%" align="center" justify="center">
                     画像を選択
@@ -130,19 +135,30 @@ export const Onboarding: VFC = () => {
                 </FormLabel>
               </Flex>
             </FormControl>
-            <FormControl isInvalid={inputNameError}>
+            <FormControl isInvalid={!!errors?.name} errortext={errors?.name?.message}>
               <FormLabel htmlFor="name">なまえ</FormLabel>
-              <Input value={inputName} onChange={(event) => setInputName(event.target.value)} id="name" size="lg" />
-              {inputNameError ? (
-                <FormErrorMessage>なまえを入力してください</FormErrorMessage>
+              <Input
+                id="name"
+                size="lg"
+                // eslint-disable-next-line react/jsx-props-no-spreading
+                {...register('name', {
+                  required: 'なまえを入力してください',
+                  maxLength: {
+                    value: 15,
+                    message: '15文字以下で入力してください',
+                  },
+                })}
+              />
+              {errors.name ? (
+                <FormErrorMessage>{errors.name?.message}</FormErrorMessage>
               ) : (
                 <FormHelperText>なまえは後から変えられます</FormHelperText>
               )}
             </FormControl>
             <PrimaryButton
-              isLoading={processing}
-              onClickButton={handleCreateUser}
-              disabled={inputNameError || processing}
+              isLoading={formState.isSubmitting}
+              onClickButton={handleSubmit(handleCreateUser)}
+              disabled={!formState.isValid || formState.isSubmitting}
             >
               上記の内容で登録する
             </PrimaryButton>
