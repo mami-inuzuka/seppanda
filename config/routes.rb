@@ -1,11 +1,7 @@
 Rails.application.routes.draw do
   namespace :api, defaults: { format: :json } do
     resources :users, only: %i[create]
-    namespace :auth do
-
-      resources :sessions, only: %i[index]
-    end
-
+    resources :sessions, only: %i[index]
     resources :payments
     resources :teams, only: %i[show] do
       patch :payments, to: 'teams/payments#update'

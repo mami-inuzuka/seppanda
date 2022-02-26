@@ -26,4 +26,4 @@ export const updateUser = (params: UpdateUserParams, idToken: FirebaseIdToken): 
 
 // idTokenをもとにusersテーブル内の該当ユーザーを取得する
 export const getCurrentUser = (idToken: FirebaseIdToken): AxiosPromise<CurrentUserResponse> | undefined =>
-  client.get(`/auth/sessions`, { headers: { Authorization: idToken || '' } })
+  client.get(`/sessions`, { headers: { Authorization: idToken || '' } })
