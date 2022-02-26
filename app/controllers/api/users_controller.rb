@@ -9,18 +9,23 @@ class Api::UsersController < Api::Auth::FirebaseAuthRailsController
     FirebaseIdToken::Certificates.request
     raise ArgumentError, 'BadRequest Parameter' if payload.blank?
 
+    @user = User.new(uid: payload['sub'], email: payload['email'], name: params[:name], provider: payload['firebase']['sign_in_provider'])
     invitation_token = request.headers[:InvitationToken]
-    @user = User.find_or_initialize_by(uid: payload['sub']) do |user|
-      user.email = payload['email']
-      if invitation_token.present?
-        team = Team.find_by!(invitation_token: invitation_token)
-        user.team_id = team.id
-        user.color = 'orange'
-      else
-        @invitation_token = SecureRandom.urlsafe_base64
-        user.build_team(invitation_token: @invitation_token)
-        user.color = 'blue'
-      end
+    if invitation_token.present?
+      team = Team.find_by!(invitation_token: invitation_token)
+      @user.team_id = team.id
+      @user.color = 'orange'
+    else
+      @invitation_token = SecureRandom.urlsafe_base64
+      @user.build_team(invitation_token: @invitation_token)
+      @user.color = 'blue'
+    end
+    if params[:avatar][:data].present?
+      blob = ActiveStorage::Blob.create_and_upload!(
+        io: StringIO.new("#{decode(params[:avatar][:data])}\n"),
+        filename: params[:avatar][:name]
+      )
+      @user.avatar.attach(blob)
     end
     if @user.save
       render :create
@@ -75,8 +80,6 @@ class Api::UsersController < Api::Auth::FirebaseAuthRailsController
   end
 
   def update_params
-    params.permit(
-      :name
-    )
+    params.permit(:name)
   end
 end
