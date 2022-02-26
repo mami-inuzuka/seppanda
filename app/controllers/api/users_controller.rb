@@ -5,7 +5,7 @@ class Api::UsersController < Api::Auth::FirebaseAuthRailsController
   before_action :check_invitation_token_and_team_capacity, only: :create
   after_action :attach_default_avatar, only: :create
 
-  def create
+  def create # rubocop:disable Metrics/MethodLength
     FirebaseIdToken::Certificates.request
     raise ArgumentError, 'BadRequest Parameter' if payload.blank?
 
