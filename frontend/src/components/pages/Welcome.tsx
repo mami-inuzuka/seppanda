@@ -6,7 +6,7 @@ import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
 
 import googleIcon from 'assets/images/google_icon.svg'
 import LogoWithCopy from 'assets/images/logo-with-copy.svg'
-import { getCurrentUser } from 'lib/api/auth'
+import { getCurrentUser } from 'lib/api/session'
 
 export const Welcome: VFC = memo(() => {
   const history = useHistory()

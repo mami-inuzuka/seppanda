@@ -7,10 +7,11 @@ import { PrimaryButton } from 'components/atoms/button/PrimaryButton'
 import { SecondaryButton } from 'components/atoms/button/SecondaryButton'
 import { HeaderWithTitleLayout } from 'components/templates/HeaderWithTitleLayout'
 import { AuthContext } from 'context/AuthContext'
-import { updateUser } from 'lib/api/auth'
+import { updateUser } from 'lib/api/user'
 import { auth } from 'lib/firebase'
 import { useToast } from 'lib/toast'
-import { UpdateUserParams } from 'types/updateUserParams'
+
+import type { UpdateUserParams } from 'types/updateUserParams'
 
 export const Setting: VFC = () => {
   const { currentUser } = useContext(AuthContext)

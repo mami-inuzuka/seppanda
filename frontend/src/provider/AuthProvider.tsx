@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import firebase from 'firebase/compat/app'
 
 import { AuthContext } from 'context/AuthContext'
-import { getCurrentUser } from 'lib/api/auth'
+import { getCurrentUser } from 'lib/api/session'
 import { auth } from 'lib/firebase'
 
 import type { User } from 'types/user'
