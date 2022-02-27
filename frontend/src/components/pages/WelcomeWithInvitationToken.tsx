@@ -58,7 +58,7 @@ export const WelcomeWithInvitationToken: VFC = memo(() => {
           setIsLoaded(true)
         }
       } catch {
-        history.push('/')
+        history.push('/welcome')
         errorToast('不正な招待URLです')
       }
     }
