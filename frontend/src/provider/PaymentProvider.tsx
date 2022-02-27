@@ -85,9 +85,5 @@ export const PaymentProvider = ({ children }: { children: React.ReactElement }) 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [paymentList])
 
-  return (
-    <PaymentContext.Provider value={value}>
-      {isPaymentListLoaded && isTeamStatusLoaded && children}
-    </PaymentContext.Provider>
-  )
+  return <PaymentContext.Provider value={value}>{children}</PaymentContext.Provider>
 }
