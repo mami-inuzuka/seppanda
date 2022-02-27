@@ -9,7 +9,7 @@ class Api::UsersController < Api::Auth::FirebaseAuthRailsController
     FirebaseIdToken::Certificates.request
     raise ArgumentError, 'BadRequest Parameter' if payload.blank?
 
-    @user = User.new(uid: payload['sub'], email: payload['email'], name: params[:name], provider: payload['firebase']['sign_in_provider'])
+    @user = User.new(uid: payload['sub'], name: params[:name])
     invitation_token = request.headers[:InvitationToken]
     if invitation_token.present?
       team = Team.find_by!(invitation_token: invitation_token)
