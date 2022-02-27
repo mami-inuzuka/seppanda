@@ -44,6 +44,9 @@ export const Onboarding: VFC = () => {
     formState: { errors },
   } = useForm<CreateUserParams>({
     mode: 'all',
+    defaultValues: {
+      name: auth.currentUser?.displayName,
+    },
   })
 
   const handleImageSelect = (e: React.FormEvent) => {
