@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 
 import firebase from 'firebase/compat/app'
 
+import { Loading } from 'components/pages/Loading'
 import { AuthContext } from 'context/AuthContext'
 import { getCurrentUser } from 'lib/api/session'
 import { auth } from 'lib/firebase'
@@ -24,7 +25,6 @@ export const AuthProvider = ({ children }: { children: React.ReactElement }) => 
 
   const handleGetCurrentUser = async () => {
     const token = await auth.currentUser?.getIdToken(true)
-
     try {
       const res = await getCurrentUser(token)
       if (res?.status === 200) {
@@ -49,5 +49,10 @@ export const AuthProvider = ({ children }: { children: React.ReactElement }) => 
     }
   }, [])
 
-  return <AuthContext.Provider value={value}>{isLoaded && children}</AuthContext.Provider>
+  return (
+    <AuthContext.Provider value={value}>
+      {!isLoaded && <Loading />}
+      {isLoaded && children}
+    </AuthContext.Provider>
+  )
 }
