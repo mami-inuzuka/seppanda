@@ -14,7 +14,7 @@ class Api::UsersController < Api::Auth::FirebaseAuthRailsController
     if @user.save
       render :create
     else
-      render status: :unprocessable_entity
+      render json: { messages: @user.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
