@@ -24,10 +24,10 @@ class Api::PaymentsController < Api::ApplicationController
   end
 
   def update
-    if @payment.update!(payment_params)
+    if @payment.update(payment_params)
       render :update
     else
-      render json: { status: :unprocessable_entity }
+      render json: { messages: @payment.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
