@@ -3,30 +3,14 @@
 class Api::UsersController < Api::Auth::FirebaseAuthRailsController
   skip_before_action :authenticate_user
   before_action :check_invitation_token_and_team_capacity, only: :create
-  after_action :attach_default_avatar, only: :create
 
-  def create # rubocop:disable Metrics/MethodLength
+  def create
     FirebaseIdToken::Certificates.request
     raise ArgumentError, 'BadRequest Parameter' if payload.blank?
 
     @user = User.new(uid: payload['sub'], name: params[:name])
-    invitation_token = request.headers[:InvitationToken]
-    if invitation_token.present?
-      team = Team.find_by!(invitation_token: invitation_token)
-      @user.team_id = team.id
-      @user.color = 'orange'
-    else
-      @invitation_token = SecureRandom.urlsafe_base64
-      @user.build_team(invitation_token: @invitation_token)
-      @user.color = 'blue'
-    end
-    if params[:avatar][:data].present?
-      blob = ActiveStorage::Blob.create_and_upload!(
-        io: StringIO.new("#{decode(params[:avatar][:data])}\n"),
-        filename: params[:avatar][:name]
-      )
-      @user.avatar.attach(blob)
-    end
+    create_team_or_belongs_to_team
+    attach_avatar
     if @user.save
       render :create
     else
@@ -53,8 +37,29 @@ class Api::UsersController < Api::Auth::FirebaseAuthRailsController
 
   private
 
-  def attach_default_avatar
-    @user.avatar.attach(io: File.open('./app/assets/images/default-user-icon.png'), filename: 'default-user-icon.png')
+  def create_team_or_belongs_to_team
+    invitation_token = request.headers[:InvitationToken]
+    if invitation_token.present?
+      team = Team.find_by!(invitation_token: invitation_token)
+      @user.team_id = team.id
+      @user.color = 'orange'
+    else
+      @invitation_token = SecureRandom.urlsafe_base64
+      @user.build_team(invitation_token: @invitation_token)
+      @user.color = 'blue'
+    end
+  end
+
+  def attach_avatar
+    if params[:avatar][:data].present?
+      io = StringIO.new("#{decode(params[:avatar][:data])}\n")
+      filename = params[:avatar][:name]
+    else
+      io = File.open('./app/assets/images/default-user-icon.png')
+      filename = 'default-user-icon.png'
+    end
+    blob = ActiveStorage::Blob.create_and_upload!(io: io, filename: filename)
+    @user.avatar.attach(blob)
   end
 
   def check_invitation_token_and_team_capacity
