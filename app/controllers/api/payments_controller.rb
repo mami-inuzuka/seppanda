@@ -10,13 +10,11 @@ class Api::PaymentsController < Api::ApplicationController
   end
 
   def create
-    @payment = Payment.new(payment_params)
-    @payment.user_id = current_user.id
-    @payment.team_id = current_user.team_id
-    if @payment.save!
+    @payment = current_user.payments.build(payment_params.merge({ team_id: current_user.team_id }))
+    if @payment.save
       render :create
     else
-      render json: { status: :unprocessable_entity }
+      render json: { messages: @payment.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
@@ -26,10 +24,10 @@ class Api::PaymentsController < Api::ApplicationController
   end
 
   def update
-    if @payment.update!(payment_params)
+    if @payment.update(payment_params)
       render :update
     else
-      render json: { status: :unprocessable_entity }
+      render json: { messages: @payment.errors.full_messages }, status: :unprocessable_entity
     end
   end
 

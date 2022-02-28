@@ -2,6 +2,7 @@ import { VFC, memo, useEffect, useState } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 
 import { Box, Button, Heading, Image, Text } from '@chakra-ui/react'
+import axios from 'axios'
 import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
 
 import googleIcon from 'assets/images/google_icon.svg'
@@ -9,6 +10,7 @@ import { HeaderOnlyLogoLayout } from 'components/templates/HeaderOnlyLogoLayout'
 import { getInviter } from 'lib/api/invitation'
 import { getCurrentUser } from 'lib/api/session'
 import { useToast } from 'lib/toast'
+import { ErrorResponse } from 'types/errorResponse'
 
 export const WelcomeWithInvitationToken: VFC = memo(() => {
   const history = useHistory()
@@ -57,9 +59,13 @@ export const WelcomeWithInvitationToken: VFC = memo(() => {
           setInviterAvatar(res.data.avatar)
           setIsLoaded(true)
         }
-      } catch {
+      } catch (err) {
+        if (axios.isAxiosError(err) && err.response) {
+          errorToast((err.response?.data as ErrorResponse).message)
+        } else {
+          errorToast('エラーが発生しました')
+        }
         history.push('/welcome')
-        errorToast('不正な招待URLです')
       }
     }
   }

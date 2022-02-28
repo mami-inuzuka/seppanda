@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form'
 import { useHistory } from 'react-router-dom'
 
 import { Box, Divider, Flex, FormControl, FormErrorMessage, FormLabel, Grid, Image, Input } from '@chakra-ui/react'
+import axios from 'axios'
 
 import { PrimaryButton } from 'components/atoms/button/PrimaryButton'
 import { SecondaryButton } from 'components/atoms/button/SecondaryButton'
@@ -11,7 +12,9 @@ import { AuthContext } from 'context/AuthContext'
 import { updateUser } from 'lib/api/user'
 import { auth } from 'lib/firebase'
 import { useToast } from 'lib/toast'
-import { UpdateUserParams } from 'types/updateUserParams'
+
+import type { MultipleErrorResponse } from 'types/multipleErrorResponses'
+import type { UpdateUserParams } from 'types/updateUserParams'
 
 export const Setting: VFC = () => {
   const { currentUser, setCurrentUser } = useContext(AuthContext)
@@ -39,15 +42,17 @@ export const Setting: VFC = () => {
     }
     try {
       const res = await updateUser(data, idToken)
-      if (res.status === 200) {
-        setCurrentUser(res.data.user)
-        history.push('/')
-        successToast('ユーザー情報を更新しました')
+      setCurrentUser(res.data.user)
+      history.push('/')
+      successToast('ユーザー情報を更新しました')
+    } catch (err) {
+      if (axios.isAxiosError(err) && err.response) {
+        ;(err.response?.data as MultipleErrorResponse).messages.forEach((message) => {
+          errorToast(message)
+        })
       } else {
-        errorToast('ユーザー情報の更新に失敗しました')
+        errorToast('エラーが発生しました')
       }
-    } catch {
-      errorToast('ユーザー情報の更新に失敗しました')
     }
   }
 

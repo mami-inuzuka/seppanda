@@ -15,9 +15,9 @@ RSpec.describe 'Api::Invitations', type: :request do
       expect(JSON.parse(response.body)['avatar']['name']).to be_present
     end
 
-    example '不正なinvitation_tokenの場合404が返る' do
+    example '不正なinvitation_tokenの場合unprocessable_entityが返る' do
       get api_invitations_path, headers: { invitationToken: '12345' }
-      expect(response).to have_http_status(:bad_request)
+      expect(response).to have_http_status(:unprocessable_entity)
     end
   end
 end
