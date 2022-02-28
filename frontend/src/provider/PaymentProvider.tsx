@@ -52,19 +52,17 @@ export const PaymentProvider = ({ children }: { children: React.ReactElement }) 
   }
 
   const handleGetTeamStatus = async () => {
+    setIsTeamStatusLoaded(false)
     const idToken = await auth.currentUser?.getIdToken(true)
     if (currentUser) {
       try {
         const res = await getTeamStatus(currentUser.teamId, idToken)
-        if (res?.status === 200) {
-          setTeamStatus(res?.data)
-        } else {
-          errorToast('取得に失敗しました')
-        }
+        setTeamStatus(res?.data)
       } catch {
-        errorToast('取得に失敗しました')
+        errorToast('情報の取得に失敗しました')
+      } finally {
+        setIsTeamStatusLoaded(true)
       }
-      setIsTeamStatusLoaded(true)
     }
   }
 
