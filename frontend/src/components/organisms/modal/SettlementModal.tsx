@@ -1,6 +1,7 @@
 import { useContext, useState, VFC } from 'react'
 
 import { Modal, ModalHeader, ModalBody, ModalContent, ModalOverlay, Text, Grid, Box } from '@chakra-ui/react'
+import axios from 'axios'
 
 import { PrimaryButton } from 'components/atoms/button/PrimaryButton'
 import { SecondaryButton } from 'components/atoms/button/SecondaryButton'
@@ -9,6 +10,8 @@ import { PaymentContext } from 'context/PaymentContext'
 import { settleTeamPayments } from 'lib/api/payment'
 import { auth } from 'lib/firebase'
 import { useToast } from 'lib/toast'
+
+import type { ErrorResponse } from 'types/errorResponse'
 
 type Props = {
   isOpen: boolean
@@ -29,17 +32,17 @@ export const SettelementModal: VFC<Props> = (props) => {
     const idToken = await auth.currentUser?.getIdToken(true)
     if (currentUser) {
       try {
-        const res = await settleTeamPayments(currentUser.teamId, idToken)
-        if (res?.status === 200) {
-          successToast('清算が完了しました')
-          setPaymentList([])
-          onClose()
+        await settleTeamPayments(currentUser.teamId, idToken)
+        successToast('清算が完了しました')
+        setPaymentList([])
+      } catch (err) {
+        if (axios.isAxiosError(err) && err.response) {
+          errorToast((err.response?.data as ErrorResponse).message)
         } else {
-          errorToast('処理に失敗しました')
+          errorToast('エラーが発生しました')
         }
-      } catch {
-        errorToast('処理に失敗しました')
       } finally {
+        onClose()
         setProcessing(false)
       }
     }
