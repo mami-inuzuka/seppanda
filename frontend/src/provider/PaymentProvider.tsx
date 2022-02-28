@@ -43,15 +43,12 @@ export const PaymentProvider = ({ children }: { children: React.ReactElement }) 
     const idToken = await auth.currentUser?.getIdToken(true)
     try {
       const res = await getPayments(idToken)
-      if (res?.status === 200) {
-        setPaymentList(res?.data)
-      } else {
-        errorToast('取得に失敗しました')
-      }
+      setPaymentList(res?.data)
     } catch {
-      errorToast('取得に失敗しました')
+      errorToast('支払情報の取得ができませんでした')
+    } finally {
+      setIsPaymentListLoaded(true)
     }
-    setIsPaymentListLoaded(true)
   }
 
   const handleGetTeamStatus = async () => {
