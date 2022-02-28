@@ -4,24 +4,13 @@ class Api::UsersController < Api::Auth::FirebaseAuthRailsController
   skip_before_action :authenticate_user
   before_action :check_invitation_token_and_team_capacity, only: :create
 
-  def create # rubocop:disable Metrics/MethodLength
+  def create
     FirebaseIdToken::Certificates.request
     raise ArgumentError, 'BadRequest Parameter' if payload.blank?
 
     @user = User.new(uid: payload['sub'], name: params[:name])
-    invitation_token = request.headers[:InvitationToken]
-    if invitation_token.present?
-      team = Team.find_by!(invitation_token: invitation_token)
-      @user.team_id = team.id
-      @user.color = 'orange'
-    else
-      @invitation_token = SecureRandom.urlsafe_base64
-      @user.build_team(invitation_token: @invitation_token)
-      @user.color = 'blue'
-    end
-
+    create_team_or_belongs_to_team
     attach_avatar
-
     if @user.save
       render :create
     else
@@ -47,6 +36,19 @@ class Api::UsersController < Api::Auth::FirebaseAuthRailsController
   end
 
   private
+
+  def create_team_or_belongs_to_team
+    invitation_token = request.headers[:InvitationToken]
+    if invitation_token.present?
+      team = Team.find_by!(invitation_token: invitation_token)
+      @user.team_id = team.id
+      @user.color = 'orange'
+    else
+      @invitation_token = SecureRandom.urlsafe_base64
+      @user.build_team(invitation_token: @invitation_token)
+      @user.color = 'blue'
+    end
+  end
 
   def attach_avatar
     if params[:avatar][:data].present?
