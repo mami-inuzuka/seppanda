@@ -19,6 +19,7 @@ export const Input = {
           borderColor: 'brand.primary',
           boxShadow: 0,
         },
+        _invalid: { borderColor: 'red.500', boxShadow: 'none', _focus: { borderColor: 'red.500' } },
       },
     },
   },
