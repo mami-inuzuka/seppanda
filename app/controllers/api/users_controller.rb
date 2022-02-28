@@ -14,7 +14,7 @@ class Api::UsersController < Api::Auth::FirebaseAuthRailsController
     if @user.save
       render :create
     else
-      render json: { status: :unprocessable_entity }
+      render status: :unprocessable_entity
     end
   end
 
@@ -31,7 +31,7 @@ class Api::UsersController < Api::Auth::FirebaseAuthRailsController
     if @user.update(update_params)
       render :update
     else
-      render json: { status: :unprocessable_entity }
+      render status: :unprocessable_entity
     end
   end
 
