@@ -15,6 +15,7 @@ import {
   Input,
   Text,
 } from '@chakra-ui/react'
+import axios from 'axios'
 
 import DefaultUserIcon from 'assets/images/default-user-icon.png'
 import { PrimaryButton } from 'components/atoms/button/PrimaryButton'
@@ -25,6 +26,7 @@ import { auth } from 'lib/firebase'
 import { useToast } from 'lib/toast'
 
 import type { CreateUserParams } from 'types/createUserParams'
+import type { MultipleErrorResponse } from 'types/multipleErrorResponses'
 
 type LocationState = {
   invitationToken: string
@@ -72,21 +74,25 @@ export const Onboarding: VFC = () => {
     const token = await auth.currentUser?.getIdToken(true)
     try {
       const res = await createUser(data, token)
-      if (res.status === 200) {
-        setCurrentUser(res.data?.user)
-        if (location.state.invitationToken) {
-          history.push('/')
-          successToast('登録が完了しました')
-        } else {
-          history.push({
-            pathname: '/invitation',
-            state: { invitationToken: res.data.invitationToken },
-          })
-          successToast('登録が完了しました')
-        }
+      setCurrentUser(res.data?.user)
+      if (location.state.invitationToken) {
+        history.push('/')
+        successToast('登録が完了しました')
+      } else {
+        history.push({
+          pathname: '/invitation',
+          state: { invitationToken: res.data.invitationToken },
+        })
+        successToast('登録が完了しました')
       }
-    } catch {
-      errorToast('登録に失敗しました')
+    } catch (err) {
+      if (axios.isAxiosError(err) && err.response) {
+        ;(err.response?.data as MultipleErrorResponse).messages.forEach((message) => {
+          errorToast(message)
+        })
+      } else {
+        errorToast('エラーが発生しました')
+      }
     }
   }
 
