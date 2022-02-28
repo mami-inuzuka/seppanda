@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom'
 
 import { Box, Center } from '@chakra-ui/react'
 
-import bgBlue from 'assets/images/bg_blue.png'
-import bgOrange from 'assets/images/bg_orange.png'
+import bgBlue from 'assets/images/home-bg-blue.svg'
+import bgOrange from 'assets/images/home-bg-orange.svg'
 import { CircleAddButton } from 'components/atoms/button/CircleAddButton'
 import { CurrentStatusCard } from 'components/organisms/CurrentStatusCard'
 import { InvitationAlert } from 'components/organisms/InvitationAlert'
