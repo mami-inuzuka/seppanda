@@ -55,7 +55,7 @@ export const NewPaymentEntry: VFC = () => {
               <FormLabel htmlFor="amount">金額</FormLabel>
               <Input
                 id="amount"
-                type="number"
+                type="tel"
                 size="lg"
                 placeholder="金額を入力"
                 // eslint-disable-next-line react/jsx-props-no-spreading
