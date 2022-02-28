@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form'
 import { useHistory } from 'react-router-dom'
 
 import { Flex, FormControl, FormErrorMessage, FormLabel, Grid, Input } from '@chakra-ui/react'
+import axios from 'axios'
 import { DateTime } from 'luxon'
 
 import { PrimaryButton } from 'components/atoms/button/PrimaryButton'
@@ -11,6 +12,7 @@ import { PaymentContext } from 'context/PaymentContext'
 import { postPayment } from 'lib/api/payment'
 import { auth } from 'lib/firebase'
 import { useToast } from 'lib/toast'
+import { MultipleErrorResponse } from 'types/multipleErrorResponses'
 
 import type { PostPaymentParams } from 'types/postPaymentParams'
 
@@ -33,16 +35,18 @@ export const NewPaymentEntry: VFC = () => {
   const handleSubmitAmount = async (params: PostPaymentParams) => {
     const idToken = await auth.currentUser?.getIdToken(true)
     try {
-      const res = await postPayment(params, idToken)
-      if (res.status === 200) {
-        setUpdatePaymentList(!updatePaymentList)
-        history.push('/')
-        successToast('支払い情報を登録しました')
+      await postPayment(params, idToken)
+      setUpdatePaymentList(!updatePaymentList)
+      history.push('/')
+      successToast('支払い情報を登録しました')
+    } catch (err) {
+      if (axios.isAxiosError(err) && err.response) {
+        ;(err.response?.data as MultipleErrorResponse).messages.forEach((message) => {
+          errorToast(message)
+        })
       } else {
-        errorToast('登録に失敗しました')
+        errorToast('エラーが発生しました')
       }
-    } catch {
-      errorToast('登録に失敗しました')
     }
   }
 
