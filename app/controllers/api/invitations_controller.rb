@@ -9,7 +9,7 @@ class Api::InvitationsController < Api::ApplicationController
       @user = team.users.first
       render :index
     else
-      render status: :bad_request
+      render json: { message: '不正な招待URLです' }, status: :unprocessable_entity
     end
   end
 end
