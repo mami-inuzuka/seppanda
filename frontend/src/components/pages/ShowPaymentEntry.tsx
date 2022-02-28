@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form'
 import { useHistory, useLocation } from 'react-router-dom'
 
 import { Flex, FormControl, FormErrorMessage, FormLabel, Grid, Input } from '@chakra-ui/react'
+import axios from 'axios'
 
 import { DangerButton } from 'components/atoms/button/DangerButton'
 import { PrimaryButton } from 'components/atoms/button/PrimaryButton'
@@ -11,6 +12,7 @@ import { PaymentContext } from 'context/PaymentContext'
 import { deletePayment, updatePayment } from 'lib/api/payment'
 import { auth } from 'lib/firebase'
 import { useToast } from 'lib/toast'
+import { MultipleErrorResponse } from 'types/multipleErrorResponses'
 
 import type { Payment } from 'types/payment'
 import type { PostPaymentParams } from 'types/postPaymentParams'
@@ -64,16 +66,18 @@ export const ShowPaymentEntry: VFC = () => {
   const handleUpdateAmount = async (params: PostPaymentParams) => {
     const idToken = await auth.currentUser?.getIdToken(true)
     try {
-      const res = await updatePayment(params, payment.id, idToken)
-      if (res.status === 200) {
-        setUpdatePaymentList(!updatePaymentList)
-        history.push('/')
-        successToast('支払い情報を更新しました')
+      await updatePayment(params, payment.id, idToken)
+      setUpdatePaymentList(!updatePaymentList)
+      history.push('/')
+      successToast('支払い情報を更新しました')
+    } catch (err) {
+      if (axios.isAxiosError(err) && err.response) {
+        ;(err.response?.data as MultipleErrorResponse).messages.forEach((message) => {
+          errorToast(message)
+        })
       } else {
-        errorToast('更新に失敗しました')
+        errorToast('エラーが発生しました')
       }
-    } catch {
-      errorToast('更新に失敗しました')
     }
   }
 
