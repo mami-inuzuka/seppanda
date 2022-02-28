@@ -14,7 +14,7 @@ class Api::PaymentsController < Api::ApplicationController
     if @payment.save
       render :create
     else
-      render json: { status: :unprocessable_entity }
+      render json: { messages: @payment.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
