@@ -32,17 +32,19 @@ export const AuthProvider = ({ children }: { children: React.ReactElement }) => 
       }
     } catch (e) {
       console.log(e)
-    } finally {
-      setIsLoaded(true)
     }
   }
 
   useEffect(() => {
     const unsubscribed = auth.onAuthStateChanged((user) => {
       setCurrentFirebaseUser(user)
-      handleGetCurrentUser().catch((err) => {
-        console.log(err)
-      })
+      handleGetCurrentUser()
+        .catch((err) => {
+          console.log(err)
+        })
+        .finally(() => {
+          setIsLoaded(true)
+        })
     })
     return () => {
       unsubscribed()
