@@ -2,11 +2,12 @@ import { VFC, memo, useState } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 
 import { Box, Button, Flex, Image, Spinner, Text } from '@chakra-ui/react'
-import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
+import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
 
 import googleIcon from 'assets/images/google_icon.svg'
 import LogoWithCopy from 'assets/images/logo-with-copy.svg'
 import { getCurrentUser } from 'lib/api/session'
+import { auth } from 'lib/firebase'
 
 export const Welcome: VFC = memo(() => {
   const [isLoading, setIsLoading] = useState(false)
@@ -16,31 +17,33 @@ export const Welcome: VFC = memo(() => {
   const invitationToken = query.get('invitation_token')
 
   const handleGetCurrentUser = async () => {
-    setIsLoading(true)
     const token = await auth.currentUser?.getIdToken(true)
     const res = await getCurrentUser(token)
     return res
   }
 
-  const auth = getAuth()
   const signInWithGoogle = () => {
     const provider = new GoogleAuthProvider()
     signInWithPopup(auth, provider)
+      .then(() => {
+        setIsLoading(true)
+      })
       .then(handleGetCurrentUser)
       .then((res) => {
-        if (res?.status === 200) {
-          if (res?.data.isExisted) {
-            history.push('/')
-          } else {
-            history.push({
-              pathname: '/onboarding',
-              state: { invitationToken },
-            })
-          }
+        if (res?.data.isExisted) {
+          history.push('/')
+        } else {
+          history.push({
+            pathname: '/onboarding',
+            state: { invitationToken },
+          })
         }
       })
       .catch((error) => {
         console.log(error)
+      })
+      .finally(() => {
+        setIsLoading(false)
       })
   }
 
