@@ -10,6 +10,7 @@ import { SecondaryButton } from 'components/atoms/button/SecondaryButton'
 import { HeaderWithTitleLayout } from 'components/templates/HeaderWithTitleLayout'
 import { AuthContext } from 'context/AuthContext'
 import { useSelectImage } from 'hooks/useSelectImage'
+import { useSignOut } from 'hooks/useSignOut'
 import { updateUser } from 'lib/api/user'
 import { auth } from 'lib/firebase'
 import { useToast } from 'lib/toast'
@@ -22,6 +23,7 @@ export const Setting: VFC = () => {
   const { errorToast, successToast } = useToast()
   const history = useHistory()
   const { handleImageSelect, imageData, setImageData, imageName, setImageName } = useSelectImage()
+  const { handleSignOut } = useSignOut()
 
   const {
     register,
@@ -55,12 +57,6 @@ export const Setting: VFC = () => {
         errorToast('エラーが発生しました')
       }
     }
-  }
-
-  const handleSignOut = async () => {
-    await auth.signOut()
-    history.push('/welcome')
-    successToast('ログアウトしました')
   }
 
   useEffect(() => {
