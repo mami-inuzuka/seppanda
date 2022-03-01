@@ -9,6 +9,7 @@ import { DangerButton } from 'components/atoms/button/DangerButton'
 import { PrimaryButton } from 'components/atoms/button/PrimaryButton'
 import { HeaderWithTitleLayout } from 'components/templates/HeaderWithTitleLayout'
 import { PaymentContext } from 'context/PaymentContext'
+import { useDeletePayment } from 'hooks/useDeletePayment'
 import { deletePayment, updatePayment } from 'lib/api/payment'
 import { auth } from 'lib/firebase'
 import { useToast } from 'lib/toast'
@@ -22,13 +23,14 @@ type stateType = {
 }
 
 export const ShowPaymentEntry: VFC = () => {
-  const { updatePaymentList, setUpdatePaymentList } = useContext(PaymentContext)
-  const { errorToast, successToast } = useToast()
-  const [processingDelete, setProcessingDelete] = useState<boolean>(false)
-  const history = useHistory()
   const location = useLocation()
   const state = location.state as stateType
   const { payment } = state
+  const { updatePaymentList, setUpdatePaymentList } = useContext(PaymentContext)
+  const { errorToast, successToast } = useToast()
+  const { handleDeletePayment, processingDelete } = useDeletePayment(payment)
+  const history = useHistory()
+
   const {
     register,
     handleSubmit,
@@ -42,26 +44,6 @@ export const ShowPaymentEntry: VFC = () => {
       paidAt: payment.paidAt,
     },
   })
-
-  const handleDeletePayment = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault()
-    setProcessingDelete(true)
-    const idToken = await auth.currentUser?.getIdToken(true)
-    try {
-      const res = await deletePayment(payment.id, idToken)
-      if (res.status === 200) {
-        setUpdatePaymentList(!updatePaymentList)
-        history.push('/')
-        successToast('支払い情報を削除しました')
-      } else {
-        errorToast('削除に失敗しました')
-      }
-    } catch {
-      errorToast('削除に失敗しました')
-    } finally {
-      setProcessingDelete(false)
-    }
-  }
 
   const handleUpdateAmount = async (params: PostPaymentParams) => {
     const idToken = await auth.currentUser?.getIdToken(true)
