@@ -4,7 +4,6 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { ChakraProvider } from '@chakra-ui/react'
 
 import { Home } from 'components/pages/Home'
-import { Invitation } from 'components/pages/Invitation'
 import { NewPaymentEntry } from 'components/pages/NewPaymentEntry'
 import { Onboarding } from 'components/pages/Onboarding'
 import { Setting } from 'components/pages/Setting'
@@ -21,7 +20,6 @@ const App: VFC = () => (
       <Switch>
         <Route path="/welcome" component={WelcomeWrapper} />
         <Route path="/onboarding" component={Onboarding} />
-        <Route path="/invitation" component={Invitation} />
         <AuthProvider>
           <PrivateRoute>
             <PaymentProvider>

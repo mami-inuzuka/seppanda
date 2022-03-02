@@ -76,7 +76,7 @@ export const Onboarding: VFC = () => {
         history.push('/')
       } else {
         history.push({
-          pathname: '/invitation',
+          pathname: '/',
           state: { invitationToken: res.data.invitationToken },
         })
       }
