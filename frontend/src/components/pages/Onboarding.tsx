@@ -100,6 +100,7 @@ export const Onboarding: VFC = () => {
                   border="4px"
                   borderColor="gray.200"
                   mb={4}
+                  objectFit="cover"
                 />
                 <FormLabel
                   bg="gray.50"

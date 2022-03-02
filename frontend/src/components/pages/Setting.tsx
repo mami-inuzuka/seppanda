@@ -85,6 +85,7 @@ export const Setting: VFC = () => {
                   border="4px"
                   borderColor={`brand.${currentUser?.color}`}
                   mb={4}
+                  objectFit="cover"
                 />
                 <FormLabel
                   bg="gray.50"

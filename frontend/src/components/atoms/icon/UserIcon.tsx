@@ -19,6 +19,7 @@ export const UserIcon: VFC<Props> = (props) => {
       borderRadius="full"
       border="2px"
       borderColor={`brand.${user?.color}`}
+      objectFit="cover"
     />
   )
 }
