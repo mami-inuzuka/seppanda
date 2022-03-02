@@ -1,4 +1,4 @@
-import { useState, VFC } from 'react'
+import { VFC } from 'react'
 import { useForm } from 'react-hook-form'
 import { useHistory, useLocation } from 'react-router-dom'
 
@@ -20,6 +20,7 @@ import axios from 'axios'
 import DefaultUserIcon from 'assets/images/default-user-icon.png'
 import { PrimaryButton } from 'components/atoms/button/PrimaryButton'
 import { HeaderOnlyLogoLayout } from 'components/templates/HeaderOnlyLogoLayout'
+import { useImageSelect } from 'hooks/useImageSelect'
 import { createUser } from 'lib/api/user'
 import { auth } from 'lib/firebase'
 import { useToast } from 'lib/toast'
@@ -32,10 +33,10 @@ type LocationState = {
 }
 
 export const Onboarding: VFC = () => {
-  const [inputAvatar, setInputAvatar] = useState({ data: '', name: '' })
   const { errorToast, successToast } = useToast()
   const location = useLocation<LocationState>()
   const history = useHistory()
+  const { handleImageSelect, inputAvatar } = useImageSelect()
 
   const {
     register,
@@ -48,20 +49,6 @@ export const Onboarding: VFC = () => {
       name: auth.currentUser?.displayName,
     },
   })
-
-  const handleImageSelect = (e: React.FormEvent) => {
-    const reader = new FileReader()
-    const { files } = e.target as HTMLInputElement
-    if (files) {
-      reader.readAsDataURL(files[0])
-      reader.onload = () => {
-        setInputAvatar({
-          data: reader.result as string,
-          name: files[0] ? files[0].name : 'unknownfile',
-        })
-      }
-    }
-  }
 
   const handleCreateUser = async (params: CreateUserParams) => {
     const data = {
@@ -113,6 +100,7 @@ export const Onboarding: VFC = () => {
                   border="4px"
                   borderColor="gray.200"
                   mb={4}
+                  objectFit="cover"
                 />
                 <FormLabel
                   bg="gray.50"
@@ -131,7 +119,7 @@ export const Onboarding: VFC = () => {
                     display="none"
                     // eslint-disable-next-line react/jsx-props-no-spreading
                     {...register('avatar', {
-                      onChange: (e) => handleImageSelect(e as React.FormEvent),
+                      onChange: (e) => handleImageSelect(e as React.FormEvent<HTMLInputElement>),
                     })}
                   />
                   <Flex h="100%" align="center" justify="center">

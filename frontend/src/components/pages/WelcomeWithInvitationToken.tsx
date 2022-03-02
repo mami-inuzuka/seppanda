@@ -32,21 +32,20 @@ export const WelcomeWithInvitationToken: VFC = memo(() => {
                 </Heading>
               </Box>
               <Box bg="gray.100" position="relative" p={6} pt="56px">
-                <Box
+                <Image
+                  src={inviterAvatar.data}
+                  alt={inviterAvatar.name}
+                  boxSize="64px"
+                  borderRadius="full"
+                  objectFit="cover"
+                  border="2px"
+                  borderColor="blue.500"
                   position="absolute"
-                  w="64px"
-                  h="64px"
                   top="-32px"
                   left="0"
                   right="0"
                   m="auto"
-                  border="2px"
-                  borderColor="blue.500"
-                  borderRadius="9999px"
-                  overflow="hidden"
-                >
-                  <Image src={inviterAvatar.data} />
-                </Box>
+                />
                 <Text align="center" fontSize="sm" lineHeight="1.8" mb={6}>
                   <Text as="span" fontWeight="bold">
                     {inviterName}
