@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState, VFC } from 'react'
+import { useContext, useEffect, VFC } from 'react'
 import { useForm } from 'react-hook-form'
 import { useHistory } from 'react-router-dom'
 
@@ -9,6 +9,7 @@ import { PrimaryButton } from 'components/atoms/button/PrimaryButton'
 import { SecondaryButton } from 'components/atoms/button/SecondaryButton'
 import { HeaderWithTitleLayout } from 'components/templates/HeaderWithTitleLayout'
 import { AuthContext } from 'context/AuthContext'
+import { useImageSelect } from 'hooks/useImageSelect'
 import { updateUser } from 'lib/api/user'
 import { auth } from 'lib/firebase'
 import { useToast } from 'lib/toast'
@@ -18,9 +19,9 @@ import type { UpdateUserParams } from 'types/updateUserParams'
 
 export const Setting: VFC = () => {
   const { currentUser, setCurrentUser } = useContext(AuthContext)
-  const [inputAvatar, setInputAvatar] = useState({ data: '', name: '' })
   const { errorToast, successToast } = useToast()
   const history = useHistory()
+  const { handleImageSelect, inputAvatar, setInputAvatar } = useImageSelect()
 
   const {
     register,
@@ -52,20 +53,6 @@ export const Setting: VFC = () => {
         })
       } else {
         errorToast('エラーが発生しました')
-      }
-    }
-  }
-
-  const handleImageSelect = (e: React.FormEvent) => {
-    const reader = new FileReader()
-    const { files } = e.target as HTMLInputElement
-    if (files) {
-      reader.readAsDataURL(files[0])
-      reader.onload = () => {
-        setInputAvatar({
-          data: reader.result as string,
-          name: files[0] ? files[0].name : 'unknownfile',
-        })
       }
     }
   }
