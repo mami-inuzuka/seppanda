@@ -1,4 +1,4 @@
-import { useContext, useState, VFC } from 'react'
+import { useState, VFC } from 'react'
 import { useForm } from 'react-hook-form'
 import { useHistory, useLocation } from 'react-router-dom'
 
@@ -20,7 +20,6 @@ import axios from 'axios'
 import DefaultUserIcon from 'assets/images/default-user-icon.png'
 import { PrimaryButton } from 'components/atoms/button/PrimaryButton'
 import { HeaderOnlyLogoLayout } from 'components/templates/HeaderOnlyLogoLayout'
-import { AuthContext } from 'context/AuthContext'
 import { createUser } from 'lib/api/user'
 import { auth } from 'lib/firebase'
 import { useToast } from 'lib/toast'
@@ -36,7 +35,6 @@ export const Onboarding: VFC = () => {
   const [inputAvatar, setInputAvatar] = useState({ data: '', name: '' })
   const { errorToast, successToast } = useToast()
   const location = useLocation<LocationState>()
-  const { setCurrentUser } = useContext(AuthContext)
   const history = useHistory()
 
   const {
@@ -74,17 +72,15 @@ export const Onboarding: VFC = () => {
     const token = await auth.currentUser?.getIdToken(true)
     try {
       const res = await createUser(data, token)
-      setCurrentUser(res.data?.user)
       if (location.state.invitationToken) {
         history.push('/')
-        successToast('登録が完了しました')
       } else {
         history.push({
           pathname: '/invitation',
           state: { invitationToken: res.data.invitationToken },
         })
-        successToast('登録が完了しました')
       }
+      successToast('登録が完了しました')
     } catch (err) {
       if (axios.isAxiosError(err) && err.response) {
         ;(err.response?.data as MultipleErrorResponse).messages.forEach((message) => {

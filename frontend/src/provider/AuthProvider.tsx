@@ -6,6 +6,7 @@ import { Loading } from 'components/pages/Loading'
 import { AuthContext } from 'context/AuthContext'
 import { getCurrentUser } from 'lib/api/session'
 import { auth } from 'lib/firebase'
+import { useToast } from 'lib/toast'
 
 import type { User } from 'types/user'
 
@@ -13,6 +14,7 @@ export const AuthProvider = ({ children }: { children: React.ReactElement }) => 
   const [isLoaded, setIsLoaded] = useState<boolean>(false)
   const [currentUser, setCurrentUser] = useState<User | null>(null)
   const [currentFirebaseUser, setCurrentFirebaseUser] = useState<firebase.User | null>(null)
+  const { errorToast } = useToast()
 
   // eslint-disable-next-line react/jsx-no-constructed-context-values
   const value = {
@@ -30,23 +32,26 @@ export const AuthProvider = ({ children }: { children: React.ReactElement }) => 
       if (res?.status === 200) {
         setCurrentUser(res.data.user)
       }
-    } catch (e) {
-      console.log(e)
-    } finally {
-      setIsLoaded(true)
+    } catch {
+      errorToast('エラーが発生しました')
     }
   }
 
   useEffect(() => {
     const unsubscribed = auth.onAuthStateChanged((user) => {
       setCurrentFirebaseUser(user)
-      handleGetCurrentUser().catch((err) => {
-        console.log(err)
-      })
+      handleGetCurrentUser()
+        .catch((err) => {
+          console.log(err)
+        })
+        .finally(() => {
+          setIsLoaded(true)
+        })
     })
     return () => {
       unsubscribed()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
