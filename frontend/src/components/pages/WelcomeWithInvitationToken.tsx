@@ -1,55 +1,23 @@
-import { VFC, memo, useEffect, useState } from 'react'
-import { useHistory, useLocation } from 'react-router-dom'
+import { VFC, memo, useEffect } from 'react'
 
 import { Box, Button, Flex, Heading, Image, Spinner, Text } from '@chakra-ui/react'
-import axios from 'axios'
 
 import googleIcon from 'assets/images/google_icon.svg'
 import { HeaderOnlyLogoLayout } from 'components/templates/HeaderOnlyLogoLayout'
+import { useGetInviter } from 'hooks/useGetInviter'
 import { useSignInWithGoogle } from 'hooks/useSignInWithGoogle'
-import { getInviter } from 'lib/api/invitation'
-import { useToast } from 'lib/toast'
-import { ErrorResponse } from 'types/errorResponse'
 
 export const WelcomeWithInvitationToken: VFC = memo(() => {
   const { signInWithGoogle, isLoading } = useSignInWithGoogle()
-  const history = useHistory()
-  const { search } = useLocation()
-  const query = new URLSearchParams(search)
-  const invitationToken = query.get('invitation_token')
-  const { errorToast } = useToast()
-  const [inviterName, setInviterName] = useState('')
-  const [inviterAvatar, setInviterAvatar] = useState({ data: '', name: '' })
-  const [isLoaded, setIsLoaded] = useState(false)
-
-  const handleGetInviter = async () => {
-    if (invitationToken) {
-      try {
-        const res = await getInviter(invitationToken)
-        if (res?.status === 200) {
-          setInviterName(res.data.name)
-          setInviterAvatar(res.data.avatar)
-          setIsLoaded(true)
-        }
-      } catch (err) {
-        if (axios.isAxiosError(err) && err.response) {
-          errorToast((err.response?.data as ErrorResponse).message)
-        } else {
-          errorToast('エラーが発生しました')
-        }
-        history.push('/welcome')
-      }
-    }
-  }
+  const { handleGetInviter, inviterName, inviterAvatar, isInviterLoaded } = useGetInviter()
 
   useEffect(() => {
-    if (invitationToken) {
-      handleGetInviter().catch((err) => {
-        console.log(err)
-      })
-    }
+    handleGetInviter().catch((err) => {
+      console.log(err)
+    })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
   return (
     <>
       {isLoading && (
@@ -70,7 +38,7 @@ export const WelcomeWithInvitationToken: VFC = memo(() => {
         </Flex>
       )}
       <Box>
-        {isLoaded && (
+        {isInviterLoaded && (
           <HeaderOnlyLogoLayout>
             <Box h="100vh" p={6}>
               <Box mb={20}>
