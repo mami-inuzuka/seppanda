@@ -1,7 +1,7 @@
 import { VFC } from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
-import { ChakraProvider } from '@chakra-ui/react'
+import { Box, ChakraProvider } from '@chakra-ui/react'
 
 import { Home } from 'components/pages/Home'
 import { NewPaymentEntry } from 'components/pages/NewPaymentEntry'
@@ -15,31 +15,35 @@ import { PaymentProvider } from 'provider/PaymentProvider'
 import { theme } from 'theme/index'
 
 const App: VFC = () => (
-  <BrowserRouter>
-    <ChakraProvider theme={theme}>
-      <Switch>
-        <Route path="/welcome" component={WelcomeWrapper} />
-        <Route path="/onboarding" component={Onboarding} />
-        <AuthProvider>
-          <PrivateRoute>
-            <PaymentProvider>
-              <Route
-                path="/"
-                render={() => (
-                  <Switch>
-                    <Route exact path="/" component={Home} />
-                    <Route path="/payments/new" component={NewPaymentEntry} />
-                    <Route path="/payments/:id" component={ShowPaymentEntry} />
-                    <Route path="/setting" component={Setting} />
-                  </Switch>
-                )}
-              />
-            </PaymentProvider>
-          </PrivateRoute>
-        </AuthProvider>
-      </Switch>
-    </ChakraProvider>
-  </BrowserRouter>
+  <ChakraProvider theme={theme}>
+    <Box w="100%" bg="gray.50">
+      <Box w="100%" m="0 auto" bg="white" maxW={{ base: 'auto', sm: '400px' }} minW="320px">
+        <BrowserRouter>
+          <Switch>
+            <Route path="/welcome" component={WelcomeWrapper} />
+            <Route path="/onboarding" component={Onboarding} />
+            <AuthProvider>
+              <PrivateRoute>
+                <PaymentProvider>
+                  <Route
+                    path="/"
+                    render={() => (
+                      <Switch>
+                        <Route exact path="/" component={Home} />
+                        <Route path="/payments/new" component={NewPaymentEntry} />
+                        <Route path="/payments/:id" component={ShowPaymentEntry} />
+                        <Route path="/setting" component={Setting} />
+                      </Switch>
+                    )}
+                  />
+                </PaymentProvider>
+              </PrivateRoute>
+            </AuthProvider>
+          </Switch>
+        </BrowserRouter>
+      </Box>
+    </Box>
+  </ChakraProvider>
 )
 
 export default App
