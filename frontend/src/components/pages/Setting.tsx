@@ -102,7 +102,7 @@ export const Setting: VFC = () => {
                     accept="image/png, image/jpeg"
                     display="none" // eslint-disable-next-line react/jsx-props-no-spreading
                     {...register('avatar', {
-                      onChange: (e) => handleImageSelect(e as React.FormEvent),
+                      onChange: (e) => handleImageSelect(e as React.FormEvent<HTMLInputElement>),
                     })}
                   />
                   <Flex h="100%" align="center" justify="center">
