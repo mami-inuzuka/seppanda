@@ -3,16 +3,16 @@ import { useHistory, useLocation } from 'react-router-dom'
 
 import { Box, Button, Heading, Image, Text } from '@chakra-ui/react'
 import axios from 'axios'
-import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
 
 import googleIcon from 'assets/images/google_icon.svg'
 import { HeaderOnlyLogoLayout } from 'components/templates/HeaderOnlyLogoLayout'
+import { useSignInWithGoogle } from 'hooks/useSignInWithGoogle'
 import { getInviter } from 'lib/api/invitation'
-import { getCurrentUser } from 'lib/api/session'
 import { useToast } from 'lib/toast'
 import { ErrorResponse } from 'types/errorResponse'
 
 export const WelcomeWithInvitationToken: VFC = memo(() => {
+  const { signInWithGoogle, isLoading } = useSignInWithGoogle()
   const history = useHistory()
   const { search } = useLocation()
   const query = new URLSearchParams(search)
@@ -21,34 +21,6 @@ export const WelcomeWithInvitationToken: VFC = memo(() => {
   const [inviterName, setInviterName] = useState('')
   const [inviterAvatar, setInviterAvatar] = useState({ data: '', name: '' })
   const [isLoaded, setIsLoaded] = useState(false)
-
-  const handleGetCurrentUser = async () => {
-    const token = await auth.currentUser?.getIdToken(true)
-    const res = await getCurrentUser(token)
-    return res
-  }
-
-  const auth = getAuth()
-  const signInWithGoogle = () => {
-    const provider = new GoogleAuthProvider()
-    signInWithPopup(auth, provider)
-      .then(handleGetCurrentUser)
-      .then((res) => {
-        if (res?.status === 200) {
-          if (res?.data.isExisted) {
-            history.push('/')
-          } else {
-            history.push({
-              pathname: '/onboarding',
-              state: { invitationToken },
-            })
-          }
-        }
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-  }
 
   const handleGetInviter = async () => {
     if (invitationToken) {
