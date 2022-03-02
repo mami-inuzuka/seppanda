@@ -28,11 +28,18 @@ export const CurrentStatusContents: VFC = memo(() => {
             )}
           </>
         ) : (
-          <Text fontSize="sm" fontWeight="bold" align="center">
-            おあいての登録が完了すると
-            <br />
-            表示されます
-          </Text>
+          <Box p={8} textAlign="center">
+            <Text fontSize="sm" fontWeight="bold" mb={2}>
+              おあいての登録が完了すると
+              <br />
+              表示されます
+            </Text>
+            <Text as="p" fontWeight="normal" fontSize="0.7rem">
+              おあいての登録が完了したら
+              <br />
+              画面を再読み込みしてください
+            </Text>
+          </Box>
         )}
       </Box>
     </>
