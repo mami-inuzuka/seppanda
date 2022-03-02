@@ -1,8 +1,9 @@
 import { VFC, memo, useEffect } from 'react'
 
-import { Box, Button, Flex, Heading, Image, Spinner, Text } from '@chakra-ui/react'
+import { Box, Button, Heading, Image, Text } from '@chakra-ui/react'
 
 import googleIcon from 'assets/images/google_icon.svg'
+import { FullWindowSpinner } from 'components/organisms/FullWindowSpinner'
 import { HeaderOnlyLogoLayout } from 'components/templates/HeaderOnlyLogoLayout'
 import { useGetInviter } from 'hooks/useGetInviter'
 import { useSignInWithGoogle } from 'hooks/useSignInWithGoogle'
@@ -20,23 +21,7 @@ export const WelcomeWithInvitationToken: VFC = memo(() => {
 
   return (
     <>
-      {isLoading && (
-        <Flex
-          w="100%"
-          h="100vh"
-          direction="column"
-          justify="center"
-          align="center"
-          p={6}
-          position="fixed"
-          top="0"
-          left="0"
-          bg="rgba(255,255,255,0.7)"
-          zIndex="1"
-        >
-          <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="green.500" size="xl" />
-        </Flex>
-      )}
+      {isLoading && <FullWindowSpinner />}
       <Box>
         {isInviterLoaded && (
           <HeaderOnlyLogoLayout>
