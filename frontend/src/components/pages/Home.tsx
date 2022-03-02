@@ -45,7 +45,7 @@ export const Home: VFC = memo(() => {
               </Box>
             )}
           </Box>
-          <Box position="fixed" bottom="24px" w="100%">
+          <Box position="fixed" right="0" left="0" bottom="24px" margin="auto" w="100%">
             <Center w="100%">
               <Link to="/payments/new">
                 <CircleAddButton />
