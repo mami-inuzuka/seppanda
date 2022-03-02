@@ -27,9 +27,9 @@ export const Home: VFC = memo(() => {
 
   return (
     <>
-      {!localStorage.getItem('invitationUrlClosed') && location.state.invitationToken && (
-        <InvitationUrlModal isOpen={isOpen} onClose={onClose} size="xl" />
-      )}
+      {!localStorage.getItem('invitationUrlClosed') &&
+        location.state.invitationToken &&
+        !teamStatus.isTeamCapacityReached && <InvitationUrlModal isOpen={isOpen} onClose={onClose} size="xl" />}
       {isTeamStatusLoaded && !teamStatus.isTeamCapacityReached && (
         <InvitationAlert invitationToken={teamStatus.invitationToken} />
       )}
