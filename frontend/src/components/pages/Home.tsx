@@ -1,5 +1,5 @@
 import { memo, useContext, VFC } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import { Box, Center, useDisclosure } from '@chakra-ui/react'
 
@@ -15,21 +15,16 @@ import { HomeHeaderLayout } from 'components/templates/HomeHeaderLayout'
 import { AuthContext } from 'context/AuthContext'
 import { PaymentContext } from 'context/PaymentContext'
 
-type LocationState = {
-  invitationToken: string
-}
-
 export const Home: VFC = memo(() => {
   const { isPaymentListLoaded, teamStatus, isTeamStatusLoaded } = useContext(PaymentContext)
   const { currentUser } = useContext(AuthContext)
-  const location = useLocation<LocationState>()
   const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true })
 
   return (
     <>
-      {!localStorage.getItem('invitationUrlClosed') &&
-        location.state.invitationToken &&
-        !teamStatus.isTeamCapacityReached && <InvitationUrlModal isOpen={isOpen} onClose={onClose} size="xl" />}
+      {!localStorage.getItem('invitationUrlClosed') && isTeamStatusLoaded && !teamStatus.isTeamCapacityReached && (
+        <InvitationUrlModal isOpen={isOpen} onClose={onClose} size="xl" />
+      )}
       {isTeamStatusLoaded && !teamStatus.isTeamCapacityReached && (
         <InvitationAlert invitationToken={teamStatus.invitationToken} />
       )}
