@@ -5,7 +5,7 @@ class Api::InvitationsController < Api::ApplicationController
 
   def index
     team = Team.find_by(invitation_token: request.headers[:invitationToken])
-    if team.present?
+    if team.present? && !team.capacity_reached?
       @user = team.users.first
       render :index
     else
