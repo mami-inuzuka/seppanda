@@ -5,6 +5,7 @@ import { Box, ChakraProvider } from '@chakra-ui/react'
 
 import { Home } from 'components/pages/Home'
 import { NewPaymentEntry } from 'components/pages/NewPaymentEntry'
+import { NotFound } from 'components/pages/NotFound'
 import { Onboarding } from 'components/pages/Onboarding'
 import { Setting } from 'components/pages/Setting'
 import { ShowPaymentEntry } from 'components/pages/ShowPaymentEntry'
@@ -33,6 +34,7 @@ const App: VFC = () => (
                         <Route path="/payments/new" component={NewPaymentEntry} />
                         <Route path="/payments/:id" component={ShowPaymentEntry} />
                         <Route path="/setting" component={Setting} />
+                        <Route path="*" component={NotFound} />
                       </Switch>
                     )}
                   />
