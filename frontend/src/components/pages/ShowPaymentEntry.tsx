@@ -12,8 +12,8 @@ import { PaymentContext } from 'context/PaymentContext'
 import { deletePayment, updatePayment } from 'lib/api/payment'
 import { auth } from 'lib/firebase'
 import { useToast } from 'lib/toast'
-import { MultipleErrorResponse } from 'types/multipleErrorResponses'
 
+import type { MultipleErrorResponse } from 'types/multipleErrorResponses'
 import type { Payment } from 'types/payment'
 import type { PostPaymentParams } from 'types/postPaymentParams'
 
@@ -71,7 +71,7 @@ export const ShowPaymentEntry: VFC = () => {
       history.push('/')
       successToast('支払い情報を更新しました')
     } catch (err) {
-      if (axios.isAxiosError(err) && err.response) {
+      if (axios.isAxiosError(err) && (err.response?.data as MultipleErrorResponse).messages) {
         ;(err.response?.data as MultipleErrorResponse).messages.forEach((message) => {
           errorToast(message)
         })

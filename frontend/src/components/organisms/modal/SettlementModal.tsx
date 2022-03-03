@@ -36,7 +36,7 @@ export const SettelementModal: VFC<Props> = (props) => {
         successToast('清算が完了しました')
         setPaymentList([])
       } catch (err) {
-        if (axios.isAxiosError(err) && err.response) {
+        if (axios.isAxiosError(err) && (err.response?.data as ErrorResponse).message) {
           errorToast((err.response?.data as ErrorResponse).message)
         } else {
           errorToast('エラーが発生しました')
