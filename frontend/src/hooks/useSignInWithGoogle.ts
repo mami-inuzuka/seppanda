@@ -32,7 +32,7 @@ export const useSignInWithGoogle = () => {
         } else {
           history.push({
             pathname: '/onboarding',
-            state: { invitationToken },
+            state: { invitationToken, referrer: 'welcome' },
           })
         }
       })
