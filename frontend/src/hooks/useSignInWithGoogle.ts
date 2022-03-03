@@ -5,6 +5,7 @@ import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
 
 import { getCurrentUser } from 'lib/api/session'
 import { auth } from 'lib/firebase'
+import { useToast } from 'lib/toast'
 
 export const useSignInWithGoogle = () => {
   const history = useHistory()
@@ -12,6 +13,7 @@ export const useSignInWithGoogle = () => {
   const query = new URLSearchParams(search)
   const invitationToken = query.get('invitation_token')
   const [isLoading, setIsLoading] = useState(false)
+  const { errorToast } = useToast()
 
   const handleGetCurrentUser = async () => {
     const token = await auth.currentUser?.getIdToken(true)
@@ -36,8 +38,8 @@ export const useSignInWithGoogle = () => {
           })
         }
       })
-      .catch((error) => {
-        console.log(error)
+      .catch(() => {
+        errorToast('エラーが発生しました')
       })
       .finally(() => {
         setIsLoading(false)

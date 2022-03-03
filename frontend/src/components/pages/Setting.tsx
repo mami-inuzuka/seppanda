@@ -47,7 +47,7 @@ export const Setting: VFC = () => {
       history.push('/')
       successToast('ユーザー情報を更新しました')
     } catch (err) {
-      if (axios.isAxiosError(err) && err.response) {
+      if (axios.isAxiosError(err) && (err.response?.data as MultipleErrorResponse).messages) {
         ;(err.response?.data as MultipleErrorResponse).messages.forEach((message) => {
           errorToast(message)
         })

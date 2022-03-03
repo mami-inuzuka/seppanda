@@ -28,7 +28,7 @@ export const useGetInviter = () => {
           setIsInviterLoaded(true)
         }
       } catch (err) {
-        if (axios.isAxiosError(err) && err.response) {
+        if (axios.isAxiosError(err) && (err.response?.data as ErrorResponse).message) {
           errorToast((err.response?.data as ErrorResponse).message)
         } else {
           errorToast('エラーが発生しました')

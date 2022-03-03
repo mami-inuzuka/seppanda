@@ -69,7 +69,7 @@ export const Onboarding: VFC = () => {
       }
       successToast('登録が完了しました')
     } catch (err) {
-      if (axios.isAxiosError(err) && err.response) {
+      if (axios.isAxiosError(err) && (err.response?.data as MultipleErrorResponse).messages) {
         ;(err.response?.data as MultipleErrorResponse).messages.forEach((message) => {
           errorToast(message)
         })

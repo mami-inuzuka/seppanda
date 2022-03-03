@@ -40,7 +40,7 @@ export const NewPaymentEntry: VFC = () => {
       history.push('/')
       successToast('支払い情報を登録しました')
     } catch (err) {
-      if (axios.isAxiosError(err) && err.response) {
+      if (axios.isAxiosError(err) && (err.response?.data as MultipleErrorResponse).messages) {
         ;(err.response?.data as MultipleErrorResponse).messages.forEach((message) => {
           errorToast(message)
         })
