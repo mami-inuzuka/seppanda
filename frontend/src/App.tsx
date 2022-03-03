@@ -6,7 +6,7 @@ import { Box, ChakraProvider } from '@chakra-ui/react'
 import { Home } from 'components/pages/Home'
 import { NewPaymentEntry } from 'components/pages/NewPaymentEntry'
 import { NotFound } from 'components/pages/NotFound'
-import { Onboarding } from 'components/pages/Onboarding'
+import { OnboardingWrapper } from 'components/pages/OnboardingWrapper'
 import { Setting } from 'components/pages/Setting'
 import { ShowPaymentEntry } from 'components/pages/ShowPaymentEntry'
 import { WelcomeWrapper } from 'components/pages/WelcomeWrapper'
@@ -22,7 +22,7 @@ const App: VFC = () => (
         <BrowserRouter>
           <Switch>
             <Route path="/welcome" component={WelcomeWrapper} />
-            <Route path="/onboarding" component={Onboarding} />
+            <Route path="/onboarding" component={OnboardingWrapper} />
             <AuthProvider>
               <PrivateRoute>
                 <PaymentProvider>
