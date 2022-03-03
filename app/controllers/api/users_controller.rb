@@ -8,7 +8,7 @@ class Api::UsersController < Api::Auth::FirebaseAuthRailsController
     FirebaseIdToken::Certificates.request
     raise ArgumentError, 'BadRequest Parameter' if payload.blank?
 
-    @user = User.new(uid: payload['sub'], name: params[:name])
+    @user = User.new(create_params)
     create_team_or_belongs_to_team
     attach_avatar
     if @user.save
@@ -86,5 +86,9 @@ class Api::UsersController < Api::Auth::FirebaseAuthRailsController
 
   def update_params
     params.permit(:name)
+  end
+
+  def create_params
+    params.permit(:name).merge(uid: payload['sub'])
   end
 end
