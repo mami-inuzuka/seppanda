@@ -17,6 +17,7 @@ gem 'mini_magick'
 gem 'pg'
 gem 'puma', '~> 5.0'
 gem 'rack-cors'
+gem 'rack-rewrite'
 gem 'rails', '~> 6.1.4', '>= 6.1.4.4'
 gem 'redis'
 gem 'whenever', require: false
