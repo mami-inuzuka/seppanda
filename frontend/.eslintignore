@@ -5,3 +5,5 @@ public/
 .*lintrc.js
 /*.*
 src/theme.tsx
+src/service-worker.ts
+src/serviceWorkerRegistration.ts
