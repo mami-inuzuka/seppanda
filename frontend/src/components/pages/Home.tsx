@@ -33,10 +33,13 @@ export const Home: VFC = memo(() => {
         backgroundSize="contain"
         backgroundRepeat="no-repeat"
         minH="100vh"
+        h="100vh"
+        display="flex"
+        flexDirection="column"
       >
         <HomeHeaderLayout>
           <CurrentStatusCard />
-          <Box borderTopColor="gray.200" borderTopWidth="1px" flex="1">
+          <Box borderTopColor="gray.200" borderTopWidth="1px" flex="1" overflow="auto">
             {isPaymentListLoaded ? (
               <PaymentListArea />
             ) : (

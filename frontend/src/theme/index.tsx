@@ -9,6 +9,7 @@ export const theme = extendTheme({
     global: {
       body: {
         color: 'black',
+        height: '100vh',
       },
     },
   },
