@@ -40,13 +40,17 @@ export const AuthProvider = ({ children }: { children: React.ReactElement }) => 
   useEffect(() => {
     const unsubscribed = auth.onAuthStateChanged((user) => {
       setCurrentFirebaseUser(user)
-      handleGetCurrentUser()
-        .catch((err) => {
-          console.log(err)
-        })
-        .finally(() => {
-          setIsLoaded(true)
-        })
+      if (user) {
+        handleGetCurrentUser()
+          .catch((err) => {
+            errorToast('エラーが発生しました')
+          })
+          .finally(() => {
+            setIsLoaded(true)
+          })
+      } else {
+        setIsLoaded(true)
+      }
     })
     return () => {
       unsubscribed()
