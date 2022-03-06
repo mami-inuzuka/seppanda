@@ -13,7 +13,7 @@ type Props = {
 export const InvitationAlert: FC<Props> = (props) => {
   const { invitationToken } = props
   const { successToast } = useToast()
-  const invitationUrl = `${window.location.protocol}//${window.location.host}/welcome?invitation_token=${invitationToken}`
+  const invitationUrl = `${window.location.protocol}//${window.location.host}/welcome?invitation_token=${invitationToken}&openExternalBrowser=1`
   const handleFeedback = () => {
     successToast('コピーしました')
   }
