@@ -1,6 +1,5 @@
 import { VFC } from 'react'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
-import { useLocation } from 'react-router-dom'
 
 import { CopyIcon } from '@chakra-ui/icons'
 import { Modal, ModalHeader, ModalBody, ModalContent, ModalOverlay, Text, Box, Flex } from '@chakra-ui/react'
@@ -12,17 +11,13 @@ type Props = {
   isOpen: boolean
   onClose: () => void
   size: string
-}
-
-type LocationState = {
   invitationToken: string
 }
 
 export const InvitationUrlModal: VFC<Props> = (props) => {
   const { successToast } = useToast()
-  const { isOpen, onClose, size } = props
-  const location = useLocation<LocationState>()
-  const invitationUrl = `${window.location.protocol}//${window.location.host}/welcome?invitation_token=${location.state.invitationToken}`
+  const { isOpen, onClose, size, invitationToken } = props
+  const invitationUrl = `${window.location.protocol}//${window.location.host}/welcome?invitation_token=${invitationToken}`
 
   const onClickClose = () => {
     onClose()

@@ -58,15 +58,8 @@ export const Onboarding: VFC = () => {
     }
     const token = await auth.currentUser?.getIdToken(true)
     try {
-      const res = await createUser(data, token)
-      if (location.state.invitationToken) {
-        history.push('/')
-      } else {
-        history.push({
-          pathname: '/',
-          state: { invitationToken: res.data.invitationToken },
-        })
-      }
+      await createUser(data, token)
+      history.push('/')
       successToast('登録が完了しました')
     } catch (err) {
       if (axios.isAxiosError(err) && (err.response?.data as MultipleErrorResponse).messages) {
