@@ -52,7 +52,7 @@ export const Setting: VFC = () => {
           errorToast(message)
         })
       } else {
-        errorToast('エラーが発生しました')
+        errorToast('エラーが発生しました', '時間をおいてから再度お試しください')
       }
     }
   }

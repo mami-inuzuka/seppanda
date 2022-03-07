@@ -29,9 +29,7 @@ export const AuthProvider = ({ children }: { children: React.ReactElement }) => 
     const token = await auth.currentUser?.getIdToken(true)
     try {
       const res = await getCurrentUser(token)
-      if (res?.status === 200) {
-        setCurrentUser(res.data.user)
-      }
+      setCurrentUser(res?.data.user)
     } catch {
       errorToast('エラーが発生しました')
     }
@@ -42,7 +40,7 @@ export const AuthProvider = ({ children }: { children: React.ReactElement }) => 
       setCurrentFirebaseUser(user)
       if (user) {
         handleGetCurrentUser()
-          .catch((err) => {
+          .catch(() => {
             errorToast('エラーが発生しました')
           })
           .finally(() => {

@@ -29,9 +29,12 @@ export const useGetInviter = () => {
         }
       } catch (err) {
         if (axios.isAxiosError(err) && (err.response?.data as ErrorResponse).message) {
-          errorToast((err.response?.data as ErrorResponse).message)
+          errorToast(
+            (err.response?.data as ErrorResponse).message,
+            '時間をおいて再度試すか、招待URLが正しいことを確認してください'
+          )
         } else {
-          errorToast('エラーが発生しました')
+          errorToast('エラーが発生しました', '時間をおいてから再度お試しください')
         }
         history.push('/welcome')
       }

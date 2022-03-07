@@ -39,7 +39,7 @@ export const SettelementModal: VFC<Props> = (props) => {
         if (axios.isAxiosError(err) && (err.response?.data as ErrorResponse).message) {
           errorToast((err.response?.data as ErrorResponse).message)
         } else {
-          errorToast('エラーが発生しました')
+          errorToast('エラーが発生しました', '時間をおいてから再度お試しください')
         }
       } finally {
         onClose()

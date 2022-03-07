@@ -39,7 +39,7 @@ export const useSignInWithGoogle = () => {
         }
       })
       .catch(() => {
-        errorToast('エラーが発生しました')
+        errorToast('エラーが発生しました', '時間をおいてから再度お試しください')
       })
       .finally(() => {
         setIsLoading(false)
