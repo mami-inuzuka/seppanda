@@ -8,7 +8,7 @@ export const getCompressedImageFile = async (file: File) => {
   try {
     return await imageCompression(file, options)
   } catch (err) {
-    console.error('getCompressImageFileAsync is error', err)
+    console.error('getCompressedImageFile is error', err)
     throw err
   }
 }
