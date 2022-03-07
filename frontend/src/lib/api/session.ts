@@ -6,5 +6,5 @@ import type { CurrentUserResponse } from 'types/currentUserResponse'
 import type { FirebaseIdToken } from 'types/firebaseIdToken'
 
 // idTokenをもとにusersテーブル内の該当ユーザーを取得する
-export const getCurrentUser = (idToken: FirebaseIdToken): AxiosPromise<CurrentUserResponse> | undefined =>
+export const getCurrentUser = (idToken: FirebaseIdToken): AxiosPromise<CurrentUserResponse> =>
   client.get(`/sessions`, { headers: { Authorization: idToken || '' } })
