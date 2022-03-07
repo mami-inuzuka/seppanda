@@ -1,4 +1,4 @@
-import { FC, ReactNode } from 'react'
+import { VFC, ReactNode } from 'react'
 
 import { Button } from '@chakra-ui/react'
 
@@ -9,7 +9,7 @@ type Props = {
   onClick: () => void
 }
 
-export const SecondaryButton: FC<Props> = (props) => {
+export const SecondaryButton: VFC<Props> = (props) => {
   const { children, size, isFullWidth, onClick } = props
 
   return (
