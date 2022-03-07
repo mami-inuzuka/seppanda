@@ -88,9 +88,9 @@ export const Onboarding: VFC = () => {
                 <Image
                   src={!inputAvatar.data ? DefaultUserIcon : inputAvatar.data}
                   alt={!inputAvatar.name ? 'default-user-icon' : inputAvatar.name}
-                  boxSize="124px"
+                  boxSize="100px"
                   borderRadius="full"
-                  border="4px"
+                  border="3px solid"
                   borderColor="gray.200"
                   mb={4}
                   objectFit="cover"
