@@ -1,7 +1,6 @@
 import { useToast as useChakraToast, UseToastOptions } from '@chakra-ui/react'
 
 const defaultParams: UseToastOptions = {
-  duration: 3000,
   position: 'top',
   isClosable: true,
 }
@@ -12,6 +11,7 @@ export const useToast = () => {
   const errorToast = (title: string, description?: string) => {
     toast({
       ...defaultParams,
+      duration: 8000,
       status: 'error',
       title,
       description,
@@ -21,6 +21,7 @@ export const useToast = () => {
   const successToast = (title: string, description?: string) => {
     toast({
       ...defaultParams,
+      duration: 3000,
       status: 'success',
       title,
       description,

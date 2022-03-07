@@ -48,16 +48,12 @@ export const ShowPaymentEntry: VFC = () => {
     setProcessingDelete(true)
     const idToken = await auth.currentUser?.getIdToken(true)
     try {
-      const res = await deletePayment(payment.id, idToken)
-      if (res.status === 200) {
-        setUpdatePaymentList(!updatePaymentList)
-        history.push('/')
-        successToast('支払い情報を削除しました')
-      } else {
-        errorToast('削除に失敗しました')
-      }
+      await deletePayment(payment.id, idToken)
+      setUpdatePaymentList(!updatePaymentList)
+      history.push('/')
+      successToast('支払い情報を削除しました')
     } catch {
-      errorToast('削除に失敗しました')
+      errorToast('エラーが発生しました', '時間をおいてから再度お試しください')
     } finally {
       setProcessingDelete(false)
     }
@@ -76,7 +72,7 @@ export const ShowPaymentEntry: VFC = () => {
           errorToast(message)
         })
       } else {
-        errorToast('エラーが発生しました')
+        errorToast('エラーが発生しました', '時間をおいてから再度お試しください')
       }
     }
   }

@@ -45,7 +45,7 @@ export const PaymentProvider = ({ children }: { children: React.ReactElement }) 
       const res = await getPayments(idToken)
       setPaymentList(res?.data)
     } catch {
-      errorToast('支払情報の取得ができませんでした')
+      errorToast('支払情報の取得ができませんでした', '時間をおいてから再読み込みをしてください')
     } finally {
       setIsPaymentListLoaded(true)
     }
@@ -59,7 +59,7 @@ export const PaymentProvider = ({ children }: { children: React.ReactElement }) 
         const res = await getTeamStatus(currentUser.teamId, idToken)
         setTeamStatus(res?.data)
       } catch {
-        errorToast('情報の取得に失敗しました')
+        errorToast('情報の取得に失敗しました', '時間をおいてから再読み込みをしてください')
       } finally {
         setIsTeamStatusLoaded(true)
       }
