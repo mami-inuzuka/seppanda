@@ -80,9 +80,9 @@ export const Setting: VFC = () => {
                 <Image
                   src={inputAvatar.data}
                   alt={inputAvatar.name}
-                  boxSize="124px"
+                  boxSize="100px"
                   borderRadius="full"
-                  border="4px"
+                  border="3px solid"
                   borderColor={`brand.${currentUser?.color}`}
                   mb={4}
                   objectFit="cover"
@@ -101,7 +101,8 @@ export const Setting: VFC = () => {
                   <Input
                     type="file"
                     accept="image/png, image/jpeg"
-                    display="none" // eslint-disable-next-line react/jsx-props-no-spreading
+                    display="none"
+                    // eslint-disable-next-line react/jsx-props-no-spreading
                     {...register('avatar', {
                       onChange: (e) => handleImageSelect(e as React.FormEvent<HTMLInputElement>),
                     })}
