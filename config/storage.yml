@@ -19,7 +19,7 @@ google:
   service: GCS
   project: seppanda
   credentials: <%= ENV["GOOGLE_CREDENTIALS"] %>
-  bucket: seppanda
+  bucket: seppanda-876f9.appspot.com
 # Use rails credentials:edit to set the Azure Storage secret (as azure_storage:storage_access_key)
 # microsoft:
 #   service: AzureStorage
