@@ -1,4 +1,4 @@
-import { VFC, memo, useEffect } from 'react'
+import { VFC, useEffect } from 'react'
 
 import { Box, Button, Heading, Image, Text } from '@chakra-ui/react'
 
@@ -8,7 +8,7 @@ import { HeaderOnlyLogoLayout } from 'components/templates/HeaderOnlyLogoLayout'
 import { useGetInviter } from 'hooks/useGetInviter'
 import { useSignInWithGoogle } from 'hooks/useSignInWithGoogle'
 
-export const WelcomeWithInvitationToken: VFC = memo(() => {
+export const WelcomeWithInvitationToken: VFC = () => {
   const { signInWithGoogle, isLoading } = useSignInWithGoogle()
   const { handleGetInviter, inviterName, inviterAvatar, isInviterLoaded } = useGetInviter()
 
@@ -81,4 +81,4 @@ export const WelcomeWithInvitationToken: VFC = memo(() => {
       </Box>
     </>
   )
-})
+}

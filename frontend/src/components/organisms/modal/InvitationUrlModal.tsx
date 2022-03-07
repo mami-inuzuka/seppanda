@@ -1,4 +1,4 @@
-import { VFC } from 'react'
+import { memo, VFC } from 'react'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 
 import { CopyIcon } from '@chakra-ui/icons'
@@ -14,7 +14,7 @@ type Props = {
   invitationToken: string
 }
 
-export const InvitationUrlModal: VFC<Props> = (props) => {
+export const InvitationUrlModal: VFC<Props> = memo((props) => {
   const { successToast } = useToast()
   const { isOpen, onClose, size, invitationToken } = props
   const invitationUrl = `${window.location.protocol}//${window.location.host}/welcome?invitation_token=${invitationToken}&openExternalBrowser=1`
@@ -63,4 +63,4 @@ export const InvitationUrlModal: VFC<Props> = (props) => {
       </ModalContent>
     </Modal>
   )
-}
+})

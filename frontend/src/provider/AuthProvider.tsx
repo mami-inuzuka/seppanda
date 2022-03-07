@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 import firebase from 'firebase/compat/app'
 
@@ -16,14 +16,16 @@ export const AuthProvider = ({ children }: { children: React.ReactElement }) => 
   const [currentFirebaseUser, setCurrentFirebaseUser] = useState<firebase.User | null>(null)
   const { errorToast } = useToast()
 
-  // eslint-disable-next-line react/jsx-no-constructed-context-values
-  const value = {
-    isLoaded,
-    setIsLoaded,
-    currentUser,
-    setCurrentUser,
-    currentFirebaseUser,
-  }
+  const value = useMemo(
+    () => ({
+      isLoaded,
+      setIsLoaded,
+      currentUser,
+      setCurrentUser,
+      currentFirebaseUser,
+    }),
+    [isLoaded, currentUser, currentFirebaseUser]
+  )
 
   const handleGetCurrentUser = async () => {
     const token = await auth.currentUser?.getIdToken(true)

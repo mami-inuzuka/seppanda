@@ -1,4 +1,4 @@
-import { VFC, memo } from 'react'
+import { VFC } from 'react'
 import { useHistory } from 'react-router-dom'
 
 import { Box, Heading, Image, Text } from '@chakra-ui/react'
@@ -7,7 +7,7 @@ import logomark from 'assets/images/logomark.svg'
 import { SecondaryButton } from 'components/atoms/button/SecondaryButton'
 import { HeaderOnlyLogoLayout } from 'components/templates/HeaderOnlyLogoLayout'
 
-export const NotFound: VFC = memo(() => {
+export const NotFound: VFC = () => {
   const history = useHistory()
 
   const handleVisitHome = () => {
@@ -34,4 +34,4 @@ export const NotFound: VFC = memo(() => {
       </Box>
     </HeaderOnlyLogoLayout>
   )
-})
+}

@@ -1,4 +1,4 @@
-import { VFC, memo } from 'react'
+import { VFC } from 'react'
 
 import { Box, Button, Flex, Image, Text } from '@chakra-ui/react'
 
@@ -7,7 +7,7 @@ import LogoWithCopy from 'assets/images/logo-with-copy.svg'
 import { FullWindowSpinner } from 'components/organisms/FullWindowSpinner'
 import { useSignInWithGoogle } from 'hooks/useSignInWithGoogle'
 
-export const Welcome: VFC = memo(() => {
+export const Welcome: VFC = () => {
   const { signInWithGoogle, isLoading } = useSignInWithGoogle()
 
   return (
@@ -27,4 +27,4 @@ export const Welcome: VFC = memo(() => {
       </Flex>
     </>
   )
-})
+}

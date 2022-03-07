@@ -22,11 +22,9 @@ export const useGetInviter = () => {
     if (invitationToken) {
       try {
         const res = await getInviter(invitationToken)
-        if (res?.status === 200) {
-          setInviterName(res.data.name)
-          setInviterAvatar(res.data.avatar)
-          setIsInviterLoaded(true)
-        }
+        setInviterName(res.data.name)
+        setInviterAvatar(res.data.avatar)
+        setIsInviterLoaded(true)
       } catch (err) {
         if (axios.isAxiosError(err) && (err.response?.data as ErrorResponse).message) {
           errorToast(

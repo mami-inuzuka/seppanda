@@ -1,4 +1,4 @@
-import { memo, useContext, VFC } from 'react'
+import { useContext, VFC } from 'react'
 
 import { Box, Text, useDisclosure } from '@chakra-ui/react'
 
@@ -8,7 +8,7 @@ import { RefundAmount } from 'components/molcules/RefundAmount'
 import { SettelementModal } from 'components/organisms/modal/SettlementModal'
 import { PaymentContext } from 'context/PaymentContext'
 
-export const CurrentStatusContents: VFC = memo(() => {
+export const CurrentStatusContents: VFC = () => {
   const { teamStatus } = useContext(PaymentContext)
   const { isOpen: isOpenSettleModal, onOpen: onOpenSettleModal, onClose: onCloseSettleModal } = useDisclosure()
   return (
@@ -44,4 +44,4 @@ export const CurrentStatusContents: VFC = memo(() => {
       </Box>
     </>
   )
-})
+}

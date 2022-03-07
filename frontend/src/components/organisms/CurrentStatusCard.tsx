@@ -1,4 +1,4 @@
-import { memo, useContext, VFC } from 'react'
+import { useContext, VFC } from 'react'
 
 import { AspectRatio, Box } from '@chakra-ui/react'
 
@@ -7,7 +7,7 @@ import { CurrentStatusContents } from 'components/organisms/CurrentStatusContent
 import { Loading } from 'components/organisms/Loading'
 import { PaymentContext } from 'context/PaymentContext'
 
-export const CurrentStatusCard: VFC = memo(() => {
+export const CurrentStatusCard: VFC = () => {
   const { isTeamStatusLoaded } = useContext(PaymentContext)
 
   return (
@@ -53,4 +53,4 @@ export const CurrentStatusCard: VFC = memo(() => {
       </AspectRatio>
     </Box>
   )
-})
+}

@@ -1,4 +1,4 @@
-import { VFC } from 'react'
+import { memo, VFC } from 'react'
 
 import { Image } from '@chakra-ui/react'
 
@@ -9,8 +9,9 @@ type Props = {
   size: string
 }
 
-export const UserIcon: VFC<Props> = (props) => {
+export const UserIcon: VFC<Props> = memo((props) => {
   const { user, size } = props
+
   return (
     <Image
       src={user?.avatar.data}
@@ -22,4 +23,4 @@ export const UserIcon: VFC<Props> = (props) => {
       objectFit="cover"
     />
   )
-}
+})

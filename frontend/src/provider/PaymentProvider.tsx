@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useMemo, useState } from 'react'
 
 import { AuthContext } from 'context/AuthContext'
 import { PaymentContext } from 'context/PaymentContext'
@@ -24,19 +24,21 @@ export const PaymentProvider = ({ children }: { children: React.ReactElement }) 
   const [isPaymentListLoaded, setIsPaymentListLoaded] = useState<boolean>(false)
   const [isTeamStatusLoaded, setIsTeamStatusLoaded] = useState<boolean>(false)
   const { errorToast } = useToast()
-  // eslint-disable-next-line react/jsx-no-constructed-context-values
-  const value = {
-    paymentList,
-    setPaymentList,
-    isPaymentListLoaded,
-    setIsPaymentListLoaded,
-    teamStatus,
-    setTeamStatus,
-    isTeamStatusLoaded,
-    setIsTeamStatusLoaded,
-    updatePaymentList,
-    setUpdatePaymentList,
-  }
+  const value = useMemo(
+    () => ({
+      paymentList,
+      setPaymentList,
+      isPaymentListLoaded,
+      setIsPaymentListLoaded,
+      teamStatus,
+      setTeamStatus,
+      isTeamStatusLoaded,
+      setIsTeamStatusLoaded,
+      updatePaymentList,
+      setUpdatePaymentList,
+    }),
+    [paymentList, isPaymentListLoaded, teamStatus, isTeamStatusLoaded, updatePaymentList]
+  )
 
   const handleGetPayments = async () => {
     setIsPaymentListLoaded(false)
