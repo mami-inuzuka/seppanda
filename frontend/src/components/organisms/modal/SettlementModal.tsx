@@ -1,4 +1,4 @@
-import { useContext, useState, VFC } from 'react'
+import { memo, useContext, useState, VFC } from 'react'
 
 import { Modal, ModalHeader, ModalBody, ModalContent, ModalOverlay, Text, Grid, Box } from '@chakra-ui/react'
 import axios from 'axios'
@@ -19,7 +19,7 @@ type Props = {
   size: string
 }
 
-export const SettelementModal: VFC<Props> = (props) => {
+export const SettelementModal: VFC<Props> = memo((props) => {
   const { isOpen, onClose, size } = props
   const { currentUser } = useContext(AuthContext)
   const { teamStatus, setPaymentList } = useContext(PaymentContext)
@@ -85,4 +85,4 @@ export const SettelementModal: VFC<Props> = (props) => {
       </ModalContent>
     </Modal>
   )
-}
+})

@@ -1,4 +1,4 @@
-import { FC, ReactNode } from 'react'
+import { FC, memo, ReactNode } from 'react'
 
 import { Button } from '@chakra-ui/react'
 
@@ -9,7 +9,7 @@ type Props = {
   isLoading: boolean
 }
 
-export const PrimaryButton: FC<Props> = (props) => {
+export const PrimaryButton: FC<Props> = memo((props) => {
   const { children, onClickButton, disabled, isLoading } = props
   return (
     <Button
@@ -30,4 +30,4 @@ export const PrimaryButton: FC<Props> = (props) => {
       {children}
     </Button>
   )
-}
+})

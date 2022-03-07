@@ -11,6 +11,7 @@ type Props = {
 
 export const SecondaryButton: FC<Props> = (props) => {
   const { children, size, isFullWidth, onClick } = props
+
   return (
     <Button
       bg="gray.50"
