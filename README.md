@@ -28,8 +28,8 @@ https://seppanda.com
 # 開発環境
 * ruby 3.0.1
 * Rails 6.1.4.4
-* React
-* TypeScript
+* React 17.0.2
+* TypeScript 4.5.4
 
 # セットアップ
 ### Railsの起動
