@@ -1,4 +1,5 @@
 import { VFC, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 
 import { Box, Heading, Image, Text } from '@chakra-ui/react'
 
@@ -59,8 +60,16 @@ export const WelcomeWithInvitationToken: VFC = () => {
                   下記のボタンから参加しましょう
                 </Text>
                 <GoogleLoginButton onClick={signInWithGoogle} disabled={isLoading} />
-                <Text fontSize="xs" align="center" color="gray.400">
-                  上記のボタンをクリックすることで、利用規約およびプライバシーポリシーに同意するものとします。
+                <Text fontSize="xs" align="center" color="gray.400" lineHeight="1.8">
+                  上記のボタンをクリックすることで、
+                  <Text as="span" textDecoration="underline">
+                    <Link to="/terms">利用規約</Link>
+                  </Text>
+                  および
+                  <Text as="span" textDecoration="underline">
+                    <Link to="/policy">プライバシーポリシー</Link>
+                  </Text>
+                  に同意するものとします。
                 </Text>
               </Box>
             </Box>
