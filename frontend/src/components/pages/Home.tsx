@@ -32,7 +32,7 @@ export const Home: VFC = memo(() => {
         backgroundImage={currentUser?.color === 'blue' ? bgBlue : bgOrange}
         backgroundSize="contain"
         backgroundRepeat="no-repeat"
-        minH="100vh"
+        minH="100%"
       >
         <HomeHeaderLayout>
           <CurrentStatusCard />

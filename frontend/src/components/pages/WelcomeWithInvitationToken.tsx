@@ -25,7 +25,7 @@ export const WelcomeWithInvitationToken: VFC = () => {
       <Box>
         {isInviterLoaded && (
           <HeaderOnlyLogoLayout>
-            <Box h="100vh" p={6}>
+            <Box h="100%" p={6}>
               <Box mb={20}>
                 <Heading size="lg" textAlign="center" my={4}>
                   seppandaに参加する
