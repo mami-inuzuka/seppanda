@@ -8,8 +8,8 @@ RSpec.describe User, type: :model do
       user = build(:user, :with_team, name: nil)
       user.valid?
       expect(user).to be_invalid
-      expect(user.errors[:name]).to include("can't be blank")
-      expect(user.errors[:name]).to include('is too short (minimum is 1 character)')
+      expect(user.errors[:name]).to include('を入力してください')
+      expect(user.errors[:name]).to include('は1文字以上で入力してください')
     end
 
     example '1文字は登録できる' do
@@ -28,7 +28,7 @@ RSpec.describe User, type: :model do
       user = build(:user, :with_team, name: 'ああああああああああああああああ')
       user.valid?
       expect(user).to be_invalid
-      expect(user.errors[:name]).to include('is too long (maximum is 15 characters)')
+      expect(user.errors[:name]).to include('は15文字以内で入力してください')
     end
   end
 end
