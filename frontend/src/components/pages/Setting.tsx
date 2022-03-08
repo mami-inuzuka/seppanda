@@ -44,7 +44,7 @@ export const Setting: VFC = () => {
     try {
       const res = await updateUser(data, idToken)
       setCurrentUser(res.data.user)
-      history.push('/')
+      history.push('/home')
       successToast('ユーザー情報を更新しました')
     } catch (err) {
       if (axios.isAxiosError(err) && (err.response?.data as MultipleErrorResponse).messages) {
@@ -59,7 +59,7 @@ export const Setting: VFC = () => {
 
   const handleSignOut = async () => {
     await auth.signOut()
-    history.push('/welcome')
+    history.push('/')
     successToast('ログアウトしました')
   }
 

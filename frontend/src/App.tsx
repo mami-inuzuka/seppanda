@@ -21,6 +21,7 @@ const App: VFC = () => (
       <Box w="100%" m="0 auto" bg="white" maxW={{ base: 'auto', sm: '400px' }} minW="320px">
         <BrowserRouter>
           <Switch>
+            <Route exact path="/" component={WelcomeWrapper} />
             <Route path="/welcome" component={WelcomeWrapper} />
             <Route path="/onboarding" component={OnboardingWrapper} />
             <AuthProvider>
@@ -30,7 +31,7 @@ const App: VFC = () => (
                     path="/"
                     render={() => (
                       <Switch>
-                        <Route exact path="/" component={Home} />
+                        <Route path="/home" component={Home} />
                         <Route path="/payments/new" component={NewPaymentEntry} />
                         <Route path="/payments/:id" component={ShowPaymentEntry} />
                         <Route path="/setting" component={Setting} />

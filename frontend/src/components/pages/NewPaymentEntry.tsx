@@ -37,7 +37,7 @@ export const NewPaymentEntry: VFC = () => {
     try {
       await postPayment(params, idToken)
       setUpdatePaymentList(!updatePaymentList)
-      history.push('/')
+      history.push('/home')
       successToast('支払い情報を登録しました')
     } catch (err) {
       if (axios.isAxiosError(err) && (err.response?.data as MultipleErrorResponse).messages) {

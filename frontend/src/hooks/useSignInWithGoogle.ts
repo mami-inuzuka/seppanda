@@ -30,7 +30,7 @@ export const useSignInWithGoogle = () => {
       .then(handleGetCurrentUser)
       .then((res) => {
         if (res?.data.isExisted) {
-          history.push('/')
+          history.push('/home')
         } else {
           history.push({
             pathname: '/onboarding',
