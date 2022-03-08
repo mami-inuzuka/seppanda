@@ -59,7 +59,7 @@ export const Onboarding: VFC = () => {
     const token = await auth.currentUser?.getIdToken(true)
     try {
       await createUser(data, token)
-      history.push('/')
+      history.push('/home')
       successToast('登録が完了しました')
     } catch (err) {
       if (axios.isAxiosError(err) && (err.response?.data as MultipleErrorResponse).messages) {

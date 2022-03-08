@@ -50,7 +50,7 @@ export const ShowPaymentEntry: VFC = () => {
     try {
       await deletePayment(payment.id, idToken)
       setUpdatePaymentList(!updatePaymentList)
-      history.push('/')
+      history.push('/home')
       successToast('支払い情報を削除しました')
     } catch {
       errorToast('エラーが発生しました', '時間をおいてから再度お試しください')
@@ -64,7 +64,7 @@ export const ShowPaymentEntry: VFC = () => {
     try {
       await updatePayment(params, payment.id, idToken)
       setUpdatePaymentList(!updatePaymentList)
-      history.push('/')
+      history.push('/home')
       successToast('支払い情報を更新しました')
     } catch (err) {
       if (axios.isAxiosError(err) && (err.response?.data as MultipleErrorResponse).messages) {

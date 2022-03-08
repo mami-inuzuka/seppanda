@@ -34,7 +34,7 @@ export const useGetInviter = () => {
         } else {
           errorToast('エラーが発生しました', '時間をおいてから再度お試しください')
         }
-        history.push('/welcome')
+        history.push('/')
       }
     }
   }

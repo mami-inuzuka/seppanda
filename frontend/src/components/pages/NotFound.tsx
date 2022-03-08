@@ -11,7 +11,7 @@ export const NotFound: VFC = () => {
   const history = useHistory()
 
   const handleVisitHome = () => {
-    history.push('/')
+    history.push('/home')
   }
 
   return (
