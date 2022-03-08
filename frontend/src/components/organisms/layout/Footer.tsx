@@ -8,7 +8,9 @@ import logo from 'assets/images/logo-horizon-gray-300.svg'
 export const Footer: VFC = () => (
   <Box as="footer" color="gray.300" borderTopWidth="1px" borderColor="gray.100">
     <Flex w="100%" px={4} py={10} align="center" direction="column" justifyContent="center">
-      <Image src={logo} w="130px" m="0 auto" mb={5} />
+      <Link to="/welcome">
+        <Image src={logo} w="130px" m="0 auto" mb={5} />
+      </Link>
       <Flex fontSize="xs">
         <Text as="span" textDecoration="underline" px={2}>
           <Link to="/terms">利用規約</Link>
