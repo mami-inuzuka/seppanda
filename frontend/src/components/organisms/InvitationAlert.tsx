@@ -25,13 +25,13 @@ export const InvitationAlert: VFC<Props> = memo((props) => {
         下記のURLを共有して登録をしてもらおう
       </Text>
       <Flex bg="gray.200" p={3}>
-        <Text fontSize="xs" wordBreak="break-all">
+        <Text fontSize="xs" wordBreak="break-all" pr={1}>
           {invitationUrl}
         </Text>
         <CopyToClipboard text={invitationUrl}>
-          <Box onClick={handleFeedback}>
+          <Flex onClick={handleFeedback} justify="center" align="center">
             <CopyIcon />
-          </Box>
+          </Flex>
         </CopyToClipboard>
       </Flex>
     </Box>
