@@ -4,7 +4,7 @@ import { Box, Heading, Image, Text } from '@chakra-ui/react'
 
 import { GoogleLoginButton } from 'components/atoms/button/GoogleLoginButton'
 import { FullWindowSpinner } from 'components/organisms/FullWindowSpinner'
-import { HeaderOnlyLogoLayout } from 'components/templates/HeaderOnlyLogoLayout'
+import { HeaderAndFooterLayout } from 'components/templates/HeaderAndFooterLayout'
 import { useGetInviter } from 'hooks/useGetInviter'
 import { useSignInWithGoogle } from 'hooks/useSignInWithGoogle'
 
@@ -24,8 +24,8 @@ export const WelcomeWithInvitationToken: VFC = () => {
       {isLoading && <FullWindowSpinner />}
       <Box>
         {isInviterLoaded && (
-          <HeaderOnlyLogoLayout>
-            <Box h="100%" p={6}>
+          <HeaderAndFooterLayout>
+            <Box h="100%" p={6} mb={10}>
               <Box mb={20}>
                 <Heading size="lg" textAlign="center" my={4}>
                   seppandaに参加する
@@ -64,7 +64,7 @@ export const WelcomeWithInvitationToken: VFC = () => {
                 </Text>
               </Box>
             </Box>
-          </HeaderOnlyLogoLayout>
+          </HeaderAndFooterLayout>
         )}
       </Box>
     </>
