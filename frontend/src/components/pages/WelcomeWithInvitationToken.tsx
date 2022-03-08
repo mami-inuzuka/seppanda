@@ -1,8 +1,8 @@
 import { VFC, useEffect } from 'react'
 
-import { Box, Button, Heading, Image, Text } from '@chakra-ui/react'
+import { Box, Heading, Image, Text } from '@chakra-ui/react'
 
-import googleIcon from 'assets/images/google_icon.svg'
+import { GoogleLoginButton } from 'components/atoms/button/GoogleLoginButton'
 import { FullWindowSpinner } from 'components/organisms/FullWindowSpinner'
 import { HeaderOnlyLogoLayout } from 'components/templates/HeaderOnlyLogoLayout'
 import { useGetInviter } from 'hooks/useGetInviter'
@@ -25,7 +25,7 @@ export const WelcomeWithInvitationToken: VFC = () => {
       <Box>
         {isInviterLoaded && (
           <HeaderOnlyLogoLayout>
-            <Box h="100vh" p={6}>
+            <Box h="100%" p={6}>
               <Box mb={20}>
                 <Heading size="lg" textAlign="center" my={4}>
                   seppandaに参加する
@@ -58,19 +58,7 @@ export const WelcomeWithInvitationToken: VFC = () => {
                   <br />
                   下記のボタンから参加しましょう
                 </Text>
-
-                <Button
-                  onClick={signInWithGoogle}
-                  bg="white"
-                  size="xl"
-                  mb={6}
-                  border="1px solid rgba(46, 47, 46, 0.1)"
-                  boxShadow="0px 1px 0px #D7D7D7"
-                  isFullWidth
-                >
-                  <Image src={googleIcon} mr="24px" />
-                  Googleでログインする
-                </Button>
+                <GoogleLoginButton onClick={signInWithGoogle} disabled={isLoading} />
                 <Text fontSize="xs" align="center" color="gray.400">
                   上記のボタンをクリックすることで、利用規約およびプライバシーポリシーに同意するものとします。
                 </Text>

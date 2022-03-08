@@ -17,8 +17,8 @@ import { theme } from 'theme/index'
 
 const App: VFC = () => (
   <ChakraProvider theme={theme}>
-    <Box w="100%" bg="gray.50">
-      <Box w="100%" m="0 auto" bg="white" maxW={{ base: 'auto', sm: '400px' }} minW="320px">
+    <Box w="100%" minH="100vh" bg="gray.50">
+      <Box w="100%" m="0 auto" bg="white" maxW={{ base: 'auto', sm: '400px' }} minW="320px" minH="100vh">
         <BrowserRouter>
           <Switch>
             <Route exact path="/" component={WelcomeWrapper} />
