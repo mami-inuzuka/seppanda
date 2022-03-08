@@ -22,6 +22,7 @@ const App: VFC = () => (
         <BrowserRouter>
           <Switch>
             <Route exact path="/" component={WelcomeWrapper} />
+            <Route path="/welcome" component={WelcomeWrapper} />
             <Route path="/onboarding" component={OnboardingWrapper} />
             <AuthProvider>
               <PrivateRoute>
