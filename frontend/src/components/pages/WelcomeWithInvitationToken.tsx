@@ -1,10 +1,11 @@
 import { VFC, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 
 import { Box, Heading, Image, Text } from '@chakra-ui/react'
 
 import { GoogleLoginButton } from 'components/atoms/button/GoogleLoginButton'
 import { FullWindowSpinner } from 'components/organisms/FullWindowSpinner'
-import { HeaderOnlyLogoLayout } from 'components/templates/HeaderOnlyLogoLayout'
+import { HeaderAndFooterLayout } from 'components/templates/HeaderAndFooterLayout'
 import { useGetInviter } from 'hooks/useGetInviter'
 import { useSignInWithGoogle } from 'hooks/useSignInWithGoogle'
 
@@ -24,8 +25,8 @@ export const WelcomeWithInvitationToken: VFC = () => {
       {isLoading && <FullWindowSpinner />}
       <Box>
         {isInviterLoaded && (
-          <HeaderOnlyLogoLayout>
-            <Box h="100%" p={6}>
+          <HeaderAndFooterLayout>
+            <Box h="100%" p={6} mb={10}>
               <Box mb={20}>
                 <Heading size="lg" textAlign="center" my={4}>
                   seppandaに参加する
@@ -59,12 +60,20 @@ export const WelcomeWithInvitationToken: VFC = () => {
                   下記のボタンから参加しましょう
                 </Text>
                 <GoogleLoginButton onClick={signInWithGoogle} disabled={isLoading} />
-                <Text fontSize="xs" align="center" color="gray.400">
-                  上記のボタンをクリックすることで、利用規約およびプライバシーポリシーに同意するものとします。
+                <Text fontSize="xs" align="center" color="gray.400" lineHeight="1.8">
+                  上記のボタンをクリックすることで、
+                  <Text as="span" textDecoration="underline">
+                    <Link to="/terms">利用規約</Link>
+                  </Text>
+                  および
+                  <Text as="span" textDecoration="underline">
+                    <Link to="/policy">プライバシーポリシー</Link>
+                  </Text>
+                  に同意するものとします。
                 </Text>
               </Box>
             </Box>
-          </HeaderOnlyLogoLayout>
+          </HeaderAndFooterLayout>
         )}
       </Box>
     </>
