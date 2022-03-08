@@ -22,6 +22,8 @@ export const GoogleLoginButton: VFC<Props> = memo((props) => {
       disabled={disabled}
       padding="4px"
       justifyContent="normal"
+      _hover={{ bg: '#4285F4' }}
+      _active={{ bg: '#3367D6' }}
     >
       <Flex bg="white" h="56px" w="56px" align="center" justify="center" borderRadius={2}>
         <Image w="40%" src={googleIcon} />
