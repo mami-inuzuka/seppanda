@@ -56,13 +56,13 @@ RSpec.describe 'AuthApi', type: :request do
             'InvitationToken' => '123456789'
           }
         end.to change(User, :count).by(0).and change(Team, :count).by(0)
-        expect(JSON.parse(response.body)['errors']['fullMessages']).to include('Your token is invalid or the team reached capacity')
+        expect(JSON.parse(response.body)['errors']['fullMessages']).to include('invitation_tokenが不正かチームの定員が上限に達しています')
       end
 
       example 'teamに既に2人のユーザーが所属していたら登録できない' do
         create(:user, team_id: host_user.team_id)
         expect { post api_users_path, params: params, headers: headers }.to change(User, :count).by(0).and change(Team, :count).by(0)
-        expect(JSON.parse(response.body)['errors']['fullMessages']).to include('Your token is invalid or the team reached capacity')
+        expect(JSON.parse(response.body)['errors']['fullMessages']).to include('invitation_tokenが不正かチームの定員が上限に達しています')
       end
     end
   end

@@ -17,28 +17,28 @@ RSpec.describe Payment, type: :model do
       payment = user.payments.build(amount: '１００', team_id: team_id, paid_at: '2022-02-14')
       payment.valid?
       expect(payment).to be_invalid
-      expect(payment.errors[:amount]).to include('is not a number')
+      expect(payment.errors[:amount]).to include('は数値で入力してください')
     end
 
     example '金額の入力がないと登録できない' do
       payment = user.payments.build(amount: nil, team_id: team_id, paid_at: '2022-02-14')
       payment.valid?
       expect(payment).to be_invalid
-      expect(payment.errors[:amount]).to include("can't be blank")
+      expect(payment.errors[:amount]).to include('を入力してください')
     end
 
     example '小数は登録できない' do
       payment = user.payments.build(amount: 100.5, team_id: team_id, paid_at: '2022-02-14')
       payment.valid?
       expect(payment).to be_invalid
-      expect(payment.errors[:amount]).to include('must be an integer')
+      expect(payment.errors[:amount]).to include('は整数で入力してください')
     end
 
     example '0は登録できない' do
       payment = user.payments.build(amount: 0, team_id: team_id, paid_at: '2022-02-14')
       payment.valid?
       expect(payment).to be_invalid
-      expect(payment.errors[:amount]).to include('must be greater than 0')
+      expect(payment.errors[:amount]).to include('は0より大きい値にしてください')
     end
 
     example '1は登録できる' do
@@ -57,7 +57,7 @@ RSpec.describe Payment, type: :model do
       payment = user.payments.build(amount: 10000000, team_id: team_id, paid_at: '2022-02-14')
       payment.valid?
       expect(payment).to be_invalid
-      expect(payment.errors[:amount]).to include('must be less than or equal to 9999999')
+      expect(payment.errors[:amount]).to include('は9999999以下の値にしてください')
     end
   end
 
@@ -78,7 +78,7 @@ RSpec.describe Payment, type: :model do
       payment = user.payments.build(amount: 100, detail: 'あああああああああああああああああああああああああああああ', team_id: team_id, paid_at: '2022-02-14')
       payment.valid?
       expect(payment).to be_invalid
-      expect(payment.errors[:detail]).to include('is too long (maximum is 28 characters)')
+      expect(payment.errors[:detail]).to include('は28文字以内で入力してください')
     end
   end
 end

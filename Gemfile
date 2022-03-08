@@ -19,6 +19,7 @@ gem 'puma', '~> 5.0'
 gem 'rack-cors'
 gem 'rack-rewrite'
 gem 'rails', '~> 6.1.4', '>= 6.1.4.4'
+gem 'rails-i18n'
 gem 'redis'
 gem 'whenever', require: false
 

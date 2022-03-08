@@ -75,7 +75,7 @@ class Api::UsersController < Api::Auth::FirebaseAuthRailsController
     render json: {
       status: 'error',
       errors: {
-        fullMessages: [I18n.t('devise_token_auth.registrations.token_invalid_or_team_capacity_reached')]
+        fullMessages: 'invitation_tokenが不正かチームの定員が上限に達しています'
       }
     }, status: :unprocessable_entity
   end

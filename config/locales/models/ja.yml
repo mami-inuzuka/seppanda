@@ -1,0 +1,12 @@
+ja:
+  activerecord:
+    models:
+      user: ユーザー
+      payment: 支払い情報
+    attributes:
+      user:
+        name: なまえ
+      payment:
+        amount: 金額
+        paid_at: 支払日
+        detail: 内容
