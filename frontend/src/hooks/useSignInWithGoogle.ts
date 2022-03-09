@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 
-import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
+import { signInWithRedirect, GoogleAuthProvider } from 'firebase/auth'
 
 import { getCurrentUser } from 'lib/api/session'
 import { auth } from 'lib/firebase'
@@ -23,7 +23,7 @@ export const useSignInWithGoogle = () => {
 
   const signInWithGoogle = () => {
     const provider = new GoogleAuthProvider()
-    signInWithPopup(auth, provider)
+    signInWithRedirect(auth, provider)
       .then(() => {
         setIsLoading(true)
       })
