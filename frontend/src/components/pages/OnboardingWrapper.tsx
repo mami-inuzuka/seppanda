@@ -8,8 +8,8 @@ type LocationState = {
 }
 
 export const OnboardingWrapper = () => {
-  const location = useLocation<LocationState>()
-  if (location.state?.referrer === 'welcome') {
+  const location = useLocation()
+  if ((location.state as LocationState).referrer === 'welcome') {
     return <Onboarding />
   }
   return <NotFound />

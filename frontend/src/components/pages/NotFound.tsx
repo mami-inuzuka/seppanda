@@ -1,5 +1,5 @@
 import { VFC } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import { Box, Heading, Image, Text } from '@chakra-ui/react'
 
@@ -8,10 +8,10 @@ import { SecondaryButton } from 'components/atoms/button/SecondaryButton'
 import { HeaderOnlyLogoLayout } from 'components/templates/HeaderOnlyLogoLayout'
 
 export const NotFound: VFC = () => {
-  const history = useHistory()
+  const navigation = useNavigate()
 
   const handleVisitHome = () => {
-    history.push('/home')
+    navigation('/home')
   }
 
   return (

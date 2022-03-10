@@ -1,6 +1,6 @@
 import { useContext, useState, VFC } from 'react'
 import { useForm } from 'react-hook-form'
-import { useHistory, useLocation } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 
 import { Flex, FormControl, FormErrorMessage, FormLabel, Grid, Input } from '@chakra-ui/react'
 import axios from 'axios'
@@ -25,7 +25,7 @@ export const ShowPaymentEntry: VFC = () => {
   const { updatePaymentList, setUpdatePaymentList } = useContext(PaymentContext)
   const { errorToast, successToast } = useToast()
   const [processingDelete, setProcessingDelete] = useState<boolean>(false)
-  const history = useHistory()
+  const navigation = useNavigate()
   const location = useLocation()
   const state = location.state as stateType
   const { payment } = state
@@ -50,7 +50,7 @@ export const ShowPaymentEntry: VFC = () => {
     try {
       await deletePayment(payment.id, idToken)
       setUpdatePaymentList(!updatePaymentList)
-      history.push('/home')
+      navigation('/home')
       successToast('支払い情報を削除しました')
     } catch {
       errorToast('エラーが発生しました', '時間をおいてから再度お試しください')
@@ -64,7 +64,7 @@ export const ShowPaymentEntry: VFC = () => {
     try {
       await updatePayment(params, payment.id, idToken)
       setUpdatePaymentList(!updatePaymentList)
-      history.push('/home')
+      navigation('/home')
       successToast('支払い情報を更新しました')
     } catch (err) {
       if (axios.isAxiosError(err) && (err.response?.data as MultipleErrorResponse).messages) {

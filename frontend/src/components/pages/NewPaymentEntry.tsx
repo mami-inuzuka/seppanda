@@ -1,6 +1,6 @@
 import { useContext, VFC } from 'react'
 import { useForm } from 'react-hook-form'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import { Box, Flex, FormControl, FormErrorMessage, FormLabel, Grid, Input, Text } from '@chakra-ui/react'
 import axios from 'axios'
@@ -19,7 +19,7 @@ import type { PostPaymentParams } from 'types/postPaymentParams'
 export const NewPaymentEntry: VFC = () => {
   const { updatePaymentList, setUpdatePaymentList } = useContext(PaymentContext)
   const { errorToast, successToast } = useToast()
-  const history = useHistory()
+  const navigation = useNavigate()
   const {
     register,
     handleSubmit,
@@ -37,7 +37,7 @@ export const NewPaymentEntry: VFC = () => {
     try {
       await postPayment(params, idToken)
       setUpdatePaymentList(!updatePaymentList)
-      history.push('/home')
+      navigation('/home')
       successToast('支払い情報を登録しました')
     } catch (err) {
       if (axios.isAxiosError(err) && (err.response?.data as MultipleErrorResponse).messages) {

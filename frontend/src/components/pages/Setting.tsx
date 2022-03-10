@@ -1,6 +1,6 @@
 import { useContext, useEffect, VFC } from 'react'
 import { useForm } from 'react-hook-form'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import { Box, Divider, Flex, FormControl, FormErrorMessage, FormLabel, Grid, Image, Input } from '@chakra-ui/react'
 import axios from 'axios'
@@ -20,7 +20,7 @@ import type { UpdateUserParams } from 'types/updateUserParams'
 export const Setting: VFC = () => {
   const { currentUser, setCurrentUser } = useContext(AuthContext)
   const { errorToast, successToast } = useToast()
-  const history = useHistory()
+  const navigation = useNavigate()
   const { handleImageSelect, inputAvatar, setInputAvatar } = useImageSelect()
 
   const {
@@ -44,7 +44,7 @@ export const Setting: VFC = () => {
     try {
       const res = await updateUser(data, idToken)
       setCurrentUser(res.data.user)
-      history.push('/home')
+      navigation('/home')
       successToast('ユーザー情報を更新しました')
     } catch (err) {
       if (axios.isAxiosError(err) && (err.response?.data as MultipleErrorResponse).messages) {
@@ -59,7 +59,7 @@ export const Setting: VFC = () => {
 
   const handleSignOut = async () => {
     await auth.signOut()
-    history.push('/')
+    navigation('/')
     successToast('ログアウトしました')
   }
 

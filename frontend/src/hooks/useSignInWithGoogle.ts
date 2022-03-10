@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useHistory, useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
 
@@ -8,7 +8,7 @@ import { auth } from 'lib/firebase'
 import { useToast } from 'lib/toast'
 
 export const useSignInWithGoogle = () => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const { search } = useLocation()
   const query = new URLSearchParams(search)
   const invitationToken = query.get('invitation_token')
@@ -30,12 +30,9 @@ export const useSignInWithGoogle = () => {
       .then(handleGetCurrentUser)
       .then((res) => {
         if (res?.data.isExisted) {
-          history.push('/home')
+          navigate('/home')
         } else {
-          history.push({
-            pathname: '/onboarding',
-            state: { invitationToken, referrer: 'welcome' },
-          })
+          navigate('/onboarding', { state: { invitationToken, referrer: 'welcome' } })
         }
       })
       .catch(() => {
