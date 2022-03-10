@@ -5,8 +5,8 @@ import axios from 'axios'
 
 import { PrimaryButton } from 'components/atoms/button/PrimaryButton'
 import { SecondaryButton } from 'components/atoms/button/SecondaryButton'
-import { AuthContext } from 'context/AuthContext'
 import { PaymentContext } from 'context/PaymentContext'
+import { UserContext } from 'context/UserContext'
 import { settleTeamPayments } from 'lib/api/payment'
 import { auth } from 'lib/firebase'
 import { useToast } from 'lib/toast'
@@ -21,7 +21,7 @@ type Props = {
 
 export const SettelementModal: VFC<Props> = memo((props) => {
   const { isOpen, onClose, size } = props
-  const { currentUser } = useContext(AuthContext)
+  const { currentUser } = useContext(UserContext)
   const { teamStatus, setPaymentList } = useContext(PaymentContext)
   const [processing, setProcessing] = useState<boolean>(false)
   const { errorToast, successToast } = useToast()

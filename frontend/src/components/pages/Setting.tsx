@@ -8,7 +8,7 @@ import axios from 'axios'
 import { PrimaryButton } from 'components/atoms/button/PrimaryButton'
 import { SecondaryButton } from 'components/atoms/button/SecondaryButton'
 import { HeaderWithTitleLayout } from 'components/templates/HeaderWithTitleLayout'
-import { AuthContext } from 'context/AuthContext'
+import { UserContext } from 'context/UserContext'
 import { useImageSelect } from 'hooks/useImageSelect'
 import { updateUser } from 'lib/api/user'
 import { auth } from 'lib/firebase'
@@ -18,7 +18,7 @@ import type { MultipleErrorResponse } from 'types/multipleErrorResponses'
 import type { UpdateUserParams } from 'types/updateUserParams'
 
 export const Setting: VFC = () => {
-  const { currentUser, setCurrentUser } = useContext(AuthContext)
+  const { currentUser, setCurrentUser } = useContext(UserContext)
   const { errorToast, successToast } = useToast()
   const navigation = useNavigate()
   const { handleImageSelect, inputAvatar, setInputAvatar } = useImageSelect()

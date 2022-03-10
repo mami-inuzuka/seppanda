@@ -2,11 +2,11 @@ import { useContext, VFC } from 'react'
 
 import { Flex, Text } from '@chakra-ui/react'
 
-import { AuthContext } from 'context/AuthContext'
 import { PaymentContext } from 'context/PaymentContext'
+import { UserContext } from 'context/UserContext'
 
 export const CardText: VFC = () => {
-  const { currentUser } = useContext(AuthContext)
+  const { currentUser } = useContext(UserContext)
   const { teamStatus } = useContext(PaymentContext)
   return (
     <Flex fontSize="sm" fontWeight="bold" justify="center" align="center" mb={2}>

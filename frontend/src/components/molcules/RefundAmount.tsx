@@ -2,11 +2,11 @@ import { useContext, VFC } from 'react'
 
 import { Center, Text } from '@chakra-ui/react'
 
-import { AuthContext } from 'context/AuthContext'
 import { PaymentContext } from 'context/PaymentContext'
+import { UserContext } from 'context/UserContext'
 
 export const RefundAmount: VFC = () => {
-  const { currentUser } = useContext(AuthContext)
+  const { currentUser } = useContext(UserContext)
   const { teamStatus } = useContext(PaymentContext)
   return (
     <Center mb={4}>

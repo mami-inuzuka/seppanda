@@ -2,8 +2,8 @@ import { VFC } from 'react'
 
 import { ChakraProvider } from '@chakra-ui/react'
 
-import { AuthProvider } from 'providers/AuthProvider'
 import { PaymentProvider } from 'providers/PaymentProvider'
+import { UserProvider } from 'providers/UserProvider'
 import { theme } from 'theme/index'
 
 type Props = {
@@ -12,8 +12,8 @@ type Props = {
 
 export const Providers: VFC<Props> = ({ children }) => (
   <ChakraProvider theme={theme}>
-    <AuthProvider>
+    <UserProvider>
       <PaymentProvider>{children}</PaymentProvider>
-    </AuthProvider>
+    </UserProvider>
   </ChakraProvider>
 )
