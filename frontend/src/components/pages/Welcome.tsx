@@ -19,7 +19,7 @@ export const Welcome: VFC = () => {
         <Flex h="100%" justify="center" align="center" direction="column" p={6} flex="1" my={28}>
           <Box>
             <Box mb="10">
-              <Image src={VerticalLogo} margin="0 auto" mb={4} />
+              <Image src={VerticalLogo} margin="0 auto" mb={4} h="140px" />
               <Text fontWeight="bold" textAlign="center" letterSpacing="0.1em">
                 毎日の
                 <Text as="span" color="green.500">
