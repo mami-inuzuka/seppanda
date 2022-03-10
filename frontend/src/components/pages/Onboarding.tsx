@@ -1,4 +1,4 @@
-import { VFC } from 'react'
+import { useContext, VFC } from 'react'
 import { useForm } from 'react-hook-form'
 import { useNavigate, useLocation } from 'react-router-dom'
 
@@ -20,6 +20,7 @@ import axios from 'axios'
 import DefaultUserIcon from 'assets/images/default-user-icon.png'
 import { PrimaryButton } from 'components/atoms/button/PrimaryButton'
 import { HeaderOnlyLogoLayout } from 'components/templates/HeaderOnlyLogoLayout'
+import { UserContext } from 'context/UserContext'
 import { useImageSelect } from 'hooks/useImageSelect'
 import { createUser } from 'lib/api/user'
 import { auth } from 'lib/firebase'
@@ -33,6 +34,7 @@ type LocationState = {
 }
 
 export const Onboarding: VFC = () => {
+  const { setCurrentUser } = useContext(UserContext)
   const { errorToast, successToast } = useToast()
   const location = useLocation()
   const navigation = useNavigate()
@@ -58,7 +60,8 @@ export const Onboarding: VFC = () => {
     }
     const token = await auth.currentUser?.getIdToken(true)
     try {
-      await createUser(data, token)
+      const res = await createUser(data, token)
+      setCurrentUser(res.data.user)
       navigation('/home')
       successToast('登録が完了しました')
     } catch (err) {

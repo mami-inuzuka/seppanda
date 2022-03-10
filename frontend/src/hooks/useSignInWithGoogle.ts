@@ -1,13 +1,15 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 
 import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
 
+import { UserContext } from 'context/UserContext'
 import { getCurrentUser } from 'lib/api/session'
 import { auth } from 'lib/firebase'
 import { useToast } from 'lib/toast'
 
 export const useSignInWithGoogle = () => {
+  const { setCurrentUser } = useContext(UserContext)
   const navigate = useNavigate()
   const { search } = useLocation()
   const query = new URLSearchParams(search)
@@ -30,6 +32,7 @@ export const useSignInWithGoogle = () => {
       .then(handleGetCurrentUser)
       .then((res) => {
         if (res?.data.isExisted) {
+          setCurrentUser(res.data.user)
           navigate('/home')
         } else {
           navigate('/onboarding', { state: { invitationToken, referrer: 'welcome' } })
