@@ -5,8 +5,8 @@ import { WelcomeWrapper } from 'components/pages/WelcomeWrapper'
 import { UserContext } from 'context/UserContext'
 
 export const HomeWrapper = () => {
-  const { isLoaded, currentUser, currentFirebaseUser } = useContext(UserContext)
-  if (isLoaded && currentUser && currentFirebaseUser) {
+  const { currentUser } = useContext(UserContext)
+  if (currentUser) {
     return <Navigate to="/home" />
   }
   return <WelcomeWrapper />
