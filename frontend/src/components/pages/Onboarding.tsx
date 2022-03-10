@@ -1,6 +1,6 @@
 import { VFC } from 'react'
 import { useForm } from 'react-hook-form'
-import { useHistory, useLocation } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 
 import {
   Box,
@@ -34,8 +34,8 @@ type LocationState = {
 
 export const Onboarding: VFC = () => {
   const { errorToast, successToast } = useToast()
-  const location = useLocation<LocationState>()
-  const history = useHistory()
+  const location = useLocation()
+  const navigation = useNavigate()
   const { handleImageSelect, inputAvatar } = useImageSelect()
 
   const {
@@ -54,12 +54,12 @@ export const Onboarding: VFC = () => {
     const data = {
       name: params.name,
       avatar: inputAvatar,
-      invitationToken: location.state.invitationToken,
+      invitationToken: (location.state as LocationState).invitationToken,
     }
     const token = await auth.currentUser?.getIdToken(true)
     try {
       await createUser(data, token)
-      history.push('/home')
+      navigation('/home')
       successToast('登録が完了しました')
     } catch (err) {
       if (axios.isAxiosError(err) && (err.response?.data as MultipleErrorResponse).messages) {

@@ -1,5 +1,5 @@
 import { memo, VFC } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import { Box, Flex, Text } from '@chakra-ui/react'
 import { DateTime } from 'luxon'
@@ -15,12 +15,8 @@ type Props = {
 
 export const PaymentList: VFC<Props> = memo((props) => {
   const { paymentList } = props
-  const history = useHistory()
-  const handleRowClick = (payment: Payment) =>
-    history.push({
-      pathname: `/payments/${payment.id}`,
-      state: { payment },
-    })
+  const navigation = useNavigate()
+  const handleRowClick = (payment: Payment) => navigation(`/payments/${payment.id}`, { state: { payment } })
 
   return (
     <>

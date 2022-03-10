@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useHistory, useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 import axios from 'axios'
 
@@ -9,7 +9,7 @@ import { useToast } from 'lib/toast'
 import type { ErrorResponse } from 'types/errorResponse'
 
 export const useGetInviter = () => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const { search } = useLocation()
   const query = new URLSearchParams(search)
   const invitationToken = query.get('invitation_token')
@@ -34,7 +34,7 @@ export const useGetInviter = () => {
         } else {
           errorToast('エラーが発生しました', '時間をおいてから再度お試しください')
         }
-        history.push('/')
+        navigate('/')
       }
     }
   }
