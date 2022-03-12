@@ -1,4 +1,4 @@
-import { VFC } from 'react'
+import { useContext, useEffect, VFC } from 'react'
 import { useForm } from 'react-hook-form'
 import { useNavigate, useLocation } from 'react-router-dom'
 
@@ -20,6 +20,7 @@ import axios from 'axios'
 import DefaultUserIcon from 'assets/images/default-user-icon.png'
 import { PrimaryButton } from 'components/atoms/button/PrimaryButton'
 import { HeaderOnlyLogoLayout } from 'components/templates/HeaderOnlyLogoLayout'
+import { AuthContext } from 'context/AuthContext'
 import { useImageSelect } from 'hooks/useImageSelect'
 import { createUser } from 'lib/api/user'
 import { auth } from 'lib/firebase'
@@ -37,7 +38,7 @@ export const Onboarding: VFC = () => {
   const location = useLocation()
   const navigation = useNavigate()
   const { handleImageSelect, inputAvatar } = useImageSelect()
-
+  const { currentUser, setCurrentUser } = useContext(AuthContext)
   const {
     register,
     handleSubmit,
@@ -58,9 +59,8 @@ export const Onboarding: VFC = () => {
     }
     const token = await auth.currentUser?.getIdToken(true)
     try {
-      await createUser(data, token)
-      navigation('/home')
-      successToast('登録が完了しました')
+      const res = await createUser(data, token)
+      setCurrentUser(res.data.user)
     } catch (err) {
       if (axios.isAxiosError(err) && (err.response?.data as MultipleErrorResponse).messages) {
         ;(err.response?.data as MultipleErrorResponse).messages.forEach((message) => {
@@ -71,6 +71,19 @@ export const Onboarding: VFC = () => {
       }
     }
   }
+
+  const handleGoToHomePage = () => {
+    navigation('/home')
+    successToast('登録が完了しました')
+  }
+
+  useEffect(() => {
+    if (currentUser) {
+      // currentUserが最新に書きかわったのを確認して遷移する
+      handleGoToHomePage()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentUser])
 
   return (
     <HeaderOnlyLogoLayout>
