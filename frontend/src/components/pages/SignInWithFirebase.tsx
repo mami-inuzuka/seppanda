@@ -48,7 +48,9 @@ export const SignInWithFirebase = () => {
       auth.signInWithRedirect(provider).catch(() => {
         errorToast('エラーが発生しました', '時間をおいてから再度お試しください')
       })
-      localStorage.setItem('invitationToken', invitationTokenFromWelcomePage)
+      if (invitationTokenFromWelcomePage) {
+        localStorage.setItem('invitationToken', invitationTokenFromWelcomePage)
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
