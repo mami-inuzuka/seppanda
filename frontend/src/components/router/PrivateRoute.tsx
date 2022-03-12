@@ -1,17 +1,11 @@
-import { ReactElement, useContext, VFC } from 'react'
-import { Navigate } from 'react-router-dom'
+import { useContext, VFC } from 'react'
+import { Navigate, Outlet } from 'react-router-dom'
 
 import { AuthContext } from 'context/AuthContext'
 
-type Props = {
-  component: ReactElement
-}
-export const PrivateRoute: VFC<Props> = ({ component }) => {
-  const { isLoaded, currentUser, currentFirebaseUser } = useContext(AuthContext)
-  if (isLoaded) {
-    // eslint-disable-next-line react/jsx-no-useless-fragment
-    if (currentUser && currentFirebaseUser) return <>{component}</>
-    return <Navigate to="/" />
-  }
-  return null
+export const PrivateRoute: VFC = () => {
+  const { currentUser, currentFirebaseUser } = useContext(AuthContext)
+
+  // eslint-disable-next-line react/jsx-no-useless-fragment
+  return <>{currentUser && currentFirebaseUser ? <Outlet /> : <Navigate to="/welcome" />}</>
 }

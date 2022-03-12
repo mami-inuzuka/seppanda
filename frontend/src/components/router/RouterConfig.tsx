@@ -8,6 +8,7 @@ import { OnboardingWrapper } from 'components/pages/OnboardingWrapper'
 import { Policy } from 'components/pages/Policy'
 import { Setting } from 'components/pages/Setting'
 import { ShowPaymentEntry } from 'components/pages/ShowPaymentEntry'
+import { SignInWithFirebase } from 'components/pages/SignInWithFirebase'
 import { Terms } from 'components/pages/Terms'
 import { WelcomeWrapper } from 'components/pages/WelcomeWrapper'
 import { PrivateRoute } from 'components/router/PrivateRoute'
@@ -18,12 +19,15 @@ export const RouterConfig: VFC = () => (
       <Route path="/" element={<WelcomeWrapper />} />
       <Route path="/welcome" element={<WelcomeWrapper />} />
       <Route path="/onboarding" element={<OnboardingWrapper />} />
+      <Route path="/signin" element={<SignInWithFirebase />} />
       <Route path="/terms" element={<Terms />} />
       <Route path="/policy" element={<Policy />} />
-      <Route path="/home" element={<PrivateRoute component={<Home />} />} />
-      <Route path="/payments/new" element={<PrivateRoute component={<NewPaymentEntry />} />} />
-      <Route path="/payments/:id" element={<PrivateRoute component={<ShowPaymentEntry />} />} />
-      <Route path="/setting" element={<PrivateRoute component={<Setting />} />} />
+      <Route element={<PrivateRoute />}>
+        <Route path="/home" element={<Home />} />
+        <Route path="/payments/new" element={<NewPaymentEntry />} />
+        <Route path="/payments/:id" element={<ShowPaymentEntry />} />
+        <Route path="/setting" element={<Setting />} />
+      </Route>
       <Route path="/*" element={<NotFound />} />
     </Routes>
   </BrowserRouter>
