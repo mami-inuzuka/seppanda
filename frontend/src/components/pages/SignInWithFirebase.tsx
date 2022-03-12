@@ -14,7 +14,7 @@ import { useToast } from 'lib/toast'
  */
 
 export const SignInWithFirebase = () => {
-  const { successToast, errorToast } = useToast()
+  const { errorToast } = useToast()
   const [isLoading, setIsLoading] = useState(true)
   const { currentUser, setCurrentUser, setCurrentFirebaseUser } = useContext(AuthContext)
   const navigate = useNavigate()
@@ -81,7 +81,6 @@ export const SignInWithFirebase = () => {
 
   const handleGoToHomePage = () => {
     navigate('/home')
-    successToast('ログインしました')
   }
 
   useEffect(() => {
