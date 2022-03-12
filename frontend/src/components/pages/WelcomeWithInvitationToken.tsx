@@ -1,5 +1,5 @@
 import { VFC, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 
 import { Box, Heading, Image, Text } from '@chakra-ui/react'
 
@@ -10,6 +10,9 @@ import { useGetInviter } from 'hooks/useGetInviter'
 export const WelcomeWithInvitationToken: VFC = () => {
   const { handleGetInviter, inviterName, inviterAvatar, isInviterLoaded } = useGetInviter()
   const navigate = useNavigate()
+  const { search } = useLocation()
+  const query = new URLSearchParams(search)
+  const invitationToken = query.get('invitation_token')
 
   useEffect(() => {
     handleGetInviter().catch((err) => {
@@ -57,7 +60,7 @@ export const WelcomeWithInvitationToken: VFC = () => {
               </Text>
               <GoogleLoginButton
                 onClick={() => {
-                  navigate('/signin', { state: { referrer: 'signin' } })
+                  navigate('/signin', { state: { referrer: 'signin', invitationToken } })
                 }}
                 disabled={false}
               />

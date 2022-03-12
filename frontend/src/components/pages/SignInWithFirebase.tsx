@@ -18,14 +18,13 @@ export const SignInWithFirebase = () => {
   const [isLoading, setIsLoading] = useState(true)
   const { currentUser, setCurrentUser, setCurrentFirebaseUser } = useContext(AuthContext)
   const navigate = useNavigate()
-  const { search } = useLocation()
   const location = useLocation()
-  const query = new URLSearchParams(search)
-  const invitationToken = query.get('invitation_token')
   type LocationStateType = {
     referrer: string
+    invitationToken: string
   }
   const locationState = location.state as LocationStateType
+  const invitationTokenFromWelcomePage = locationState?.invitationToken
 
   const handleDecideNextPage = async () => {
     try {
@@ -35,7 +34,7 @@ export const SignInWithFirebase = () => {
         setCurrentUser(res.data.user)
         navigate('/home')
       } else {
-        navigate('/onboarding', { state: { invitationToken, referrer: 'welcome' } })
+        navigate('/onboarding', { state: { referrer: 'welcome' } })
       }
     } catch {
       errorToast('エラーが発生しました', '時間をおいてから再度お試しください')
@@ -49,6 +48,7 @@ export const SignInWithFirebase = () => {
       auth.signInWithRedirect(provider).catch(() => {
         errorToast('エラーが発生しました', '時間をおいてから再度お試しください')
       })
+      localStorage.setItem('invitationToken', invitationTokenFromWelcomePage)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])

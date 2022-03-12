@@ -1,6 +1,6 @@
 import { useContext, useEffect, VFC } from 'react'
 import { useForm } from 'react-hook-form'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import {
   Box,
@@ -29,13 +29,8 @@ import { useToast } from 'lib/toast'
 import type { CreateUserParams } from 'types/createUserParams'
 import type { MultipleErrorResponse } from 'types/multipleErrorResponses'
 
-type LocationState = {
-  invitationToken: string
-}
-
 export const Onboarding: VFC = () => {
   const { errorToast, successToast } = useToast()
-  const location = useLocation()
   const navigation = useNavigate()
   const { handleImageSelect, inputAvatar } = useImageSelect()
   const { currentUser, setCurrentUser } = useContext(AuthContext)
@@ -55,7 +50,7 @@ export const Onboarding: VFC = () => {
     const data = {
       name: params.name,
       avatar: inputAvatar,
-      invitationToken: (location.state as LocationState).invitationToken,
+      invitationToken: localStorage.getItem('invitationToken'),
     }
     const token = await auth.currentUser?.getIdToken(true)
     try {
@@ -69,6 +64,8 @@ export const Onboarding: VFC = () => {
       } else {
         errorToast('エラーが発生しました', '時間をおいてから再度お試しください')
       }
+    } finally {
+      localStorage.removeItem('invitationToken')
     }
   }
 
