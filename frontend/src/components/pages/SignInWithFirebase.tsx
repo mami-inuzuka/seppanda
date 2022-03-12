@@ -14,9 +14,9 @@ import { useToast } from 'lib/toast'
  */
 
 export const SignInWithFirebase = () => {
-  const { errorToast } = useToast()
+  const { successToast, errorToast } = useToast()
   const [isLoading, setIsLoading] = useState(true)
-  const { setCurrentUser, setCurrentFirebaseUser } = useContext(AuthContext)
+  const { currentUser, setCurrentUser, setCurrentFirebaseUser } = useContext(AuthContext)
   const navigate = useNavigate()
   const { search } = useLocation()
   const location = useLocation()
@@ -78,6 +78,19 @@ export const SignInWithFirebase = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  const handleGoToHomePage = () => {
+    navigate('/home')
+    successToast('ログインしました')
+  }
+
+  useEffect(() => {
+    if (currentUser) {
+      // currentUserが最新に書きかわったのを確認して遷移する
+      handleGoToHomePage()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentUser])
 
   // eslint-disable-next-line react/jsx-no-useless-fragment
   return <>{isLoading && <FullWindowSpinner />}</>
