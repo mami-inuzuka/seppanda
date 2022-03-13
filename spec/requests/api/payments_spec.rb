@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Api::Payments', type: :request do
+RSpec.describe 'API::Payments', type: :request do
   let(:current_user) { create(:user, :with_team) }
   let(:other_user) { create(:user, team_id: current_user.team_id) }
   let(:team) { current_user.team }
