@@ -21,9 +21,7 @@ class API::UsersController < API::Auth::FirebaseAuthRailsController
   def update
     @user = User.find_by(uid: payload['sub'])
     @user.name = params[:name]
-    if params[:avatar][:data].present?
-      @user.attach_avatar(params[:avatar][:data], params[:avatar][:name])
-    end
+    @user.attach_avatar(params[:avatar][:data], params[:avatar][:name]) if params[:avatar][:data].present?
     if @user.update(update_params)
       render :update
     else

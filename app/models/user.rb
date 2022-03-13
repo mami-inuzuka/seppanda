@@ -17,7 +17,7 @@ class User < ApplicationRecord
       filename = 'default-user-icon.png'
     end
     blob = ActiveStorage::Blob.create_and_upload!(io: io, filename: filename)
-    self.avatar.attach(blob)
+    avatar.attach(blob)
   end
 
   def create_team_or_belongs_to_team(invitation_token)
@@ -27,7 +27,7 @@ class User < ApplicationRecord
       self.color = 'orange'
     else
       invitation_token = SecureRandom.urlsafe_base64
-      self.build_team(invitation_token: invitation_token)
+      build_team(invitation_token: invitation_token)
       self.color = 'blue'
     end
   end
