@@ -1,11 +1,9 @@
 import { AxiosPromise } from 'axios'
 
 import client from 'lib/api/client'
-import { PostPaymentParams } from 'types/postPaymentParams'
 
+import type { Payment, PostPaymentParams, PaymentListGroupByPaidAt } from 'types/api/payment'
 import type { FirebaseIdToken } from 'types/firebaseIdToken'
-import type { Payment } from 'types/payment'
-import type { PaymentListGroupByPaidAt } from 'types/paymentListGroupByPaidAt'
 
 export const getPayments = (idToken: FirebaseIdToken): AxiosPromise<PaymentListGroupByPaidAt[]> =>
   client.get('/payments', { headers: { Authorization: idToken || '' } })

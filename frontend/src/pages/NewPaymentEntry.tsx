@@ -1,34 +1,25 @@
-import { useContext, useState, VFC } from 'react'
+import { useContext, VFC } from 'react'
 import { useForm } from 'react-hook-form'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
-import { Flex, FormControl, FormErrorMessage, FormLabel, Grid, Input } from '@chakra-ui/react'
+import { Box, Flex, FormControl, FormErrorMessage, FormLabel, Grid, Input, Text } from '@chakra-ui/react'
 import axios from 'axios'
+import { DateTime } from 'luxon'
 
-import { DangerButton } from 'components/atoms/button/DangerButton'
 import { PrimaryButton } from 'components/atoms/button/PrimaryButton'
 import { HeaderWithTitleLayout } from 'components/templates/HeaderWithTitleLayout'
 import { PaymentContext } from 'context/PaymentContext'
-import { deletePayment, updatePayment } from 'lib/api/payment'
+import { postPayment } from 'lib/api/payment'
 import { auth } from 'lib/firebase'
 import { useToast } from 'lib/toast'
 
+import type { PostPaymentParams } from 'types/api/payment'
 import type { MultipleErrorResponse } from 'types/multipleErrorResponses'
-import type { Payment } from 'types/payment'
-import type { PostPaymentParams } from 'types/postPaymentParams'
 
-type stateType = {
-  payment: Payment
-}
-
-export const ShowPaymentEntry: VFC = () => {
+export const NewPaymentEntry: VFC = () => {
   const { updatePaymentList, setUpdatePaymentList } = useContext(PaymentContext)
   const { errorToast, successToast } = useToast()
-  const [processingDelete, setProcessingDelete] = useState<boolean>(false)
   const navigation = useNavigate()
-  const location = useLocation()
-  const state = location.state as stateType
-  const { payment } = state
   const {
     register,
     handleSubmit,
@@ -37,35 +28,17 @@ export const ShowPaymentEntry: VFC = () => {
   } = useForm<PostPaymentParams>({
     mode: 'all',
     defaultValues: {
-      amount: String(payment.amount),
-      detail: payment.detail,
-      paidAt: payment.paidAt,
+      paidAt: DateTime.local().toFormat('yyyy-MM-dd'),
     },
   })
 
-  const handleDeletePayment = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault()
-    setProcessingDelete(true)
+  const handleSubmitAmount = async (params: PostPaymentParams) => {
     const idToken = await auth.currentUser?.getIdToken(true)
     try {
-      await deletePayment(payment.id, idToken)
+      await postPayment(params, idToken)
       setUpdatePaymentList(!updatePaymentList)
       navigation('/home')
-      successToast('支払い情報を削除しました')
-    } catch {
-      errorToast('エラーが発生しました', '時間をおいてから再度お試しください')
-    } finally {
-      setProcessingDelete(false)
-    }
-  }
-
-  const handleUpdateAmount = async (params: PostPaymentParams) => {
-    const idToken = await auth.currentUser?.getIdToken(true)
-    try {
-      await updatePayment(params, payment.id, idToken)
-      setUpdatePaymentList(!updatePaymentList)
-      navigation('/home')
-      successToast('支払い情報を更新しました')
+      successToast('支払い情報を登録しました')
     } catch (err) {
       if (axios.isAxiosError(err) && (err.response?.data as MultipleErrorResponse).messages) {
         ;(err.response?.data as MultipleErrorResponse).messages.forEach((message) => {
@@ -78,7 +51,15 @@ export const ShowPaymentEntry: VFC = () => {
   }
 
   return (
-    <HeaderWithTitleLayout title="支払い情報の編集">
+    <HeaderWithTitleLayout title="支払い情報の入力">
+      <Box p={6} pb={0}>
+        <Text fontSize="xs" bg="gray.50" p={4} textAlign="center" lineHeight="1.7">
+          割り勘をしたいけど、あなたが全額支払った
+          <br />
+          お買い物の情報を入力してください💰
+        </Text>
+      </Box>
+
       <Flex flexDirection="column" p={6}>
         <form>
           <Grid gap={6}>
@@ -88,7 +69,7 @@ export const ShowPaymentEntry: VFC = () => {
                 id="amount"
                 type="tel"
                 size="lg"
-                placeholder="金額を入力"
+                placeholder="例）1000"
                 // eslint-disable-next-line react/jsx-props-no-spreading
                 {...register('amount', {
                   required: '金額を入力してください',
@@ -110,8 +91,7 @@ export const ShowPaymentEntry: VFC = () => {
                 id="detail"
                 type="text"
                 size="lg"
-                placeholder="例）スーパー"
-                // eslint-disable-next-line react/jsx-props-no-spreading
+                placeholder="例）スーパー" // eslint-disable-next-line react/jsx-props-no-spreading
                 {...register('detail', {
                   maxLength: {
                     value: 28,
@@ -126,32 +106,20 @@ export const ShowPaymentEntry: VFC = () => {
               <Input
                 id="paid_at"
                 type="date"
-                size="lg"
-                // eslint-disable-next-line react/jsx-props-no-spreading
+                size="lg" // eslint-disable-next-line react/jsx-props-no-spreading
                 {...register('paidAt', {
                   required: '支払日を入力してください',
                 })}
               />
               <FormErrorMessage>{errors.paidAt && errors.paidAt?.message}</FormErrorMessage>
             </FormControl>
-            <Grid gap={4}>
-              <PrimaryButton
-                onClickButton={handleSubmit(handleUpdateAmount)}
-                isLoading={formState.isSubmitting}
-                disabled={!formState.isValid || formState.isSubmitting}
-              >
-                更新する
-              </PrimaryButton>
-              <DangerButton
-                size="xl"
-                isFullWidth
-                onClick={handleDeletePayment}
-                disabled={processingDelete}
-                isLoading={processingDelete}
-              >
-                削除する
-              </DangerButton>
-            </Grid>
+            <PrimaryButton
+              onClickButton={handleSubmit(handleSubmitAmount)}
+              disabled={!formState.isValid || formState.isSubmitting}
+              isLoading={formState.isSubmitting}
+            >
+              登録する
+            </PrimaryButton>
           </Grid>
         </form>
       </Flex>

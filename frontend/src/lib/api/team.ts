@@ -1,7 +1,7 @@
 import { AxiosPromise } from 'axios'
 
 import client from 'lib/api/client'
-import { TeamStatus } from 'types/teamStatus'
+import { TeamStatus } from 'types/api/team'
 
 import type { FirebaseIdToken } from 'types/firebaseIdToken'
 

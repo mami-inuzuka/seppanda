@@ -6,8 +6,7 @@ import { DateTime } from 'luxon'
 
 import { UserIcon } from 'components/atoms/icon/UserIcon'
 
-import type { Payment } from 'types/payment'
-import type { PaymentListGroupByPaidAt } from 'types/paymentListGroupByPaidAt'
+import type { Payment, PaymentListGroupByPaidAt } from 'types/api/payment'
 
 type Props = {
   paymentList: PaymentListGroupByPaidAt[]

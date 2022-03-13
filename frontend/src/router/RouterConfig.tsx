@@ -1,17 +1,17 @@
 import { VFC } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
-import { Home } from 'components/pages/Home'
-import { NewPaymentEntry } from 'components/pages/NewPaymentEntry'
-import { NotFound } from 'components/pages/NotFound'
-import { OnboardingWrapper } from 'components/pages/OnboardingWrapper'
-import { Policy } from 'components/pages/Policy'
-import { Setting } from 'components/pages/Setting'
-import { ShowPaymentEntry } from 'components/pages/ShowPaymentEntry'
-import { SignInWithFirebase } from 'components/pages/SignInWithFirebase'
-import { Terms } from 'components/pages/Terms'
-import { WelcomeWrapper } from 'components/pages/WelcomeWrapper'
-import { PrivateRoute } from 'components/router/PrivateRoute'
+import { Home } from 'pages/Home'
+import { NewPaymentEntry } from 'pages/NewPaymentEntry'
+import { NotFound } from 'pages/NotFound'
+import { Policy } from 'pages/Policy'
+import { Setting } from 'pages/Setting'
+import { ShowPaymentEntry } from 'pages/ShowPaymentEntry'
+import { SignInWithFirebase } from 'pages/SignInWithFirebase'
+import { Terms } from 'pages/Terms'
+import { OnboardingWrapper } from 'router/OnboardingWrapper'
+import { PrivateRoute } from 'router/PrivateRoute'
+import { WelcomeWrapper } from 'router/WelcomeWrapper'
 
 export const RouterConfig: VFC = () => (
   <BrowserRouter>

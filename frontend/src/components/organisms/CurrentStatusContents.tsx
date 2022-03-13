@@ -3,8 +3,8 @@ import { useContext, VFC } from 'react'
 import { Box, Text, useDisclosure } from '@chakra-ui/react'
 
 import { SecondaryButton } from 'components/atoms/button/SecondaryButton'
-import { CardText } from 'components/molcules/CardText'
-import { RefundAmount } from 'components/molcules/RefundAmount'
+import { CardText } from 'components/molecules/CardText'
+import { RefundAmount } from 'components/molecules/RefundAmount'
 import { SettelementModal } from 'components/organisms/modal/SettlementModal'
 import { PaymentContext } from 'context/PaymentContext'
 

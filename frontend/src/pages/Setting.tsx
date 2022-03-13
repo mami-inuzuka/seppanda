@@ -14,8 +14,8 @@ import { updateUser } from 'lib/api/user'
 import { auth } from 'lib/firebase'
 import { useToast } from 'lib/toast'
 
+import type { UpdateUserParams } from 'types/api/user'
 import type { MultipleErrorResponse } from 'types/multipleErrorResponses'
-import type { UpdateUserParams } from 'types/updateUserParams'
 
 export const Setting: VFC = () => {
   const { currentUser, setCurrentUser } = useContext(AuthContext)

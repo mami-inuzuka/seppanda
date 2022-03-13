@@ -5,7 +5,7 @@ import { Box, Flex, Image, Text } from '@chakra-ui/react'
 
 import VerticalLogo from 'assets/images/logo-vertical-black.svg'
 import { GoogleLoginButton } from 'components/atoms/button/GoogleLoginButton'
-import { Footer } from 'components/organisms/layout/Footer'
+import { Footer } from 'components/organisms/footer/Footer'
 
 export const Welcome: VFC = () => {
   const navigate = useNavigate()

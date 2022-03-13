@@ -1,7 +1,7 @@
 import { useLocation } from 'react-router-dom'
 
-import { Welcome } from './Welcome'
-import { WelcomeWithInvitationToken } from './WelcomeWithInvitationToken'
+import { Welcome } from '../pages/Welcome'
+import { WelcomeWithInvitationToken } from '../pages/WelcomeWithInvitationToken'
 
 export const WelcomeWrapper = () => {
   const { search } = useLocation()
