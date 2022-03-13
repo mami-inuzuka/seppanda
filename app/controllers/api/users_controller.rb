@@ -2,7 +2,7 @@
 
 class API::UsersController < API::Auth::FirebaseAuthRailsController
   skip_before_action :authenticate_user
-  before_action :check_invitation_token_and_team_capacity, only: :create
+  include InvitationTokenAndTeamCapacityCheckable
 
   def create
     FirebaseIdToken::Certificates.request
@@ -62,23 +62,7 @@ class API::UsersController < API::Auth::FirebaseAuthRailsController
     @user.avatar.attach(blob)
   end
 
-  def check_invitation_token_and_team_capacity
-    invitation_token = request.headers[:InvitationToken]
-    return if invitation_token.empty?
 
-    if !Team.invitation_token_exists?(invitation_token) || Team.find_by(invitation_token: invitation_token).capacity_reached? # rubocop:disable Style/GuardClause
-      render_create_error_token_invalid_or_team_capacity_reached
-    end
-  end
-
-  def render_create_error_token_invalid_or_team_capacity_reached
-    render json: {
-      status: 'error',
-      errors: {
-        fullMessages: 'invitation_tokenが不正かチームの定員が上限に達しています'
-      }
-    }, status: :unprocessable_entity
-  end
 
   def decode(str)
     Base64.decode64(str.split(',').last)
