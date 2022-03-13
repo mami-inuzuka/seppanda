@@ -12,9 +12,9 @@ import { PaymentContext } from 'context/PaymentContext'
 import { postPayment } from 'lib/api/payment'
 import { auth } from 'lib/firebase'
 import { useToast } from 'lib/toast'
-import { MultipleErrorResponse } from 'types/multipleErrorResponses'
 
-import type { PostPaymentParams } from 'types/postPaymentParams'
+import type { PostPaymentParams } from 'types/api/payment'
+import type { MultipleErrorResponse } from 'types/multipleErrorResponses'
 
 export const NewPaymentEntry: VFC = () => {
   const { updatePaymentList, setUpdatePaymentList } = useContext(PaymentContext)

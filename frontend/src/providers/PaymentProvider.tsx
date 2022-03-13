@@ -2,8 +2,8 @@ import { useState } from 'react'
 
 import { PaymentContext } from 'context/PaymentContext'
 
+import type { PaymentListGroupByPaidAt } from 'types/api/payment'
 import type { TeamStatus } from 'types/api/team'
-import type { PaymentListGroupByPaidAt } from 'types/paymentListGroupByPaidAt'
 
 export const PaymentProvider = ({ children }: { children: React.ReactElement }) => {
   const [paymentList, setPaymentList] = useState<PaymentListGroupByPaidAt[]>([])

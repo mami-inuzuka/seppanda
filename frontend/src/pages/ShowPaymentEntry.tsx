@@ -13,9 +13,8 @@ import { deletePayment, updatePayment } from 'lib/api/payment'
 import { auth } from 'lib/firebase'
 import { useToast } from 'lib/toast'
 
+import type { Payment, PostPaymentParams } from 'types/api/payment'
 import type { MultipleErrorResponse } from 'types/multipleErrorResponses'
-import type { Payment } from 'types/payment'
-import type { PostPaymentParams } from 'types/postPaymentParams'
 
 type stateType = {
   payment: Payment
