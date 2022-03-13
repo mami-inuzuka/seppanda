@@ -10,8 +10,6 @@ export const theme = extendTheme({
       body: {
         color: 'black',
         w: '100%',
-        minHeight: '100vh',
-        bg: 'gray.50',
       },
     },
   },
