@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'data_uri'
+
 class User < ApplicationRecord
   has_one_attached :avatar
   belongs_to :team
@@ -8,7 +10,7 @@ class User < ApplicationRecord
 
   def attach_avatar(data, name)
     if data.present?
-      io = StringIO.new("#{decode(data)}\n")
+      io = StringIO.new("#{DataURI.decode(data)}\n")
       filename = name
     else
       io = File.open('./app/assets/images/default-user-icon.png')
@@ -28,11 +30,5 @@ class User < ApplicationRecord
       self.build_team(invitation_token: invitation_token)
       self.color = 'blue'
     end
-  end
-
-  private
-
-  def decode(str)
-    Base64.decode64(str.split(',').last)
   end
 end
