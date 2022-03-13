@@ -3,10 +3,6 @@
 module InvitationTokenAndTeamCapacityCheckable
   extend ActiveSupport::Concern
 
-  included do
-    before_action :check_invitation_token_and_team_capacity, only: :create
-  end
-
   def check_invitation_token_and_team_capacity
     invitation_token = request.headers[:InvitationToken]
     return if invitation_token.empty?

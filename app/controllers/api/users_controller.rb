@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 class API::UsersController < API::Auth::FirebaseAuthRailsController
-  skip_before_action :authenticate_user
   include InvitationTokenAndTeamCapacityCheckable
+  before_action :check_invitation_token_and_team_capacity, only: :create
+  skip_before_action :authenticate_user
 
   def create
     FirebaseIdToken::Certificates.request
