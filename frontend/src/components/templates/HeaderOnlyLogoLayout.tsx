@@ -1,6 +1,6 @@
 import { memo, ReactNode, VFC } from 'react'
 
-import { HeaderOnlyLogo } from 'components/organisms/layout/HeaderOnlyLogo'
+import { HeaderOnlyLogo } from 'components/organisms/header/HeaderOnlyLogo'
 
 type Props = {
   children: ReactNode
