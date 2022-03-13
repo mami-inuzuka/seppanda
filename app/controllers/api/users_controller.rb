@@ -50,11 +50,11 @@ class API::UsersController < API::Auth::FirebaseAuthRailsController
     end
   end
 
-  def update_params
-    params.permit(:name)
-  end
-
   def create_params
     params.permit(:name).merge(uid: payload['sub'])
+  end
+
+  def update_params
+    params.permit(:name)
   end
 end
