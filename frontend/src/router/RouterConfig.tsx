@@ -4,14 +4,14 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { Home } from 'pages/Home'
 import { NewPaymentEntry } from 'pages/NewPaymentEntry'
 import { NotFound } from 'pages/NotFound'
-import { OnboardingWrapper } from 'pages/OnboardingWrapper'
 import { Policy } from 'pages/Policy'
 import { Setting } from 'pages/Setting'
 import { ShowPaymentEntry } from 'pages/ShowPaymentEntry'
 import { SignInWithFirebase } from 'pages/SignInWithFirebase'
 import { Terms } from 'pages/Terms'
-import { WelcomeWrapper } from 'pages/WelcomeWrapper'
+import { OnboardingWrapper } from 'router/OnboardingWrapper'
 import { PrivateRoute } from 'router/PrivateRoute'
+import { WelcomeWrapper } from 'router/WelcomeWrapper'
 
 export const RouterConfig: VFC = () => (
   <BrowserRouter>

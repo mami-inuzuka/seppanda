@@ -1,7 +1,7 @@
 import { useLocation } from 'react-router-dom'
 
-import { NotFound } from './NotFound'
-import { Onboarding } from './Onboarding'
+import { NotFound } from '../pages/NotFound'
+import { Onboarding } from '../pages/Onboarding'
 
 type LocationState = {
   referrer: string
