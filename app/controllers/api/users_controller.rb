@@ -22,11 +22,7 @@ class API::UsersController < API::Auth::FirebaseAuthRailsController
     @user = User.find_by(uid: payload['sub'])
     @user.name = params[:name]
     if params[:avatar][:data].present?
-      blob = ActiveStorage::Blob.create_and_upload!(
-        io: StringIO.new("#{decode(params[:avatar][:data])}\n"),
-        filename: params[:avatar][:name]
-      )
-      @user.avatar.attach(blob)
+      @user.attach_avatar(params[:avatar][:data], params[:avatar][:name])
     end
     if @user.update(update_params)
       render :update
