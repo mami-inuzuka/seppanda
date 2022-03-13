@@ -1,7 +1,7 @@
 import { createContext } from 'react'
 
+import type { TeamStatus } from 'types/api/team'
 import type { PaymentListGroupByPaidAt } from 'types/paymentListGroupByPaidAt'
-import type { TeamStatus } from 'types/teamStatus'
 
 export type PaymentContextType = {
   paymentList: PaymentListGroupByPaidAt[]
