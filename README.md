@@ -30,16 +30,18 @@ https://seppanda.com
 * Rails 6.1.4.4
 * React 17.0.2
 * TypeScript 4.5.4
+* redis（ [firebase-auth-rails](https://github.com/penguinwokrs/firebase-auth-rails) で必要)
 
 # セットアップ
-### Railsの起動
+### Rails（バックエンド）
 ```
 $ bin/setup
-$ rails s -p 3001
+$ rails server
 ```
-### Reactの起動
+### React（フロントエンド）
 ```
 $ cd /frontend
+$ yarn install
 $ npm run start
 ```
 ### redis-serverの起動
