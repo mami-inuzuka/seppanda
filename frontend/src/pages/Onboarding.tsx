@@ -26,7 +26,7 @@ import { createUser } from 'lib/api/user'
 import { auth } from 'lib/firebase'
 import { useToast } from 'lib/toast'
 
-import type { CreateUserParams } from 'types/createUserParams'
+import type { CreateUserParams } from 'types/api/user'
 import type { MultipleErrorResponse } from 'types/multipleErrorResponses'
 
 export const Onboarding: VFC = () => {
