@@ -10,7 +10,7 @@ class API::UsersController < API::Auth::FirebaseAuthRailsController
 
     @user = User.new(create_params)
     create_team_or_belongs_to_team
-    attach_avatar
+    @user.attach_avatar(params[:avatar][:data], params[:avatar][:name])
     if @user.save
       render :create
     else
@@ -48,24 +48,6 @@ class API::UsersController < API::Auth::FirebaseAuthRailsController
       @user.build_team(invitation_token: @invitation_token)
       @user.color = 'blue'
     end
-  end
-
-  def attach_avatar
-    if params[:avatar][:data].present?
-      io = StringIO.new("#{decode(params[:avatar][:data])}\n")
-      filename = params[:avatar][:name]
-    else
-      io = File.open('./app/assets/images/default-user-icon.png')
-      filename = 'default-user-icon.png'
-    end
-    blob = ActiveStorage::Blob.create_and_upload!(io: io, filename: filename)
-    @user.avatar.attach(blob)
-  end
-
-
-
-  def decode(str)
-    Base64.decode64(str.split(',').last)
   end
 
   def update_params
