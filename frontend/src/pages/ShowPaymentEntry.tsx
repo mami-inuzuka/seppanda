@@ -21,7 +21,7 @@ type stateType = {
 }
 
 export const ShowPaymentEntry: VFC = () => {
-  const { updatePaymentList, setUpdatePaymentList } = useContext(PaymentContext)
+  const { isUpdatedPaymentList, setIsUpdatedPaymentList } = useContext(PaymentContext)
   const { errorToast, successToast } = useToast()
   const [processingDelete, setProcessingDelete] = useState<boolean>(false)
   const navigation = useNavigate()
@@ -48,7 +48,7 @@ export const ShowPaymentEntry: VFC = () => {
     const idToken = await auth.currentUser?.getIdToken(true)
     try {
       await deletePayment(payment.id, idToken)
-      setUpdatePaymentList(!updatePaymentList)
+      setIsUpdatedPaymentList(!isUpdatedPaymentList)
       navigation('/home')
       successToast('支払い情報を削除しました')
     } catch {
@@ -62,7 +62,7 @@ export const ShowPaymentEntry: VFC = () => {
     const idToken = await auth.currentUser?.getIdToken(true)
     try {
       await updatePayment(params, payment.id, idToken)
-      setUpdatePaymentList(!updatePaymentList)
+      setIsUpdatedPaymentList(!isUpdatedPaymentList)
       navigation('/home')
       successToast('支払い情報を更新しました')
     } catch (err) {

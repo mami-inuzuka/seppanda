@@ -6,6 +6,7 @@ import { AuthContext } from 'context/AuthContext'
 import { getCurrentUser } from 'lib/api/session'
 import { auth } from 'lib/firebase'
 import { useToast } from 'lib/toast'
+import { PaymentProvider } from 'providers/PaymentProvider'
 
 export const PrivateRoute: VFC = () => {
   const { currentUser, setCurrentUser, currentFirebaseUser, setCurrentFirebaseUser } = useContext(AuthContext)
@@ -49,7 +50,11 @@ export const PrivateRoute: VFC = () => {
 
   if (isLoaded) {
     if (currentUser && currentFirebaseUser) {
-      return <Outlet />
+      return (
+        <PaymentProvider>
+          <Outlet />
+        </PaymentProvider>
+      )
     }
     return <Navigate to="/welcome" />
   }
