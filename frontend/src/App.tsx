@@ -11,8 +11,17 @@ const App: VFC = () => (
   <ChakraProvider theme={theme}>
     <AuthProvider>
       <PaymentProvider>
-        <Box w="100%" m="0 auto" bg="white" maxW={{ base: 'auto', sm: '400px' }} minW="320px" minH="100vh">
-          <RouterConfig />
+        <Box bg={{ base: 'none', sm: 'gray.50' }} minH={{ base: 'none', sm: '100vh' }}>
+          <Box
+            w="100%"
+            m="0 auto"
+            bg="white"
+            maxW={{ base: 'none', sm: '400px' }}
+            minW="320px"
+            minH={{ base: 'none', sm: '100vh' }}
+          >
+            <RouterConfig />
+          </Box>
         </Box>
       </PaymentProvider>
     </AuthProvider>

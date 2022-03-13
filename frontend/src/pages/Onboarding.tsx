@@ -89,7 +89,11 @@ export const Onboarding: VFC = () => {
           <Heading size="lg" textAlign="center" my={4}>
             Welcome!
           </Heading>
-          <Text fontSize="sm">あなたのプロフィール画像となまえを設定しましょう</Text>
+          <Text fontSize="sm" align="center" lineHeight="1.7">
+            あなたのプロフィール画像と
+            <br />
+            なまえを設定しましょう
+          </Text>
         </Box>
         <form>
           <Grid gap={8}>
