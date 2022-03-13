@@ -1,17 +1,18 @@
 import { VFC, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 
 import { Box, Heading, Image, Text } from '@chakra-ui/react'
 
 import { GoogleLoginButton } from 'components/atoms/button/GoogleLoginButton'
-import { FullWindowSpinner } from 'components/organisms/FullWindowSpinner'
 import { HeaderAndFooterLayout } from 'components/templates/HeaderAndFooterLayout'
 import { useGetInviter } from 'hooks/useGetInviter'
-import { useSignInWithGoogle } from 'hooks/useSignInWithGoogle'
 
 export const WelcomeWithInvitationToken: VFC = () => {
-  const { signInWithGoogle, isLoading } = useSignInWithGoogle()
   const { handleGetInviter, inviterName, inviterAvatar, isInviterLoaded } = useGetInviter()
+  const navigate = useNavigate()
+  const { search } = useLocation()
+  const query = new URLSearchParams(search)
+  const invitationToken = query.get('invitation_token')
 
   useEffect(() => {
     handleGetInviter().catch((err) => {
@@ -21,61 +22,63 @@ export const WelcomeWithInvitationToken: VFC = () => {
   }, [])
 
   return (
-    <>
-      {isLoading && <FullWindowSpinner />}
-      <Box>
-        {isInviterLoaded && (
-          <HeaderAndFooterLayout>
-            <Box h="100%" p={6} mb={10}>
-              <Box mb={20}>
-                <Heading size="lg" textAlign="center" my={4}>
-                  seppandaに参加する
-                </Heading>
-              </Box>
-              <Box bg="gray.100" position="relative" p={6} pt="56px">
-                <Image
-                  src={inviterAvatar.data}
-                  alt={inviterAvatar.name}
-                  boxSize="64px"
-                  borderRadius="full"
-                  objectFit="cover"
-                  border="2px"
-                  borderColor="blue.500"
-                  position="absolute"
-                  top="-32px"
-                  left="0"
-                  right="0"
-                  m="auto"
-                />
-                <Text align="center" fontSize="sm" lineHeight="1.8" mb={6}>
-                  <Text as="span" fontWeight="bold">
-                    {inviterName}
-                  </Text>
-                  さんが
-                  <br />
-                  あなたをseppandaの利用に
-                  <br />
-                  招待しています。
-                  <br />
-                  下記のボタンから参加しましょう
-                </Text>
-                <GoogleLoginButton onClick={signInWithGoogle} disabled={isLoading} />
-                <Text fontSize="xs" align="center" color="gray.400" lineHeight="1.8">
-                  上記のボタンをクリックすることで、
-                  <Text as="span" textDecoration="underline">
-                    <Link to="/terms">利用規約</Link>
-                  </Text>
-                  および
-                  <Text as="span" textDecoration="underline">
-                    <Link to="/policy">プライバシーポリシー</Link>
-                  </Text>
-                  に同意するものとします。
-                </Text>
-              </Box>
+    <Box>
+      {isInviterLoaded && (
+        <HeaderAndFooterLayout>
+          <Box h="100%" p={6} mb={10}>
+            <Box mb={20}>
+              <Heading size="lg" textAlign="center" my={4}>
+                seppandaに参加する
+              </Heading>
             </Box>
-          </HeaderAndFooterLayout>
-        )}
-      </Box>
-    </>
+            <Box bg="gray.100" position="relative" p={6} pt="56px">
+              <Image
+                src={inviterAvatar.data}
+                alt={inviterAvatar.name}
+                boxSize="64px"
+                borderRadius="full"
+                objectFit="cover"
+                border="2px"
+                borderColor="blue.500"
+                position="absolute"
+                top="-32px"
+                left="0"
+                right="0"
+                m="auto"
+              />
+              <Text align="center" fontSize="sm" lineHeight="1.8" mb={6}>
+                <Text as="span" fontWeight="bold">
+                  {inviterName}
+                </Text>
+                さんが
+                <br />
+                あなたをseppandaの利用に
+                <br />
+                招待しています。
+                <br />
+                下記のボタンから参加しましょう
+              </Text>
+              <GoogleLoginButton
+                onClick={() => {
+                  navigate('/signin', { state: { referrer: 'signin', invitationToken } })
+                }}
+                disabled={false}
+              />
+              <Text fontSize="xs" align="center" color="gray.400" lineHeight="1.8">
+                上記のボタンをクリックすることで、
+                <Text as="span" textDecoration="underline">
+                  <Link to="/terms">利用規約</Link>
+                </Text>
+                および
+                <Text as="span" textDecoration="underline">
+                  <Link to="/policy">プライバシーポリシー</Link>
+                </Text>
+                に同意するものとします。
+              </Text>
+            </Box>
+          </Box>
+        </HeaderAndFooterLayout>
+      )}
+    </Box>
   )
 }

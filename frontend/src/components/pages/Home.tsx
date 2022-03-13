@@ -1,4 +1,4 @@
-import { memo, useContext, VFC } from 'react'
+import { memo, useContext, useEffect, VFC } from 'react'
 import { Link } from 'react-router-dom'
 
 import { Box, Center, useDisclosure } from '@chakra-ui/react'
@@ -14,12 +14,68 @@ import { PaymentListArea } from 'components/organisms/PaymentListArea'
 import { HomeHeaderLayout } from 'components/templates/HomeHeaderLayout'
 import { AuthContext } from 'context/AuthContext'
 import { PaymentContext } from 'context/PaymentContext'
+import { getPayments } from 'lib/api/payment'
+import { getTeamStatus } from 'lib/api/team'
+import { auth } from 'lib/firebase'
+import { useToast } from 'lib/toast'
 
 export const Home: VFC = memo(() => {
-  const { isPaymentListLoaded, teamStatus, isTeamStatusLoaded } = useContext(PaymentContext)
+  const {
+    paymentList,
+    setPaymentList,
+    isPaymentListLoaded,
+    setIsPaymentListLoaded,
+    teamStatus,
+    setTeamStatus,
+    isTeamStatusLoaded,
+    setIsTeamStatusLoaded,
+    updatePaymentList,
+  } = useContext(PaymentContext)
   const { currentUser } = useContext(AuthContext)
   const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true })
+  const { errorToast } = useToast()
 
+  const handleGetPayments = async () => {
+    setIsPaymentListLoaded(false)
+    const idToken = await auth.currentUser?.getIdToken(true)
+    try {
+      const res = await getPayments(idToken)
+      setPaymentList(res?.data)
+    } catch {
+      errorToast('支払情報の取得ができませんでした', '時間をおいてから再読み込みをしてください')
+    } finally {
+      setIsPaymentListLoaded(true)
+    }
+  }
+
+  const handleGetTeamStatus = async () => {
+    setIsTeamStatusLoaded(false)
+    const idToken = await auth.currentUser?.getIdToken(true)
+    if (currentUser) {
+      try {
+        const res = await getTeamStatus(currentUser.teamId, idToken)
+        setTeamStatus(res?.data)
+      } catch {
+        errorToast('情報の取得に失敗しました', '時間をおいてから再読み込みをしてください')
+      } finally {
+        setIsTeamStatusLoaded(true)
+      }
+    }
+  }
+
+  useEffect(() => {
+    handleGetPayments().catch((err) => {
+      console.log(err)
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [updatePaymentList, currentUser])
+
+  useEffect(() => {
+    handleGetTeamStatus().catch((err) => {
+      console.log(err)
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [paymentList])
   return (
     <>
       {!localStorage.getItem('invitationUrlClosed') && isTeamStatusLoaded && !teamStatus.isTeamCapacityReached && (
