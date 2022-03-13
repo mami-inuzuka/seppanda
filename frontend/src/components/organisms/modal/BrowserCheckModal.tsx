@@ -2,6 +2,8 @@ import { memo, VFC } from 'react'
 
 import { Modal, ModalHeader, ModalBody, ModalContent, ModalOverlay, Text, Box } from '@chakra-ui/react'
 
+import { SecondaryButton } from 'components/atoms/button/SecondaryButton'
+
 type Props = {
   isOpen: boolean
   onClose: () => void
@@ -26,6 +28,15 @@ export const BrowserCheckModal: VFC<Props> = memo((props) => {
               LINEやInstagram、Messangerなどのアプリ内ブラウザでは正しく動作しない場合があります。お手数ですが外部ブラウザで開き直してください。
             </Text>
           </Box>
+          <SecondaryButton
+            onClick={() => {
+              onClose()
+            }}
+            size="xl"
+            isFullWidth
+          >
+            とじる
+          </SecondaryButton>
         </ModalBody>
       </ModalContent>
     </Modal>
