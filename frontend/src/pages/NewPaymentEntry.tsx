@@ -17,7 +17,7 @@ import type { PostPaymentParams } from 'types/api/payment'
 import type { MultipleErrorResponse } from 'types/multipleErrorResponses'
 
 export const NewPaymentEntry: VFC = () => {
-  const { updatePaymentList, setUpdatePaymentList } = useContext(PaymentContext)
+  const { isUpdatedPaymentList, setIsUpdatedPaymentList } = useContext(PaymentContext)
   const { errorToast, successToast } = useToast()
   const navigation = useNavigate()
   const {
@@ -36,7 +36,7 @@ export const NewPaymentEntry: VFC = () => {
     const idToken = await auth.currentUser?.getIdToken(true)
     try {
       await postPayment(params, idToken)
-      setUpdatePaymentList(!updatePaymentList)
+      setIsUpdatedPaymentList(!isUpdatedPaymentList)
       navigation('/home')
       successToast('支払い情報を登録しました')
     } catch (err) {

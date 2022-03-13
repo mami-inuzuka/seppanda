@@ -12,7 +12,7 @@ import type { TeamStatus } from 'types/api/team'
 
 export const PaymentProvider = ({ children }: { children: React.ReactElement }) => {
   const [paymentList, setPaymentList] = useState<PaymentListGroupByPaidAt[]>([])
-  const [updatePaymentList, setUpdatePaymentList] = useState<boolean>(false)
+  const [isUpdatedPaymentList, setIsUpdatedPaymentList] = useState<boolean>(false)
   const [teamStatus, setTeamStatus] = useState<TeamStatus>({
     refundAmount: 0,
     largestPaymentUser: null,
@@ -35,8 +35,8 @@ export const PaymentProvider = ({ children }: { children: React.ReactElement }) 
     setTeamStatus,
     isTeamStatusLoaded,
     setIsTeamStatusLoaded,
-    updatePaymentList,
-    setUpdatePaymentList,
+    isUpdatedPaymentList,
+    setIsUpdatedPaymentList,
   }
 
   const handleGetPayments = async () => {
@@ -74,7 +74,7 @@ export const PaymentProvider = ({ children }: { children: React.ReactElement }) 
       })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [updatePaymentList, currentUser])
+  }, [isUpdatedPaymentList, currentUser])
 
   useEffect(() => {
     if (currentUser) {
