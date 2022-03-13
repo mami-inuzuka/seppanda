@@ -74,7 +74,7 @@ export const PaymentProvider = ({ children }: { children: React.ReactElement }) 
       })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isUpdatedPaymentList, currentUser])
+  }, [isUpdatedPaymentList])
 
   useEffect(() => {
     if (currentUser) {
