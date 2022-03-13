@@ -18,6 +18,18 @@ class User < ApplicationRecord
     self.avatar.attach(blob)
   end
 
+  def create_team_or_belongs_to_team(invitation_token)
+    if invitation_token.present?
+      team = Team.find_by!(invitation_token: invitation_token)
+      self.team = team
+      self.color = 'orange'
+    else
+      invitation_token = SecureRandom.urlsafe_base64
+      self.build_team(invitation_token: invitation_token)
+      self.color = 'blue'
+    end
+  end
+
   private
 
   def decode(str)

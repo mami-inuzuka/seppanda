@@ -9,7 +9,7 @@ class API::UsersController < API::Auth::FirebaseAuthRailsController
     raise ArgumentError, 'BadRequest Parameter' if payload.blank?
 
     @user = User.new(create_params)
-    create_team_or_belongs_to_team
+    @user.create_team_or_belongs_to_team(request.headers[:InvitationToken])
     @user.attach_avatar(params[:avatar][:data], params[:avatar][:name])
     if @user.save
       render :create
@@ -36,19 +36,6 @@ class API::UsersController < API::Auth::FirebaseAuthRailsController
   end
 
   private
-
-  def create_team_or_belongs_to_team
-    invitation_token = request.headers[:InvitationToken]
-    if invitation_token.present?
-      team = Team.find_by!(invitation_token: invitation_token)
-      @user.team_id = team.id
-      @user.color = 'orange'
-    else
-      @invitation_token = SecureRandom.urlsafe_base64
-      @user.build_team(invitation_token: @invitation_token)
-      @user.color = 'blue'
-    end
-  end
 
   def create_params
     params.permit(:name).merge(uid: payload['sub'])
