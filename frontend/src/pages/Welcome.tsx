@@ -6,7 +6,7 @@ import { Box, Flex, Image, Text, useDisclosure } from '@chakra-ui/react'
 import VerticalLogo from 'assets/images/logo-vertical-black.svg'
 import { GoogleLoginButton } from 'components/atoms/button/GoogleLoginButton'
 import { Footer } from 'components/organisms/footer/Footer'
-import { BrowserCheckModal } from 'components/organisms/modal/BrowserCheckModal'
+import { BrowserCautionModal } from 'components/organisms/modal/BrowserCautionModal'
 import { detectInAppBrowser } from 'lib/detectInAppBrowser'
 
 export const Welcome: VFC = () => {
@@ -26,7 +26,7 @@ export const Welcome: VFC = () => {
 
   return (
     <>
-      <BrowserCheckModal isOpen={isOpen} onClose={onClose} size="xl" />
+      <BrowserCautionModal isOpen={isOpen} onClose={onClose} size="xl" />
       <Flex h="100%" direction="column" minH="100vh">
         <Flex h="100%" justify="center" align="center" direction="column" p={6} flex="1" my={28}>
           <Box>

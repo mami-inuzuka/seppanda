@@ -8,9 +8,9 @@ import bgOrange from 'assets/images/home-bg-orange.svg'
 import { CircleAddButton } from 'components/atoms/button/CircleAddButton'
 import { CurrentStatusCard } from 'components/organisms/CurrentStatusCard'
 import { InvitationAlert } from 'components/organisms/InvitationAlert'
-import { Loading } from 'components/organisms/Loading'
 import { InvitationUrlModal } from 'components/organisms/modal/InvitationUrlModal'
 import { PaymentListArea } from 'components/organisms/PaymentListArea'
+import { SpinnerIcon } from 'components/organisms/spinner/Spinner'
 import { HomeHeaderLayout } from 'components/templates/HomeHeaderLayout'
 import { AuthContext } from 'context/AuthContext'
 import { PaymentContext } from 'context/PaymentContext'
@@ -41,7 +41,7 @@ export const Home: VFC = memo(() => {
               <PaymentListArea />
             ) : (
               <Box pt={12} textAlign="center">
-                <Loading />
+                <SpinnerIcon />
               </Box>
             )}
           </Box>
