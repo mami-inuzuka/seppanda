@@ -10,7 +10,7 @@ type Props = {
   size: string
 }
 
-export const BrowserCheckModal: VFC<Props> = memo((props) => {
+export const BrowserCautionModal: VFC<Props> = memo((props) => {
   const { isOpen, onClose, size } = props
 
   return (
