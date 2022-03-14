@@ -32,7 +32,7 @@ export const NewPaymentEntry: VFC = () => {
     },
   })
 
-  const handleSubmitAmount = async (params: PostPaymentParams) => {
+  const handleSubmitPayment = async (params: PostPaymentParams) => {
     const idToken = await auth.currentUser?.getIdToken(true)
     try {
       await postPayment(params, idToken)
@@ -114,7 +114,7 @@ export const NewPaymentEntry: VFC = () => {
               <FormErrorMessage>{errors.paidAt && errors.paidAt?.message}</FormErrorMessage>
             </FormControl>
             <PrimaryButton
-              onClickButton={handleSubmit(handleSubmitAmount)}
+              onClickButton={handleSubmit(handleSubmitPayment)}
               disabled={!formState.isValid || formState.isSubmitting}
               isLoading={formState.isSubmitting}
             >
