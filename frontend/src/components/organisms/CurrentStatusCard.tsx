@@ -4,7 +4,7 @@ import { AspectRatio, Box } from '@chakra-ui/react'
 
 import cardLabel from 'assets/images/card-label.svg'
 import { CurrentStatusContents } from 'components/organisms/CurrentStatusContents'
-import { Loading } from 'components/organisms/Loading'
+import { SpinnerIcon } from 'components/organisms/spinner/Spinner'
 import { PaymentContext } from 'context/PaymentContext'
 
 export const CurrentStatusCard: VFC = () => {
@@ -48,7 +48,7 @@ export const CurrentStatusCard: VFC = () => {
             transform: 'rotate(180deg)',
           }}
         >
-          {isTeamStatusLoaded ? <CurrentStatusContents /> : <Loading />}
+          {isTeamStatusLoaded ? <CurrentStatusContents /> : <SpinnerIcon />}
         </Box>
       </AspectRatio>
     </Box>
