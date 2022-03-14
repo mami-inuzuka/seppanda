@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Api::Teams::PaymentsController < Api::ApplicationController
+class API::Teams::PaymentsController < API::ApplicationController
   def update
     payments = Payment.includes(:user).where(team_id: current_user.team_id, settled: false)
     if payments.present?

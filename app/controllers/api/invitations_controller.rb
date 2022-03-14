@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Api::InvitationsController < Api::ApplicationController
+class API::InvitationsController < API::ApplicationController
   skip_before_action :authenticate_user
 
   def index

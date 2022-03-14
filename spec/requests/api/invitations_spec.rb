@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Api::Invitations', type: :request do
+RSpec.describe 'API::Invitations', type: :request do
   let(:user) { create(:user, :with_team) }
   let(:invitation_token) { Team.find(user.team_id).invitation_token }
 

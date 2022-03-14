@@ -77,16 +77,17 @@ export const Setting: VFC = () => {
           <Grid gap={6}>
             <FormControl>
               <Flex align="center" direction="column">
-                <Image
-                  src={inputAvatar.data}
-                  alt={inputAvatar.name}
+                <Box
                   boxSize="100px"
                   borderRadius="full"
                   border="3px solid"
                   borderColor={`brand.${currentUser?.color}`}
                   mb={4}
-                  objectFit="cover"
-                />
+                  overflow="hidden"
+                  bg="gray.50"
+                >
+                  {inputAvatar.data && <Image src={inputAvatar.data} alt={inputAvatar.name} objectFit="cover" />}
+                </Box>
                 <FormLabel
                   bg="gray.50"
                   color="gray.900"

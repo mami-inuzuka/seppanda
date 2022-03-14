@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Api::Auth::FirebaseAuthRailsController < Api::ApplicationController
+class API::Auth::FirebaseAuthRailsController < API::ApplicationController
   private
 
   def token_from_request_headers

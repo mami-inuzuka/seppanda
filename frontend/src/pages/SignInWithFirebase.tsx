@@ -38,6 +38,7 @@ export const SignInWithFirebase = () => {
       }
     } catch {
       errorToast('エラーが発生しました', '時間をおいてから再度お試しください')
+      navigate('/welcome')
     }
   }
 
@@ -47,6 +48,7 @@ export const SignInWithFirebase = () => {
       const provider = new GoogleAuthProvider()
       auth.signInWithRedirect(provider).catch(() => {
         errorToast('エラーが発生しました', '時間をおいてから再度お試しください')
+        navigate('/welcome')
       })
       if (invitationTokenFromWelcomePage) {
         localStorage.setItem('invitationToken', invitationTokenFromWelcomePage)
