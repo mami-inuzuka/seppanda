@@ -23,5 +23,7 @@ jobs:
         run: yarn install --check-files
         working-directory: ./frontend
       - name: Run Jest
+        env:
+          REACT_APP_FIREBASE_API_KEY: ${{ secrets.REACT_APP_FIREBASE_API_KEY }}
         run: npm test
         working-directory: ./frontend
