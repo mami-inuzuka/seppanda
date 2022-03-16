@@ -63,13 +63,14 @@ $ rails firebase:certificates:force_request
 # テスト・Lint
 ### Rails
 ```
-$ bundle exec rspec
 $ bundle exec rubocop
+$ bundle exec rspec
 ```
 ### React
 ```
 $ cd /frontend
 $ yarn lint
+$ yarn test
 ```
 
 
