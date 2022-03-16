@@ -3,7 +3,11 @@ import { VFC } from 'react'
 import { AddIcon } from '@chakra-ui/icons'
 import { Button } from '@chakra-ui/react'
 
-export const CircleAddButton: VFC = () => (
+type Props = {
+  testId?: string
+}
+
+export const CircleAddButton: VFC<Props> = ({ testId }) => (
   <Button
     bgColor="green.500"
     w="60px"
@@ -11,6 +15,7 @@ export const CircleAddButton: VFC = () => (
     borderRadius="60px"
     _active={{ bg: 'green.600' }}
     _hover={{ bg: 'green.400' }}
+    data-testid={testId}
   >
     <AddIcon color="white" />
   </Button>
