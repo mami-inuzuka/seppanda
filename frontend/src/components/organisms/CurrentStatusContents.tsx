@@ -6,18 +6,20 @@ import { SecondaryButton } from 'components/atoms/button/SecondaryButton'
 import { CardText } from 'components/molecules/CardText'
 import { RefundAmount } from 'components/molecules/RefundAmount'
 import { SettelementModal } from 'components/organisms/modal/SettlementModal'
+import { AuthContext } from 'context/AuthContext'
 import { PaymentContext } from 'context/PaymentContext'
 
 export const CurrentStatusContents: VFC = () => {
   const { teamStatus } = useContext(PaymentContext)
+  const { currentUser } = useContext(AuthContext)
   const { isOpen: isOpenSettleModal, onOpen: onOpenSettleModal, onClose: onCloseSettleModal } = useDisclosure()
   return (
     <>
       <SettelementModal isOpen={isOpenSettleModal} onClose={onCloseSettleModal} size="xl" />
       <Box>
-        {teamStatus.isTeamCapacityReached ? (
+        {currentUser && teamStatus.isTeamCapacityReached ? (
           <>
-            <CardText />
+            <CardText isDebt={currentUser.isDebt} refundAmount={teamStatus.refundAmount} />
             <RefundAmount />
             {teamStatus.refundAmount !== 0 && (
               <Box textAlign="center">
