@@ -1,11 +1,13 @@
 import { VFC, useEffect } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 
-import { Box, Heading, Image, Text } from '@chakra-ui/react'
+import { Box, Heading, Image, Text, useDisclosure } from '@chakra-ui/react'
 
 import { GoogleLoginButton } from 'components/atoms/button/GoogleLoginButton'
+import { BrowserCautionModal } from 'components/organisms/modal/BrowserCautionModal'
 import { HeaderAndFooterLayout } from 'components/templates/HeaderAndFooterLayout'
 import { useGetInviter } from 'hooks/useGetInviter'
+import { detectInAppBrowser } from 'lib/detectInAppBrowser'
 
 export const WelcomeWithInvitationToken: VFC = () => {
   const { handleGetInviter, inviterName, inviterAvatar, isInviterLoaded } = useGetInviter()
@@ -13,6 +15,18 @@ export const WelcomeWithInvitationToken: VFC = () => {
   const { search } = useLocation()
   const query = new URLSearchParams(search)
   const invitationToken = query.get('invitation_token')
+  const userAgent = detectInAppBrowser(window.navigator.userAgent)
+  const { isOpen, onOpen, onClose } = useDisclosure()
+
+  const handleGoToSignInPage = () => {
+    if (userAgent) {
+      if (userAgent.match(/line|instagram|facebook/)) {
+        onOpen()
+      }
+    } else {
+      navigate('/signin', { state: { referrer: 'signin', invitationToken } })
+    }
+  }
 
   useEffect(() => {
     handleGetInviter().catch((err) => {
@@ -23,6 +37,7 @@ export const WelcomeWithInvitationToken: VFC = () => {
 
   return (
     <Box>
+      <BrowserCautionModal isOpen={isOpen} onClose={onClose} size="xl" />
       {isInviterLoaded && (
         <HeaderAndFooterLayout>
           <Box h="100%" p={6} mb={10}>
@@ -58,11 +73,7 @@ export const WelcomeWithInvitationToken: VFC = () => {
                 <br />
                 下記のボタンから参加しましょう
               </Text>
-              <GoogleLoginButton
-                onClick={() => {
-                  navigate('/signin', { state: { referrer: 'signin', invitationToken } })
-                }}
-              />
+              <GoogleLoginButton onClick={handleGoToSignInPage} />
               <Text fontSize="xs" align="center" color="gray.400" lineHeight="1.8">
                 上記のボタンをクリックすることで、
                 <Text as="span" textDecoration="underline">
