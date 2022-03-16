@@ -14,7 +14,6 @@ describe('SettlementModal', () => {
     )
     expect(screen.getByTestId('settlement-modal')).toBeInTheDocument()
     expect(screen.getByTestId('settlement-modal-header')).toHaveTextContent('精算')
-    console.log(refundAmount.toLocaleString())
     expect(screen.getByTestId('settlement-modal-body')).toHaveTextContent(refundAmount.toLocaleString())
   })
 
