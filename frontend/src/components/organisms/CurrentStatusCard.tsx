@@ -1,17 +1,20 @@
-import { useContext, VFC } from 'react'
+import { memo, VFC } from 'react'
 
 import { AspectRatio, Box } from '@chakra-ui/react'
 
 import cardLabel from 'assets/images/card-label.svg'
 import { CurrentStatusContents } from 'components/organisms/CurrentStatusContents'
 import { SpinnerIcon } from 'components/organisms/spinner/Spinner'
-import { PaymentContext } from 'context/PaymentContext'
 
-export const CurrentStatusCard: VFC = () => {
-  const { isTeamStatusLoaded } = useContext(PaymentContext)
+type Props = {
+  isLoaded: boolean
+}
+
+export const CurrentStatusCard: VFC<Props> = memo((props) => {
+  const { isLoaded } = props
 
   return (
-    <Box px={8} mb={8}>
+    <Box px={8} mb={8} data-testid="current-status-card">
       <AspectRatio ratio={311 / 166}>
         <Box
           py={6}
@@ -48,9 +51,9 @@ export const CurrentStatusCard: VFC = () => {
             transform: 'rotate(180deg)',
           }}
         >
-          {isTeamStatusLoaded ? <CurrentStatusContents /> : <SpinnerIcon />}
+          {isLoaded ? <CurrentStatusContents /> : <SpinnerIcon />}
         </Box>
       </AspectRatio>
     </Box>
   )
-}
+})

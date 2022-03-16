@@ -14,8 +14,7 @@ export const CurrentStatusContents: VFC = () => {
   const { currentUser } = useContext(AuthContext)
   const { isOpen: isOpenSettleModal, onOpen: onOpenSettleModal, onClose: onCloseSettleModal } = useDisclosure()
   return (
-    // eslint-disable-next-line react/jsx-no-useless-fragment
-    <>
+    <Box data-testid="current-status-contents">
       {currentUser && (
         <>
           <SettelementModal
@@ -56,6 +55,6 @@ export const CurrentStatusContents: VFC = () => {
           </Box>
         </>
       )}
-    </>
+    </Box>
   )
 }

@@ -35,7 +35,7 @@ export const Home: VFC = memo(() => {
         minH="100%"
       >
         <HomeHeaderLayout>
-          <CurrentStatusCard />
+          <CurrentStatusCard isLoaded={isTeamStatusLoaded} />
           <Box borderTopColor="gray.200" borderTopWidth="1px" flex="1">
             {isPaymentListLoaded ? (
               <PaymentListArea />
