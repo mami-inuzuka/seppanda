@@ -12,6 +12,13 @@
 
 <br>
 
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/52844263/158577117-0c7b46ed-00dc-42e8-8c54-249d3411d635.png" width="600px">
+</p>
+
+
+<br>
+
 ### サービス利用の流れ
 
 ![新規登録（招待する人）](https://user-images.githubusercontent.com/52844263/157189632-c0b180ba-7a5d-4baa-ba31-a6f96cdc75be.png)
