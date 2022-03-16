@@ -16,7 +16,7 @@ export const BrowserCautionModal: VFC<Props> = memo((props) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose} size={size} closeOnOverlayClick={false} isCentered>
       <ModalOverlay />
-      <ModalContent m={6} py={14} px={6}>
+      <ModalContent m={6} py={14} px={6} data-testid="browser-caution-modal">
         <ModalHeader align="center" mb={4}>
           外部ブラウザで
           <br />
@@ -34,6 +34,7 @@ export const BrowserCautionModal: VFC<Props> = memo((props) => {
             }}
             size="xl"
             isFullWidth
+            testId="browser-caution-modal-close-button"
           >
             とじる
           </SecondaryButton>
