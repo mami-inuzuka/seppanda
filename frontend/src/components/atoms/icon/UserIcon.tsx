@@ -19,8 +19,9 @@ export const UserIcon: VFC<Props> = memo((props) => {
       boxSize={size}
       borderRadius="full"
       border="2px"
-      borderColor={`brand.${user?.color}`}
+      borderColor={`${user?.color}.500`}
       objectFit="cover"
+      data-testid="user-icon"
     />
   )
 })
