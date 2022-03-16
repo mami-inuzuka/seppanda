@@ -20,7 +20,7 @@ export const CurrentStatusContents: VFC = () => {
         {currentUser && teamStatus.isTeamCapacityReached ? (
           <>
             <CardText isDebt={currentUser.isDebt} refundAmount={teamStatus.refundAmount} />
-            <RefundAmount />
+            <RefundAmount isDebt={currentUser.isDebt} refundAmount={teamStatus.refundAmount} />
             {teamStatus.refundAmount !== 0 && (
               <Box textAlign="center">
                 <SecondaryButton size="sm" isFullWidth={false} onClick={onOpenSettleModal}>
