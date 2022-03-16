@@ -18,7 +18,7 @@ export const PaymentList: VFC<Props> = memo((props) => {
   const handleRowClick = (payment: Payment) => navigation(`/payments/${payment.id}`, { state: { payment } })
 
   return (
-    <>
+    <Box data-testid="payment-list">
       {paymentList.map((paymentListItem) => (
         <Box key={paymentListItem.date} data-testid="payment-list-group">
           <Box bg="gray.100" fontSize="xs" color="gray.500" p={1}>
@@ -50,6 +50,6 @@ export const PaymentList: VFC<Props> = memo((props) => {
           ))}
         </Box>
       ))}
-    </>
+    </Box>
   )
 })

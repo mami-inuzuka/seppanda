@@ -16,7 +16,7 @@ import { AuthContext } from 'context/AuthContext'
 import { PaymentContext } from 'context/PaymentContext'
 
 export const Home: VFC = memo(() => {
-  const { isPaymentListLoaded, teamStatus, isTeamStatusLoaded } = useContext(PaymentContext)
+  const { isPaymentListLoaded, paymentList, teamStatus, isTeamStatusLoaded } = useContext(PaymentContext)
   const { currentUser } = useContext(AuthContext)
   const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true })
 
@@ -38,7 +38,7 @@ export const Home: VFC = memo(() => {
           <CurrentStatusCard isLoaded={isTeamStatusLoaded} />
           <Box borderTopColor="gray.200" borderTopWidth="1px" flex="1">
             {isPaymentListLoaded ? (
-              <PaymentListArea />
+              <PaymentListArea paymentList={paymentList} />
             ) : (
               <Box pt={12} textAlign="center">
                 <SpinnerIcon />
