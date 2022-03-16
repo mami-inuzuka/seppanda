@@ -157,7 +157,7 @@ export const Onboarding: VFC = () => {
             </FormControl>
             <PrimaryButton
               isLoading={formState.isSubmitting}
-              onClickButton={handleSubmit(handleCreateUser)}
+              onClick={handleSubmit(handleCreateUser)}
               disabled={!formState.isValid || formState.isSubmitting}
             >
               上記の内容で登録する

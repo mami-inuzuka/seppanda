@@ -74,7 +74,7 @@ export const SettelementModal: VFC<Props> = memo((props) => {
             </Text>
           </Box>
           <Grid gap={4}>
-            <PrimaryButton isLoading={processing} onClickButton={handleSettleTeamPayments} disabled={processing}>
+            <PrimaryButton isLoading={processing} onClick={handleSettleTeamPayments} disabled={processing}>
               {currentUser?.isDebt ? '返した' : '返してもらった'}ので清算する
             </PrimaryButton>
             <SecondaryButton onClick={onClose} size="xl" isFullWidth>

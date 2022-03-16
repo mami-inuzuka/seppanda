@@ -135,7 +135,7 @@ export const ShowPaymentEntry: VFC = () => {
             </FormControl>
             <Grid gap={4}>
               <PrimaryButton
-                onClickButton={handleSubmit(handleUpdateAmount)}
+                onClick={handleSubmit(handleUpdateAmount)}
                 isLoading={formState.isSubmitting}
                 disabled={!formState.isValid || formState.isSubmitting}
               >
