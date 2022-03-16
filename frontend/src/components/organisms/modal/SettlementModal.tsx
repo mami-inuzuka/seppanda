@@ -5,7 +5,6 @@ import axios from 'axios'
 
 import { PrimaryButton } from 'components/atoms/button/PrimaryButton'
 import { SecondaryButton } from 'components/atoms/button/SecondaryButton'
-import { AuthContext } from 'context/AuthContext'
 import { PaymentContext } from 'context/PaymentContext'
 import { settleTeamPayments } from 'lib/api/payment'
 import { auth } from 'lib/firebase'
@@ -17,67 +16,67 @@ type Props = {
   isOpen: boolean
   onClose: () => void
   size: string
+  isDebt: boolean
+  refundAmount: number
+  teamId: number
 }
 
 export const SettelementModal: VFC<Props> = memo((props) => {
-  const { isOpen, onClose, size } = props
-  const { currentUser } = useContext(AuthContext)
-  const { teamStatus, setPaymentList } = useContext(PaymentContext)
-  const [processing, setProcessing] = useState<boolean>(false)
+  const { isOpen, onClose, size, isDebt, refundAmount, teamId } = props
+  const { setPaymentList } = useContext(PaymentContext)
   const { errorToast, successToast } = useToast()
+  const [processing, setProcessing] = useState<boolean>(false)
 
   const handleSettleTeamPayments = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
     setProcessing(true)
     const idToken = await auth.currentUser?.getIdToken(true)
-    if (currentUser) {
-      try {
-        await settleTeamPayments(currentUser.teamId, idToken)
-        successToast('清算が完了しました')
-        setPaymentList([])
-      } catch (err) {
-        if (axios.isAxiosError(err) && (err.response?.data as ErrorResponse).message) {
-          errorToast((err.response?.data as ErrorResponse).message)
-        } else {
-          errorToast('エラーが発生しました', '時間をおいてから再度お試しください')
-        }
-      } finally {
-        onClose()
-        setProcessing(false)
+    try {
+      await settleTeamPayments(teamId, idToken)
+      successToast('清算が完了しました')
+      setPaymentList([])
+    } catch (err) {
+      if (axios.isAxiosError(err) && (err.response?.data as ErrorResponse).message) {
+        errorToast((err.response?.data as ErrorResponse).message)
+      } else {
+        errorToast('エラーが発生しました', '時間をおいてから再度お試しください')
       }
+    } finally {
+      onClose()
+      setProcessing(false)
     }
   }
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} size={size} isCentered>
       <ModalOverlay />
-      <ModalContent m={6} py={14} px={6}>
-        <ModalHeader align="center" mb={4}>
+      <ModalContent m={6} py={14} px={6} data-testid="settlement-modal">
+        <ModalHeader align="center" mb={4} data-testid="settlement-modal-header">
           精算
         </ModalHeader>
-        <ModalBody p={0}>
+        <ModalBody p={0} data-testid="settlement-modal-body">
           <Box mb={12}>
             <Text fontWeight="bold" align="center" mb={6}>
               お相手に下記の金額を
               <br />
-              {currentUser?.isDebt ? '返しましたか？' : '返してもらいましたか？'}
+              {isDebt ? '返しましたか？' : '返してもらいましたか？'}
             </Text>
             <Text
               align="center"
               fontSize="5xl"
               lineHeight="1"
               fontWeight="bold"
-              color={currentUser?.isDebt ? 'red.500' : 'green.500'}
+              color={isDebt ? 'red.500' : 'green.500'}
               _after={{ content: `"円"`, fontSize: '3xl' }}
             >
-              {teamStatus.refundAmount.toLocaleString()}
+              {refundAmount.toLocaleString()}
             </Text>
           </Box>
           <Grid gap={4}>
             <PrimaryButton isLoading={processing} onClick={handleSettleTeamPayments} disabled={processing}>
-              {currentUser?.isDebt ? '返した' : '返してもらった'}ので清算する
+              {isDebt ? '返した' : '返してもらった'}ので清算する
             </PrimaryButton>
-            <SecondaryButton onClick={onClose} size="xl" isFullWidth>
+            <SecondaryButton onClick={onClose} size="xl" isFullWidth testId="settlement-modal-close-button">
               キャンセル
             </SecondaryButton>
           </Grid>

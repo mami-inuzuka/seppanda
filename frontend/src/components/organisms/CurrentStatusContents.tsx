@@ -14,36 +14,48 @@ export const CurrentStatusContents: VFC = () => {
   const { currentUser } = useContext(AuthContext)
   const { isOpen: isOpenSettleModal, onOpen: onOpenSettleModal, onClose: onCloseSettleModal } = useDisclosure()
   return (
+    // eslint-disable-next-line react/jsx-no-useless-fragment
     <>
-      <SettelementModal isOpen={isOpenSettleModal} onClose={onCloseSettleModal} size="xl" />
-      <Box>
-        {currentUser && teamStatus.isTeamCapacityReached ? (
-          <>
-            <CardText isDebt={currentUser.isDebt} refundAmount={teamStatus.refundAmount} />
-            <RefundAmount isDebt={currentUser.isDebt} refundAmount={teamStatus.refundAmount} />
-            {teamStatus.refundAmount !== 0 && (
-              <Box textAlign="center">
-                <SecondaryButton size="sm" isFullWidth={false} onClick={onOpenSettleModal}>
-                  精算する
-                </SecondaryButton>
+      {currentUser && (
+        <>
+          <SettelementModal
+            isOpen={isOpenSettleModal}
+            onClose={onCloseSettleModal}
+            size="xl"
+            isDebt={currentUser?.isDebt}
+            refundAmount={teamStatus.refundAmount}
+            teamId={currentUser?.teamId}
+          />
+          <Box>
+            {currentUser && teamStatus.isTeamCapacityReached ? (
+              <>
+                <CardText isDebt={currentUser.isDebt} refundAmount={teamStatus.refundAmount} />
+                <RefundAmount isDebt={currentUser.isDebt} refundAmount={teamStatus.refundAmount} />
+                {teamStatus.refundAmount !== 0 && (
+                  <Box textAlign="center">
+                    <SecondaryButton size="sm" isFullWidth={false} onClick={onOpenSettleModal}>
+                      精算する
+                    </SecondaryButton>
+                  </Box>
+                )}
+              </>
+            ) : (
+              <Box p={8} textAlign="center">
+                <Text fontSize="sm" fontWeight="bold" mb={2}>
+                  おあいての登録が完了すると
+                  <br />
+                  表示されます
+                </Text>
+                <Text as="p" fontWeight="normal" fontSize="0.7rem">
+                  おあいての登録が完了したら
+                  <br />
+                  画面を再読み込みしてください
+                </Text>
               </Box>
             )}
-          </>
-        ) : (
-          <Box p={8} textAlign="center">
-            <Text fontSize="sm" fontWeight="bold" mb={2}>
-              おあいての登録が完了すると
-              <br />
-              表示されます
-            </Text>
-            <Text as="p" fontWeight="normal" fontSize="0.7rem">
-              おあいての登録が完了したら
-              <br />
-              画面を再読み込みしてください
-            </Text>
           </Box>
-        )}
-      </Box>
+        </>
+      )}
     </>
   )
 }
