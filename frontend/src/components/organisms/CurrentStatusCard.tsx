@@ -8,10 +8,14 @@ import { SpinnerIcon } from 'components/organisms/spinner/Spinner'
 
 type Props = {
   isLoaded: boolean
+  isDebt: boolean
+  refundAmount: number
+  teamId: number
+  isTeamCapacityReached: boolean
 }
 
 export const CurrentStatusCard: VFC<Props> = memo((props) => {
-  const { isLoaded } = props
+  const { isLoaded, isDebt, refundAmount, teamId, isTeamCapacityReached } = props
 
   return (
     <Box px={8} mb={8} data-testid="current-status-card">
@@ -51,7 +55,16 @@ export const CurrentStatusCard: VFC<Props> = memo((props) => {
             transform: 'rotate(180deg)',
           }}
         >
-          {isLoaded ? <CurrentStatusContents /> : <SpinnerIcon />}
+          {isLoaded ? (
+            <CurrentStatusContents
+              isDebt={isDebt}
+              refundAmount={refundAmount}
+              teamId={teamId}
+              isTeamCapacityReached={isTeamCapacityReached}
+            />
+          ) : (
+            <SpinnerIcon />
+          )}
         </Box>
       </AspectRatio>
     </Box>

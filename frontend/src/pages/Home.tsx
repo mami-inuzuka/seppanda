@@ -28,32 +28,40 @@ export const Home: VFC = memo(() => {
       {isTeamStatusLoaded && !teamStatus.isTeamCapacityReached && (
         <InvitationAlert invitationToken={teamStatus.invitationToken} />
       )}
-      <Box
-        backgroundImage={currentUser?.color === 'blue' ? bgBlue : bgOrange}
-        backgroundSize="contain"
-        backgroundRepeat="no-repeat"
-        minH="100%"
-      >
-        <HomeHeaderLayout>
-          <CurrentStatusCard isLoaded={isTeamStatusLoaded} />
-          <Box borderTopColor="gray.200" borderTopWidth="1px" flex="1">
-            {isPaymentListLoaded ? (
-              <PaymentListArea paymentList={paymentList} />
-            ) : (
-              <Box pt={12} textAlign="center">
-                <SpinnerIcon />
-              </Box>
-            )}
-          </Box>
-          <Box position="fixed" right="0" left="0" bottom="24px" margin="auto" w="100%">
-            <Center w="100%">
-              <Link to="/payments/new">
-                <CircleAddButton />
-              </Link>
-            </Center>
-          </Box>
-        </HomeHeaderLayout>
-      </Box>
+      {currentUser && (
+        <Box
+          backgroundImage={currentUser.color === 'blue' ? bgBlue : bgOrange}
+          backgroundSize="contain"
+          backgroundRepeat="no-repeat"
+          minH="100%"
+        >
+          <HomeHeaderLayout>
+            <CurrentStatusCard
+              isLoaded={isTeamStatusLoaded}
+              isDebt={currentUser.isDebt}
+              refundAmount={teamStatus.refundAmount}
+              teamId={currentUser.teamId}
+              isTeamCapacityReached={teamStatus.isTeamCapacityReached}
+            />
+            <Box borderTopColor="gray.200" borderTopWidth="1px" flex="1">
+              {isPaymentListLoaded ? (
+                <PaymentListArea paymentList={paymentList} />
+              ) : (
+                <Box pt={12} textAlign="center">
+                  <SpinnerIcon />
+                </Box>
+              )}
+            </Box>
+            <Box position="fixed" right="0" left="0" bottom="24px" margin="auto" w="100%">
+              <Center w="100%">
+                <Link to="/payments/new">
+                  <CircleAddButton />
+                </Link>
+              </Center>
+            </Box>
+          </HomeHeaderLayout>
+        </Box>
+      )}
     </>
   )
 })
