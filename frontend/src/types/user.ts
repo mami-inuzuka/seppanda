@@ -6,7 +6,6 @@ export type User = {
   email: string
   uid: string
   teamId: number
-  allowPasswordChange: false
   createdAt: string
   updatedAt: string
   avatar: Avatar
