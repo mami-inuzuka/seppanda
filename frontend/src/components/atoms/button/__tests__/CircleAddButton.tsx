@@ -7,7 +7,7 @@ import { CircleAddButton } from '../CircleAddButton'
 
 describe('CircleAddButton', () => {
   it('can display itself', () => {
-    renderWithChakraProvider(<CircleAddButton testId="testId" />)
-    expect(screen.getByTestId('testId')).toBeInTheDocument()
+    renderWithChakraProvider(<CircleAddButton />)
+    expect(screen.getByTestId('circle-add-button')).toBeInTheDocument()
   })
 })
