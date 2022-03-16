@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { Box, Divider, Flex, FormControl, FormErrorMessage, FormLabel, Grid, Image, Input } from '@chakra-ui/react'
 import axios from 'axios'
+import { signOut } from 'firebase/auth'
 
 import { PrimaryButton } from 'components/atoms/button/PrimaryButton'
 import { SecondaryButton } from 'components/atoms/button/SecondaryButton'
@@ -58,7 +59,7 @@ export const Setting: VFC = () => {
   }
 
   const handleSignOut = async () => {
-    await auth.signOut()
+    await signOut(auth)
     navigation('/')
     successToast('ログアウトしました')
   }

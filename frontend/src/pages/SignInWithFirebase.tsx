@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 
-import { GoogleAuthProvider } from 'firebase/auth'
+import { GoogleAuthProvider, signInWithRedirect, getRedirectResult } from 'firebase/auth'
 
 import { FullWindowSpinner } from 'components/organisms/spinner/FullWindowSpinner'
 import { AuthContext } from 'context/AuthContext'
@@ -46,7 +46,7 @@ export const SignInWithFirebase = () => {
   useEffect(() => {
     if (locationState?.referrer === 'signin') {
       const provider = new GoogleAuthProvider()
-      auth.signInWithRedirect(provider).catch(() => {
+      signInWithRedirect(auth, provider).catch(() => {
         errorToast('エラーが発生しました', '時間をおいてから再度お試しください')
         navigate('/welcome')
       })
@@ -60,10 +60,9 @@ export const SignInWithFirebase = () => {
   // SignInに成功し、リダイレクトした後の処理
   useEffect(() => {
     if (!locationState) {
-      auth
-        .getRedirectResult()
+      getRedirectResult(auth)
         .then((result) => {
-          if (result.user) {
+          if (result?.user) {
             handleDecideNextPage().catch(() => {
               errorToast('エラーが発生しました', '時間をおいてから再度お試しください')
             })

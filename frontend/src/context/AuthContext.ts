@@ -1,6 +1,6 @@
 import { createContext } from 'react'
 
-import firebase from 'firebase/compat/app'
+import { UserCredential } from 'firebase/auth'
 
 import type { User } from 'types/user'
 
@@ -9,8 +9,8 @@ export type AuthContextType = {
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
   currentUser: User | null
   setCurrentUser: React.Dispatch<React.SetStateAction<User | null>>
-  currentFirebaseUser: firebase.User | null
-  setCurrentFirebaseUser: React.Dispatch<React.SetStateAction<firebase.User | null>>
+  currentFirebaseUser: UserCredential['user'] | null
+  setCurrentFirebaseUser: React.Dispatch<React.SetStateAction<UserCredential['user'] | null>>
 }
 
 export const AuthContext = createContext<AuthContextType>({
