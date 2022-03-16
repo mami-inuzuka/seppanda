@@ -13,7 +13,6 @@ describe('SecondaryButton', () => {
     const user: User = {
       id: 1,
       name: 'テスト',
-      email: 'test@example.com',
       uid: '1',
       teamId: 1,
       createdAt: '',

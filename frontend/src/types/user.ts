@@ -3,7 +3,6 @@ import { Avatar } from 'types/avatar'
 export type User = {
   id: number
   name: string
-  email: string
   uid: string
   teamId: number
   createdAt: string
