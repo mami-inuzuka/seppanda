@@ -18,14 +18,14 @@ export const InvitationAlert: VFC<Props> = memo((props) => {
     successToast('コピーしました')
   }
   return (
-    <Box bg="gray.100" p={4}>
+    <Box bg="gray.100" p={4} data-testid="invitation-alert">
       <Text fontSize="xs" fontWeight="bold" align="center" mb={3}>
         お相手の登録がまだのようです
         <br />
         下記のURLを共有して登録をしてもらおう
       </Text>
       <Flex bg="gray.200" p={3}>
-        <Text fontSize="xs" wordBreak="break-all" pr={1}>
+        <Text fontSize="xs" wordBreak="break-all" pr={1} data-testid="invitation-alert-invitation-url">
           {invitationUrl}
         </Text>
         <CopyToClipboard text={invitationUrl}>

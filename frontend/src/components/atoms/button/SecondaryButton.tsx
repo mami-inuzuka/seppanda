@@ -7,10 +7,11 @@ type Props = {
   size: string
   isFullWidth: boolean
   onClick: () => void
+  testId?: string
 }
 
 export const SecondaryButton: VFC<Props> = (props) => {
-  const { children, size, isFullWidth, onClick } = props
+  const { children, size, isFullWidth, onClick, testId } = props
 
   return (
     <Button
@@ -23,6 +24,7 @@ export const SecondaryButton: VFC<Props> = (props) => {
       border="1px solid rgba(46, 47, 46, 0.1)"
       boxShadow="0px 1px 0px #D7D7D7"
       onClick={onClick}
+      data-testid={testId}
     >
       {children}
     </Button>

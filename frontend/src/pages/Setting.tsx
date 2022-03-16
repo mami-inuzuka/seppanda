@@ -132,7 +132,7 @@ export const Setting: VFC = () => {
             </FormControl>
             <PrimaryButton
               isLoading={formState.isSubmitting}
-              onClickButton={handleSubmit(handleUpdateUser)}
+              onClick={handleSubmit(handleUpdateUser)}
               disabled={!formState.isValid || formState.isSubmitting}
             >
               保存する

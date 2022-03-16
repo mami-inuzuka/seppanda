@@ -18,14 +18,14 @@ export const PaymentList: VFC<Props> = memo((props) => {
   const handleRowClick = (payment: Payment) => navigation(`/payments/${payment.id}`, { state: { payment } })
 
   return (
-    <>
+    <Box data-testid="payment-list">
       {paymentList.map((paymentListItem) => (
-        <Box key={paymentListItem.date}>
+        <Box key={paymentListItem.date} data-testid="payment-list-group">
           <Box bg="gray.100" fontSize="xs" color="gray.500" p={1}>
             {DateTime.fromISO(paymentListItem.date).toFormat('yyyy.MM.dd')}
           </Box>
           {paymentListItem.payments.map((payment) => (
-            <Box key={payment.id}>
+            <Box key={payment.id} data-testid="payment-list-item">
               <Flex
                 justify="space-between"
                 align="center"
@@ -50,6 +50,6 @@ export const PaymentList: VFC<Props> = memo((props) => {
           ))}
         </Box>
       ))}
-    </>
+    </Box>
   )
 })

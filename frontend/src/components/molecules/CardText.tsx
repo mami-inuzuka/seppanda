@@ -1,21 +1,22 @@
-import { useContext, VFC } from 'react'
+import { memo, VFC } from 'react'
 
 import { Flex, Text } from '@chakra-ui/react'
 
-import { AuthContext } from 'context/AuthContext'
-import { PaymentContext } from 'context/PaymentContext'
+type Props = {
+  isDebt: boolean
+  refundAmount: number
+}
 
-export const CardText: VFC = () => {
-  const { currentUser } = useContext(AuthContext)
-  const { teamStatus } = useContext(PaymentContext)
+export const CardText: VFC<Props> = memo((props) => {
+  const { isDebt, refundAmount } = props
   return (
-    <Flex fontSize="sm" fontWeight="bold" justify="center" align="center" mb={2}>
-      {teamStatus.refundAmount === 0 ? (
+    <Flex fontSize="sm" fontWeight="bold" justify="center" align="center" mb={2} data-testid="card-text">
+      {refundAmount === 0 ? (
         <Text>現在貸し借りはありません</Text>
       ) : (
         <>
           あいてに
-          {currentUser?.isDebt ? (
+          {isDebt ? (
             <Text bg="rgba(208, 57, 57, 0.1)" color="red.500" py={0.5} px={1.5} mx={1}>
               返す
             </Text>
@@ -29,4 +30,4 @@ export const CardText: VFC = () => {
       )}
     </Flex>
   )
-}
+})

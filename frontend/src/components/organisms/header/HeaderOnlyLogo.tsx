@@ -6,7 +6,16 @@ import { Box, Flex, Image } from '@chakra-ui/react'
 import logo from 'assets/images/logo-horizon-black.svg'
 
 export const HeaderOnlyLogo: VFC = () => (
-  <Flex as="header" justify="center" align="center" h="56px" borderBottom="1px" borderColor="gray.100" p={4}>
+  <Flex
+    as="header"
+    justify="center"
+    align="center"
+    h="56px"
+    borderBottom="1px"
+    borderColor="gray.100"
+    p={4}
+    data-testid="header-only-logo"
+  >
     <Box h="100%">
       <Link to="/welcome">
         <Image m="0 auto" h="100%" src={logo} />

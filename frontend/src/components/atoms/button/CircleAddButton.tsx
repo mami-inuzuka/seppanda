@@ -11,6 +11,7 @@ export const CircleAddButton: VFC = () => (
     borderRadius="60px"
     _active={{ bg: 'green.600' }}
     _hover={{ bg: 'green.400' }}
+    data-testid="circle-add-button"
   >
     <AddIcon color="white" />
   </Button>

@@ -1,4 +1,4 @@
-import { useContext, VFC } from 'react'
+import { VFC } from 'react'
 
 import { Box, Text, useDisclosure } from '@chakra-ui/react'
 
@@ -6,22 +6,40 @@ import { SecondaryButton } from 'components/atoms/button/SecondaryButton'
 import { CardText } from 'components/molecules/CardText'
 import { RefundAmount } from 'components/molecules/RefundAmount'
 import { SettelementModal } from 'components/organisms/modal/SettlementModal'
-import { PaymentContext } from 'context/PaymentContext'
 
-export const CurrentStatusContents: VFC = () => {
-  const { teamStatus } = useContext(PaymentContext)
+type Props = {
+  isDebt: boolean
+  refundAmount: number
+  teamId: number
+  isTeamCapacityReached: boolean
+}
+
+export const CurrentStatusContents: VFC<Props> = (props) => {
+  const { isDebt, refundAmount, teamId, isTeamCapacityReached } = props
   const { isOpen: isOpenSettleModal, onOpen: onOpenSettleModal, onClose: onCloseSettleModal } = useDisclosure()
   return (
-    <>
-      <SettelementModal isOpen={isOpenSettleModal} onClose={onCloseSettleModal} size="xl" />
+    <Box data-testid="current-status-contents">
+      <SettelementModal
+        isOpen={isOpenSettleModal}
+        onClose={onCloseSettleModal}
+        size="xl"
+        isDebt={isDebt}
+        refundAmount={refundAmount}
+        teamId={teamId}
+      />
       <Box>
-        {teamStatus.isTeamCapacityReached ? (
+        {isTeamCapacityReached ? (
           <>
-            <CardText />
-            <RefundAmount />
-            {teamStatus.refundAmount !== 0 && (
+            <CardText isDebt={isDebt} refundAmount={refundAmount} />
+            <RefundAmount isDebt={isDebt} refundAmount={refundAmount} />
+            {refundAmount !== 0 && (
               <Box textAlign="center">
-                <SecondaryButton size="sm" isFullWidth={false} onClick={onOpenSettleModal}>
+                <SecondaryButton
+                  size="sm"
+                  isFullWidth={false}
+                  onClick={onOpenSettleModal}
+                  testId="current-status-contents-settlement-button"
+                >
                   精算する
                 </SecondaryButton>
               </Box>
@@ -42,6 +60,6 @@ export const CurrentStatusContents: VFC = () => {
           </Box>
         )}
       </Box>
-    </>
+    </Box>
   )
 }

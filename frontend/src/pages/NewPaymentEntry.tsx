@@ -114,7 +114,7 @@ export const NewPaymentEntry: VFC = () => {
               <FormErrorMessage>{errors.paidAt && errors.paidAt?.message}</FormErrorMessage>
             </FormControl>
             <PrimaryButton
-              onClickButton={handleSubmit(handleSubmitPayment)}
+              onClick={handleSubmit(handleSubmitPayment)}
               disabled={!formState.isValid || formState.isSubmitting}
               isLoading={formState.isSubmitting}
             >

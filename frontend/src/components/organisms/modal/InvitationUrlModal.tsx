@@ -27,8 +27,8 @@ export const InvitationUrlModal: VFC<Props> = memo((props) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose} size={size} closeOnOverlayClick={false} isCentered>
       <ModalOverlay />
-      <ModalContent m={6} py={14} px={6}>
-        <ModalHeader align="center" mb={4}>
+      <ModalContent m={6} py={14} px={6} data-testid="invitation-url-modal">
+        <ModalHeader align="center" mb={4} data-testid="invitation-url-modal-header">
           一緒に使う相手を
           <br />
           招待しましょう
@@ -39,7 +39,7 @@ export const InvitationUrlModal: VFC<Props> = memo((props) => {
               アカウントの設定が完了しました！アプリを一緒に使いたいおあいてに下記の招待URLを共有してください
             </Text>
             <Flex bg="gray.100" py={5} px={6} align="center">
-              <Text flex="1" fontSize="sm" wordBreak="break-all">
+              <Text flex="1" fontSize="sm" wordBreak="break-all" data-testid="invitation-url">
                 {invitationUrl}
               </Text>
               <CopyToClipboard text={invitationUrl}>
@@ -56,7 +56,7 @@ export const InvitationUrlModal: VFC<Props> = memo((props) => {
               </CopyToClipboard>
             </Flex>
           </Box>
-          <SecondaryButton onClick={onClickClose} size="xl" isFullWidth>
+          <SecondaryButton onClick={onClickClose} size="xl" isFullWidth testId="invitation-url-modal-close-button">
             とじる
           </SecondaryButton>
         </ModalBody>
