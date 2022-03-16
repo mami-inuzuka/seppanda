@@ -9,7 +9,7 @@ describe('PrimaryButton', () => {
     const onClick = jest.fn()
     const children = 'test'
     renderWithChakraProvider(
-      <PrimaryButton onClick={onClick} size="xl" isFullWidth disabled isLoading>
+      <PrimaryButton onClick={onClick} disabled isLoading>
         {children}
       </PrimaryButton>
     )
