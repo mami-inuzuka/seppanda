@@ -5,12 +5,11 @@ import { Button, Flex, Image, Text } from '@chakra-ui/react'
 import googleIcon from 'assets/images/google_icon.svg'
 
 type Props = {
-  disabled: boolean
   onClick: () => void
 }
 
 export const GoogleLoginButton: VFC<Props> = memo((props) => {
-  const { disabled, onClick } = props
+  const { onClick } = props
   return (
     <Button
       onClick={onClick}
@@ -19,7 +18,6 @@ export const GoogleLoginButton: VFC<Props> = memo((props) => {
       size="xl"
       mb={6}
       isFullWidth
-      disabled={disabled}
       padding="4px"
       justifyContent="normal"
       _hover={{ bg: '#4285F4' }}

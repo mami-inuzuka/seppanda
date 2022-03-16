@@ -62,7 +62,6 @@ export const WelcomeWithInvitationToken: VFC = () => {
                 onClick={() => {
                   navigate('/signin', { state: { referrer: 'signin', invitationToken } })
                 }}
-                disabled={false}
               />
               <Text fontSize="xs" align="center" color="gray.400" lineHeight="1.8">
                 上記のボタンをクリックすることで、

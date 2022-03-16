@@ -44,7 +44,7 @@ export const Welcome: VFC = () => {
                 計算
               </Text>
             </Box>
-            <GoogleLoginButton onClick={handleGoToSignInPage} disabled={false} />
+            <GoogleLoginButton onClick={handleGoToSignInPage} />
             <Text fontSize="xs" align="center" color="gray.400" lineHeight="1.8">
               上記のボタンをクリックすることで、
               <Text as="span" textDecoration="underline">

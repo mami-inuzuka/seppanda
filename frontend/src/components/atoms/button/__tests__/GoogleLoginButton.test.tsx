@@ -8,7 +8,7 @@ import { GoogleLoginButton } from '../GoogleLoginButton'
 describe('GoogleLoginButton', () => {
   it('can display itself', () => {
     const onClick = jest.fn()
-    renderWithChakraProvider(<GoogleLoginButton onClick={onClick} disabled />)
+    renderWithChakraProvider(<GoogleLoginButton onClick={onClick} />)
     expect(screen.getByTestId('google-login-button')).toBeInTheDocument()
   })
 })
