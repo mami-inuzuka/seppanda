@@ -1,5 +1,5 @@
 import { VFC } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import { Box, Flex, Image, Text, useDisclosure } from '@chakra-ui/react'
 
@@ -8,6 +8,8 @@ import { GoogleLoginButton } from 'components/atoms/button/GoogleLoginButton'
 import { Footer } from 'components/organisms/footer/Footer'
 import { BrowserCautionModal } from 'components/organisms/modal/BrowserCautionModal'
 import { detectInAppBrowser } from 'lib/detectInAppBrowser'
+
+import { TermsAndPolicyLick } from './Welcome/TermsAndPolicyLink'
 
 export const Welcome: VFC = () => {
   const navigate = useNavigate()
@@ -45,17 +47,7 @@ export const Welcome: VFC = () => {
               </Text>
             </Box>
             <GoogleLoginButton onClick={handleGoToSignInPage} />
-            <Text fontSize="xs" align="center" color="gray.400" lineHeight="1.8">
-              上記のボタンをクリックすることで、
-              <Text as="span" textDecoration="underline">
-                <Link to="/terms">利用規約</Link>
-              </Text>
-              および
-              <Text as="span" textDecoration="underline">
-                <Link to="/policy">プライバシーポリシー</Link>
-              </Text>
-              に同意するものとします。
-            </Text>
+            <TermsAndPolicyLick />
           </Box>
         </Flex>
         <Footer />
