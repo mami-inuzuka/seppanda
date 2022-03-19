@@ -15,6 +15,7 @@ const App: VFC = () => (
         minH={{ base: 'none', sm: '100vh' }}
         bgImage={{ base: 'none', sm: `url(${bg})` }}
         bgSize={{ base: 'none', sm: ' 200px' }}
+        backgroundAttachment={{ base: 'none', sm: ' fixed' }}
       >
         <Box
           w="100%"
