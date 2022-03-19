@@ -8,8 +8,9 @@ import { GoogleLoginButton } from 'components/atoms/button/GoogleLoginButton'
 import { Footer } from 'components/organisms/footer/Footer'
 import { BrowserCautionModal } from 'components/organisms/modal/BrowserCautionModal'
 import { detectInAppBrowser } from 'lib/detectInAppBrowser'
-
-import { TermsAndPolicyLick } from './Welcome/TermsAndPolicyLink'
+import { Cta } from 'pages/Welcome/Cta'
+import { TermsAndPolicyLick } from 'pages/Welcome/TermsAndPolicyLink'
+import { WelcomeContents } from 'pages/Welcome/WelcomeContents'
 
 export const Welcome: VFC = () => {
   const navigate = useNavigate()
@@ -30,9 +31,9 @@ export const Welcome: VFC = () => {
     <>
       <BrowserCautionModal isOpen={isOpen} onClose={onClose} size="xl" />
       <Flex h="100%" direction="column" minH="100vh">
-        <Flex h="100%" justify="center" align="center" direction="column" p={6} flex="1" my={28}>
-          <Box>
-            <Box mb="10">
+        <Flex h="100%" justify="center" align="center" direction="column" p={8} flex="1" mt={28} mb={20}>
+          <Box mb={20}>
+            <Box mb={10}>
               <Image src={VerticalLogo} margin="0 auto" mb={4} h="140px" />
               <Text fontWeight="bold" textAlign="center" letterSpacing="0.1em">
                 毎日の
@@ -49,6 +50,8 @@ export const Welcome: VFC = () => {
             <GoogleLoginButton onClick={handleGoToSignInPage} />
             <TermsAndPolicyLick />
           </Box>
+          <WelcomeContents />
+          <Cta onClick={handleGoToSignInPage} />
         </Flex>
         <Footer />
       </Flex>
