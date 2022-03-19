@@ -15,7 +15,7 @@ export const About: VFC = () => (
       </Heading>
     </Box>
     <Text>
-      seppanda（せっぱんだ）は
+      seppanda（せっぱんだ）は、
       <Text
         as="span"
         bg="rgba(114,190,36,0.1)"
