@@ -41,6 +41,12 @@
     "@typescript-eslint/no-use-before-define": ["error"],
     "@typescript-eslint/restrict-template-expressions": "off",
     "react/react-in-jsx-scope": "off",
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": ["**/__specs__/**", "**/*/*.spec.*", "**/__tests__/**", "**/*/*.test.*"]
+      }
+    ],
     "react/jsx-filename-extension": [
       "error",
       {
