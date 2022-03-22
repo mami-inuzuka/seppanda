@@ -1,3 +1,4 @@
+import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 
 import client from 'lib/api/client'
@@ -18,6 +19,19 @@ describe('invitations API', () => {
       const invitationToken = 'dummyInvitationToken'
       const res = await getInviter(invitationToken)
       expect(res.data).toEqual(inviter)
+    })
+
+    it('should fail with invalid invitation token', async () => {
+      mock.onGet('/invitations').reply(422, { message: '不正な招待URLです' })
+      const invitationToken = 'dummyInvitationToken'
+      try {
+        await getInviter(invitationToken)
+      } catch (error) {
+        expect(axios.isAxiosError(error)).toBe(true)
+        if (axios.isAxiosError(error)) {
+          expect(error.response?.status).toBe(422)
+        }
+      }
     })
   })
 })
