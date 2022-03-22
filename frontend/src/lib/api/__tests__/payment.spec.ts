@@ -1,3 +1,4 @@
+import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 
 import payment from 'lib/api/__mocks__/payment.json'
@@ -35,6 +36,24 @@ describe('payment API', () => {
       const res = await postPayment(params, idToken)
       expect(res.data).toEqual(payment)
     })
+
+    it('should fail with invalid params', async () => {
+      mock.onPost('/payments').reply(422, { messages: ['金額は数値で入力してください'] })
+      const idToken = 'dummyIdToken'
+      const params: PostPaymentParams = {
+        amount: 'あああ',
+        detail: '外食',
+        paidAt: '2022-03-22',
+      }
+      try {
+        await postPayment(params, idToken)
+      } catch (error) {
+        expect(axios.isAxiosError(error)).toBe(true)
+        if (axios.isAxiosError(error)) {
+          expect(error.response?.status).toBe(422)
+        }
+      }
+    })
   })
 
   describe('Update payment', () => {
@@ -49,6 +68,25 @@ describe('payment API', () => {
       }
       const res = await updatePayment(params, id, idToken)
       expect(res.data).toEqual(payment)
+    })
+
+    it('should fail with invalid params', async () => {
+      const id = 1
+      mock.onPatch(`/payments/${id}`).reply(422, { messages: ['金額は数値で入力してください'] })
+      const idToken = 'dummyIdToken'
+      const params: PostPaymentParams = {
+        amount: 'あああ',
+        detail: '外食',
+        paidAt: '2022-03-22',
+      }
+      try {
+        await updatePayment(params, id, idToken)
+      } catch (error) {
+        expect(axios.isAxiosError(error)).toBe(true)
+        if (axios.isAxiosError(error)) {
+          expect(error.response?.status).toBe(422)
+        }
+      }
     })
   })
 
