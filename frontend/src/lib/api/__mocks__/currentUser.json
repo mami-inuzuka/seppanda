@@ -1,0 +1,17 @@
+{
+  "user": {
+    "id": 236,
+    "name": "Taro",
+    "uid": "dummyIdToken",
+    "teamId": 204,
+    "createdAt": "2022-03-20T14:25:32.712+09:00",
+    "updatedAt": "2022-03-20T14:25:32.760+09:00",
+    "color": "blue",
+    "isDebt": false,
+    "avatar": {
+      "data": "http://localhost:3001/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBc1FCIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--7bd28fb9542764708f50087dca3894afb943750f/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lKYW5CbFp3WTZCa1ZVT2d0eVpYTnBlbVZKSWd3eU1EQjRNakF3QmpzR1ZBPT0iLCJleHAiOm51bGwsInB1ciI6InZhcmlhdGlvbiJ9fQ==--ca2a2c39e0316a5afde726453a0ece097abf33dd/profile.jpeg",
+      "name": "profile.jpeg"
+    }
+  },
+  "isExisted": true
+}
