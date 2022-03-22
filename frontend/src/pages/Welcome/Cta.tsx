@@ -13,7 +13,6 @@ export const Cta: VFC<Props> = (props) => {
   const { onClick } = props
   return (
     <>
-      <Text mb={6}>＼アプリのご利用はこちらから／</Text>
       <Box mb={8}>
         <Image src={logo} mb={3} />
         <Text fontWeight="bold" textAlign="center" letterSpacing="0.1em">
