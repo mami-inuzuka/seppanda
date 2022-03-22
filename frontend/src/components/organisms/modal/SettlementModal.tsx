@@ -57,7 +57,7 @@ export const SettelementModal: VFC<Props> = memo((props) => {
         <ModalBody p={0} data-testid="settlement-modal-body">
           <Box mb={12}>
             <Text fontWeight="bold" align="center" mb={6}>
-              お相手に下記の金額を
+              おあいてに下記の金額を
               <br />
               {isDebt ? '返しましたか？' : '返してもらいましたか？'}
             </Text>

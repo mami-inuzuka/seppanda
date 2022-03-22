@@ -22,7 +22,7 @@ describe('SettlementModal', () => {
       <SettelementModal teamId={1} refundAmount={refundAmount} isDebt isOpen onClose={onClose} size="xl" />
     )
     expect(screen.getByTestId('settlement-modal')).toBeInTheDocument()
-    expect(screen.getByTestId('settlement-modal-body')).toHaveTextContent('お相手に下記の金額を返しましたか？')
+    expect(screen.getByTestId('settlement-modal-body')).toHaveTextContent('おあいてに下記の金額を返しましたか？')
   })
 
   it('can display correctly when isDebt is false', () => {
@@ -30,7 +30,9 @@ describe('SettlementModal', () => {
       <SettelementModal teamId={1} refundAmount={refundAmount} isDebt={false} isOpen onClose={onClose} size="xl" />
     )
     expect(screen.getByTestId('settlement-modal')).toBeInTheDocument()
-    expect(screen.getByTestId('settlement-modal-body')).toHaveTextContent('お相手に下記の金額を返してもらいましたか？')
+    expect(screen.getByTestId('settlement-modal-body')).toHaveTextContent(
+      'おあいてに下記の金額を返してもらいましたか？'
+    )
   })
 
   it('can close modal', () => {
