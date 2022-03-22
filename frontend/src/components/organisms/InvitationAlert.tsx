@@ -20,7 +20,7 @@ export const InvitationAlert: VFC<Props> = memo((props) => {
   return (
     <Box bg="gray.100" p={4} data-testid="invitation-alert">
       <Text fontSize="xs" fontWeight="bold" align="center" mb={3}>
-        お相手の登録がまだのようです
+        おあいての登録がまだのようです
         <br />
         下記のURLを共有して登録をしてもらおう
       </Text>

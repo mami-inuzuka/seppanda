@@ -37,7 +37,7 @@ export const PaymentList: VFC<Props> = memo((props) => {
                 <Box mr={4}>
                   <UserIcon user={payment.user} size="28px" />
                 </Box>
-                <Text flex="1" fontSize="sm">
+                <Text flex="1" fontSize="sm" mr={2}>
                   {payment.detail}
                 </Text>
                 <Flex display="flex" align="baseline" _after={{ content: `"円"`, fontSize: 'xs' }}>
