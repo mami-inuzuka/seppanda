@@ -61,7 +61,7 @@ export const NewPaymentEntry: VFC = () => {
       </Box>
 
       <Flex flexDirection="column" p={6}>
-        <form>
+        <form autoComplete="off">
           <Grid gap={6}>
             <FormControl isInvalid={!!errors?.amount} errortext={errors?.amount?.message}>
               <FormLabel htmlFor="amount">金額</FormLabel>
