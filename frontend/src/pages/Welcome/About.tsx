@@ -24,8 +24,9 @@ export const About: VFC = () => (
         fontWeight="bold"
         color="green.600"
         align="center"
-        p={2}
+        py={5}
         my={4}
+        fontSize="lg"
       >
         割り勘したいけど
         <br />

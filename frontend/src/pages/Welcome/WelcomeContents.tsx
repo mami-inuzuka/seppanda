@@ -9,7 +9,6 @@ import { Scene } from 'pages/Welcome/Scene'
 export const WelcomeContents: VFC = () => (
   <Box
     sx={{
-      p: {},
       h2: {
         textAlign: 'center',
         fontSize: '2xl',
@@ -33,8 +32,7 @@ export const WelcomeContents: VFC = () => (
       'section p': {
         textAlign: 'center',
         mb: '6',
-        lineHeight: '180%',
-        fontSize: '15px',
+        lineHeight: '185%',
       },
     }}
   >
