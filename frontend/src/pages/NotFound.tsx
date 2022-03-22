@@ -29,7 +29,7 @@ export const NotFound: VFC = () => {
           URLにタイプミスがないかご確認ください。
         </Text>
         <SecondaryButton onClick={handleVisitHome} size="xl" isFullWidth>
-          メインページに戻る
+          TOPに戻る
         </SecondaryButton>
       </Box>
     </HeaderOnlyLogoLayout>
