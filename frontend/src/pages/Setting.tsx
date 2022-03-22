@@ -2,7 +2,18 @@ import { useContext, useEffect, VFC } from 'react'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 
-import { Box, Divider, Flex, FormControl, FormErrorMessage, FormLabel, Grid, Image, Input } from '@chakra-ui/react'
+import {
+  Box,
+  Divider,
+  Flex,
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
+  Grid,
+  Image,
+  Input,
+  Text,
+} from '@chakra-ui/react'
 import axios from 'axios'
 import { signOut } from 'firebase/auth'
 
@@ -145,6 +156,11 @@ export const Setting: VFC = () => {
             ログアウト
           </SecondaryButton>
         </Box>
+        <Text mt={16} fontSize="xs" align="center" color="gray.400" lineHeight="1.8">
+          退会をご希望の方はお手数ですが
+          <br />
+          seppanda.app@gmail.comまでご連絡ください
+        </Text>
       </Box>
     </HeaderWithTitleLayout>
   )
