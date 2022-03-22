@@ -21,6 +21,7 @@ import { PrimaryButton } from 'components/atoms/button/PrimaryButton'
 import { SecondaryButton } from 'components/atoms/button/SecondaryButton'
 import { HeaderWithTitleLayout } from 'components/templates/HeaderWithTitleLayout'
 import { AuthContext } from 'context/AuthContext'
+import { PaymentContext } from 'context/PaymentContext'
 import { useImageSelect } from 'hooks/useImageSelect'
 import { updateUser } from 'lib/api/user'
 import { auth } from 'lib/firebase'
@@ -31,6 +32,7 @@ import type { MultipleErrorResponse } from 'types/multipleErrorResponses'
 
 export const Setting: VFC = () => {
   const { currentUser, setCurrentUser } = useContext(AuthContext)
+  const { isUpdatedPaymentList, setIsUpdatedPaymentList } = useContext(PaymentContext)
   const { errorToast, successToast } = useToast()
   const navigation = useNavigate()
   const { handleImageSelect, inputAvatar, setInputAvatar } = useImageSelect()
@@ -56,6 +58,8 @@ export const Setting: VFC = () => {
     try {
       const res = await updateUser(data, idToken)
       setCurrentUser(res.data.user)
+      // ユーザーアイコンを変更した時に新しいユーザーアイコンで支払い情報を表示させるためPaymentListを再レンダリングさせる
+      setIsUpdatedPaymentList(!isUpdatedPaymentList)
       navigation('/home')
       successToast('ユーザー情報を更新しました')
     } catch (err) {
