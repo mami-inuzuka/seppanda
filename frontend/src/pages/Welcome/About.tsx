@@ -1,9 +1,10 @@
+/* eslint-disable jsx-a11y/media-has-caption */
 import { VFC } from 'react'
 
 import { Box, Heading, Image, Text } from '@chakra-ui/react'
 
-import homeGif from 'assets/images/home.gif'
 import logotype from 'assets/images/logotype-black.svg'
+import homeVideo from 'assets/seppanda.mp4'
 
 export const About: VFC = () => (
   <Box as="section">
@@ -35,8 +36,29 @@ export const About: VFC = () => (
     <Text>
       一旦支払った側がその金額をメモしておくだけで最終的にどちらがいくらお金を渡せばいいのかを瞬時に確認することができます。
     </Text>
-    <Box>
-      <Image src={homeGif} maxW="183px" m="0 auto" borderRadius={4} border="8px solid #ebeff5" />
+    <Box
+      overflow="hidden"
+      position="relative"
+      maxW="170px"
+      h="283px"
+      m="0 auto"
+      borderWidth="6px"
+      borderColor="gray.200"
+      borderRadius="6px"
+      sx={{
+        video: {
+          position: 'absolute',
+          zIndex: 0,
+          top: '136px',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: 'auto',
+        },
+      }}
+    >
+      <video webkit-playsinline playsInline muted autoPlay loop>
+        <source src={homeVideo} type="video/mp4" />
+      </video>
     </Box>
   </Box>
 )
