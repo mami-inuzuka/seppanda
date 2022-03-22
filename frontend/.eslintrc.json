@@ -42,6 +42,7 @@
     "@typescript-eslint/restrict-template-expressions": "off",
     "react/react-in-jsx-scope": "off",
     "jest/no-mocks-import": "off",
+    "jest/no-conditional-expect": "off",
     "import/no-extraneous-dependencies": [
       "error",
       {
