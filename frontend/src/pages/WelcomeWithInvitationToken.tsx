@@ -60,6 +60,7 @@ export const WelcomeWithInvitationToken: VFC = () => {
                 left="0"
                 right="0"
                 m="auto"
+                bg="gray.50"
               />
               <Text align="center" fontSize="sm" lineHeight="1.8" mb={6}>
                 <Text as="span" fontWeight="bold">
