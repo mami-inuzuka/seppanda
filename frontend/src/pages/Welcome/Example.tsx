@@ -20,7 +20,7 @@ export const Example: VFC = () => (
       これらを全て2人で割り勘する場合、<b>最終的にどちらがどちらに何円渡すことになるのでしょうか？</b>
     </Text>
     <Image src={dot} m="0 auto" mt={8} mb={10} />
-    <Text>この計算って意外と面倒ですよね</Text>
+    <Text>この計算って意外と面倒ですよね......</Text>
     <Text fontSize="18px !important" fontWeight="bold" my={12}>
       でも、seppandaを使えば一旦支払った金額をメモしておくだけで貸し借りの状況をいつでも確認することができます
     </Text>
