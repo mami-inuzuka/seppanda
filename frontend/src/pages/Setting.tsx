@@ -102,7 +102,9 @@ export const Setting: VFC = () => {
                   overflow="hidden"
                   bg="gray.50"
                 >
-                  {inputAvatar.data && <Image src={inputAvatar.data} alt={inputAvatar.name} objectFit="cover" />}
+                  {inputAvatar.data && (
+                    <Image src={inputAvatar.data} alt={inputAvatar.name} objectFit="cover" w="94px" h="94px" />
+                  )}
                 </Box>
                 <FormLabel
                   bg="gray.50"
