@@ -24,7 +24,6 @@ export const useGetInviter = () => {
         const res = await getInviter(invitationToken)
         setInviterName(res.data.name)
         setInviterAvatar(res.data.avatar)
-        setIsInviterLoaded(true)
       } catch (err) {
         if (axios.isAxiosError(err) && (err.response?.data as ErrorResponse).message) {
           errorToast(
@@ -35,6 +34,8 @@ export const useGetInviter = () => {
           errorToast('エラーが発生しました', '時間をおいてから再度お試しください')
         }
         navigate('/')
+      } finally {
+        setIsInviterLoaded(true)
       }
     }
   }

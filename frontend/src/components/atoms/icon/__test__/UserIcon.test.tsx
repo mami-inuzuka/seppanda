@@ -21,6 +21,7 @@ describe('SecondaryButton', () => {
       isDebt: true,
       avatar: {
         data: IMAGE_URL,
+        dataSmall: IMAGE_URL,
         name: 'test-image.png',
       },
     }
