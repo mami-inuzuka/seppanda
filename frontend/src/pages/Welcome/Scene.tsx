@@ -26,7 +26,9 @@ export const Scene: VFC = () => (
       </Text>
     </Flex>
 
-    <Text>支払い周りは基本割り勘にしたいけど、共通の口座を持つのはハードルが高いというカップルにおすすめです</Text>
+    <Text>
+      支払い周りは基本割り勘にしたいけど、共通のお財布や共通の口座を持つのはハードルが高いというカップルにおすすめです
+    </Text>
 
     <Image src={footprint} w="20px" h="20px" m="0 auto" my={20} />
   </Box>
