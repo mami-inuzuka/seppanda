@@ -14,8 +14,8 @@ export const UserIcon: VFC<Props> = memo((props) => {
 
   return (
     <Image
-      src={user?.avatar.data}
-      alt={user?.avatar.name}
+      src={user?.avatar.dataSmall}
+      alt="user-icon"
       boxSize={size}
       borderRadius="full"
       border="2px"
