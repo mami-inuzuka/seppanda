@@ -50,16 +50,16 @@ export const SettelementModal: VFC<Props> = memo((props) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose} size={size} isCentered>
       <ModalOverlay />
-      <ModalContent m={6} pt={8} pb={14} px={6} data-testid="settlement-modal">
+      <ModalContent m={6} pt={8} pb={10} px={6} data-testid="settlement-modal">
         <ModalHeader align="center" mb={2} data-testid="settlement-modal-header" letterSpacing="0.1em">
           精算
         </ModalHeader>
         <ModalBody p={0} data-testid="settlement-modal-body">
           <Text fontSize="xs" bg="gray.50" p={6} textAlign="center" lineHeight="1.7">
-            精算を実行するとこれまでの支払い情報が非表示になり、貸し借りがリセットされます。
+            精算を実行するとこれまでの支払い情報が非表示になり、貸し借りの金額が0になります。
           </Text>
           <Box mb={16}>
-            <Text fontWeight="bold" align="center" my={10} lineHeight="2">
+            <Text fontSize="lg" fontWeight="bold" align="center" my={10} lineHeight="2">
               おあいてに下記の金額を
               <br />
               {isDebt ? (
