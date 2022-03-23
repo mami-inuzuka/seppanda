@@ -57,7 +57,7 @@ export const About: VFC = () => (
         },
       }}
     >
-      <video webkit-playsinline playsInline muted autoPlay loop>
+      <video playsInline muted autoPlay loop>
         <source src={homeVideo} type="video/mp4" />
       </video>
     </Box>
