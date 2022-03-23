@@ -8,6 +8,7 @@ import { BrowserCautionModal } from 'components/organisms/modal/BrowserCautionMo
 import { HeaderAndFooterLayout } from 'components/templates/HeaderAndFooterLayout'
 import { useGetInviter } from 'hooks/useGetInviter'
 import { detectInAppBrowser } from 'lib/detectInAppBrowser'
+import { Loading } from 'pages/Loading'
 
 export const WelcomeWithInvitationToken: VFC = () => {
   const { handleGetInviter, inviterName, inviterAvatar, isInviterLoaded } = useGetInviter()
@@ -38,7 +39,7 @@ export const WelcomeWithInvitationToken: VFC = () => {
   return (
     <Box>
       <BrowserCautionModal isOpen={isOpen} onClose={onClose} size="xl" />
-      {isInviterLoaded && (
+      {isInviterLoaded ? (
         <HeaderAndFooterLayout>
           <Box h="100%" p={6} mb={10}>
             <Box mb={20}>
@@ -89,6 +90,8 @@ export const WelcomeWithInvitationToken: VFC = () => {
             </Box>
           </Box>
         </HeaderAndFooterLayout>
+      ) : (
+        <Loading />
       )}
     </Box>
   )
