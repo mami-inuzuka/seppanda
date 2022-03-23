@@ -50,16 +50,45 @@ export const SettelementModal: VFC<Props> = memo((props) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose} size={size} isCentered>
       <ModalOverlay />
-      <ModalContent m={6} py={14} px={6} data-testid="settlement-modal">
-        <ModalHeader align="center" mb={4} data-testid="settlement-modal-header">
+      <ModalContent m={6} pt={8} pb={14} px={6} data-testid="settlement-modal">
+        <ModalHeader align="center" mb={2} data-testid="settlement-modal-header" letterSpacing="0.1em">
           精算
         </ModalHeader>
         <ModalBody p={0} data-testid="settlement-modal-body">
-          <Box mb={12}>
-            <Text fontWeight="bold" align="center" mb={6}>
+          <Text fontSize="xs" bg="gray.50" p={6} textAlign="center" lineHeight="1.7">
+            精算を実行するとこれまでの支払い情報が非表示になり、貸し借りがリセットされます。
+          </Text>
+          <Box mb={16}>
+            <Text fontWeight="bold" align="center" my={10} lineHeight="2">
               おあいてに下記の金額を
               <br />
-              {isDebt ? '返しましたか？' : '返してもらいましたか？'}
+              {isDebt ? (
+                <Text
+                  as="span"
+                  bg="rgba(208, 57, 57, 0.1)"
+                  color="red.500"
+                  py={0.5}
+                  px={1.5}
+                  mx={1}
+                  display="inline"
+                  p={1.5}
+                >
+                  返しましたか？
+                </Text>
+              ) : (
+                <Text
+                  as="span"
+                  bg="rgba(107, 178, 73, 0.1)"
+                  color="green.500"
+                  py={0.5}
+                  px={1.5}
+                  mx={1}
+                  display="inline"
+                  p={1.5}
+                >
+                  返してもらいましたか？
+                </Text>
+              )}
             </Text>
             <Text
               align="center"
