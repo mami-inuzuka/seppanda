@@ -18,6 +18,9 @@ export const Footer: VFC = () => (
         <Text as="span" textDecoration="underline" px={2}>
           <Link to="/policy">プライバシーポリシー</Link>
         </Text>
+        <Text as="span" textDecoration="underline" px={2}>
+          <a href="https://quick-tarp-d8c.notion.site/seppanda-c9ffc223e9d242fa9b7c189e58b9eb69">よくある質問</a>
+        </Text>
       </Flex>
     </Flex>
     <Text fontSize="xs" p={2} align="center">
