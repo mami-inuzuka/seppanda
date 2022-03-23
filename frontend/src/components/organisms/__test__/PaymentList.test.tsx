@@ -20,6 +20,7 @@ const user: User = {
   isDebt: false,
   avatar: {
     data: 'https://placekitten.com/200/300',
+    dataSmall: 'https://placekitten.com/200/300',
     name: 'default-user-icon.png',
   },
 }
