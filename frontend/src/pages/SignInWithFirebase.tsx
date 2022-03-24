@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 
 import { GoogleAuthProvider, signInWithRedirect, getRedirectResult } from 'firebase/auth'
 
-import { FullWindowSpinner } from 'components/organisms/spinner/FullWindowSpinner'
+import { FullWindowSpinner } from 'components/atoms/spinner/FullWindowSpinner'
 import { AuthContext } from 'context/AuthContext'
 import { useToast } from 'hooks/useToast'
 import { getCurrentUser } from 'lib/api/session'
