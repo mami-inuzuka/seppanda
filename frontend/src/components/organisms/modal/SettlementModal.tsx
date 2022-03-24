@@ -6,9 +6,9 @@ import axios from 'axios'
 import { PrimaryButton } from 'components/atoms/button/PrimaryButton'
 import { SecondaryButton } from 'components/atoms/button/SecondaryButton'
 import { PaymentContext } from 'context/PaymentContext'
+import { useToast } from 'hooks/useToast'
 import { settleTeamPayments } from 'lib/api/payment'
 import { auth } from 'lib/firebase'
-import { useToast } from 'lib/toast'
 
 import type { ErrorResponse } from 'types/errorResponse'
 
