@@ -6,8 +6,6 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.0.1'
 
 gem 'bootsnap', '>= 1.4.4', require: false
-gem 'devise'
-gem 'devise_token_auth'
 gem 'dotenv-rails'
 gem 'firebase-auth-rails'
 gem 'google-cloud-storage'
