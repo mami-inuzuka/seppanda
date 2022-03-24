@@ -2,10 +2,10 @@ import { useContext, useEffect, useState } from 'react'
 
 import { AuthContext } from 'context/AuthContext'
 import { PaymentContext } from 'context/PaymentContext'
+import { useToast } from 'hooks/useToast'
 import { getPayments } from 'lib/api/payment'
 import { getTeamStatus } from 'lib/api/team'
 import { auth } from 'lib/firebase'
-import { useToast } from 'lib/toast'
 
 import type { PaymentListGroupByPaidAt } from 'types/api/payment'
 import type { TeamStatus } from 'types/api/team'
