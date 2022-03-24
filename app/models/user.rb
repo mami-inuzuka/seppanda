@@ -13,7 +13,7 @@ class User < ApplicationRecord
       io = StringIO.new("#{DataURI.decode(data)}\n")
       filename = name
     else
-      io = File.open(Rails.root.join('app', 'assets', 'images', 'default-user-icon.png'))
+      io = File.open(Rails.root.join('app/assets/images/default-user-icon.png'))
       filename = 'default-user-icon.png'
     end
     blob = ActiveStorage::Blob.create_and_upload!(io: io, filename: filename)
