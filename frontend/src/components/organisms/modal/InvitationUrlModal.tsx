@@ -5,7 +5,7 @@ import { CopyIcon } from '@chakra-ui/icons'
 import { Modal, ModalHeader, ModalBody, ModalContent, ModalOverlay, Text, Box, Flex } from '@chakra-ui/react'
 
 import { SecondaryButton } from 'components/atoms/button/SecondaryButton'
-import { useToast } from 'lib/toast'
+import { useToast } from 'hooks/useToast'
 
 type Props = {
   isOpen: boolean

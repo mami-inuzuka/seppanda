@@ -23,9 +23,9 @@ import { HeaderWithTitleLayout } from 'components/templates/HeaderWithTitleLayou
 import { AuthContext } from 'context/AuthContext'
 import { PaymentContext } from 'context/PaymentContext'
 import { useImageSelect } from 'hooks/useImageSelect'
+import { useToast } from 'hooks/useToast'
 import { updateUser } from 'lib/api/user'
 import { auth } from 'lib/firebase'
-import { useToast } from 'lib/toast'
 
 import type { UpdateUserParams } from 'types/api/user'
 import type { MultipleErrorResponse } from 'types/multipleErrorResponses'

@@ -5,9 +5,9 @@ import { GoogleAuthProvider, signInWithRedirect, getRedirectResult } from 'fireb
 
 import { FullWindowSpinner } from 'components/organisms/spinner/FullWindowSpinner'
 import { AuthContext } from 'context/AuthContext'
+import { useToast } from 'hooks/useToast'
 import { getCurrentUser } from 'lib/api/session'
 import { auth } from 'lib/firebase'
-import { useToast } from 'lib/toast'
 
 /**
  * FirebaseAuthenticationで実際にサインインを実行するためのページ
