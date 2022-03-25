@@ -9,5 +9,4 @@ export type User = {
   updatedAt: string
   avatar: Avatar
   color: string
-  isDebt: boolean
 }

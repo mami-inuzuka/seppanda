@@ -17,7 +17,6 @@ const user: User = {
   createdAt: '2022-03-15T10:43:25.863+09:00',
   updatedAt: '2022-03-15T10:43:25.935+09:00',
   color: 'blue',
-  isDebt: false,
   avatar: {
     data: 'https://placekitten.com/200/300',
     dataSmall: 'https://placekitten.com/200/300',

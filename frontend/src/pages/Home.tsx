@@ -38,7 +38,7 @@ export const Home: VFC = memo(() => {
           <HomeHeaderLayout>
             <CurrentStatusCard
               isLoaded={isTeamStatusLoaded}
-              isDebt={currentUser.isDebt}
+              isDebt={teamStatus.smallestPaymentUser?.uid === currentUser.uid}
               refundAmount={teamStatus.refundAmount}
               teamId={currentUser.teamId}
               isTeamCapacityReached={teamStatus.isTeamCapacityReached}

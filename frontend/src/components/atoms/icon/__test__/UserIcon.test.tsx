@@ -18,7 +18,6 @@ describe('SecondaryButton', () => {
       createdAt: '',
       updatedAt: '',
       color: 'blue',
-      isDebt: true,
       avatar: {
         data: IMAGE_URL,
         dataSmall: IMAGE_URL,
