@@ -3,8 +3,8 @@ import { memo, VFC } from 'react'
 import { AspectRatio, Box } from '@chakra-ui/react'
 
 import cardLabel from 'assets/images/card-label.svg'
+import { SpinnerIcon } from 'components/atoms/spinner/Spinner'
 import { CurrentStatusContents } from 'components/organisms/CurrentStatusContents'
-import { SpinnerIcon } from 'components/organisms/spinner/Spinner'
 
 type Props = {
   isLoaded: boolean

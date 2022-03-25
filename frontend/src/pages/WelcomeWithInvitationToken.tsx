@@ -4,11 +4,11 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { Box, Heading, Image, Text, useDisclosure } from '@chakra-ui/react'
 
 import { GoogleLoginButton } from 'components/atoms/button/GoogleLoginButton'
+import { Loading } from 'components/molecules/Loading'
 import { BrowserCautionModal } from 'components/organisms/modal/BrowserCautionModal'
 import { HeaderAndFooterLayout } from 'components/templates/HeaderAndFooterLayout'
 import { useGetInviter } from 'hooks/useGetInviter'
 import { detectInAppBrowser } from 'lib/detectInAppBrowser'
-import { Loading } from 'pages/Loading'
 
 export const WelcomeWithInvitationToken: VFC = () => {
   const { handleGetInviter, inviterName, inviterAvatar, isInviterLoaded } = useGetInviter()

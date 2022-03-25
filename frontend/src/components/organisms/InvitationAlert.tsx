@@ -4,7 +4,7 @@ import { CopyToClipboard } from 'react-copy-to-clipboard'
 import { CopyIcon } from '@chakra-ui/icons'
 import { Box, Flex, Text } from '@chakra-ui/react'
 
-import { useToast } from 'lib/toast'
+import { useToast } from 'hooks/useToast'
 
 type Props = {
   invitationToken: string

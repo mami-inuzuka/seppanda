@@ -3,11 +3,11 @@ import { Navigate, Outlet } from 'react-router-dom'
 
 import { onAuthStateChanged } from 'firebase/auth'
 
-import { FullWindowSpinner } from 'components/organisms/spinner/FullWindowSpinner'
+import { FullWindowSpinner } from 'components/atoms/spinner/FullWindowSpinner'
 import { AuthContext } from 'context/AuthContext'
+import { useToast } from 'hooks/useToast'
 import { getCurrentUser } from 'lib/api/session'
 import { auth } from 'lib/firebase'
-import { useToast } from 'lib/toast'
 import { PaymentProvider } from 'providers/PaymentProvider'
 
 export const PrivateRoute: VFC = () => {
