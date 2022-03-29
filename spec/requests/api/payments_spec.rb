@@ -7,6 +7,7 @@ RSpec.describe 'API::Payments', type: :request do
   let(:other_user) { create(:user, team_id: current_user.team_id) }
   let(:team) { current_user.team }
   let(:headers) { { Authorization: 'Bearer token' } }
+  let(:other_team_user) { create(:user, :with_team) }
 
   before do
     current_user.payments.create(amount: 200, detail: '外食', team_id: team.id, paid_at: '2022-02-14', settled: true, settled_at: '2022-02-24')
@@ -43,10 +44,25 @@ RSpec.describe 'API::Payments', type: :request do
     end
 
     describe 'DELETE /api/payments/:id' do
-      example '対象の支払い情報を1つ削除することができる' do
+      example '自分が登録した支払い情報を削除することができる' do
         payment = Payment.last
         expect { delete api_payment_path(payment.id), headers: headers }.to change(Payment, :count).by(-1)
         expect(response).to have_http_status(:ok)
+      end
+
+      example '同じチームに所属する相手が登録した支払い情報を削除することができる' do
+        other_user.payments.create(amount: 1000, detail: '日用品', team_id: other_user.team.id, paid_at: '2022-02-25')
+        payment = Payment.last
+        expect(payment.user).to eq other_user
+        expect { delete api_payment_path(payment.id), headers: headers }.to change(Payment, :count).by(-1)
+        expect(response).to have_http_status(:ok)
+      end
+
+      example '自分が所属しているチーム以外の支払い情報は削除することができない' do
+        other_team_user.payments.create(amount: 1000, detail: '日用品', team_id: other_team_user.team.id, paid_at: '2022-02-25')
+        payment = Payment.last
+        expect(payment.user).to eq other_team_user
+        expect { delete api_payment_path(payment.id), headers: headers }.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
 
@@ -54,15 +70,35 @@ RSpec.describe 'API::Payments', type: :request do
       let(:params) { { amount: 100, detail: 'スーパー', paid_at: '2022-02-14' } }
       let(:new_params) { { amount: 500, detail: '日用品', paid_at: '2022-02-15' } }
 
-      example '対象の支払い情報を1つ更新することができる' do
+      example '自分が登録した支払い情報を更新することができる' do
         expect { post api_payments_path, params: params, headers: headers }.to change(Payment, :count).by(1)
         payment = Payment.last
+        expect(payment.user).to eq current_user
         expect(payment.amount).to eq 100
         expect { patch api_payment_path(payment.id), params: new_params, headers: headers }.to change(Payment, :count).by(0)
         expect(payment.reload.amount).to eq 500
         expect(payment.reload.paid_at.to_s).to eq '2022-02-15'
         expect(payment.reload.detail).to eq '日用品'
         expect(response).to have_http_status(:ok)
+      end
+
+      example '同じチームに所属する相手が登録した支払い情報を更新することができる' do
+        other_user.payments.create(amount: 1000, detail: '日用品', team_id: other_user.team.id, paid_at: '2022-02-25')
+        payment = Payment.last
+        expect(payment.user).to eq other_user
+        expect(payment.amount).to eq 1000
+        expect { patch api_payment_path(payment.id), params: new_params, headers: headers }.to change(Payment, :count).by(0)
+        expect(payment.reload.amount).to eq 500
+        expect(payment.reload.paid_at.to_s).to eq '2022-02-15'
+        expect(payment.reload.detail).to eq '日用品'
+        expect(response).to have_http_status(:ok)
+      end
+
+      example '自分が所属しているチーム以外の支払い情報は更新することができない' do
+        other_team_user.payments.create(amount: 1000, detail: '日用品', team_id: other_team_user.team.id, paid_at: '2022-02-25')
+        payment = Payment.last
+        expect(payment.user).to eq other_team_user
+        expect { patch api_payment_path(payment.id), params: new_params, headers: headers }.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
 
