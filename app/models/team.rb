@@ -39,8 +39,7 @@ class Team < ApplicationRecord
   private
 
   def user_id_and_total_amount
-    hash = users.map { |user| User.left_joins(:payments).group('users.id').where(id: user.id, payments: { settled: [nil, false] }).sum('payments.amount') }
-    {}.merge(*hash)
+    users.left_joins(:payments).group('users.id').where(payments: { settled: [nil, false] }).sum('payments.amount')
   end
 
   def first_user_unsettled_total_amount
