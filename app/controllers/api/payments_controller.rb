@@ -38,6 +38,6 @@ class API::PaymentsController < API::ApplicationController
   end
 
   def set_payment
-    @payment = Payment.find(params[:id])
+    @payment = current_user.team.payments.find(params[:id])
   end
 end
