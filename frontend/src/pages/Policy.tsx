@@ -2,12 +2,14 @@ import { VFC } from 'react'
 
 import { Box, Heading, Link, ListItem, OrderedList, Text } from '@chakra-ui/react'
 
+import { Footer } from 'components/organisms/footer/Footer'
 import { HeaderOnlyLogoLayout } from 'components/templates/HeaderOnlyLogoLayout'
 
 export const Policy: VFC = () => (
   <HeaderOnlyLogoLayout>
     <Box
       p={6}
+      mb={12}
       fontSize="xs"
       sx={{
         h3: {
@@ -160,5 +162,6 @@ export const Policy: VFC = () => (
       <Text>2022年 03月08日 制定</Text>
       <Text>2022年 03月30日 改訂</Text>
     </Box>
+    <Footer />
   </HeaderOnlyLogoLayout>
 )
