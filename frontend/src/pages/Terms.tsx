@@ -32,7 +32,7 @@ export const Terms: VFC = () => (
           listStyle: 'lower-alpha',
           mb: 1,
         },
-        'ol ol li:first-child': {
+        'ol ol li:first-of-type': {
           mt: 2,
         },
         'section p': {
