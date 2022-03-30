@@ -1,6 +1,6 @@
 import { VFC } from 'react'
 
-import { Box, Heading, ListItem, OrderedList, Text } from '@chakra-ui/react'
+import { Box, Heading, Link, ListItem, OrderedList, Text } from '@chakra-ui/react'
 
 import { HeaderOnlyLogoLayout } from 'components/templates/HeaderOnlyLogoLayout'
 
@@ -129,7 +129,24 @@ export const Policy: VFC = () => (
         </OrderedList>
       </Box>
       <Box as="section">
-        <Heading as="h3">第5条（プライバシーポリシーの変更）</Heading>
+        <Heading as="h3">第5条（アクセス解析ツール）</Heading>
+        <OrderedList>
+          <ListItem>
+            当サービスは、お客様のアクセス解析のために、「Googleアナリティクス」を利用しています。Googleアナリティクスは、トラフィックデータの収集のためにCookieを使用しています。トラフィックデータは匿名で収集されており、個人を特定するものではありません。Cookieを無効にすれば、これらの情報の収集を拒否することができます。詳しくはお使いのブラウザの設定をご確認ください。Googleアナリティクスについて、詳しくは右記のリンクからご確認ください。
+            <Link
+              color="green.500"
+              display="inline"
+              textDecoration="underline"
+              href="https://marketingplatform.google.com/about/analytics/terms/jp/"
+              target="_blank"
+            >
+              Google アナリティクス利用規約
+            </Link>
+          </ListItem>
+        </OrderedList>
+      </Box>
+      <Box as="section">
+        <Heading as="h3">第6条（プライバシーポリシーの変更）</Heading>
         <OrderedList>
           <ListItem>
             本ポリシーの内容は、法令その他本ポリシーに別段の定めのある事項を除いて、ユーザーに通知することなく、変更することができるものとします。
@@ -141,6 +158,7 @@ export const Policy: VFC = () => (
       </Box>
 
       <Text>2022年 03月08日 制定</Text>
+      <Text>2022年 03月30日 改訂</Text>
     </Box>
   </HeaderOnlyLogoLayout>
 )
