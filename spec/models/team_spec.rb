@@ -41,19 +41,57 @@ RSpec.describe Team, type: :model do
         expect(team.unsettled_total_amount).to eq 1000
       end
 
-      example '1人あたり支払うべき金額' do
+      example '1人あたり支払うべき金額（split_bill_amount）' do
         expect(team.split_bill_amount).to eq 500
       end
 
-      example '返金額' do
+      example '返金額（refund_amount）' do
         expect(team.refund_amount).to eq 300
       end
 
-      example '一人当たり支払うべき金額より多く支払っているユーザー' do
+      example '一人当たり支払うべき金額より多く支払っているユーザー（largest_payment_user）' do
         expect(team.largest_payment_user).to eq host_user
       end
 
-      example '一人当たり支払うべき金額より支払いが少ないユーザー' do
+      example '一人当たり支払うべき金額より支払いが少ないユーザー（smallest_payment_user）' do
+        expect(team.smallest_payment_user).to eq other_user
+      end
+    end
+
+    context '一度精算済みで片方のみ新たに支払いを登録している場合' do
+      before do
+        host_user.payments.create(amount: 200, detail: '外食', team_id: team.id, paid_at: '2022-02-14', settled: true, settled_at: '2022-02-24')
+        host_user.payments.create(amount: 800, detail: 'スーパー', team_id: team.id, paid_at: '2022-02-25')
+        other_user.payments.create(amount: 300, detail: 'カフェ', team_id: team.id, paid_at: '2022-02-14', settled: true, settled_at: '2022-02-24')
+      end
+
+      example '各ユーザーの支払い合計金額' do
+        expect(host_user.payments.sum(:amount)).to eq 1000
+        expect(other_user.payments.sum(:amount)).to eq 300
+      end
+
+      example '各ユーザーの未精算支払い合計金額' do
+        expect(host_user.payments.unsettled.sum(:amount)).to eq 800
+        expect(other_user.payments.unsettled.sum(:amount)).to eq 0
+      end
+
+      example 'teamの未清算支払い合計金額' do
+        expect(team.unsettled_total_amount).to eq 800
+      end
+
+      example '1人あたり支払うべき金額（split_bill_amount）' do
+        expect(team.split_bill_amount).to eq 400
+      end
+
+      example '返金額（refund_amount）' do
+        expect(team.refund_amount).to eq 400
+      end
+
+      example '一人当たり支払うべき金額より多く支払っているユーザー（largest_payment_user）' do
+        expect(team.largest_payment_user).to eq host_user
+      end
+
+      example '一人当たり支払うべき金額より支払いが少ないユーザー（smallest_payment_user）' do
         expect(team.smallest_payment_user).to eq other_user
       end
     end
@@ -77,19 +115,19 @@ RSpec.describe Team, type: :model do
         expect(host_user.payments.unsettled.sum(:amount)).to eq other_user.payments.unsettled.sum(:amount)
       end
 
-      example '1人あたり支払うべき金額' do
+      example '1人あたり支払うべき金額（split_bill_amount）' do
         expect(team.split_bill_amount).to eq 1000
       end
 
-      example '返金額' do
+      example '返金額（refund_amount）' do
         expect(team.refund_amount).to eq 0
       end
 
-      example '一人当たり支払うべき金額より多く支払っているユーザー' do
+      example '一人当たり支払うべき金額より多く支払っているユーザー（largest_payment_user）' do
         expect(team.largest_payment_user).to eq nil
       end
 
-      example '一人当たり支払うべき金額より支払いが少ないユーザー' do
+      example '一人当たり支払うべき金額より支払いが少ないユーザー（smallest_payment_user）' do
         expect(team.smallest_payment_user).to eq nil
       end
     end
@@ -109,19 +147,19 @@ RSpec.describe Team, type: :model do
         expect(team.unsettled_total_amount).to eq 0
       end
 
-      example '1人あたり支払うべき金額' do
+      example '1人あたり支払うべき金額（split_bill_amount）' do
         expect(team.split_bill_amount).to eq 0
       end
 
-      example '返金額' do
+      example '返金額（refund_amount）' do
         expect(team.refund_amount).to eq 0
       end
 
-      example '一人当たり支払うべき金額より多く支払っているユーザー' do
+      example '一人当たり支払うべき金額より多く支払っているユーザー（largest_payment_user）' do
         expect(team.largest_payment_user).to eq nil
       end
 
-      example '一人当たり支払うべき金額より支払いが少ないユーザー' do
+      example '一人当たり支払うべき金額より支払いが少ないユーザー（smallest_payment_user）' do
         expect(team.smallest_payment_user).to eq nil
       end
     end
