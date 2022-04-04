@@ -21,11 +21,11 @@ class Team < ApplicationRecord
   end
 
   def largest_payment_user
-    User.find(user_id_and_total_amount.key(user_id_and_total_amount.values.max)) unless refund_amount.zero?
+    users.find(user_id_and_total_amount.key(user_id_and_total_amount.values.max)) unless refund_amount.zero?
   end
 
   def smallest_payment_user
-    User.find(user_id_and_total_amount.key(user_id_and_total_amount.values.min)) unless refund_amount.zero?
+    users.find(user_id_and_total_amount.key(user_id_and_total_amount.values.min)) unless refund_amount.zero?
   end
 
   def capacity_reached?
