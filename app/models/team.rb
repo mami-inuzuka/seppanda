@@ -21,11 +21,11 @@ class Team < ApplicationRecord
   end
 
   def largest_payment_user
-    User.find(user_id_and_total_amount.key(user_id_and_total_amount.values.max)) unless refund_amount.zero?
+    users.find(user_id_and_total_amount.key(user_id_and_total_amount.values.max)) unless refund_amount.zero?
   end
 
   def smallest_payment_user
-    User.find(user_id_and_total_amount.key(user_id_and_total_amount.values.min)) unless refund_amount.zero?
+    users.find(user_id_and_total_amount.key(user_id_and_total_amount.values.min)) unless refund_amount.zero?
   end
 
   def capacity_reached?
@@ -39,7 +39,10 @@ class Team < ApplicationRecord
   private
 
   def user_id_and_total_amount
-    users.left_joins(:payments).group('users.id').where(payments: { settled: [nil, false] }).sum('payments.amount')
+    users
+      .left_joins(:payments)
+      .group('users.id')
+      .sum('CASE WHEN payments.settled = FALSE OR payments.settled IS NULL THEN payments.amount ELSE 0 END')
   end
 
   def first_user_unsettled_total_amount
