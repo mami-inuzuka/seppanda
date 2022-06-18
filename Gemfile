@@ -19,6 +19,8 @@ gem 'rack-rewrite'
 gem 'rails', '~> 6.1.4', '>= 6.1.4.4'
 gem 'rails-i18n'
 gem 'redis'
+gem 'sentry-rails'
+gem 'sentry-ruby'
 gem 'whenever', require: false
 
 group :development, :test do
