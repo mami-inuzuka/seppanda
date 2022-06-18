@@ -202,6 +202,8 @@ GEM
     mustermann (1.1.1)
       ruby2_keywords (~> 0.0.1)
     nio4r (2.5.8)
+    nokogiri (1.13.0-arm64-darwin)
+      racc (~> 1.4)
     nokogiri (1.13.0-x86_64-darwin)
       racc (~> 1.4)
     nokogiri (1.13.0-x86_64-linux)
@@ -311,6 +313,14 @@ GEM
     ruby-vips (2.1.2)
       ffi (~> 1.12)
     ruby2_keywords (0.0.5)
+    sentry-rails (5.3.1)
+      railties (>= 5.0)
+      sentry-ruby-core (~> 5.3.1)
+    sentry-ruby (5.3.1)
+      concurrent-ruby (~> 1.0, >= 1.0.2)
+      sentry-ruby-core (= 5.3.1)
+    sentry-ruby-core (5.3.1)
+      concurrent-ruby
     signet (0.16.0)
       addressable (~> 2.8)
       faraday (>= 0.17.3, < 2.0)
@@ -358,6 +368,7 @@ GEM
     zeitwerk (2.5.3)
 
 PLATFORMS
+  arm64-darwin-21
   x86_64-darwin-19
   x86_64-linux
 
@@ -386,6 +397,8 @@ DEPENDENCIES
   rubocop-performance
   rubocop-rails
   rubocop-rspec
+  sentry-rails
+  sentry-ruby
   spring
   spring-commands-rspec
   tzinfo-data
