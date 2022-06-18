@@ -51,9 +51,14 @@ $ rails server
 ```
 $ cd /frontend
 $ yarn install
-$ npm run start
+$ yarn run start
 ```
 ### redis-serverの起動
+redisが入っていない場合はインストールしておく
+```
+$ brew install redis
+```
+起動
 ```
 $ redis-server /usr/local/etc/redis.conf
 ```
