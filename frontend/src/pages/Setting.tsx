@@ -76,6 +76,7 @@ export const Setting: VFC = () => {
   const handleSignOut = async () => {
     await signOut(auth)
     navigation('/')
+    window.location.reload()
     successToast('ログアウトしました')
   }
 
