@@ -25,7 +25,7 @@ RSpec.describe 'API::Payments', type: :request do
       example '未清算の支払い一覧を取得することができる' do
         get api_payments_path, headers: headers
         expect(response).to have_http_status(:ok)
-        expect(JSON.parse(response.body)[0]['payments'].length).to eq 2
+        expect(JSON.parse(response.body)['payments'].length).to eq 2
       end
     end
 
