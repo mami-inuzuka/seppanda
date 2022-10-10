@@ -19,3 +19,7 @@ export type Payment = {
   settledAt: null
   user: User
 }
+export type PaymentResponse = {
+  payments: Payment[]
+  isLastPage: boolean
+}

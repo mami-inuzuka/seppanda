@@ -23,6 +23,7 @@ export const PaymentProvider = ({ children }: { children: React.ReactElement }) 
   })
   const [isPaymentListLoaded, setIsPaymentListLoaded] = useState<boolean>(false)
   const [isTeamStatusLoaded, setIsTeamStatusLoaded] = useState<boolean>(false)
+  const [isLastPage, setIsLastPage] = useState<boolean>(false)
   const { errorToast } = useToast()
   const { currentUser } = useContext(AuthContext)
 
@@ -31,9 +32,9 @@ export const PaymentProvider = ({ children }: { children: React.ReactElement }) 
     const requestPage = currentPage + 1
     try {
       const res = await getPayments({ page: requestPage }, idToken)
-      setPaymentList([...paymentList, ...res.data])
-      console.log([...paymentList, ...res.data])
+      setPaymentList([...paymentList, ...res.data.payments])
       setCurrentPage(currentPage + 1)
+      setIsLastPage(res?.data?.isLastPage)
     } catch {
       errorToast('支払情報の取得ができませんでした', '時間をおいてから再読み込みをしてください')
     } finally {
@@ -57,6 +58,8 @@ export const PaymentProvider = ({ children }: { children: React.ReactElement }) 
     isUpdatedPaymentList,
     setIsUpdatedPaymentList,
     handleFetchNextPage,
+    isLastPage,
+    setIsLastPage,
   }
 
   const handleGetPayments = async () => {
@@ -64,7 +67,7 @@ export const PaymentProvider = ({ children }: { children: React.ReactElement }) 
     const idToken = await auth.currentUser?.getIdToken(true)
     try {
       const res = await getPayments({ page: 1 }, idToken)
-      setPaymentList(res?.data)
+      setPaymentList(res?.data.payments)
     } catch {
       errorToast('支払情報の取得ができませんでした', '時間をおいてから再読み込みをしてください')
     } finally {

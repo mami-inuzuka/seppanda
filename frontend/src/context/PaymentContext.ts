@@ -16,6 +16,8 @@ export type PaymentContextType = {
   setIsTeamStatusLoaded: React.Dispatch<React.SetStateAction<boolean>>
   isUpdatedPaymentList: boolean
   setIsUpdatedPaymentList: React.Dispatch<React.SetStateAction<boolean>>
+  isLastPage: boolean
+  setIsLastPage: React.Dispatch<React.SetStateAction<boolean>>
   handleFetchNextPage: () => Promise<Payment[] | null>
 }
 
@@ -48,6 +50,10 @@ export const PaymentContext = createContext<PaymentContextType>({
   },
   isUpdatedPaymentList: false,
   setIsUpdatedPaymentList: () => {
+    throw new Error('PaymentContext not avaliable')
+  },
+  isLastPage: false,
+  setIsLastPage: () => {
     throw new Error('PaymentContext not avaliable')
   },
   handleFetchNextPage: () => {

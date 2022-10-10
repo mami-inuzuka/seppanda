@@ -2,10 +2,10 @@ import { AxiosPromise } from 'axios'
 
 import client from 'lib/api/client'
 
-import type { Payment, PostPaymentParams, GetPaymentParams } from 'types/api/payment'
+import type { Payment, PostPaymentParams, GetPaymentParams, PaymentResponse } from 'types/api/payment'
 import type { FirebaseIdToken } from 'types/firebaseIdToken'
 
-export const getPayments = (params: GetPaymentParams, idToken: FirebaseIdToken): AxiosPromise<Payment[]> =>
+export const getPayments = (params: GetPaymentParams, idToken: FirebaseIdToken): AxiosPromise<PaymentResponse> =>
   client.get('/payments', { headers: { Authorization: idToken || '' }, params })
 
 export const postPayment = (params: PostPaymentParams, idToken: FirebaseIdToken): AxiosPromise<Payment> =>
