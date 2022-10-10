@@ -1,10 +1,10 @@
-/* eslint-disable @typescript-eslint/no-floating-promises */
-import { memo, useEffect, useRef, VFC } from 'react'
+import { memo, useContext, useEffect, useRef, VFC } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { Box, Flex, Text } from '@chakra-ui/react'
 
 import { UserIcon } from 'components/atoms/icon/UserIcon'
+import { PaymentContext } from 'context/PaymentContext'
 
 import type { Payment } from 'types/api/payment'
 
@@ -17,12 +17,13 @@ export const PaymentListItem: VFC<Props> = memo(({ payment, isLastItem }) => {
   const ref = useRef<HTMLDivElement>(null)
   const navigation = useNavigate()
   const handleRowClick = () => navigation(`/payments/${payment.id}`, { state: { payment } })
+  const { isFirstLoad } = useContext(PaymentContext)
 
   useEffect(() => {
-    if (isLastItem) {
+    if (isLastItem && !isFirstLoad) {
       ref?.current?.scrollIntoView({ behavior: 'smooth' })
     }
-  }, [isLastItem])
+  }, [isLastItem, isFirstLoad])
 
   return (
     <Box key={payment.id} data-testid="payment-list-item" id={isLastItem ? 'last-item' : ''} ref={ref}>

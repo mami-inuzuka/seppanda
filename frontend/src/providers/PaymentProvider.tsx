@@ -11,6 +11,7 @@ import type { Payment } from 'types/api/payment'
 import type { TeamStatus } from 'types/api/team'
 
 export const PaymentProvider = ({ children }: { children: React.ReactElement }) => {
+  const [isFirstLoad, setIsFirstLoad] = useState<boolean>(true)
   const [paymentList, setPaymentList] = useState<Payment[]>([])
   const [currentPage, setCurrentPage] = useState<number>(1)
   const [isUpdatedPaymentList, setIsUpdatedPaymentList] = useState<boolean>(false)
@@ -35,6 +36,7 @@ export const PaymentProvider = ({ children }: { children: React.ReactElement }) 
       setPaymentList([...paymentList, ...res.data.payments])
       setCurrentPage(currentPage + 1)
       setIsLastPage(res?.data?.isLastPage)
+      setIsFirstLoad(false)
     } catch {
       errorToast('支払情報の取得ができませんでした', '時間をおいてから再読み込みをしてください')
     } finally {
@@ -45,6 +47,8 @@ export const PaymentProvider = ({ children }: { children: React.ReactElement }) 
 
   // eslint-disable-next-line react/jsx-no-constructed-context-values
   const value = {
+    isFirstLoad,
+    setIsFirstLoad,
     paymentList,
     setPaymentList,
     currentPage,

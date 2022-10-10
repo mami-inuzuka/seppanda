@@ -6,6 +6,8 @@ import type { TeamStatus } from 'types/api/team'
 export type PaymentContextType = {
   paymentList: Payment[]
   currentPage: number
+  isFirstLoad: boolean
+  setIsFirstLoad: React.Dispatch<React.SetStateAction<boolean>>
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>
   setPaymentList: React.Dispatch<React.SetStateAction<Payment[]>>
   isPaymentListLoaded: boolean
@@ -23,6 +25,10 @@ export type PaymentContextType = {
 
 export const PaymentContext = createContext<PaymentContextType>({
   paymentList: [],
+  isFirstLoad: true,
+  setIsFirstLoad: () => {
+    throw new Error('PaymentContext not avaliable')
+  },
   currentPage: 1,
   setCurrentPage: () => {
     throw new Error('PaymentContext not avaliable')
