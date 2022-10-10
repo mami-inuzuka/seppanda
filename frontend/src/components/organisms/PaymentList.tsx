@@ -2,6 +2,7 @@
 import { memo, useContext, VFC } from 'react'
 
 import { Box } from '@chakra-ui/react'
+import { DateTime } from 'luxon'
 
 import { SecondaryButton } from 'components/atoms/button/SecondaryButton'
 import { PaymentContext } from 'context/PaymentContext'
@@ -17,11 +18,22 @@ type Props = {
 export const PaymentList: VFC<Props> = memo((props) => {
   const { paymentList } = props
   const { handleFetchNextPage, isLastPage, totalPages } = useContext(PaymentContext)
+
   return (
     <Box data-testid="payment-list" paddingBottom="160px">
       {paymentList.map((payment, index) => {
         const isLastItem = paymentList.length === index + 1
-        return <PaymentListItem payment={payment} isLastItem={isLastItem} />
+        const isFirstItemOfDateGroup = index === 0 || payment.paidAt !== paymentList[index - 1].paidAt
+        return (
+          <>
+            {isFirstItemOfDateGroup && (
+              <Box bg="gray.100" fontSize="xs" color="gray.500" p={1}>
+                {DateTime.fromISO(payment.paidAt).toFormat('yyyy.MM.dd')}
+              </Box>
+            )}
+            <PaymentListItem payment={payment} isLastItem={isLastItem} />
+          </>
+        )
       })}
       <Box textAlign="center" margin="40px 0">
         {totalPages !== 1 && (
