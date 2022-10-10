@@ -26,7 +26,7 @@ export const PaymentListItem: VFC<Props> = memo(({ payment, isLastItem }) => {
   }, [isLastItem, isFirstLoad])
 
   return (
-    <Box key={payment.id} data-testid="payment-list-item" id={isLastItem ? 'last-item' : ''} ref={ref}>
+    <Box data-testid="payment-list-item" id={isLastItem ? 'last-item' : ''} ref={ref}>
       <Flex
         justify="space-between"
         align="center"

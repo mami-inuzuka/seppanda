@@ -25,14 +25,14 @@ export const PaymentList: VFC<Props> = memo((props) => {
         const isLastItem = paymentList.length === index + 1
         const isFirstItemOfDateGroup = index === 0 || payment.paidAt !== paymentList[index - 1].paidAt
         return (
-          <>
+          <Box key={payment.id}>
             {isFirstItemOfDateGroup && (
-              <Box bg="gray.100" fontSize="xs" color="gray.500" p={1}>
+              <Box bg="gray.100" fontSize="xs" color="gray.500" p={1} data-testid="date-banner">
                 {DateTime.fromISO(payment.paidAt).toFormat('yyyy.MM.dd')}
               </Box>
             )}
             <PaymentListItem payment={payment} isLastItem={isLastItem} />
-          </>
+          </Box>
         )
       })}
       <Box textAlign="center" margin="40px 0">
