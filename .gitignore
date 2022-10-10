@@ -36,3 +36,4 @@
 yarn.lock
 
 .env*
+dump.rdb
