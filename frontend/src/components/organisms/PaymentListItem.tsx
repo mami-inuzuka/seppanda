@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
-import { memo, VFC } from 'react'
+import { memo, useEffect, useRef, VFC } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { Box, Flex, Text } from '@chakra-ui/react'
@@ -14,11 +14,18 @@ type Props = {
 }
 
 export const PaymentListItem: VFC<Props> = memo(({ payment, isLastItem }) => {
+  const ref = useRef<HTMLDivElement>(null)
   const navigation = useNavigate()
   const handleRowClick = () => navigation(`/payments/${payment.id}`, { state: { payment } })
 
+  useEffect(() => {
+    if (isLastItem) {
+      ref?.current?.scrollIntoView({ behavior: 'smooth' })
+    }
+  }, [isLastItem])
+
   return (
-    <Box key={payment.id} data-testid="payment-list-item" id={isLastItem ? 'last-item' : ''}>
+    <Box key={payment.id} data-testid="payment-list-item" id={isLastItem ? 'last-item' : ''} ref={ref}>
       <Flex
         justify="space-between"
         align="center"

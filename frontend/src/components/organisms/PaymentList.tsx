@@ -18,7 +18,7 @@ export const PaymentList: VFC<Props> = memo((props) => {
   const { handleFetchNextPage, currentPage } = useContext(PaymentContext)
 
   return (
-    <Box data-testid="payment-list">
+    <Box data-testid="payment-list" paddingBottom="160px">
       {paymentList.map((payment, index) => {
         const isLastItem = paymentList.length === index + 1
         return <PaymentListItem payment={payment} isLastItem={isLastItem} />
