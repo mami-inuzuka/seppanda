@@ -4,7 +4,8 @@ class API::PaymentsController < API::ApplicationController
   before_action :set_payment, only: %i[destroy update]
 
   def index
-    @payments = Payment.includes(:user).where(team_id: current_user.team_id, settled: false).order(paid_at: :desc).order(created_at: :asc).page(params[:page]).per(5)
+    @payments = Payment.includes(:user).where(team_id: current_user.team_id, settled: false).order(paid_at: :desc).order(created_at: :asc).page(params[:page]).per(10)
+    @last_page = @payments.last_page?
     render :index
   end
 
