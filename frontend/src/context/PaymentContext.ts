@@ -1,11 +1,13 @@
 import { createContext } from 'react'
 
-import type { PaymentListGroupByPaidAt } from 'types/api/payment'
+import type { Payment } from 'types/api/payment'
 import type { TeamStatus } from 'types/api/team'
 
 export type PaymentContextType = {
-  paymentList: PaymentListGroupByPaidAt[]
-  setPaymentList: React.Dispatch<React.SetStateAction<PaymentListGroupByPaidAt[]>>
+  paymentList: Payment[]
+  currentPage: number
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>
+  setPaymentList: React.Dispatch<React.SetStateAction<Payment[]>>
   isPaymentListLoaded: boolean
   setIsPaymentListLoaded: React.Dispatch<React.SetStateAction<boolean>>
   teamStatus: TeamStatus
@@ -14,10 +16,15 @@ export type PaymentContextType = {
   setIsTeamStatusLoaded: React.Dispatch<React.SetStateAction<boolean>>
   isUpdatedPaymentList: boolean
   setIsUpdatedPaymentList: React.Dispatch<React.SetStateAction<boolean>>
+  handleFetchNextPage: () => Promise<Payment[] | null>
 }
 
 export const PaymentContext = createContext<PaymentContextType>({
   paymentList: [],
+  currentPage: 1,
+  setCurrentPage: () => {
+    throw new Error('PaymentContext not avaliable')
+  },
   setPaymentList: () => {
     throw new Error('PaymentContext not avaliable')
   },
@@ -41,6 +48,9 @@ export const PaymentContext = createContext<PaymentContextType>({
   },
   isUpdatedPaymentList: false,
   setIsUpdatedPaymentList: () => {
+    throw new Error('PaymentContext not avaliable')
+  },
+  handleFetchNextPage: () => {
     throw new Error('PaymentContext not avaliable')
   },
 })

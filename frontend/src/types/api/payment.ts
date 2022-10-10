@@ -1,14 +1,13 @@
 import type { User } from 'types/user'
 
+export type GetPaymentParams = {
+  page: number
+}
+
 export type PostPaymentParams = {
   amount: string
   detail: string
   paidAt: string
-}
-
-export type PaymentListGroupByPaidAt = {
-  date: string
-  payments: Payment[]
 }
 
 export type Payment = {

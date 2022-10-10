@@ -7,11 +7,12 @@ import { getPayments } from 'lib/api/payment'
 import { getTeamStatus } from 'lib/api/team'
 import { auth } from 'lib/firebase'
 
-import type { PaymentListGroupByPaidAt } from 'types/api/payment'
+import type { Payment } from 'types/api/payment'
 import type { TeamStatus } from 'types/api/team'
 
 export const PaymentProvider = ({ children }: { children: React.ReactElement }) => {
-  const [paymentList, setPaymentList] = useState<PaymentListGroupByPaidAt[]>([])
+  const [paymentList, setPaymentList] = useState<Payment[]>([])
+  const [currentPage, setCurrentPage] = useState<number>(1)
   const [isUpdatedPaymentList, setIsUpdatedPaymentList] = useState<boolean>(false)
   const [teamStatus, setTeamStatus] = useState<TeamStatus>({
     refundAmount: 0,
@@ -25,10 +26,28 @@ export const PaymentProvider = ({ children }: { children: React.ReactElement }) 
   const { errorToast } = useToast()
   const { currentUser } = useContext(AuthContext)
 
+  const handleFetchNextPage = async () => {
+    const idToken = await auth.currentUser?.getIdToken(true)
+    const requestPage = currentPage + 1
+    try {
+      const res = await getPayments({ page: requestPage }, idToken)
+      setPaymentList([...paymentList, ...res.data])
+      console.log([...paymentList, ...res.data])
+      setCurrentPage(currentPage + 1)
+    } catch {
+      errorToast('支払情報の取得ができませんでした', '時間をおいてから再読み込みをしてください')
+    } finally {
+      setIsPaymentListLoaded(true)
+    }
+    return null
+  }
+
   // eslint-disable-next-line react/jsx-no-constructed-context-values
   const value = {
     paymentList,
     setPaymentList,
+    currentPage,
+    setCurrentPage,
     isPaymentListLoaded,
     setIsPaymentListLoaded,
     teamStatus,
@@ -37,13 +56,14 @@ export const PaymentProvider = ({ children }: { children: React.ReactElement }) 
     setIsTeamStatusLoaded,
     isUpdatedPaymentList,
     setIsUpdatedPaymentList,
+    handleFetchNextPage,
   }
 
   const handleGetPayments = async () => {
     setIsPaymentListLoaded(false)
     const idToken = await auth.currentUser?.getIdToken(true)
     try {
-      const res = await getPayments(idToken)
+      const res = await getPayments({ page: 1 }, idToken)
       setPaymentList(res?.data)
     } catch {
       errorToast('支払情報の取得ができませんでした', '時間をおいてから再読み込みをしてください')

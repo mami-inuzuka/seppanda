@@ -5,10 +5,10 @@ import { Box } from '@chakra-ui/react'
 import { NoPaymentMessage } from 'components/organisms/NoPaymentMessage'
 import { PaymentList } from 'components/organisms/PaymentList'
 
-import type { PaymentListGroupByPaidAt } from 'types/api/payment'
+import type { Payment } from 'types/api/payment'
 
 type Props = {
-  paymentList: PaymentListGroupByPaidAt[]
+  paymentList: Payment[]
 }
 
 export const PaymentListArea: VFC<Props> = memo((props) => {
