@@ -29,18 +29,18 @@ export const PaymentContext = createContext<PaymentContextType>({
   paymentList: [],
   isFirstLoad: true,
   setIsFirstLoad: () => {
-    throw new Error('PaymentContext not avaliable')
+    throw new Error('PaymentContext not available')
   },
   currentPage: 1,
   setCurrentPage: () => {
-    throw new Error('PaymentContext not avaliable')
+    throw new Error('PaymentContext not available')
   },
   setPaymentList: () => {
-    throw new Error('PaymentContext not avaliable')
+    throw new Error('PaymentContext not available')
   },
   isPaymentListLoaded: false,
   setIsPaymentListLoaded: () => {
-    throw new Error('PaymentContext not avaliable')
+    throw new Error('PaymentContext not available')
   },
   teamStatus: {
     refundAmount: 0,
@@ -50,25 +50,25 @@ export const PaymentContext = createContext<PaymentContextType>({
     invitationToken: '',
   },
   setTeamStatus: () => {
-    throw new Error('PaymentContext not avaliable')
+    throw new Error('PaymentContext not available')
   },
   isTeamStatusLoaded: false,
   setIsTeamStatusLoaded: () => {
-    throw new Error('PaymentContext not avaliable')
+    throw new Error('PaymentContext not available')
   },
   isUpdatedPaymentList: false,
   setIsUpdatedPaymentList: () => {
-    throw new Error('PaymentContext not avaliable')
+    throw new Error('PaymentContext not available')
   },
   isLastPage: false,
   setIsLastPage: () => {
-    throw new Error('PaymentContext not avaliable')
+    throw new Error('PaymentContext not available')
   },
   totalPages: 1,
   setTotalPages: () => {
-    throw new Error('PaymentContext not avaliable')
+    throw new Error('PaymentContext not available')
   },
   handleFetchNextPage: () => {
-    throw new Error('PaymentContext not avaliable')
+    throw new Error('PaymentContext not available')
   },
 })
