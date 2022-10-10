@@ -7,3 +7,4 @@ json.payments do
   end
 end
 json.is_last_page @last_page
+json.total_pages @total_pages

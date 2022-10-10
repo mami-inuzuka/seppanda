@@ -22,4 +22,5 @@ export type Payment = {
 export type PaymentResponse = {
   payments: Payment[]
   isLastPage: boolean
+  totalPages: number
 }

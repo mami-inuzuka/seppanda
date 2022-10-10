@@ -20,6 +20,8 @@ export type PaymentContextType = {
   setIsUpdatedPaymentList: React.Dispatch<React.SetStateAction<boolean>>
   isLastPage: boolean
   setIsLastPage: React.Dispatch<React.SetStateAction<boolean>>
+  totalPages: number
+  setTotalPages: React.Dispatch<React.SetStateAction<number>>
   handleFetchNextPage: () => Promise<Payment[] | null>
 }
 
@@ -60,6 +62,10 @@ export const PaymentContext = createContext<PaymentContextType>({
   },
   isLastPage: false,
   setIsLastPage: () => {
+    throw new Error('PaymentContext not avaliable')
+  },
+  totalPages: 1,
+  setTotalPages: () => {
     throw new Error('PaymentContext not avaliable')
   },
   handleFetchNextPage: () => {

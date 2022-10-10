@@ -16,8 +16,7 @@ type Props = {
 
 export const PaymentList: VFC<Props> = memo((props) => {
   const { paymentList } = props
-  const { handleFetchNextPage, isLastPage } = useContext(PaymentContext)
-
+  const { handleFetchNextPage, isLastPage, totalPages } = useContext(PaymentContext)
   return (
     <Box data-testid="payment-list" paddingBottom="160px">
       {paymentList.map((payment, index) => {
@@ -25,12 +24,17 @@ export const PaymentList: VFC<Props> = memo((props) => {
         return <PaymentListItem payment={payment} isLastItem={isLastItem} />
       })}
       <Box textAlign="center" margin="40px 0">
-        {!isLastPage ? (
-          <SecondaryButton size="sm" onClick={handleFetchNextPage} isFullWidth={false}>
-            続きを読み込む
-          </SecondaryButton>
-        ) : (
-          <Box color="gray.500">最後まで読み込みました</Box>
+        {totalPages !== 1 && (
+          // eslint-disable-next-line react/jsx-no-useless-fragment
+          <>
+            {isLastPage ? (
+              <Box color="gray.500">最後まで読み込みました</Box>
+            ) : (
+              <SecondaryButton size="sm" onClick={handleFetchNextPage} isFullWidth={false}>
+                続きを読み込む
+              </SecondaryButton>
+            )}
+          </>
         )}
       </Box>
     </Box>
