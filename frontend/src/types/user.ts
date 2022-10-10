@@ -10,3 +10,12 @@ export type User = {
   avatar: Avatar
   color: string
 }
+
+export type SimpleUser = {
+  id: number
+  color: string
+  avatar: {
+    data: string
+    dataSmall: string
+  }
+}

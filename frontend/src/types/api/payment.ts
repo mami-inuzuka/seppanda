@@ -1,4 +1,4 @@
-import type { User } from 'types/user'
+import type { SimpleUser } from 'types/user'
 
 export type GetPaymentParams = {
   page: number
@@ -17,7 +17,7 @@ export type Payment = {
   id: number
   settled: boolean
   settledAt: null
-  user: User
+  user: SimpleUser
 }
 export type PaymentResponse = {
   payments: Payment[]
