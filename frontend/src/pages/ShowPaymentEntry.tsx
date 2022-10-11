@@ -1,4 +1,4 @@
-import { useContext, useState, VFC } from 'react'
+import { useContext, useEffect, useState, VFC } from 'react'
 import { useForm } from 'react-hook-form'
 import { useNavigate, useLocation } from 'react-router-dom'
 
@@ -21,7 +21,7 @@ type stateType = {
 }
 
 export const ShowPaymentEntry: VFC = () => {
-  const { isUpdatedPaymentList, setIsUpdatedPaymentList } = useContext(PaymentContext)
+  const { setIsFirstLoad, isUpdatedPaymentList, setIsUpdatedPaymentList } = useContext(PaymentContext)
   const { errorToast, successToast } = useToast()
   const [processingDelete, setProcessingDelete] = useState<boolean>(false)
   const navigation = useNavigate()
@@ -75,6 +75,12 @@ export const ShowPaymentEntry: VFC = () => {
       }
     }
   }
+
+  useEffect(() => {
+    // 編集から戻った時に一番下までスクロールしないようにする
+    setIsFirstLoad(true)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <HeaderWithTitleLayout title="支払い情報の編集">

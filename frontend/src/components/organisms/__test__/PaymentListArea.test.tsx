@@ -6,40 +6,7 @@ import { screen } from '@testing-library/react'
 import { PaymentListArea } from 'components/organisms/PaymentListArea'
 import { renderWithChakraProvider } from 'tests/chakra/themeProvider'
 
-import type { PaymentListGroupByPaidAt } from 'types/api/payment'
-import type { User } from 'types/user'
-
-const user: User = {
-  id: 234,
-  name: 'Taro',
-  uid: 'XTE9hVBnutQAlbTX4HDmLyiyVIH3',
-  teamId: 203,
-  createdAt: '2022-03-15T10:43:25.863+09:00',
-  updatedAt: '2022-03-15T10:43:25.935+09:00',
-  color: 'blue',
-  avatar: {
-    data: 'https://placekitten.com/200/300',
-    dataSmall: 'https://placekitten.com/200/300',
-    name: 'default-user-icon.png',
-  },
-}
-
-const paymentList: PaymentListGroupByPaidAt[] = [
-  {
-    date: '2022-03-15',
-    payments: [
-      {
-        id: 160,
-        amount: 333,
-        detail: 'コンビニ',
-        paidAt: '2022-03-15',
-        settled: false,
-        settledAt: null,
-        user,
-      },
-    ],
-  },
-]
+import { payments } from './payments'
 
 describe('PaymentListArea', () => {
   it('display NoPaymentMessage when paymentList is empty array', () => {
@@ -55,7 +22,7 @@ describe('PaymentListArea', () => {
   it('display CurrentStatusContents when isLoaded is true', () => {
     renderWithChakraProvider(
       <BrowserRouter>
-        <PaymentListArea paymentList={paymentList} />
+        <PaymentListArea paymentList={payments.payments} />
       </BrowserRouter>
     )
     expect(screen.getByTestId('payment-list')).toBeInTheDocument()

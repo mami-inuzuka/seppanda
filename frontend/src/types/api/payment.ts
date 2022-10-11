@@ -1,14 +1,13 @@
-import type { User } from 'types/user'
+import type { SimpleUser } from 'types/user'
+
+export type GetPaymentParams = {
+  page: number
+}
 
 export type PostPaymentParams = {
   amount: string
   detail: string
   paidAt: string
-}
-
-export type PaymentListGroupByPaidAt = {
-  date: string
-  payments: Payment[]
 }
 
 export type Payment = {
@@ -18,5 +17,10 @@ export type Payment = {
   id: number
   settled: boolean
   settledAt: null
-  user: User
+  user: SimpleUser
+}
+export type PaymentResponse = {
+  payments: Payment[]
+  isLastPage: boolean
+  totalPages: number
 }

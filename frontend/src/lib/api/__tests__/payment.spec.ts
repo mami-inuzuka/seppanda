@@ -19,7 +19,7 @@ describe('payment API', () => {
     it('should succeed', async () => {
       mock.onGet('/payments').reply(200, paymentList)
       const idToken = 'dummyIdToken'
-      const res = await getPayments(idToken)
+      const res = await getPayments({ page: 1 }, idToken)
       expect(res.data).toEqual(paymentList)
     })
   })
