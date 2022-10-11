@@ -9,11 +9,24 @@ RSpec.describe 'API::Payments', type: :request do
   let(:headers) { { Authorization: 'Bearer token' } }
   let(:other_team_user) { create(:user, :with_team) }
 
+  # 精算済みのデータが4件、未精算のデータが12件ある
   before do
-    current_user.payments.create(amount: 200, detail: '外食', team_id: team.id, paid_at: '2022-02-14', settled: true, settled_at: '2022-02-24')
-    other_user.payments.create(amount: 500, detail: 'カフェ', team_id: team.id, paid_at: '2022-02-14', settled: true, settled_at: '2022-02-24')
-    current_user.payments.create(amount: 800, detail: 'スーパー', team_id: team.id, paid_at: '2022-02-25')
-    other_user.payments.create(amount: 500, detail: '日用品', team_id: team.id, paid_at: '2022-02-25')
+    2.times do
+      current_user.payments.create(amount: 200, detail: '外食', team_id: team.id, paid_at: '2022-02-14', settled: true, settled_at: '2022-02-24')
+      other_user.payments.create(amount: 500, detail: 'カフェ', team_id: team.id, paid_at: '2022-02-14', settled: true, settled_at: '2022-02-24')
+    end
+    2.times do
+      current_user.payments.create(amount: 800, detail: 'スーパー', team_id: team.id, paid_at: '2022-02-25')
+      other_user.payments.create(amount: 500, detail: '日用品', team_id: team.id, paid_at: '2022-02-25')  
+    end
+    2.times do
+      current_user.payments.create(amount: 200, detail: '外食', team_id: team.id, paid_at: '2022-03-01')
+      other_user.payments.create(amount: 500, detail: 'カフェ', team_id: team.id, paid_at: '2022-03-01')
+    end
+    2.times do
+      current_user.payments.create(amount: 200, detail: '外食', team_id: team.id, paid_at: '2022-03-02')
+      other_user.payments.create(amount: 500, detail: 'カフェ', team_id: team.id, paid_at: '2022-03-02')
+    end
   end
 
   context 'ログイン中の時' do
@@ -22,10 +35,38 @@ RSpec.describe 'API::Payments', type: :request do
     end
 
     describe 'GET /api/payments' do
-      example '未清算の支払い一覧を取得することができる' do
-        get api_payments_path, headers: headers
+      example 'ページの合計数が返ってくる' do
+        get api_payments_path, params: { page: 1 }, headers: headers
         expect(response).to have_http_status(:ok)
-        expect(JSON.parse(response.body)['payments'].length).to eq 2
+        expect(JSON.parse(response.body)['total_pages']).to eq 2
+      end
+
+      context '?page=1' do
+        example '未清算の支払い一覧の最初の10件が返ってくる' do
+          get api_payments_path, params: { page: 1 }, headers: headers
+          expect(response).to have_http_status(:ok)
+          expect(JSON.parse(response.body)['payments'].length).to eq 10
+        end
+
+        example '最後のページではない' do
+          get api_payments_path, params: { page: 1 }, headers: headers
+          expect(response).to have_http_status(:ok)
+          expect(JSON.parse(response.body)['is_last_page']).to be false
+        end
+      end
+
+      context '?page=2' do
+        example '未清算の支払い一覧のうち最後の2件が返ってくる' do
+          get api_payments_path, params: { page: 2 }, headers: headers
+          expect(response).to have_http_status(:ok)
+          expect(JSON.parse(response.body)['payments'].length).to eq 2
+        end
+
+        example '最後のページである' do
+          get api_payments_path, params: { page: 2 }, headers: headers
+          expect(response).to have_http_status(:ok)
+          expect(JSON.parse(response.body)['is_last_page']).to be true
+        end
       end
     end
 
