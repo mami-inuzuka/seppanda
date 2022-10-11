@@ -17,7 +17,7 @@ RSpec.describe 'API::Payments', type: :request do
     end
     2.times do
       current_user.payments.create(amount: 800, detail: 'スーパー', team_id: team.id, paid_at: '2022-02-25')
-      other_user.payments.create(amount: 500, detail: '日用品', team_id: team.id, paid_at: '2022-02-25')  
+      other_user.payments.create(amount: 500, detail: '日用品', team_id: team.id, paid_at: '2022-02-25')
     end
     2.times do
       current_user.payments.create(amount: 200, detail: '外食', team_id: team.id, paid_at: '2022-03-01')
