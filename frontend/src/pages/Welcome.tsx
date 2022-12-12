@@ -1,7 +1,7 @@
 import { VFC } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { Box, Flex, Image, Text, useDisclosure } from '@chakra-ui/react'
+import { Alert, AlertIcon, AlertTitle, Box, Flex, Image, Text, useDisclosure } from '@chakra-ui/react'
 
 import VerticalLogo from 'assets/images/logo-vertical-black.svg'
 import { GoogleLoginButton } from 'components/atoms/button/GoogleLoginButton'
@@ -31,6 +31,10 @@ export const Welcome: VFC = () => {
     <>
       <BrowserCautionModal isOpen={isOpen} onClose={onClose} size="xl" />
       <Flex h="100%" direction="column" minH="100vh">
+        <Alert status="error">
+          <AlertIcon />
+          現在seppandaの利用ができなくなっております。復旧まで今しばらくお待ちください。
+        </Alert>
         <Flex h="100%" justify="center" align="center" direction="column" p={8} flex="1" mt={28} mb={20}>
           <Box mb={20}>
             <Box mb={10}>
