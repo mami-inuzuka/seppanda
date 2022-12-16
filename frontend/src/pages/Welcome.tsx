@@ -31,9 +31,9 @@ export const Welcome: VFC = () => {
     <>
       <BrowserCautionModal isOpen={isOpen} onClose={onClose} size="xl" />
       <Flex h="100%" direction="column" minH="100vh">
-        <Alert status="error">
+        <Alert status="info">
           <AlertIcon />
-          現在seppandaの利用ができなくなっております。復旧まで今しばらくお待ちください。
+          2022.12.16 Seppandaにログインできない不具合を解消済みです。
         </Alert>
         <Flex h="100%" justify="center" align="center" direction="column" p={8} flex="1" mt={28} mb={20}>
           <Box mb={20}>
