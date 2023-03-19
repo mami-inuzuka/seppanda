@@ -31,9 +31,10 @@ export const Welcome: VFC = () => {
     <>
       <BrowserCautionModal isOpen={isOpen} onClose={onClose} size="xl" />
       <Flex h="100%" direction="column" minH="100vh">
-        <Alert status="info">
+        <Alert status="error">
           <AlertIcon />
-          2022.12.16 Seppandaにログインできない不具合を解消済みです。
+          2023.03.31
+          をもちましてサービスを終了いたします。サービス終了後はログインできなくなりますので、それまでの間に割り勘額のメモや精算等のご対応をよろしくお願いいたします。
         </Alert>
         <Flex h="100%" justify="center" align="center" direction="column" p={8} flex="1" mt={28} mb={20}>
           <Box mb={20}>
