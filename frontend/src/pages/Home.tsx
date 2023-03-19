@@ -1,7 +1,7 @@
 import { memo, useContext, VFC } from 'react'
 import { Link } from 'react-router-dom'
 
-import { Box, Center, useDisclosure } from '@chakra-ui/react'
+import { Alert, AlertIcon, Box, Center, useDisclosure } from '@chakra-ui/react'
 
 import bgBlue from 'assets/images/home-bg-blue.svg'
 import bgOrange from 'assets/images/home-bg-orange.svg'
@@ -22,6 +22,11 @@ export const Home: VFC = memo(() => {
 
   return (
     <>
+      <Alert status="error">
+        <AlertIcon />
+        2023.03.31
+        をもちましてサービスを終了いたします。サービス終了後はログインできなくなりますので、それまでの間に割り勘額のメモや精算等のご対応をよろしくお願いいたします。
+      </Alert>
       {!localStorage.getItem('invitationUrlClosed') && isTeamStatusLoaded && !teamStatus.isTeamCapacityReached && (
         <InvitationUrlModal isOpen={isOpen} onClose={onClose} size="xl" invitationToken={teamStatus.invitationToken} />
       )}
